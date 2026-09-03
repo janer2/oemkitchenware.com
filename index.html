@@ -449,6 +449,15 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 pdfjsLib.GlobalWorkerOptions.workerSrc='assets/pdfjs/pdf.worker.min.js';
 const StPageFlip=St.PageFlip;
 
+// file:// guard: PDF.js cannot read local PDFs without an HTTP server
+if(location.protocol==='file:'){
+  const b=document.createElement('div');
+  b.style.cssText='position:fixed;left:0;right:0;top:0;z-index:9999;background:#1a1a2e;color:#fff;padding:10px 16px;font-size:.82rem;text-align:center;font-family:Segoe UI,system-ui,sans-serif;';
+  b.innerHTML='PDF viewer needs a local server. Close this page and double-click <b>start-server.bat</b>, then open <a href="http://localhost:8080" style="color:#ffd27a">http://localhost:8080</a>.';
+  document.body.appendChild(b);
+  document.body.style.paddingTop='38px';
+}
+
 //===== State =====
 let catalogs=[],currentPdf=null,totalPages=0,pageFlip=null,currentCatalogId='';
 let searchIndex=null,searchIndexBusy=false,currentToc=null;

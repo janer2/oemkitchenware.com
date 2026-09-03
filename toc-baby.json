@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [
   {
     "title": "Baby Feeding",
@@ -11,17 +10,3 @@
     ]
   }
 ]
-=======
-[
-  {
-    "title": "Baby Feeding",
-    "page": 1,
-    "children": [
-      { "title": "Feeding Set", "page": 1 },
-      { "title": "Spoon/Fork", "page": 18 },
-      { "title": "Baby Bib", "page": 20 },
-      { "title": "Silicone Placemat", "page": 21 }
-    ]
-  }
-]
->>>>>>> 86d8de835b32ca0a7865b4c71f3742ef8894092c

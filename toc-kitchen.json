@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [
   {
     "title": "Home & Table Top",
@@ -56,62 +55,3 @@
     ]
   }
 ]
-=======
-[
-  {
-    "title": "Home & Table Top",
-    "page": 1,
-    "children": [
-      { "title": "Kitchen Gadgets", "page": 1 },
-      { "title": "Kitchen Utensil", "page": 28 },
-      { "title": "Silicone Mat", "page": 31 },
-      { "title": "Silicone Coaster", "page": 41},
-      { "title": "Collapsible Strainer", "page": 50 },
-      { "title": "Collapsible Food Storage", "page": 54 },
-      { "title": "Food Storage Container", "page": 57 },
-      { "title": "Snack Box", "page": 59 },
-      { "title": "Silicone Food Storage Bag", "page": 66 }
-    ]
-  },
-  {
-    "title": "Drinkware & Outdoor",
-    "page": 69,
-    "children": [
-      { "title": "Collapsible Travel Cup", "page": 69 },
-      { "title": "Stainless Steel Tumbler", "page": 71 },
-      { "title": "BBQ Grill Accessories", "page": 84 },
-      {
-        "title": "Coffee & Tea",
-        "page": 92,
-        "children": [
-          { "title": "Milk Frother", "page": 92 },
-          { "title": "Tea Infuser", "page": 96 }
-        ]
-      },
-      {
-        "title": "Ice Cream Tools",
-        "page": 102,
-        "children": [
-          { "title": "Silicone Ice Tray", "page": 102 },
-          { "title": "Ice Cream Tool", "page": 114 }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Baking & Pastry Tools",
-    "page": 128,
-    "children": [
-      { "title": "Sourdough Starter Kit", "page": 128 },
-      {
-        "title": "Silicone Mold",
-        "page": 140,
-        "children": [
-          { "title": "Silicone Gummy Mold", "page": 140 },
-          { "title": "Cookie Cutter", "page": 148 }
-        ]
-      }
-    ]
-  }
-]
->>>>>>> 86d8de835b32ca0a7865b4c71f3742ef8894092c
