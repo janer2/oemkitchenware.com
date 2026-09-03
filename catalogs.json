@@ -1,0 +1,55 @@
+<<<<<<< HEAD
+[
+  {
+    "id": "kitchen",
+    "name": "Kitchen Gadgets",
+    "sub": "Kitchen Items",
+    "pdf": "assets/catalog-kitchen.pdf"
+  },
+  {
+    "id": "baby",
+    "name": "Baby Care",
+    "sub": "Infant & Nursery Products",
+    "pdf": "assets/catalog-baby.pdf"
+  },
+  {
+    "id": "ladies",
+    "name": "Ladies' Appliances",
+    "sub": "Personal Care & Beauty Devices",
+    "pdf": "assets/catalog-ladies.pdf"
+  },
+  {
+    "id": "balls",
+    "name": "Christmas Balls",
+    "sub": "Festival Decorations",
+    "pdf": "assets/catalog-balls.pdf"
+  }
+]
+=======
+[
+  {
+    "id": "kitchen",
+    "name": "Kitchen Gadgets",
+    "sub": "Kitchen Items",
+    "pdf": "assets/catalog-kitchen.pdf"
+  },
+  {
+    "id": "baby",
+    "name": "Baby Care",
+    "sub": "Infant & Nursery Products",
+    "pdf": "assets/catalog-baby.pdf"
+  },
+  {
+    "id": "ladies",
+    "name": "Ladies' Appliances",
+    "sub": "Personal Care & Beauty Devices",
+    "pdf": "assets/catalog-ladies.pdf"
+  },
+  {
+    "id": "balls",
+    "name": "Christmas Balls",
+    "sub": "Festival Decorations",
+    "pdf": "assets/catalog-balls.pdf"
+  }
+]
+>>>>>>> 86d8de835b32ca0a7865b4c71f3742ef8894092c

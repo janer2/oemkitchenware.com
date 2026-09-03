@@ -1,0 +1,673 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Page Flip Demo — XSmallAppliance</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #4a4a55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+
+/* Header */
+.demo-header {
+  width: 100%; padding: 16px 32px;
+  background: #2a2a35;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.demo-header h1 { font-size: 1.1rem; font-weight: 500; }
+.demo-header h1 span { color: #e8a840; }
+.demo-header select {
+  padding: 6px 12px; border-radius: 6px; border: 1px solid #555;
+  background: #3a3a45; color: #fff; font-size: .85rem; cursor: pointer;
+}
+
+/* Loading */
+.loading-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(30,30,40,.9);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
+}
+.loading-overlay .spinner {
+  width: 40px; height: 40px;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: #e8a840;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-overlay .progress { color: #aaa; font-size: .9rem; }
+
+/* Book area */
+.book-area {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 24px; width: 100%; overflow: hidden;
+}
+
+/* StPageFlip container — the library manages its own structure */
+#bookContainer {
+  box-shadow: 0 6px 40px rgba(0,0,0,.5);
+}
+
+/* StPageFlip internal page items — ensure canvas fills */
+#bookContainer .stf__item {
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#bookContainer .stf__item canvas {
+  width: 100%; height: 100%; object-fit: contain;
+  display: block;
+}
+
+/* Controls */
+.controls {
+  display: flex; align-items: center; gap: 20px;
+  padding: 14px 24px; flex-shrink: 0;
+  background: #2a2a35; width: 100%; justify-content: center;
+}
+.controls button {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #fff; padding: 10px 28px; border-radius: 8px;
+  cursor: pointer; font-size: .9rem; transition: background .2s;
+  user-select: none;
+}
+.controls button:hover:not(:disabled) { background: rgba(255,255,255,.16); }
+.controls button:disabled { opacity: .25; cursor: default; }
+.controls .page-info {
+  color: rgba(255,255,255,.55); font-size: .85rem; min-width: 90px; text-align: center;
+}
+.hint {
+  color: rgba(255,255,255,.25); font-size: .72rem; text-align: center;
+  padding: 8px; background: #22222c; width: 100%; flex-shrink: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .demo-header { padding: 12px 16px; }
+  .demo-header h1 { font-size: .95rem; }
+  .book-area { padding: 8px; }
+  .controls { gap: 12px; padding: 10px; }
+  .controls button { padding: 8px 18px; font-size: .82rem; }
+  .hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="progress" id="loadProgress">Loading PDF...</div>
+</div>
+
+<div class="demo-header">
+  <h1>X<span>Small</span>Appliance — 3D Page Flip Demo</h1>
+  <select id="catalogSelect">
+    <option value="">Select catalog...</option>
+  </select>
+</div>
+
+<div class="book-area">
+  <div id="bookContainer"></div>
+</div>
+
+<div class="controls">
+  <button id="btnFirst" disabled title="First page">|◂</button>
+  <button id="btnPrev" disabled title="Previous">◂ Prev</button>
+  <span class="page-info" id="pageInfo">-- / --</span>
+  <button id="btnNext" disabled title="Next">Next ▸</button>
+  <button id="btnLast" disabled title="Last page">▸|</button>
+</div>
+
+<div class="hint">← → arrow keys &nbsp;|&nbsp; Click page edges to flip &nbsp;|&nbsp; Drag corners to preview</div>
+
+<script src="assets/pdfjs/pdf.min.js"></script>
+<script src="assets/pdfjs/page-flip.browser.js"></script>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.min.js';
+// page-flip library exports as St.PageFlip, alias for convenience
+const StPageFlip = St.PageFlip;
+
+let pageFlip = null;
+let totalPages = 0;
+let pdfDoc = null;
+
+const $container   = document.getElementById('bookContainer');
+const $loading     = document.getElementById('loadingOverlay');
+const $progress    = document.getElementById('loadProgress');
+const $pageInfo    = document.getElementById('pageInfo');
+const $select      = document.getElementById('catalogSelect');
+const $btnFirst    = document.getElementById('btnFirst');
+const $btnPrev     = document.getElementById('btnPrev');
+const $btnNext     = document.getElementById('btnNext');
+const $btnLast     = document.getElementById('btnLast');
+
+// ===== Embedded catalog data =====
+const EMBEDDED_CATALOGS = [
+  { "id":"ladies", "name":"Ladies' Appliances", "sub":"Personal Care & Beauty Devices", "pdf":"assets/catalog-ladies.pdf" },
+  { "id":"balls", "name":"Sports & Balls", "sub":"Inflatable & Sports Equipment", "pdf":"assets/catalog-balls.pdf" },
+  { "id":"baby", "name":"Baby Care", "sub":"Infant & Nursery Products", "pdf":"assets/catalog-baby.pdf" },
+  { "id":"bbq", "name":"BBQ & Grilling", "sub":"Outdoor Cooking Equipment", "pdf":"assets/catalog-bbq.pdf" }
+];
+
+// ===== Init =====
+(function init() {
+  $select.innerHTML = '<option value="">Select catalog...</option>' +
+    EMBEDDED_CATALOGS.map((c, i) => `<option value="${i}">${esc(c.name)}</option>`).join('');
+  $select.addEventListener('change', () => {
+    const idx = $select.value;
+    if (idx !== '') loadCatalog(EMBEDDED_CATALOGS[parseInt(idx)]);
+  });
+})();
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ===== Load PDF & build flip book =====
+async function loadCatalog(cat) {
+  // Clean up previous
+  if (pageFlip) {
+    try { pageFlip.destroy(); } catch (e) {}
+    pageFlip = null;
+  }
+  $container.innerHTML = '';
+  pdfDoc = null;
+  totalPages = 0;
+
+  $loading.style.display = 'flex';
+  $progress.textContent = 'Loading PDF...';
+  $btnFirst.disabled = $btnPrev.disabled = $btnNext.disabled = $btnLast.disabled = true;
+  $pageInfo.textContent = '-- / --';
+
+  try {
+    pdfDoc = await pdfjsLib.getDocument(cat.pdf).promise;
+    totalPages = pdfDoc.numPages;
+
+    // Calculate optimal page size
+    const availW = window.innerWidth - 80;
+    const availH = window.innerHeight - 180;
+    let pageW, pageH;
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) {
+      pageW = availW;
+      pageH = pageW / .72;
+      if (pageH > availH) { pageH = availH; pageW = pageH * .72; }
+    } else {
+      // Dual page: each page ~half width
+      pageW = Math.min(availW / 2, availH / .707);
+      pageH = pageW / .707;
+      if (pageH > availH) { pageH = availH; pageW = pageH * .707; }
+    }
+    pageW = Math.floor(pageW);
+    pageH = Math.floor(pageH);
+
+    $progress.textContent = `Rendering ${totalPages} pages...`;
+
+    // Render all pages to canvases wrapped in divs
+    const pageDivs = [];
+    const renderScale = 1.5; // Good balance of quality & speed
+
+    for (let i = 1; i <= totalPages; i++) {
+      $progress.textContent = `Rendering page ${i} / ${totalPages}...`;
+
+      const page = await pdfDoc.getPage(i);
+      const viewport = page.getViewport({ scale: renderScale });
+
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      const ctx = canvas.getContext('2d');
+      await page.render({ canvasContext: ctx, viewport }).promise;
+
+      const div = document.createElement('div');
+      div.appendChild(canvas);
+      pageDivs.push(div);
+
+      // Yield to keep UI responsive
+      if (i % 5 === 0) await sleep(0);
+    }
+
+    $progress.textContent = 'Building flip book...';
+
+    // Clear container
+    $container.innerHTML = '';
+
+    // Initialize StPageFlip
+    pageFlip = new StPageFlip($container, {
+      width: pageW,
+      height: pageH,
+      maxShadowOpacity: .35,
+      showCover: false,
+      mobileScrollSupport: false,
+      usePortrait: false,
+      flippingTime: 550,
+      useMouseEvents: true,
+      swipeDistance: 50,
+      autoSize: false
+    });
+
+    // Load pages
+    pageFlip.loadFromHTML(pageDivs);
+
+    // Update UI
+    updatePageInfo();
+    $btnFirst.disabled = false;
+    $btnPrev.disabled = false;
+    $btnNext.disabled = totalPages <= 1;
+    $btnLast.disabled = totalPages <= 1;
+
+    // Bind flip events
+    pageFlip.on('flip', () => updatePageInfo());
+    pageFlip.on('changeState', () => updatePageInfo());
+
+    $loading.style.display = 'none';
+
+  } catch (e) {
+    console.error(e);
+    $progress.textContent = 'Error: ' + e.message;
+    setTimeout(() => { $loading.style.display = 'none'; }, 2000);
+  }
+}
+
+function updatePageInfo() {
+  if (!pageFlip) return;
+  const state = pageFlip.getState();
+  const current = state.page; // 0-indexed page number
+  $pageInfo.textContent = `${current + 1} / ${totalPages}`;
+  $btnPrev.disabled = current <= 0;
+  $btnNext.disabled = current >= totalPages - 1;
+  $btnFirst.disabled = current <= 0;
+  $btnLast.disabled = current >= totalPages - 1;
+}
+
+// ===== Navigation =====
+$btnFirst.addEventListener('click', () => { if (pageFlip) pageFlip.turnToPage(0); });
+$btnPrev.addEventListener('click',  () => { if (pageFlip) pageFlip.flipPrev(); });
+$btnNext.addEventListener('click',  () => { if (pageFlip) pageFlip.flipNext(); });
+$btnLast.addEventListener('click',  () => { if (pageFlip) pageFlip.turnToPage(totalPages - 1); });
+
+document.addEventListener('keydown', e => {
+  if (!pageFlip) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); pageFlip.flipNext(); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); pageFlip.flipPrev(); }
+  else if (e.key === 'Home') { e.preventDefault(); pageFlip.turnToPage(0); }
+  else if (e.key === 'End') { e.preventDefault(); pageFlip.turnToPage(totalPages - 1); }
+});
+
+// ===== Resize =====
+window.addEventListener('resize', () => {
+  if (!pageFlip) return;
+  clearTimeout(window._resizeTimer);
+  window._resizeTimer = setTimeout(() => {
+    const availW = window.innerWidth - 80;
+    const availH = window.innerHeight - 180;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    let pw, ph;
+    if (isMobile) {
+      pw = availW; ph = pw / .72;
+      if (ph > availH) { ph = availH; pw = ph * .72; }
+    } else {
+      pw = Math.min(availW / 2, availH / .707);
+      ph = pw / .707;
+      if (ph > availH) { ph = availH; pw = ph * .707; }
+    }
+    pageFlip.getSettings().width = Math.floor(pw);
+    pageFlip.getSettings().height = Math.floor(ph);
+    pageFlip.update();
+  }, 300);
+});
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Page Flip Demo — XSmallAppliance</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #4a4a55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+
+/* Header */
+.demo-header {
+  width: 100%; padding: 16px 32px;
+  background: #2a2a35;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.demo-header h1 { font-size: 1.1rem; font-weight: 500; }
+.demo-header h1 span { color: #e8a840; }
+.demo-header select {
+  padding: 6px 12px; border-radius: 6px; border: 1px solid #555;
+  background: #3a3a45; color: #fff; font-size: .85rem; cursor: pointer;
+}
+
+/* Loading */
+.loading-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(30,30,40,.9);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
+}
+.loading-overlay .spinner {
+  width: 40px; height: 40px;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: #e8a840;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-overlay .progress { color: #aaa; font-size: .9rem; }
+
+/* Book area */
+.book-area {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 24px; width: 100%; overflow: hidden;
+}
+
+/* StPageFlip container — the library manages its own structure */
+#bookContainer {
+  box-shadow: 0 6px 40px rgba(0,0,0,.5);
+}
+
+/* StPageFlip internal page items — ensure canvas fills */
+#bookContainer .stf__item {
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#bookContainer .stf__item canvas {
+  width: 100%; height: 100%; object-fit: contain;
+  display: block;
+}
+
+/* Controls */
+.controls {
+  display: flex; align-items: center; gap: 20px;
+  padding: 14px 24px; flex-shrink: 0;
+  background: #2a2a35; width: 100%; justify-content: center;
+}
+.controls button {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #fff; padding: 10px 28px; border-radius: 8px;
+  cursor: pointer; font-size: .9rem; transition: background .2s;
+  user-select: none;
+}
+.controls button:hover:not(:disabled) { background: rgba(255,255,255,.16); }
+.controls button:disabled { opacity: .25; cursor: default; }
+.controls .page-info {
+  color: rgba(255,255,255,.55); font-size: .85rem; min-width: 90px; text-align: center;
+}
+.hint {
+  color: rgba(255,255,255,.25); font-size: .72rem; text-align: center;
+  padding: 8px; background: #22222c; width: 100%; flex-shrink: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .demo-header { padding: 12px 16px; }
+  .demo-header h1 { font-size: .95rem; }
+  .book-area { padding: 8px; }
+  .controls { gap: 12px; padding: 10px; }
+  .controls button { padding: 8px 18px; font-size: .82rem; }
+  .hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="progress" id="loadProgress">Loading PDF...</div>
+</div>
+
+<div class="demo-header">
+  <h1>X<span>Small</span>Appliance — 3D Page Flip Demo</h1>
+  <select id="catalogSelect">
+    <option value="">Select catalog...</option>
+  </select>
+</div>
+
+<div class="book-area">
+  <div id="bookContainer"></div>
+</div>
+
+<div class="controls">
+  <button id="btnFirst" disabled title="First page">|◂</button>
+  <button id="btnPrev" disabled title="Previous">◂ Prev</button>
+  <span class="page-info" id="pageInfo">-- / --</span>
+  <button id="btnNext" disabled title="Next">Next ▸</button>
+  <button id="btnLast" disabled title="Last page">▸|</button>
+</div>
+
+<div class="hint">← → arrow keys &nbsp;|&nbsp; Click page edges to flip &nbsp;|&nbsp; Drag corners to preview</div>
+
+<script src="assets/pdfjs/pdf.min.js"></script>
+<script src="assets/pdfjs/page-flip.browser.js"></script>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdfjs/pdf.worker.min.js';
+// page-flip library exports as St.PageFlip, alias for convenience
+const StPageFlip = St.PageFlip;
+
+let pageFlip = null;
+let totalPages = 0;
+let pdfDoc = null;
+
+const $container   = document.getElementById('bookContainer');
+const $loading     = document.getElementById('loadingOverlay');
+const $progress    = document.getElementById('loadProgress');
+const $pageInfo    = document.getElementById('pageInfo');
+const $select      = document.getElementById('catalogSelect');
+const $btnFirst    = document.getElementById('btnFirst');
+const $btnPrev     = document.getElementById('btnPrev');
+const $btnNext     = document.getElementById('btnNext');
+const $btnLast     = document.getElementById('btnLast');
+
+// ===== Embedded catalog data =====
+const EMBEDDED_CATALOGS = [
+  { "id":"ladies", "name":"Ladies' Appliances", "sub":"Personal Care & Beauty Devices", "pdf":"assets/catalog-ladies.pdf" },
+  { "id":"balls", "name":"Sports & Balls", "sub":"Inflatable & Sports Equipment", "pdf":"assets/catalog-balls.pdf" },
+  { "id":"baby", "name":"Baby Care", "sub":"Infant & Nursery Products", "pdf":"assets/catalog-baby.pdf" },
+  { "id":"bbq", "name":"BBQ & Grilling", "sub":"Outdoor Cooking Equipment", "pdf":"assets/catalog-bbq.pdf" }
+];
+
+// ===== Init =====
+(function init() {
+  $select.innerHTML = '<option value="">Select catalog...</option>' +
+    EMBEDDED_CATALOGS.map((c, i) => `<option value="${i}">${esc(c.name)}</option>`).join('');
+  $select.addEventListener('change', () => {
+    const idx = $select.value;
+    if (idx !== '') loadCatalog(EMBEDDED_CATALOGS[parseInt(idx)]);
+  });
+})();
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ===== Load PDF & build flip book =====
+async function loadCatalog(cat) {
+  // Clean up previous
+  if (pageFlip) {
+    try { pageFlip.destroy(); } catch (e) {}
+    pageFlip = null;
+  }
+  $container.innerHTML = '';
+  pdfDoc = null;
+  totalPages = 0;
+
+  $loading.style.display = 'flex';
+  $progress.textContent = 'Loading PDF...';
+  $btnFirst.disabled = $btnPrev.disabled = $btnNext.disabled = $btnLast.disabled = true;
+  $pageInfo.textContent = '-- / --';
+
+  try {
+    pdfDoc = await pdfjsLib.getDocument(cat.pdf).promise;
+    totalPages = pdfDoc.numPages;
+
+    // Calculate optimal page size
+    const availW = window.innerWidth - 80;
+    const availH = window.innerHeight - 180;
+    let pageW, pageH;
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) {
+      pageW = availW;
+      pageH = pageW / .72;
+      if (pageH > availH) { pageH = availH; pageW = pageH * .72; }
+    } else {
+      // Dual page: each page ~half width
+      pageW = Math.min(availW / 2, availH / .707);
+      pageH = pageW / .707;
+      if (pageH > availH) { pageH = availH; pageW = pageH * .707; }
+    }
+    pageW = Math.floor(pageW);
+    pageH = Math.floor(pageH);
+
+    $progress.textContent = `Rendering ${totalPages} pages...`;
+
+    // Render all pages to canvases wrapped in divs
+    const pageDivs = [];
+    const renderScale = 1.5; // Good balance of quality & speed
+
+    for (let i = 1; i <= totalPages; i++) {
+      $progress.textContent = `Rendering page ${i} / ${totalPages}...`;
+
+      const page = await pdfDoc.getPage(i);
+      const viewport = page.getViewport({ scale: renderScale });
+
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      const ctx = canvas.getContext('2d');
+      await page.render({ canvasContext: ctx, viewport }).promise;
+
+      const div = document.createElement('div');
+      div.appendChild(canvas);
+      pageDivs.push(div);
+
+      // Yield to keep UI responsive
+      if (i % 5 === 0) await sleep(0);
+    }
+
+    $progress.textContent = 'Building flip book...';
+
+    // Clear container
+    $container.innerHTML = '';
+
+    // Initialize StPageFlip
+    pageFlip = new StPageFlip($container, {
+      width: pageW,
+      height: pageH,
+      maxShadowOpacity: .35,
+      showCover: false,
+      mobileScrollSupport: false,
+      usePortrait: false,
+      flippingTime: 550,
+      useMouseEvents: true,
+      swipeDistance: 50,
+      autoSize: false
+    });
+
+    // Load pages
+    pageFlip.loadFromHTML(pageDivs);
+
+    // Update UI
+    updatePageInfo();
+    $btnFirst.disabled = false;
+    $btnPrev.disabled = false;
+    $btnNext.disabled = totalPages <= 1;
+    $btnLast.disabled = totalPages <= 1;
+
+    // Bind flip events
+    pageFlip.on('flip', () => updatePageInfo());
+    pageFlip.on('changeState', () => updatePageInfo());
+
+    $loading.style.display = 'none';
+
+  } catch (e) {
+    console.error(e);
+    $progress.textContent = 'Error: ' + e.message;
+    setTimeout(() => { $loading.style.display = 'none'; }, 2000);
+  }
+}
+
+function updatePageInfo() {
+  if (!pageFlip) return;
+  const state = pageFlip.getState();
+  const current = state.page; // 0-indexed page number
+  $pageInfo.textContent = `${current + 1} / ${totalPages}`;
+  $btnPrev.disabled = current <= 0;
+  $btnNext.disabled = current >= totalPages - 1;
+  $btnFirst.disabled = current <= 0;
+  $btnLast.disabled = current >= totalPages - 1;
+}
+
+// ===== Navigation =====
+$btnFirst.addEventListener('click', () => { if (pageFlip) pageFlip.turnToPage(0); });
+$btnPrev.addEventListener('click',  () => { if (pageFlip) pageFlip.flipPrev(); });
+$btnNext.addEventListener('click',  () => { if (pageFlip) pageFlip.flipNext(); });
+$btnLast.addEventListener('click',  () => { if (pageFlip) pageFlip.turnToPage(totalPages - 1); });
+
+document.addEventListener('keydown', e => {
+  if (!pageFlip) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); pageFlip.flipNext(); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); pageFlip.flipPrev(); }
+  else if (e.key === 'Home') { e.preventDefault(); pageFlip.turnToPage(0); }
+  else if (e.key === 'End') { e.preventDefault(); pageFlip.turnToPage(totalPages - 1); }
+});
+
+// ===== Resize =====
+window.addEventListener('resize', () => {
+  if (!pageFlip) return;
+  clearTimeout(window._resizeTimer);
+  window._resizeTimer = setTimeout(() => {
+    const availW = window.innerWidth - 80;
+    const availH = window.innerHeight - 180;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    let pw, ph;
+    if (isMobile) {
+      pw = availW; ph = pw / .72;
+      if (ph > availH) { ph = availH; pw = ph * .72; }
+    } else {
+      pw = Math.min(availW / 2, availH / .707);
+      ph = pw / .707;
+      if (ph > availH) { ph = availH; pw = ph * .707; }
+    }
+    pageFlip.getSettings().width = Math.floor(pw);
+    pageFlip.getSettings().height = Math.floor(ph);
+    pageFlip.update();
+  }, 300);
+});
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
+>>>>>>> 86d8de835b32ca0a7865b4c71f3742ef8894092c

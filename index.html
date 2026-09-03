@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yongli — Silicone Kitchenware Manufacturer</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #fff; color: #222; min-height: 100vh; overflow-x: hidden; }
+
+/* ===== Header ===== */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: #fff; border-bottom: 1px solid #eee;
+  display: flex; align-items: center; gap: 32px; padding: 12px 32px;
+}
+.site-header .logo { display: flex; align-items: center; flex-shrink: 0; }
+.site-header .logo img { height: 38px; width: auto; display: block; }
+.main-nav { display: flex; align-items: center; gap: 6px; margin: 0 auto; }
+.main-nav a {
+  text-decoration: none; color: #444; font-size: .95rem; font-weight: 500;
+  padding: 8px 16px; border-radius: 6px; transition: background .15s, color .15s; cursor: pointer;
+}
+.main-nav a:hover { color: #1a1a2e; background: #f5f5f5; }
+.main-nav a.active { color: #fff; background: #1a1a2e; }
+
+/* Search */
+.search-wrap { position: relative; width: 220px; flex-shrink: 0; }
+.search-wrap .search-box {
+  display: flex; align-items: center; gap: 8px;
+  border: 1px solid #ddd; border-radius: 24px; padding: 7px 14px;
+  background: #f8f8f8; transition: border-color .15s, background .15s;
+}
+.search-wrap .search-box:focus-within { border-color: #1a1a2e; background: #fff; }
+.search-wrap .search-box svg { width: 15px; height: 15px; fill: none; stroke: #999; stroke-width: 2; flex-shrink: 0; }
+.search-wrap .search-box input { border: none; outline: none; background: none; font-size: .85rem; width: 100%; color: #333; }
+.search-wrap .search-box input::placeholder { color: #aaa; }
+.search-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0; left: 0;
+  background: #fff; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.14);
+  max-height: 340px; overflow-y: auto; z-index: 500; display: none; border: 1px solid #eee;
+}
+.search-dropdown.active { display: block; }
+.search-dropdown .sd-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid #f5f5f5; transition: background .12s; }
+.search-dropdown .sd-item:hover { background: #fafafa; }
+.search-dropdown .sd-item .sd-title { font-weight: 600; font-size: .85rem; color: #1a1a2e; }
+.search-dropdown .sd-item .sd-snippet { font-size: .75rem; color: #777; margin-top: 2px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.search-dropdown .sd-empty, .search-dropdown .sd-loading { padding: 20px; text-align: center; color: #999; font-size: .82rem; }
+
+/* ===== Views ===== */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ===== Catalog View ===== */
+.hero { text-align: center; padding: 56px 24px 40px; max-width: 800px; margin: 0 auto; }
+.hero h1 { font-size: 2.4rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; letter-spacing: -.5px; }
+.hero p { font-size: 1.05rem; color: #777; line-height: 1.6; }
+.catalog-grid { max-width: 1280px; margin: 0 auto; padding: 8px 24px 60px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 28px; }
+.catalog-card {
+  background: #fff; border-radius: 14px; overflow: hidden; cursor: pointer;
+  border: 1px solid #eee; transition: transform .25s ease, box-shadow .25s ease; position: relative;
+}
+.catalog-card:hover { transform: translateY(-6px); box-shadow: 0 14px 34px rgba(0,0,0,.1); }
+.catalog-card .card-cover { width: 100%; aspect-ratio: 3/4; background: #f5f4f0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.catalog-card .card-cover canvas { width: 100%; height: 100%; object-fit: contain; }
+.catalog-card .card-cover .placeholder { color: #bbb; font-size: .9rem; padding: 20px; text-align: center; }
+.catalog-card .card-cover .loading-spin { width: 30px; height: 30px; border: 3px solid #e6e3dc; border-top-color: #1a1a2e; border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.catalog-card .card-info { padding: 18px 16px; }
+.catalog-card .card-info h3 { font-size: 1rem; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+.catalog-card .card-info .sub { font-size: .8rem; color: #999; }
+
+/* ===== Customize View ===== */
+.customize-hero { text-align: center; padding: 60px 24px 48px; background: linear-gradient(180deg, #faf9f7 0%, #fff 100%); }
+.customize-hero h1 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+.customize-hero p { max-width: 700px; margin: 0 auto; color: #777; line-height: 1.7; font-size: 1rem; }
+.customize-section { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+.customize-section h2 { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 28px; text-align: center; }
+.process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; counter-reset: step; }
+.step-card { background: #faf9f7; border: 1px solid #eee; border-radius: 12px; padding: 22px 18px; position: relative; }
+.step-card .step-num { width: 34px; height: 34px; border-radius: 50%; background: #1a1a2e; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; margin-bottom: 14px; }
+.step-card h4 { font-size: .95rem; color: #1a1a2e; margin-bottom: 6px; }
+.customize-banner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.customize-banner + .customize-banner { margin-top: 20px; }
+.customize-banner img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #eee; }
+.customize-duo { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.customize-duo img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid #eee; }
+.customize-section { max-width: 1200px; margin: 0 auto; padding: 48px 24px 8px; }
+.customize-section h2 { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 24px; text-align: center; }
+.customize-section .section-sub { text-align: center; color: #888; font-size: .9rem; margin: -14px 0 24px; }
+.customize-cta { text-align: center; padding: 40px 24px 70px; }
+.customize-cta .cta-btn {
+  display: inline-block; background: #1a1a2e; color: #fff; text-decoration: none;
+  padding: 14px 36px; border-radius: 30px; font-size: .95rem; font-weight: 600;
+  transition: background .2s, transform .2s; cursor: pointer; border: none;
+}
+.customize-cta .cta-btn:hover { background: #2b2b4a; transform: translateY(-2px); }
+
+/* ===== About View ===== */
+.about-hero { text-align: center; padding: 60px 24px 48px; background: linear-gradient(180deg, #faf9f7 0%, #fff 100%); }
+.about-hero h1 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+.about-hero p { max-width: 720px; margin: 0 auto; color: #777; line-height: 1.7; }
+.about-section { max-width: 1000px; margin: 0 auto; padding: 48px 24px; }
+.about-section h2 { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin-bottom: 22px; }
+.about-section h2.center { text-align: center; }
+.about-text { color: #555; line-height: 1.8; font-size: .95rem; }
+.value-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.value-card { background: #faf9f7; border: 1px solid #eee; border-radius: 12px; padding: 22px 20px; transition: box-shadow .2s, transform .2s; }
+.value-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.07); transform: translateY(-2px); }
+.vc-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #1a1a2e; color: #fff; margin-bottom: 14px; }
+.value-card:nth-child(even) .vc-icon { background: #e8a840; }
+.value-card h4 { font-size: .95rem; color: #1a1a2e; margin-bottom: 8px; }
+.value-card p { font-size: .82rem; color: #888; line-height: 1.5; }
+.stats-band { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; max-width: 1000px; margin: -24px auto 0; padding: 0 24px; }
+.stat-card { text-align: center; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 24px 12px; box-shadow: 0 4px 14px rgba(0,0,0,.04); }
+.stat-card .stat-icon { width: 40px; height: 40px; margin: 0 auto 10px; color: #1a1a2e; }
+.stat-card .stat-num { font-size: 1.7rem; font-weight: 700; color: #1a1a2e; }
+.stat-card .stat-label { font-size: .78rem; color: #888; margin-top: 4px; }
+.h-icon { display: inline-flex; vertical-align: middle; width: 26px; height: 26px; color: #e8a840; margin-right: 8px; }
+.cb-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #1a1a2e; color: #fff; margin-bottom: 10px; }
+.contact-block .cb-item h4 { font-size: .82rem; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; background: #e4e1da; }
+.timeline-item { position: relative; padding: 0 0 28px 20px; }
+.timeline-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #1a1a2e; }
+.timeline-item .tl-year { font-weight: 700; color: #1a1a2e; font-size: .95rem; margin-bottom: 4px; }
+.timeline-item p { font-size: .85rem; color: #777; line-height: 1.6; }
+.cert-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.cert-chip { border: 1px solid #ddd; border-radius: 20px; padding: 8px 18px; font-size: .82rem; color: #444; background: #fff; }
+.contact-block { background: #faf9f7; border-radius: 14px; padding: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.contact-block .cb-item h4 { font-size: .82rem; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.contact-block .cb-item p { font-size: .9rem; color: #333; line-height: 1.5; }
+
+/* ===== Site Footer ===== */
+.site-footer { border-top: 1px solid #eee; text-align: center; padding: 30px 20px; color: #aaa; font-size: .8rem; }
+
+/* ===== Reader Overlay ===== */
+.reader-overlay { position: fixed; inset: 0; background: #faf9f6; z-index: 200; display: none; flex-direction: column; }
+.reader-overlay.active { display: flex; }
+.reader-header { display: flex; align-items: center; padding: 10px 20px; gap: 12px; flex-shrink: 0; border-bottom: 1px solid #e8e4dd; background: #fff; }
+.reader-header .close-btn { background: #f0ede8; border: 1px solid #d8d4cc; color: #555; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1.05rem; flex-shrink: 0; }
+.reader-header .toc-toggle-btn { background: #f0ede8; border: 1px solid #d8d4cc; color: #777; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: .9rem; flex-shrink: 0; font-weight: 600; }
+.reader-header .toc-toggle-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
+.reader-header .catalog-title { color: #333; font-size: 1rem; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.reader-header .page-indicator { color: #999; font-size: .8rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.reader-body { flex: 1; display: flex; min-height: 0; position: relative; }
+.toc-sidebar { width: 220px; flex-shrink: 0; border-right: 1px solid #e8e4dd; background: #f5f2ed; display: flex; flex-direction: column; overflow: hidden; transition: width .25s ease; }
+.toc-sidebar.hidden { width: 0; border: none; }
+.toc-sidebar .toc-title { padding: 12px 14px; font-size: .78rem; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #e8e4dd; flex-shrink: 0; }
+.toc-list { flex: 1; overflow-y: auto; padding: 6px 0; }
+.toc-item { display: block; width: 100%; text-align: left; background: none; border: none; padding: 7px 14px; font-size: .8rem; color: #555; cursor: pointer; line-height: 1.35; font-family: inherit; transition: background .12s; }
+.toc-item:hover { background: #e8e4dd; }
+.toc-item.active { background: #1a1a2e; color: #fff; font-weight: 500; }
+.toc-item.toc-sub { padding-left: 28px; font-size: .76rem; }
+.toc-item.toc-sub2 { padding-left: 40px; font-size: .74rem; color: #888; }
+.toc-item.toc-heading { font-weight: 600; font-size: .82rem; color: #333; padding-top: 10px; }
+.toc-empty { padding: 20px 14px; color: #bbb; font-size: .78rem; text-align: center; }
+.book-area { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.book-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+#bookContainer { height: 100%; }
+#bookContainer .stf__item { background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+#bookContainer .stf__item canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
+.nav-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 300; width: 42px; height: 66px; background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.08); border-radius: 8px; cursor: pointer; font-size: 1.1rem; color: #777; transition: background .2s; opacity: .55; }
+.nav-btn:hover:not(:disabled) { background: rgba(0,0,0,.1); color: #333; opacity: 1; }
+.nav-btn:disabled { opacity: .12; cursor: default; }
+.nav-prev { left: 8px; } .nav-next { right: 8px; }
+.reader-loading { position: absolute; inset: 0; background: rgba(250,249,246,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 250; }
+.reader-loading .spinner { width: 36px; height: 36px; border: 3px solid #e0dcd5; border-top-color: #1a1a2e; border-radius: 50%; animation: spin .7s linear infinite; }
+.reader-loading .text { color: #999; font-size: .88rem; }
+.reader-hint { text-align: center; color: #bbb; font-size: .7rem; padding: 8px 20px; flex-shrink: 0; border-top: 1px solid #eee; }
+
+/* ===== Contact FAB + Drawer ===== */
+.contact-fab {
+  position: fixed; right: 24px; bottom: 24px; z-index: 400;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #1a1a2e; color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25); transition: transform .2s, background .2s;
+}
+.contact-fab:hover { transform: translateY(-3px); background: #2b2b4a; }
+.contact-fab svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 1.8; }
+.drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.25); z-index: 450; opacity: 0; visibility: hidden; transition: opacity .25s; }
+.drawer-overlay.active { opacity: 1; visibility: visible; }
+.contact-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 500;
+  width: 380px; max-width: 92vw; background: #fff;
+  box-shadow: -8px 0 30px rgba(0,0,0,.15);
+  transform: translateX(100%); transition: transform .3s ease;
+  display: flex; flex-direction: column;
+}
+.contact-drawer.active { transform: translateX(0); }
+.drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #eee; }
+.drawer-header h3 { font-size: 1.15rem; color: #1a1a2e; }
+.drawer-header button { background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; width: 30px; height: 30px; }
+.drawer-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.drawer-body .drawer-intro { font-size: .88rem; color: #777; line-height: 1.6; margin-bottom: 20px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: .8rem; color: #666; margin-bottom: 5px; }
+.form-group input, .form-group textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px;
+  font-size: .88rem; font-family: inherit; outline: none; transition: border-color .15s; color: #333;
+}
+.form-group input:focus, .form-group textarea:focus { border-color: #1a1a2e; }
+.form-group textarea { height: 90px; resize: vertical; }
+.send-btn {
+  width: 100%; padding: 12px; background: #1a1a2e; color: #fff; border: none; border-radius: 8px;
+  font-size: .92rem; font-weight: 600; cursor: pointer; transition: background .2s; margin-top: 4px;
+}
+.send-btn:hover { background: #2b2b4a; }
+.send-success { display: none; text-align: center; padding: 30px 10px; color: #2e7d32; font-size: .9rem; }
+.send-success.show { display: block; }
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .site-header { padding: 10px 16px; gap: 12px; flex-wrap: wrap; }
+  .site-header .logo img { height: 30px; }
+  .main-nav { order: 3; width: 100%; justify-content: center; margin: 4px 0 0; }
+  .main-nav a { font-size: .85rem; padding: 6px 12px; }
+  .search-wrap { margin-left: auto; width: 170px; }
+  .hero h1 { font-size: 1.7rem; }
+  .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; padding: 0 14px 40px; }
+  .reader-header { padding: 8px 12px; gap: 8px; }
+  .toc-sidebar { width: 180px; }
+  .contact-fab { right: 16px; bottom: 16px; width: 48px; height: 48px; }
+  .contact-drawer { width: 100%; }
+  .customize-duo { grid-template-columns: 1fr; }
+  .customize-banner, .customize-duo { padding: 0 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <a class="logo" data-view-link="catalog"><img src="assets/logo.png" alt="Yongli"></a>
+  <nav class="main-nav">
+    <a data-view-link="catalog" class="active">Catalog</a>
+    <a data-view-link="customize">Customize</a>
+    <a data-view-link="about">About Us</a>
+  </nav>
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <input type="text" id="searchInput" placeholder="Search" autocomplete="off">
+    </div>
+    <div class="search-dropdown" id="searchDropdown"></div>
+  </div>
+</header>
+
+<!-- ===== Catalog View ===== -->
+<section id="viewCatalog" class="view active">
+  <div class="hero">
+    <h1>Product Catalog Collection</h1>
+    <p>Browse our complete product catalogs. Click any catalog to open the 3D flip-book reader, or search across all catalogs.</p>
+  </div>
+  <div id="catalogGrid" class="catalog-grid"></div>
+  <footer class="site-footer">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.</footer>
+</section>
+
+<!-- ===== Customize View ===== -->
+<section id="viewCustomize" class="view">
+  <div class="customize-hero">
+    <h1>Customization Service</h1>
+    <p>Full OEM &amp; ODM solutions since 2010. From drawing-based customization to full customization — we turn your idea into shelf-ready products with certified quality.</p>
+  </div>
+  <!-- Services overview (first) -->
+  <div class="customize-banner">
+    <img src="assets/customize/02-services.jpg" alt="Custom silicone and plastic solutions: mold design, Pantone color matching, custom packaging, logo printing" loading="lazy">
+  </div>
+
+  <!-- Certified Quality -->
+  <div class="customize-section">
+    <h2>Certified Quality</h2>
+    <p class="section-sub">BSCI &amp; ISO 9001 certified — FDA, EU, LFGB, Rohs compliant products</p>
+  </div>
+  <div class="customize-banner">
+    <img src="assets/customize/01-certifications.jpg" alt="Yongli certifications: BSCI, ISO 9001, ISO 13485, Sedex" loading="lazy">
+  </div>
+
+  <!-- 10-step workflow -->
+  <div class="customize-section">
+    <h2>Our OEM / ODM Workflow</h2>
+    <p class="section-sub">Bring your ideas to life — streamlined 10-step process</p>
+  </div>
+  <div class="customize-banner">
+    <img src="assets/customize/03-workflow.jpg" alt="OEM ODM workflow: concept, design, prototyping, tooling, production, inspection, delivery" loading="lazy">
+  </div>
+
+  <!-- 3D concept to real product -->
+  <div class="customize-section">
+    <h2>We Build What You Imagine</h2>
+    <p class="section-sub">3D concept design to real product — see the results</p>
+  </div>
+  <div class="customize-banner">
+    <img src="assets/customize/04-design-to-product-1.jpg" alt="3D concept vs real product examples 1" loading="lazy">
+  </div>
+  <div class="customize-banner">
+    <img src="assets/customize/05-design-to-product-2.jpg" alt="3D concept vs real product examples 2" loading="lazy">
+  </div>
+
+  <!-- In-house 3D design -->
+  <div class="customize-section">
+    <h2>In-House 3D Design</h2>
+    <p class="section-sub">Professional CAD modeling from sketch to digital prototype</p>
+  </div>
+  <div class="customize-banner">
+    <img src="assets/customize/06-cad-design.jpg" alt="In-house 3D CAD design work" loading="lazy">
+  </div>
+
+  <!-- R&D / Moulding / Mass production (last) -->
+  <div class="customize-section">
+    <h2>From Idea to Mass Production</h2>
+    <p class="section-sub">In-house R&amp;D, tooling and production — accepts hand sketches, PDF or JPG</p>
+  </div>
+  <div class="customize-banner">
+    <img src="assets/customize/07-factory.jpg" alt="Research and development, moulding factory, mass production" loading="lazy">
+  </div>
+
+  <div class="customize-cta">
+    <button class="cta-btn" id="ctaContactBtn">Contact Us for Customization</button>
+  </div>
+</section>
+
+<!-- ===== About View ===== -->
+<section id="viewAbout" class="view">
+  <div class="about-hero">
+    <h1>About Yongli</h1>
+    <p>Yongli is a BSCI &amp; ISO 9001 certified manufacturer specializing in OEM &amp; ODM for kitchen wares, promotional gifts and packaging boxes since 2010. Our vision: <strong>Make Globe Trade Easy</strong>.</p>
+  </div>
+
+  <!-- Key stats -->
+  <div class="stats-band">
+    <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div><div class="stat-num">16+</div><div class="stat-label">Years of Experience</div></div>
+    <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9z"/></svg></div><div class="stat-num">34</div><div class="stat-label">Countries Served</div></div>
+    <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="stat-num">9</div><div class="stat-label">International Certifications</div></div>
+    <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></div><div class="stat-num">10+</div><div class="stat-label">New SKUs Developed</div></div>
+  </div>
+
+  <div class="about-section">
+    <h2>Our Values</h2>
+    <div class="value-list">
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9L12 3z"/></svg></div><h4>Work Hard, Play Hard</h4><p>A positive, can-do, optimistic mindset in everything we do.</p></div>
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h4>Quality is the Top Concern</h4><p>Certified quality systems from raw material to finished goods.</p></div>
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 19c.8-3 3.4-5 6.5-5s5.7 2 6.5 5"/><circle cx="17" cy="9" r="2.8"/><path d="M16 14.5c2.6.2 4.6 1.7 5.5 4"/></svg></div><h4>Team Cooperation</h4><p>Positive, responsible, considerate and easy to work with.</p></div>
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 3v4h-4"/></svg></div><h4>Enjoy the Change</h4><p>Curious and creative minds; strong leaders make things happen.</p></div>
+    </div>
+  </div>
+  <div class="about-section">
+    <h2>Our Aim</h2>
+    <div class="value-list">
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/></svg></div><h4>Customer Benefit</h4><p>Strive for the customer's benefit in every decision.</p></div>
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7l9 9-7 7-9-9V4z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></div><h4>Reasonable Price</h4><p>Fair pricing that never exceeds your budget.</p></div>
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="13" height="9" rx="1"/><path d="M15 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></div><h4>Prompt Delivery</h4><p>Uber-efficient supply chain, on-time every time.</p></div>
+      <div class="value-card"><div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2.5-2.5A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg></div><h4>Fast Communication</h4><p>Quick response — average reply time under 3 hours.</p></div>
+    </div>
+  </div>
+  <div class="about-section">
+    <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Development History</h2>
+    <div class="timeline">
+      <div class="timeline-item"><div class="tl-year">2010 — Set Sail</div><p>Yongli founded on Jan 7th, 2010. BSCI verified manufacturer for kitchen ware, table wares, outdoor and packaging products.</p></div>
+      <div class="timeline-item"><div class="tl-year">2012 — Move</div><p>Marketing center completed. Expanded OEM service and sales team, working with 40 suppliers in a month.</p></div>
+      <div class="timeline-item"><div class="tl-year">2013 — OEM</div><p>8-year experienced R&amp;D team developed over 10 SKUs for packing products, winning orders from NUXE, O.P.I and more.</p></div>
+      <div class="timeline-item"><div class="tl-year">2014 — Expand</div><p>Added silicone kitchen ware product line; worked with K-Mart and Target with great feedback.</p></div>
+      <div class="timeline-item"><div class="tl-year">2016–2019 — Opportunity</div><p>Global market network; cooperated with Amazon top sellers; expanded stainless steel kitchen wares line.</p></div>
+      <div class="timeline-item"><div class="tl-year">2019 — International Exhibition</div><p>Chicago Housewares Show (US) and Birmingham Gift Show (UK), building firm global relationships.</p></div>
+      <div class="timeline-item"><div class="tl-year">2021 — Win</div><p>Honored with the certificate of advanced collective; senior staff recognized as national model worker.</p></div>
+      <div class="timeline-item"><div class="tl-year">2022 — A Reliable Partner</div><p>One-stop OEM, packaging, design and logistics service, keeping our vision: Make Globe Trade Easy.</p></div>
+    </div>
+  </div>
+  <div class="about-section">
+    <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>International Certification</h2>
+    <div class="cert-chips">
+      <span class="cert-chip">BSCI</span><span class="cert-chip">EN71</span><span class="cert-chip">FDA</span>
+      <span class="cert-chip">ISO 9001</span><span class="cert-chip">LFGB</span><span class="cert-chip">MSDS</span>
+      <span class="cert-chip">PATENT</span><span class="cert-chip">REACH</span><span class="cert-chip">ROHS</span>
+    </div>
+  </div>
+  <div class="about-section">
+    <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9z"/></svg></span>Customers Around the World</h2>
+    <p class="about-text" style="text-align:center;max-width:640px;margin:0 auto;">Our clients are located in 34 countries and regions. With 16 years of professional industry experience, we serve markets across Europe, America, the Middle East and beyond.</p>
+  </div>
+  <div class="about-section">
+    <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l1.5 4-2 1.5a12 12 0 0 0 6 6L16 13l4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>Contact</h2>
+    <div class="contact-block">
+      <div class="cb-item"><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l1.5 4-2 1.5a12 12 0 0 0 6 6L16 13l4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div><h4>Phone</h4><p>+86 13824296558</p></div>
+      <div class="cb-item"><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h4>E-mail</h4><p>info@yonglicc.com</p></div>
+      <div class="cb-item"><div class="cb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h4>Address</h4><p>No. 33 Nansan Jie, Qiuchang, Huiyang, Huizhou, Guangdong, 516221, China</p></div>
+    </div>
+  </div>
+  <footer class="site-footer">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.</footer>
+</section>
+
+<!-- ===== Reader Overlay ===== -->
+<div id="readerOverlay" class="reader-overlay">
+  <div class="reader-header">
+    <button class="close-btn" id="btnClose" title="Close (ESC)">✕</button>
+    <button class="toc-toggle-btn" id="btnTocToggle" title="Toggle contents">☰</button>
+    <span class="catalog-title" id="readerTitle">Catalog</span>
+    <span class="page-indicator" id="pageIndicator">--</span>
+  </div>
+  <div class="reader-body">
+    <aside class="toc-sidebar" id="tocSidebar">
+      <div class="toc-title">Contents</div>
+      <nav class="toc-list" id="tocList"><div class="toc-empty">Loading...</div></nav>
+    </aside>
+    <div class="book-area">
+      <button class="nav-btn nav-prev" id="btnPrev" disabled>◂</button>
+      <div class="book-wrapper"><div id="bookContainer"></div></div>
+      <button class="nav-btn nav-next" id="btnNext" disabled>▸</button>
+      <div class="reader-loading" id="readerLoading">
+        <div class="spinner"></div><div class="text" id="readerLoadingText">Loading...</div>
+      </div>
+    </div>
+  </div>
+  <div class="reader-hint">← → arrow keys | Click page edges | ESC to close</div>
+</div>
+
+<!-- ===== Contact FAB + Drawer ===== -->
+<button class="contact-fab" id="contactFab" title="Contact us">
+  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="contact-drawer" id="contactDrawer">
+  <div class="drawer-header">
+    <h3>Contact Us</h3>
+    <button id="drawerClose" title="Close">✕</button>
+  </div>
+  <div class="drawer-body">
+    <p class="drawer-intro">We're here to help! If you have any questions about wholesale opportunities, feel free to reach out.</p>
+    <div class="send-success" id="sendSuccess">
+      <div style="font-size:2rem;margin-bottom:10px">✓</div>
+      Thank you! Your message has been sent.<br>We will get back to you shortly.
+    </div>
+    <form id="contactForm">
+      <div class="form-group"><label for="fName">Name</label><input type="text" id="fName" name="name" required></div>
+      <div class="form-group"><label for="fEmail">Email</label><input type="email" id="fEmail" name="email" required></div>
+      <div class="form-group"><label for="fPhone">Phone number</label><input type="tel" id="fPhone" name="phone"></div>
+      <div class="form-group"><label for="fMessage">Message</label><textarea id="fMessage" name="message" required></textarea></div>
+      <button type="submit" class="send-btn">Send</button>
+    </form>
+  </div>
+</aside>
+
+<script src="assets/pdfjs/pdf.min.js"></script>
+<script src="assets/pdfjs/page-flip.browser.js"></script>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc='assets/pdfjs/pdf.worker.min.js';
+const StPageFlip=St.PageFlip;
+
+//===== State =====
+let catalogs=[],currentPdf=null,totalPages=0,pageFlip=null,currentCatalogId='';
+let searchIndex=null,searchIndexBusy=false,currentToc=null;
+
+//===== DOM =====
+const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.getElementById('bookContainer'),
+  $readerLoading=document.getElementById('readerLoading'),$loadingText=document.getElementById('readerLoadingText'),
+  $readerTitle=document.getElementById('readerTitle'),$pageIndicator=document.getElementById('pageIndicator'),
+  $btnPrev=document.getElementById('btnPrev'),$btnNext=document.getElementById('btnNext'),
+  $btnClose=document.getElementById('btnClose'),$btnTocToggle=document.getElementById('btnTocToggle'),
+  $tocSidebar=document.getElementById('tocSidebar'),$tocList=document.getElementById('tocList'),
+  $catalogGrid=document.getElementById('catalogGrid'),
+  $searchInput=document.getElementById('searchInput'),$searchDropdown=document.getElementById('searchDropdown'),
+  $contactFab=document.getElementById('contactFab'),$drawerOverlay=document.getElementById('drawerOverlay'),
+  $contactDrawer=document.getElementById('contactDrawer'),$drawerClose=document.getElementById('drawerClose'),
+  $contactForm=document.getElementById('contactForm'),$sendSuccess=document.getElementById('sendSuccess');
+
+//===== Data =====
+const EMBEDDED=[{id:"ladies",name:"Ladies' Appliances",sub:"Personal Care & Beauty Devices",pdf:"assets/catalog-ladies.pdf"},{id:"balls",name:"Christmas Balls",sub:"Festival Decorations",pdf:"assets/catalog-balls.pdf"},{id:"baby",name:"Baby Care",sub:"Infant & Nursery Products",pdf:"assets/catalog-baby.pdf"},{id:"kitchen",name:"Kitchen Gadgets",sub:"Kitchen Items",pdf:"assets/catalog-kitchen.pdf"}];
+
+async function init(){try{catalogs=await(await fetch('catalogs.json')).json()}catch(e){catalogs=EMBEDDED}renderCatalogCards();bindEvents()}
+
+//===== View Switching =====
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('active');
+  document.querySelectorAll('[data-view-link]').forEach(a=>a.classList.toggle('active',a.dataset.viewLink===name));
+  window.scrollTo(0,0);
+  if(name==='catalog')renderCatalogCards();
+}
+
+//===== Homepage =====
+function renderCatalogCards(){
+  if(!catalogs.length){$catalogGrid.innerHTML='<p style="text-align:center;color:#999;padding:60px;">No catalogs found.</p>';return}
+  $catalogGrid.innerHTML=catalogs.map((c,i)=>`<div class="catalog-card" data-index="${i}" role="button" tabindex="0"><div class="card-cover" id="cover-${i}"><div class="loading-spin"></div></div><div class="card-info"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div></div></div>`).join('');
+  catalogs.forEach((c,i)=>loadCover(c,i));
+}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+async function loadCover(c,i){
+  const el=document.getElementById('cover-'+i);if(!el)return;
+  try{const pdf=await pdfjsLib.getDocument(c.pdf).promise;const vp=(await pdf.getPage(1)).getViewport({scale:.65});const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;await(await pdf.getPage(1)).render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;el.innerHTML='';el.appendChild(cv)}catch(e){el.innerHTML='<div class="placeholder">Cover unavailable</div>'}
+}
+
+//===== Events =====
+function bindEvents(){
+  // Nav
+  document.querySelectorAll('[data-view-link]').forEach(a=>a.addEventListener('click',()=>showView(a.dataset.viewLink)));
+  $catalogGrid.addEventListener('click',e=>{const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))});
+  $catalogGrid.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))}});
+  $btnClose.addEventListener('click',closeReader);
+  $btnTocToggle.addEventListener('click',()=>{$tocSidebar.classList.toggle('hidden');$btnTocToggle.classList.toggle('active',!$tocSidebar.classList.contains('hidden'))});
+  $btnPrev.addEventListener('click',()=>{if(pageFlip)pageFlip.flipPrev()});
+  $btnNext.addEventListener('click',()=>{if(pageFlip)pageFlip.flipNext()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();pageFlip.flipNext()}else if(e.key==='ArrowLeft'){e.preventDefault();pageFlip.flipPrev()}});
+
+  // Contact drawer
+  $contactFab.addEventListener('click',openDrawer);
+  $drawerClose.addEventListener('click',closeDrawer);
+  $drawerOverlay.addEventListener('click',closeDrawer);
+  document.getElementById('ctaContactBtn').addEventListener('click',openDrawer);
+  $contactForm.addEventListener('submit',e=>{e.preventDefault();
+    const n=document.getElementById('fName').value.trim(),em=document.getElementById('fEmail').value.trim(),
+      ph=document.getElementById('fPhone').value.trim(),msg=document.getElementById('fMessage').value.trim();
+    const body=encodeURIComponent(`Name: ${n}\nEmail: ${em}\nPhone: ${ph}\n\n${msg}`);
+    const mailto=`mailto:info@yonglicc.com?subject=${encodeURIComponent('Wholesale Inquiry - '+n)}&body=${body}`;
+    window.location.href=mailto;
+    $contactForm.style.display='none';$sendSuccess.classList.add('show');
+  });
+
+  // Search
+  let searchTimer;
+  $searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(doSearch,350)});
+  document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$searchDropdown.classList.remove('active')});
+}
+
+//===== Search =====
+async function ensureSearchIndex(){
+  if(searchIndex||searchIndexBusy)return;
+  searchIndexBusy=true;$searchDropdown.innerHTML='<div class="sd-loading">Indexing catalogs...</div>';
+  searchIndex=[];
+  for(let ci=0;ci<catalogs.length;ci++){
+    try{const pdf=await pdfjsLib.getDocument(catalogs[ci].pdf).promise;
+      for(let pn=1;pn<=pdf.numPages;pn++){
+        try{const page=await pdf.getPage(pn);const tc=await page.getTextContent();
+          const text=tc.items.map(it=>it.str).join(' ');
+          if(text.trim().length>5)searchIndex.push({ci,catalogName:catalogs[ci].name,pn,text:text.toLowerCase()});
+        }catch(ee){}
+      }
+    }catch(ee){}
+  }
+  searchIndexBusy=false;
+}
+function doSearch(){
+  const q=$searchInput.value.trim().toLowerCase();
+  if(q.length<2){$searchDropdown.classList.remove('active');return}
+  if(!searchIndex){ensureSearchIndex().then(()=>doSearch());return}
+  $searchDropdown.classList.add('active');
+  const results=searchIndex.filter(r=>r.text.includes(q)).slice(0,10);
+  if(!results.length){$searchDropdown.innerHTML='<div class="sd-empty">No results for &ldquo;'+esc(q)+'&rdquo;</div>';return}
+  $searchDropdown.innerHTML=results.map(r=>{
+    const idx=r.text.indexOf(q),start=Math.max(0,idx-40),end=Math.min(r.text.length,idx+q.length+40);
+    let snippet=(start>0?'…':'')+r.text.slice(start,end)+(end<r.text.length?'…':'');
+    const hilite=snippet.replace(new RegExp(escRegex(q),'gi'),m=>'<b style="color:#1a1a2e">'+m+'</b>');
+    return `<div class="sd-item" data-ci="${r.ci}" data-pn="${r.pn}"><div class="sd-title">${esc(r.catalogName)} — Page ${r.pn}</div><div class="sd-snippet">${hilite}</div></div>`;
+  }).join('');
+  $searchDropdown.querySelectorAll('.sd-item').forEach(el=>el.addEventListener('click',()=>{
+    $searchDropdown.classList.remove('active');$searchInput.value='';
+    openReader(parseInt(el.dataset.ci),parseInt(el.dataset.pn));
+  }));
+}
+function escRegex(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+
+//===== Contact Drawer =====
+function openDrawer(){$contactDrawer.classList.add('active');$drawerOverlay.classList.add('active')}
+function closeDrawer(){$contactDrawer.classList.remove('active');$drawerOverlay.classList.remove('active')}
+
+//===== Reader =====
+async function openReader(ci,targetPage){
+  const cat=catalogs[ci];if(!cat)return;
+  $overlay.classList.add('active');document.body.style.overflow='hidden';
+  currentCatalogId=cat.id;$readerTitle.textContent=cat.name;$pageIndicator.textContent='--';$btnPrev.disabled=$btnNext.disabled=true;
+  $readerLoading.style.display='flex';$loadingText.textContent='Loading PDF...';
+  currentPdf=null;totalPages=0;$tocList.innerHTML='<div class="toc-empty">Loading...</div>';
+
+  try{
+    currentPdf=await pdfjsLib.getDocument(cat.pdf).promise;totalPages=currentPdf.numPages;
+    const bodyW=$overlay.clientWidth,isMobile=window.matchMedia('(max-width: 768px)').matches;
+
+    // Render pages
+    const pageDivs=[];
+    for(let i=1;i<=totalPages;i++){$loadingText.textContent='Rendering page '+i+' / '+totalPages+'...';
+      const page=await currentPdf.getPage(i);const vp=page.getViewport({scale:1.5});const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
+      await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
+      const div=document.createElement('div');div.appendChild(cv);pageDivs.push(div);if(i%5===0)await sleep(0);
+    }
+    // Pad odd-page PDF with blank page so spreads render cleanly
+    if(totalPages%2!==0&&pageDivs.length>0){
+      const ref=pageDivs[0].querySelector('canvas');const bc=document.createElement('canvas');bc.width=ref.width;bc.height=ref.height;
+      bc.getContext('2d').fillStyle='#fff';bc.getContext('2d').fillRect(0,0,bc.width,bc.height);
+      const bd=document.createElement('div');bd.appendChild(bc);pageDivs.push(bd);
+    }
+
+    $loadingText.textContent='Building flip book...';
+    const maxPW=isMobile?bodyW:700;
+    if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
+    else{pageFlip=new StPageFlip($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!0,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',updateUI);pageFlip.on('flip',updateUI);}
+
+    if(targetPage&&pageFlip){pageFlip.turnToPage(targetPage-1)}
+    extractToc(currentPdf);
+    updateUI();$readerLoading.style.display='none';
+  }catch(e){console.error(e);$loadingText.textContent='Failed to load: '+e.message;setTimeout(()=>closeReader(),2000)}
+}
+
+async function extractToc(pdf){
+  currentToc=null;$tocList.innerHTML='<div class="toc-empty">Extracting...</div>';
+  // Load manual TOC if exists for this catalog
+  const tocUrl='toc-'+currentCatalogId+'.json';
+  try{const r=await fetch(tocUrl);if(r.ok){const data=await r.json();
+    currentToc=flattenToc(data);renderToc();return}}
+  catch(e){}
+  // Otherwise auto-extract from PDF text (font-size detection, Top 1)
+  try{
+    const isCode=s=>/^[A-Z]\d*-\d{1,3}$|^[A-Z]{0,2}\d{2,}$|^\d+[A-Z]?$|^No\.\s*\d|^[IVX]+\.?$/i.test(s);
+    const isSize=s=>/^\d+[*xX-]\d|^\d+mm|^\d+ml|^\d+g\b|^[\(\)\d\s,.*xX]+$/.test(s);
+    const titleScore=s=>{if(!s)return 0;let v=0;
+      if(/[a-zA-Z]/.test(s))v+=5;if(/\s/.test(s))v+=8;if(s.length>=8)v+=3;if(s.length>=12)v+=4;
+      if(/[a-z].*[A-Z]|[A-Z].*[a-z]/.test(s))v+=3;if(isCode(s))v-=20;if(isSize(s))v-=20;
+      if(/^\d+$/.test(s))v-=20;if(s.length>65)v-=10;if(/^[A-Z][a-z]+/.test(s))v+=2;
+      return v};
+    const entries=[],topN=1;
+    for(let i=1;i<totalPages;i++){
+      try{const page=await pdf.getPage(i);const tc=await page.getTextContent();
+        const byHeight={};
+        for(const it of tc.items){if(!it.str||!it.str.trim())continue;
+          const h=Math.round(it.height*10)/10;if(!byHeight[h])byHeight[h]=[];byHeight[h].push(it.str.trim())}
+        const heights=Object.keys(byHeight).map(Number).sort((a,b)=>b-a).slice(0,topN);
+        let best=null,bestScore=-999;
+        for(const h of heights){for(const line of byHeight[h]){
+          if(line.includes('@')||line.includes('www.')||line.includes('http'))continue;
+          if(line.length<6)continue;const s=titleScore(line);if(s>bestScore){best=line;bestScore=s}}}
+        if(best&&bestScore>5)entries.push({title:best,page:i});
+      }catch(ee){}
+    }
+    currentToc=[];
+    for(let i=0;i<entries.length;i++){
+      const prev=currentToc[currentToc.length-1];
+      if(prev&&prev.title===entries[i].title){prev.pageEnd=entries[i].page;continue}
+      currentToc.push({title:entries[i].title,page:entries[i].page,pageEnd:entries[i].page});
+    }
+    renderToc();
+  }catch(e){$tocList.innerHTML='<div class="toc-empty">No content outline</div>'}
+}
+
+function flattenToc(items){
+  const out=[];
+  for(const it of items){
+    out.push({title:it.title,page:it.page,pageEnd:it.page,isHeading:!!it.children});
+    if(it.children)for(const c of it.children){
+      out.push({title:c.title,page:c.page,pageEnd:c.page,isChild:!0,isHeading:!!c.children});
+      if(c.children)for(const s of c.children)out.push({title:s.title,page:s.page,pageEnd:s.page,isSubChild:!0});
+    }
+  }
+  return out;
+}
+
+function renderToc(){
+  if(!currentToc||!currentToc.length){$tocList.innerHTML='<div class="toc-empty">No outline</div>';return}
+  let html='';
+  for(const item of currentToc){
+    const css=item.isHeading?' toc-heading':item.isChild?' toc-sub':item.isSubChild?' toc-sub2':'';
+    const label=`${esc(item.title)} — p.${item.page}`;
+    html+=`<button class="toc-item${css}" data-page="${item.page}" data-page-end="${item.pageEnd}">${label}</button>`;
+  }
+  $tocList.innerHTML=html;
+  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',()=>{if(pageFlip)pageFlip.turnToPage(parseInt(el.dataset.page)-1)}));
+}
+
+function updateUI(){
+  if(!pageFlip)return;const c=pageFlip.getCurrentPageIndex();
+  if(window.matchMedia('(max-width: 768px)').matches)$pageIndicator.textContent='Page '+(c+1)+' / '+totalPages;
+  else{const l=c+1,r=Math.min(c+2,totalPages);$pageIndicator.textContent='Pages '+l+'-'+r+' / '+totalPages}
+  $btnPrev.disabled=c<=0;$btnNext.disabled=c>=totalPages-1;
+  if(currentToc){$tocList.querySelectorAll('.toc-item').forEach(el=>{const ps=parseInt(el.dataset.page),pe=parseInt(el.dataset.pageEnd);const cur=(c+1);const on=cur>=ps&&cur<=pe;el.classList.toggle('active',on);if(on)el.scrollIntoView({block:'nearest',behavior:'smooth'})})}
+}
+
+function closeReader(){currentPdf=null;totalPages=0;currentToc=null;$btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';$overlay.classList.remove('active');document.body.style.overflow=''}
+
+//===== Resize =====
+window.addEventListener('resize',()=>{if(!pageFlip)return;clearTimeout(window._rT);window._rT=setTimeout(()=>{const im=window.matchMedia('(max-width: 768px)').matches;const mp=im?$overlay.clientWidth:700;const s=pageFlip.getSettings();s.width=mp;s.height=Math.floor(mp/.72);s.maxWidth=mp;s.minWidth=350;pageFlip.update();updateUI()},300)});
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+init();
+</script>
+</body>
+</html>
