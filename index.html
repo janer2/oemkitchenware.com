@@ -579,7 +579,7 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
   $contactForm=document.getElementById('contactForm'),$sendSuccess=document.getElementById('sendSuccess');
 
 //===== Data =====
-const EMBEDDED=[{id:"ladies",name:"Ladies' Appliances",sub:"Personal Care & Beauty Devices",pdf:"assets/catalog-ladies.pdf"},{id:"balls",name:"Christmas Balls",sub:"Festival Decorations",pdf:"assets/catalog-balls.pdf"},{id:"baby",name:"Baby Care",sub:"Infant & Nursery Products",pdf:"assets/catalog-baby.pdf"},{id:"kitchen",name:"Kitchen Gadgets",sub:"Kitchen Items",pdf:"assets/catalog-kitchen-small.pdf"}];
+const EMBEDDED=[{id:"ladies",name:"Ladies' Appliances",sub:"Personal Care & Beauty Devices",pdf:"assets/catalog-ladies.pdf"},{id:"balls",name:"Christmas Balls",sub:"Festival Decorations",pdf:"assets/catalog-balls.pdf"},{id:"baby",name:"Baby Care",sub:"Infant & Nursery Products",pdf:"assets/catalog-baby.pdf"},{id:"kitchen",name:"Kitchen Gadgets",sub:"Kitchen Items",pdf:"assets/catalog-kitchen.pdf"}];
 
 async function init(){try{catalogs=await(await fetch('catalogs.json')).json()}catch(e){catalogs=EMBEDDED}renderCatalogCards();bindEvents();handleDeepLink()}
 function handleDeepLink(){
