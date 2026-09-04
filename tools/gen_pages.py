@@ -441,6 +441,35 @@ def main():
                         encoding="utf-8")
     print("manifest written")
 
+    # ---- Static full-text search index (rebuild when any catalog input changed) ----
+    idx_ids = [c for c in CATS if (not args.only or c["id"] == args.only) and (ROOT / c["pdf"]).exists()]
+    parts = []
+    for c in idx_ids:
+        rec = manifest.get(c["id"]) or {}
+        parts.append(f'{c["id"]}:{rec.get("pdf") or sha1_file(ROOT / c["pdf"])}')
+    key = hashlib.sha1("\n".join(sorted(parts)).encode("utf-8")).hexdigest()
+    info = manifest.get("_search") or {}
+    idx_path = ROOT / "search-index.json"
+    if info.get("sha") == key and idx_path.exists() and not args.force:
+        print("search-index.json unchanged, skip")
+    else:
+        entries = []
+        for c in idx_ids:
+            with pymupdf.open(str(ROOT / c["pdf"])) as doc:
+                for pn in range(1, doc.page_count + 1):
+                    txt = re.sub(r"\s+", " ", doc[pn - 1].get_text()).strip()
+                    if txt:
+                        entries.append({"id": c["id"], "pn": pn, "text": txt[:4000]})
+        idx_path.write_text(json.dumps(entries, ensure_ascii=False, separators=(",", ":")),
+                            encoding="utf-8")
+        manifest["_search"] = {"sha": key}
+        print("search-index.json updated:", len(entries), "entries,",
+              round(idx_path.stat().st_size / 1024), "KB")
+
+    MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=1),
+                        encoding="utf-8")
+    print("manifest written (index info saved)")
+
 
 if __name__ == "__main__":
     main()
