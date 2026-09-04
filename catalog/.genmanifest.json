@@ -1,0 +1,304 @@
+{
+ "kitchen": {
+  "pdf": "7dc03f1d2a2b9df41df597667a752300c203b870",
+  "toc": "454e215a9a0b8299a1f309b8de6f7e53b514ba2f",
+  "cats": [
+   {
+    "title": "Kitchen Gadgets",
+    "page": 1
+   },
+   {
+    "title": "Kitchen Utensil",
+    "page": 38
+   },
+   {
+    "title": "Silicone Mat",
+    "page": 41
+   },
+   {
+    "title": "Silicone Coaster",
+    "page": 51
+   },
+   {
+    "title": "Collapsible Strainer",
+    "page": 61
+   },
+   {
+    "title": "Collapsible Food Storage",
+    "page": 66
+   },
+   {
+    "title": "Food Storage Container",
+    "page": 69
+   },
+   {
+    "title": "Snack Box",
+    "page": 71
+   },
+   {
+    "title": "Silicone Food Storage Bag",
+    "page": 80
+   },
+   {
+    "title": "Collapsible Travel Cup",
+    "page": 83
+   },
+   {
+    "title": "Stainless Steel Tumbler",
+    "page": 86
+   },
+   {
+    "title": "BBQ Grill Accessories",
+    "page": 99
+   },
+   {
+    "title": "Milk Frother",
+    "page": 108
+   },
+   {
+    "title": "Tea Infuser",
+    "page": 112
+   },
+   {
+    "title": "Silicone Ice Tray",
+    "page": 118
+   },
+   {
+    "title": "Ice Cream Tool",
+    "page": 130
+   },
+   {
+    "title": "Sourdough Starter Kit",
+    "page": 144
+   },
+   {
+    "title": "Silicone Gummy Mold",
+    "page": 156
+   },
+   {
+    "title": "Cookie Cutter",
+    "page": 164
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/kitchen/kitchen-gadgets/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/kitchen-utensil/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/silicone-mat/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/silicone-coaster/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/collapsible-strainer/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/collapsible-food-storage/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/food-storage-container/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/snack-box/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/silicone-food-storage-bag/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/collapsible-travel-cup/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/stainless-steel-tumbler/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/bbq-grill-accessories/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/milk-frother/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/tea-infuser/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/silicone-ice-tray/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/ice-cream-tool/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/sourdough-starter-kit/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/silicone-gummy-mold/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/cookie-cutter/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "baby": {
+  "pdf": "970a78a7e566437c236f246b411acff26312ebdd",
+  "toc": "f2531155aa4dc5cff9d46b2f17e2fba7314ee4b0",
+  "cats": [
+   {
+    "title": "Feeding Set",
+    "page": 1
+   },
+   {
+    "title": "Spoon/Fork",
+    "page": 18
+   },
+   {
+    "title": "Baby Bib",
+    "page": 20
+   },
+   {
+    "title": "Silicone Placemat",
+    "page": 21
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/baby/feeding-set/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/baby/spoon-fork/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/baby/baby-bib/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/baby/silicone-placemat/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "ladies": {
+  "pdf": "de99f0c161caeb1525ecf3ffcaf78d1d6e5d4365",
+  "toc": "fc8bb6f59546666bd76e1e364489137bccd0135e",
+  "cats": [
+   {
+    "title": "Ice Facial Roller",
+    "page": 1
+   },
+   {
+    "title": "Silicone Cupping Therapy",
+    "page": 3
+   },
+   {
+    "title": "Menstrual Cup",
+    "page": 5
+   },
+   {
+    "title": "Applicator",
+    "page": 12
+   },
+   {
+    "title": "Menstrual Pants",
+    "page": 19
+   },
+   {
+    "title": "Silicone Urinal",
+    "page": 21
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/ladies/ice-facial-roller/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ladies/silicone-cupping-therapy/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ladies/menstrual-cup/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ladies/applicator/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ladies/menstrual-pants/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ladies/silicone-urinal/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "balls": {
+  "pdf": "91bae1779c5ac1015e3ec6fe915f10e950e7a7d5",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Christmas Balls",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/balls/christmas-balls/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ }
+}

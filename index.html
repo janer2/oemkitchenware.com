@@ -282,6 +282,42 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   .customize-duo { grid-template-columns: 1fr; }
   .customize-banner, .customize-duo { padding: 0 12px; }
 }
+
+/* Tablet 769-1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .site-header { gap: 18px; padding: 12px 20px; }
+  .main-nav a { padding: 8px 12px; }
+  .search-wrap { width: 190px; }
+  .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); padding: 8px 20px 50px; }
+  .hero h1 { font-size: 2rem; }
+  .customize-section h2, .about-section h2 { font-size: 1.35rem; }
+}
+
+/* Small phones <=480px */
+@media (max-width: 480px) {
+  .site-header { padding: 10px 12px; gap: 10px; }
+  .site-header .logo img { height: 26px; }
+  .main-nav a { font-size: .8rem; padding: 6px 10px; }
+  .search-wrap { width: 100%; order: 4; margin: 2px 0 0; }
+  .search-dropdown { max-height: 260px; }
+  .hero { padding: 34px 16px 28px; }
+  .hero h1 { font-size: 1.35rem; letter-spacing: 0; }
+  .hero p { font-size: .92rem; }
+  .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(142px, 1fr)); gap: 12px; padding: 6px 12px 40px; }
+  .catalog-card .card-info { padding: 12px 10px; }
+  .catalog-card .card-info h3 { font-size: .88rem; }
+  .stats-band { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: -14px; padding: 0 12px; }
+  .stat-card { padding: 16px 6px; }
+  .stat-card .stat-num { font-size: 1.35rem; }
+  .about-section, .customize-section { padding: 30px 16px; }
+  .customize-hero { padding: 40px 16px 32px; }
+  .reader-hint { display: none; }
+  .nav-btn { width: 34px; height: 52px; font-size: .95rem; opacity: .75; }
+  .toc-sidebar { width: 172px; }
+  .contact-fab { right: 12px; bottom: 12px; width: 46px; height: 46px; }
+  .contact-block { grid-template-columns: 1fr; }
+  .contact-fab svg { width: 20px; height: 20px; }
+}
 </style>
 </head>
 <body>
@@ -310,7 +346,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <p>Browse our complete product catalogs. Click any catalog to open the 3D flip-book reader, or search across all catalogs.</p>
   </div>
   <div id="catalogGrid" class="catalog-grid"></div>
-  <footer class="site-footer">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.</footer>
+  <footer class="site-footer">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.<br><a href="catalog/" style="color:#1a1a2e;font-weight:600;display:inline-block;margin-top:8px">Browse Product Category Pages &rarr;</a></footer>
 </section>
 
 <!-- ===== Customize View ===== -->
@@ -543,9 +579,19 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
   $contactForm=document.getElementById('contactForm'),$sendSuccess=document.getElementById('sendSuccess');
 
 //===== Data =====
-const EMBEDDED=[{id:"ladies",name:"Ladies' Appliances",sub:"Personal Care & Beauty Devices",pdf:"assets/catalog-ladies.pdf"},{id:"balls",name:"Christmas Balls",sub:"Festival Decorations",pdf:"assets/catalog-balls.pdf"},{id:"baby",name:"Baby Care",sub:"Infant & Nursery Products",pdf:"assets/catalog-baby.pdf"},{id:"kitchen",name:"Kitchen Gadgets",sub:"Kitchen Items",pdf:"assets/catalog-kitchen.pdf"}];
+const EMBEDDED=[{id:"ladies",name:"Ladies' Appliances",sub:"Personal Care & Beauty Devices",pdf:"assets/catalog-ladies.pdf"},{id:"balls",name:"Christmas Balls",sub:"Festival Decorations",pdf:"assets/catalog-balls.pdf"},{id:"baby",name:"Baby Care",sub:"Infant & Nursery Products",pdf:"assets/catalog-baby.pdf"},{id:"kitchen",name:"Kitchen Gadgets",sub:"Kitchen Items",pdf:"assets/catalog-kitchen-small.pdf"}];
 
-async function init(){try{catalogs=await(await fetch('catalogs.json')).json()}catch(e){catalogs=EMBEDDED}renderCatalogCards();bindEvents()}
+async function init(){try{catalogs=await(await fetch('catalogs.json')).json()}catch(e){catalogs=EMBEDDED}renderCatalogCards();bindEvents();handleDeepLink()}
+function handleDeepLink(){
+  try{
+    const p=new URLSearchParams(location.search),cid=p.get('catalog');
+    if(!cid)return;
+    const ci=catalogs.findIndex(c=>c.id===cid);
+    if(ci<0)return;
+    const pg=parseInt(p.get('page'));
+    openReader(ci,isFinite(pg)&&pg>0?pg:1);
+  }catch(e){console.error(e)}
+}
 
 //===== View Switching =====
 function showView(name){
@@ -663,6 +709,67 @@ function openDrawer(){$contactDrawer.classList.add('active');$drawerOverlay.clas
 function closeDrawer(){$contactDrawer.classList.remove('active');$drawerOverlay.classList.remove('active')}
 
 //===== Reader =====
+let pageRendered={},pgBusy={},pageDivs=[],pgPadIdx=-1,pipelineStop=false,$lazyHint=null;
+
+function renderPdfPage(pn){
+  if(pageRendered[pn])return Promise.resolve(true);
+  if(pgBusy[pn])return pgBusy[pn];
+  const holder=pageDivs[pn-1];
+  if(!holder||!currentPdf)return Promise.resolve(false);
+  if(holder.dataset.rdy==='1'){pageRendered[pn]=true;return Promise.resolve(true)}
+  pgBusy[pn]=(async()=>{
+    try{
+      const page=await currentPdf.getPage(pn);
+      const vp=page.getViewport({scale:1.5});
+      const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
+      await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
+      if(holder.innerHTML==='')holder.appendChild(cv);
+      holder.dataset.rdy='1';pageRendered[pn]=true;
+      return true;
+    }catch(e){console.error('render page',pn,e);return false}
+  })();
+  return pgBusy[pn];
+}
+
+async function ensureNear(idx,totalItems){
+  for(const ix of [idx-1,idx,idx+1]){
+    if(ix<0||ix>=totalItems)continue;
+    if(pageDivs[ix].dataset.rdy!=='1')await renderPdfPage(ix+1);
+  }
+}
+
+function countReadyPages(totalItems){
+  let c=0;for(let i=0;i<totalItems;i++){if(pageDivs[i]&&pageDivs[i].dataset.rdy==='1')c++}
+  return c;
+}
+
+function updateLazyHint(done,total){
+  if(!$lazyHint){
+    $lazyHint=document.createElement('div');
+    $lazyHint.style.cssText='position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:320;background:rgba(26,26,46,.88);color:#fff;padding:7px 16px;border-radius:20px;font-size:.75rem;pointer-events:none;transition:opacity .4s;font-family:Segoe UI,system-ui,sans-serif;';
+    document.body.appendChild($lazyHint);
+  }
+  if(done>=total){$lazyHint.textContent='All '+total+' pages ready';setTimeout(()=>{$lazyHint.style.opacity='0';setTimeout(()=>{if($lazyHint){$lazyHint.remove();$lazyHint=null}},450)},600)}
+  else{$lazyHint.textContent='Preparing pages '+done+' / '+total+'…';$lazyHint.style.opacity='1'}
+}
+
+function startPipeline(idx0,totalItems){
+  updateLazyHint(countReadyPages(totalItems),totalItems);
+  (async()=>{
+    const seq=[];
+    for(let d=0;d<=totalItems;d++){
+      if(idx0-d>=0)seq.push(idx0-d);
+      if(d>0&&idx0+d<totalItems)seq.push(idx0+d);
+    }
+    for(const i of seq){
+      if(pipelineStop||!pageFlip)return;
+      if(pageDivs[i].dataset.rdy!=='1')await renderPdfPage(i+1);
+      updateLazyHint(countReadyPages(totalItems),totalItems);
+      await sleep(0);
+    }
+  })();
+}
+
 async function openReader(ci,targetPage){
   const cat=catalogs[ci];if(!cat)return;
   $overlay.classList.add('active');document.body.style.overflow='hidden';
@@ -674,28 +781,25 @@ async function openReader(ci,targetPage){
     currentPdf=await pdfjsLib.getDocument(cat.pdf).promise;totalPages=currentPdf.numPages;
     const bodyW=$overlay.clientWidth,isMobile=window.matchMedia('(max-width: 768px)').matches;
 
-    // Render pages
-    const pageDivs=[];
-    for(let i=1;i<=totalPages;i++){$loadingText.textContent='Rendering page '+i+' / '+totalPages+'...';
-      const page=await currentPdf.getPage(i);const vp=page.getViewport({scale:1.5});const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
-      await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
-      const div=document.createElement('div');div.appendChild(cv);pageDivs.push(div);if(i%5===0)await sleep(0);
-    }
-    // Pad odd-page PDF with blank page so spreads render cleanly
-    if(totalPages%2!==0&&pageDivs.length>0){
-      const ref=pageDivs[0].querySelector('canvas');const bc=document.createElement('canvas');bc.width=ref.width;bc.height=ref.height;
-      bc.getContext('2d').fillStyle='#fff';bc.getContext('2d').fillRect(0,0,bc.width,bc.height);
-      const bd=document.createElement('div');bd.appendChild(bc);pageDivs.push(bd);
-    }
+    // Lazy reader: instant placeholder shells, pages rendered on demand
+    pageDivs=[];pageRendered={};pgBusy={};pipelineStop=false;pgPadIdx=-1;
+    for(let i=1;i<=totalPages;i++){const div=document.createElement('div');div.className='pg-shell';pageDivs.push(div)}
+    if(totalPages%2!==0){const bd=document.createElement('div');bd.className='pg-shell pg-pad';bd.dataset.rdy='1';pageDivs.push(bd);pgPadIdx=pageDivs.length-1}
+    const totalItems=pageDivs.length;
 
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
     if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
     else{pageFlip=new StPageFlip($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!0,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',updateUI);pageFlip.on('flip',updateUI);}
 
-    if(targetPage&&pageFlip){pageFlip.turnToPage(targetPage-1)}
+    const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
+    $loadingText.textContent='Preparing pages…';
+    await ensureNear(t,totalItems);
+    if(pipelineStop)return;
+    pageFlip.turnToPage(t);
     extractToc(currentPdf);
     updateUI();$readerLoading.style.display='none';
+    startPipeline(t,totalItems);
   }catch(e){console.error(e);$loadingText.textContent='Failed to load: '+e.message;setTimeout(()=>closeReader(),2000)}
 }
 
@@ -760,7 +864,7 @@ function renderToc(){
     html+=`<button class="toc-item${css}" data-page="${item.page}" data-page-end="${item.pageEnd}">${label}</button>`;
   }
   $tocList.innerHTML=html;
-  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',()=>{if(pageFlip)pageFlip.turnToPage(parseInt(el.dataset.page)-1)}));
+  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',async()=>{if(pageFlip){const t=parseInt(el.dataset.page)-1;await ensureNear(t,pageDivs.length);if(!pipelineStop)pageFlip.turnToPage(t)}}));
 }
 
 function updateUI(){
@@ -771,7 +875,13 @@ function updateUI(){
   if(currentToc){$tocList.querySelectorAll('.toc-item').forEach(el=>{const ps=parseInt(el.dataset.page),pe=parseInt(el.dataset.pageEnd);const cur=(c+1);const on=cur>=ps&&cur<=pe;el.classList.toggle('active',on);if(on)el.scrollIntoView({block:'nearest',behavior:'smooth'})})}
 }
 
-function closeReader(){currentPdf=null;totalPages=0;currentToc=null;$btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';$overlay.classList.remove('active');document.body.style.overflow=''}
+function closeReader(){
+  pipelineStop=true;currentPdf=null;totalPages=0;currentToc=null;
+  $btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';
+  $overlay.classList.remove('active');document.body.style.overflow='';
+  if($lazyHint){$lazyHint.remove();$lazyHint=null}
+  pageDivs=[];pageRendered={};pgBusy={};
+}
 
 //===== Resize =====
 window.addEventListener('resize',()=>{if(!pageFlip)return;clearTimeout(window._rT);window._rT=setTimeout(()=>{const im=window.matchMedia('(max-width: 768px)').matches;const mp=im?$overlay.clientWidth:700;const s=pageFlip.getSettings();s.width=mp;s.height=Math.floor(mp/.72);s.maxWidth=mp;s.minWidth=350;pageFlip.update();updateUI()},300)});

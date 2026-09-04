@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Yongli Kitchenware</title>
+<meta name="robots" content="noindex">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #faf9f7; color: #1a1a2e; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px; text-align: center;
+  }
+  .logo { display: inline-block; margin-bottom: 28px; }
+  .logo img { height: 40px; width: auto; }
+  .code { font-size: 3.2rem; font-weight: 700; letter-spacing: 2px; color: #1a1a2e; }
+  h1 { font-size: 1.25rem; font-weight: 600; margin: 12px 0 8px; }
+  p { color: #777; font-size: .92rem; line-height: 1.7; max-width: 420px; margin-bottom: 24px; }
+  .note { color: #b8860b; font-size: .85rem; margin-bottom: 8px; min-height: 1.2em; }
+  .btn {
+    display: inline-block; background: #1a1a2e; color: #fff; text-decoration: none;
+    padding: 12px 28px; border-radius: 8px; font-size: .95rem; font-weight: 600;
+    transition: background .2s; margin: 0 6px;
+  }
+  .btn:hover { background: #2b2b4a; }
+  .btn.ghost { background: #fff; color: #1a1a2e; border: 1px solid #ddd; }
+  .btn.ghost:hover { border-color: #1a1a2e; background: #fff; }
+</style>
+</head>
+<body>
+  <a class="logo" href="https://oemkitchenware.com/"><img src="assets/logo.png" alt="Yongli"></a>
+  <div class="code">404</div>
+  <h1>This page has moved</h1>
+  <p>We recently redesigned our website and this page no longer exists. Our latest product catalogs and services are available from the homepage.</p>
+  <div class="note" id="redirectNote"></div>
+  <p style="margin-bottom:0">
+    <a class="btn" href="https://oemkitchenware.com/">Back to Homepage</a>
+    <a class="btn ghost" href="https://wa.me/8613824296558">Chat on WhatsApp</a>
+  </p>
+<script>
+(function(){
+  try {
+    var p = location.pathname;
+    // Old localized site paths, e.g. /ko_KR/index.html, /it_IT/... -> send to homepage
+    if (/(^|\/)[a-z]{2}_[A-Z]{2}(\/|$)/.test(p)) {
+      var n = document.getElementById('redirectNote');
+      n.textContent = 'Redirecting to the new homepage in a moment...';
+      setTimeout(function(){ location.replace('https://oemkitchenware.com/'); }, 3000);
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
