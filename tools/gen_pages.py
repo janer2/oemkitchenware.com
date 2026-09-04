@@ -161,6 +161,121 @@ def esc(s):
             .replace('"', "&quot;"))
 
 
+# ---- per-page mirrors (one static HTML page per catalog PDF page) ----
+def clean_page_lines(txt):
+    lines = []
+    for ln in txt.split("\n"):
+        ln = re.sub(r"\s+", " ", ln).strip()
+        if len(ln) >= 2:
+            lines.append(ln)
+    return lines
+
+
+def pick_headline(lines):
+    for ln in lines:
+        if len(ln) < 8:
+            continue
+        low = ln.lower()
+        if low.startswith(("http", "www", "tel:", "mailto")) or "@" in ln:
+            continue
+        if re.match(r"^[\d\s.,\-/x×*()+]+$", ln):
+            continue
+        return ln[:90]
+    return None
+
+
+def mirror_page_html(cat, pn, n, head, lines, leaf):
+    title = (head or "Catalog Page %d" % pn) + " | Yongli " + cat["name"] + " Wholesale"
+    desc = (" ".join(lines[:3])[:155]) if lines else ("Page %d of the " % pn) + cat["name"] + " catalog."
+    url = "%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn)
+    parent = ("%s/catalog/%s/%s/" % (SITE, cat["id"], slugify(leaf["title"]))) if leaf else None
+    prev_u = ("%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn - 1)) if pn > 1 else None
+    next_u = ("%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn + 1)) if pn < n else None
+    crumb_items = [
+        {"name": "Home", "url": SITE + "/"},
+        {"name": "Catalog", "url": SITE + "/catalog/"},
+        {"name": cat["name"], "url": "%s/catalog/%s/" % (SITE, cat["id"])},
+    ]
+    if leaf:
+        crumb_items.append({"name": leaf["title"], "url": parent})
+    crumb_items.append({"name": "Page %d" % pn, "url": url})
+    ld = json.dumps({
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [{"@type": "ListItem", "position": i + 1,
+                             "name": it["name"], "item": it["url"]}
+                            for i, it in enumerate(crumb_items)]},
+        ensure_ascii=False)
+    paras = "\n".join('<p class="ln">%s</p>' % esc(ln) for ln in lines)
+    nav = []
+    if prev_u:
+        nav.append('<a class="pgbtn" rel="prev" href="%s">&larr; Page %d</a>' % (prev_u, pn - 1))
+    else:
+        nav.append('<span class="pgbtn off">Start</span>')
+    nav.append('<a class="pgbtn primary" href="%s/?catalog=%s&page=%d">Open in 3D Flip Catalog</a>'
+               % (SITE, cat["id"], pn))
+    if next_u:
+        nav.append('<a class="pgbtn" rel="next" href="%s">Page %d &rarr;</a>' % (next_u, pn + 1))
+    else:
+        nav.append('<span class="pgbtn off">End</span>')
+    parent_link = ('<a href="%s">%s</a>' % (parent, esc(leaf["title"]))) if leaf else ""
+    return ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n"
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+            "<title>%s</title>\n"
+            "<meta name=\"description\" content=\"%s\">\n"
+            "<link rel=\"canonical\" href=\"%s\">\n"
+            "<meta property=\"og:title\" content=\"%s\">\n"
+            "<meta property=\"og:type\" content=\"website\">\n"
+            "<meta property=\"og:url\" content=\"%s\">\n"
+            "<meta property=\"og:image\" content=\"%s/assets/logo.png\">\n"
+            "<script type=\"application/ld+json\">%s</script>\n"
+            "<style>body{font-family:'Segoe UI',system-ui,sans-serif;color:#1a1a2e;background:#faf9f7;margin:0}"
+            ".wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px}"
+            ".crumbs{font-size:.8rem;color:#888;margin-bottom:18px}.crumbs a{color:#1a1a2e;text-decoration:none}"
+            "h1{font-size:1.6rem;margin:0 0 6px}.pg{color:#888;font-size:.85rem;margin-bottom:18px}"
+            ".ln{margin:.5em 0;font-size:.95rem;line-height:1.6;color:#333}"
+            ".cta{margin:20px 0;display:flex;gap:10px;flex-wrap:wrap}"
+            ".pgbtn{display:inline-block;padding:9px 18px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a2e;text-decoration:none;font-size:.88rem;font-weight:600}"
+            ".pgbtn.primary{background:#1a1a2e;color:#fff;border-color:#1a1a2e}"
+            ".pgbtn.off{color:#bbb;background:#f1efec}"
+            ".note{font-size:.85rem;color:#888;margin:22px 0 0}"
+            "footer{margin-top:36px;font-size:.8rem;color:#999;border-top:1px solid #eee;padding-top:16px}"
+            "footer a{color:#1a1a2e;text-decoration:none}</style>\n"
+            "</head>\n<body>\n<div class=\"wrap\">\n"
+            "<div class=\"crumbs\"><a href=\"/\">Home</a> &rsaquo; <a href=\"/catalog/\">Catalog</a>"
+            " &rsaquo; <a href=\"/catalog/%s/\">%s</a>%s%s</div>\n"
+            "<h1>%s</h1>\n<p class=\"pg\">%s &mdash; catalog PDF page %d of %d</p>\n"
+            "<div class=\"cta\">%s</div>\n"
+            "%s\n"
+            "<p class=\"note\">Product details above are as printed in the official catalog PDF. "
+            "Pricing, MOQ and customization available on request.</p>\n"
+            "<footer>&copy; 2026 Huizhou Yongli Industrial Co., Ltd. <a href=\"/\">Back to 3D catalog</a></footer>\n"
+            "</div>\n</body>\n</html>\n") % (
+            esc(title), esc(desc), url, esc(title), url, SITE, ld,
+            cat["id"], esc(cat["name"]),
+            ((" &rsaquo; " + parent_link) if leaf else ""),
+            (" &rsaquo; Page %d" % pn), esc(head or ("Catalog Page %d" % pn)),
+            esc(cat["name"]), pn, n, " ".join(nav), paras or "<p class=\"ln\">(image page)</p>")
+
+
+def build_page_mirrors(cat, leaves, doc):
+    n = doc.page_count
+    catmap = [None] * (n + 1)
+    for lf in leaves:
+        for pn in range(lf["page"], min(lf.get("end", n), n) + 1):
+            catmap[pn] = lf
+    urls = []
+    base = OUT / cat["id"] / "pages"
+    for pn in range(1, n + 1):
+        lines = clean_page_lines(doc[pn - 1].get_text())
+        head = pick_headline(lines)
+        d = base / str(pn)
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(
+            mirror_page_html(cat, pn, n, head, lines, catmap[pn]), encoding="utf-8")
+        urls.append(("%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn), "monthly", "0.5"))
+    return urls
+
+
 def page_text(doc, start, end, limit=420):
     """Best-effort plain text of the category's first pages."""
     try:
@@ -347,6 +462,7 @@ def hub_html(cats_built):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="catalog id to build")
+    ap.add_argument("--pages", help="catalog ids that also get one HTML page per PDF page, e.g. kitchen")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
 
@@ -379,6 +495,7 @@ def main():
             print("unchanged, skip:", cat["id"])
             cats_built.append((cat, rec.get("cats", [])))
             out_pages.extend(rec.get("pages", []))
+            out_pages.extend(rec.get("mirrors", []))
             continue
 
         leaves = build_categories(cat)
