@@ -115,6 +115,40 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .catalog-card .card-info h3 { font-size: 1rem; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
 .catalog-card .card-info .sub { font-size: .8rem; color: #999; }
 
+/* ===== Shop by Category ===== */
+.shopby { max-width: 1280px; margin: 0 auto; padding: 24px 24px 64px; }
+.shopby-head { margin-bottom: 26px; }
+.shopby-head h2 { font-size: 1.45rem; font-weight: 700; color: #1a1a2e; letter-spacing: -.02em; }
+.shopby-head p { color: #999; font-size: .88rem; margin-top: 6px; }
+.shopby-group { margin-bottom: 44px; }
+.shopby-group:last-child { margin-bottom: 0; }
+.shopby-group > h3 { font-size: .95rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #8a8172; padding-bottom: 10px; margin-bottom: 18px; border-bottom: 1px solid #eee9e1; }
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.cat-card { cursor: pointer; outline: none; opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+.cat-card.in { opacity: 1; transform: none; }
+.cat-card .cat-cover { position: relative; aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; background: #f5f4f0; }
+.cat-card .cat-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .55s ease; }
+.cat-card:hover .cat-cover img, .cat-card:focus-visible .cat-cover img { transform: scale(1.045); }
+.cat-card .cat-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,20,32,.5), transparent 45%); opacity: 0; transition: opacity .3s ease; }
+.cat-card:hover .cat-cover::after, .cat-card:focus-visible .cat-cover::after { opacity: 1; }
+.view-more { position: absolute; left: 50%; bottom: 14px; transform: translate(-50%, 10px); background: #fff; color: #1a1a2e; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 9px 18px; border-radius: 999px; box-shadow: 0 8px 20px rgba(0,0,0,.22); opacity: 0; transition: opacity .3s ease, transform .3s ease; pointer-events: none; white-space: nowrap; }
+.cat-card:hover .view-more, .cat-card:focus-visible .view-more { opacity: 1; transform: translate(-50%, 0); }
+.cat-meta { padding: 11px 2px 0; }
+.cat-meta .cat-name { font-size: .92rem; font-weight: 600; color: #1a1a2e; }
+.cat-meta .cat-page { display: block; font-size: .76rem; color: #b9b2a6; margin-top: 2px; }
+.cat-meta .pp-link { display: inline-block; margin-top: 6px; font-size: .8rem; color: #8a8172; text-decoration: underline; text-underline-offset: 3px; }
+.cat-meta .pp-link:hover { color: #1a1a2e; }
+@media (max-width: 1100px) { .cat-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .shopby { padding: 18px 14px 44px; }
+  .shopby-group { margin-bottom: 34px; }
+}
+@media (hover: none) {
+  .cat-card .view-more { display: none; }
+  .cat-card .cat-cover::after { display: none; }
+}
+
 /* ===== Customize View ===== */
 .customize-hero { text-align: center; padding: 60px 24px 48px; background: linear-gradient(180deg, #faf9f7 0%, #fff 100%); }
 .customize-hero h1 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
@@ -352,6 +386,16 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <p>Browse our complete product catalogs. Click any catalog to open the 3D flip-book reader, or search across all catalogs.</p>
   </div>
   <div id="catalogGrid" class="catalog-grid"></div>
+
+  <!-- ===== Shop by Category ===== -->
+  <section class="shopby" id="shopBy">
+    <div class="shopby-head">
+      <h2>Shop by Category</h2>
+      <p>Jump straight to any product range inside the flip-book readers, or open its dedicated product page.</p>
+    </div>
+    <div id="catGroups"></div>
+  </section>
+
   <footer class="site-footer">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.<br><a href="catalog/" style="color:#1a1a2e;font-weight:600;display:inline-block;margin-top:8px">Browse Product Category Pages &rarr;</a></footer>
 </section>
 
@@ -575,7 +619,7 @@ if(location.protocol==='file:'){
 }
 
 //===== State =====
-let catalogs=[],currentPdf=null,totalPages=0,pageFlip=null,currentCatalogId='';
+let catalogs=[],shopByData=null,currentPdf=null,totalPages=0,pageFlip=null,currentCatalogId='';
 let searchIndex=null,searchIndexBusy=false,currentToc=null;
 
 //===== DOM =====
@@ -585,7 +629,7 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
   $btnPrev=document.getElementById('btnPrev'),$btnNext=document.getElementById('btnNext'),
   $btnClose=document.getElementById('btnClose'),$btnTocToggle=document.getElementById('btnTocToggle'),
   $tocSidebar=document.getElementById('tocSidebar'),$tocList=document.getElementById('tocList'),
-  $catalogGrid=document.getElementById('catalogGrid'),
+  $catalogGrid=document.getElementById('catalogGrid'),$catGroups=document.getElementById('catGroups'),
   $searchInput=document.getElementById('searchInput'),$searchDropdown=document.getElementById('searchDropdown'),
   $contactFab=document.getElementById('contactFab'),$drawerOverlay=document.getElementById('drawerOverlay'),
   $contactDrawer=document.getElementById('contactDrawer'),$drawerClose=document.getElementById('drawerClose'),
@@ -594,7 +638,12 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
 //===== Data =====
 const EMBEDDED=[{id:"ladies",name:"Ladies' Appliances",sub:"Personal Care & Beauty Devices",pdf:"assets/catalog-ladies.pdf"},{id:"balls",name:"Christmas Balls",sub:"Festival Decorations",pdf:"assets/catalog-balls.pdf"},{id:"baby",name:"Baby Care",sub:"Infant & Nursery Products",pdf:"assets/catalog-baby.pdf"},{id:"kitchen",name:"Kitchen Gadgets",sub:"Kitchen Items",pdf:"assets/catalog-kitchen.pdf"}];
 
-async function init(){try{catalogs=await(await fetch('catalogs.json')).json()}catch(e){catalogs=EMBEDDED}renderCatalogCards();bindEvents();handleDeepLink()}
+async function init(){
+  const [cres,gres]=await Promise.allSettled([fetch('catalogs.json'),fetch('categories.json')]);
+  try{catalogs=await cres.value.json()}catch(e){catalogs=EMBEDDED}
+  if(gres.status==='fulfilled'){try{shopByData=await gres.value.json()}catch(e){}}
+  renderCatalogCards();renderShopBy();bindEvents();handleDeepLink();
+}
 function handleDeepLink(){
   try{
     const p=new URLSearchParams(location.search),cid=p.get('catalog');
@@ -621,6 +670,24 @@ function renderCatalogCards(){
   $catalogGrid.innerHTML=catalogs.map((c,i)=>`<div class="catalog-card" data-index="${i}" role="button" tabindex="0"><div class="card-cover"><img class="cover-img" src="assets/covers/${esc(c.id)}.jpg" alt="${esc(c.name)} catalog cover" width="640" height="910" loading="${i===0?'eager':'lazy'}" fetchpriority="${i===0?'high':'auto'}" decoding="async" onerror="window.coverFallback(this,${i})"></div><div class="card-info"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div></div></div>`).join('');
 }
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function renderShopBy(){
+  if(!shopByData||!shopByData.groups||!shopByData.groups.length){return}
+  $catGroups.innerHTML=shopByData.groups.map(g=>{
+    const cards=g.items.map((it,i)=>`<div class="cat-card" role="button" tabindex="0" data-cid="${esc(g.id)}" data-page="${it.page}" style="transition-delay:${(i%4)*90}ms"><div class="cat-cover"><img src="catalog/${esc(g.id)}/${esc(it.slug)}/cover.jpg" alt="${esc(it.title)}" loading="lazy" decoding="async"><span class="view-more">View More</span></div><div class="cat-meta"><span class="cat-name">${esc(it.title)}</span><span class="cat-page">p.${it.page} &middot; ${esc(g.name)}</span><a class="pp-link" href="catalog/${esc(g.id)}/${esc(it.slug)}/" target="_blank" rel="noopener">Product page &rarr;</a></div></div>`).join('');
+    return `<div class="shopby-group"><h3>${esc(g.name)}</h3><div class="cat-grid">${cards}</div></div>`;
+  }).join('');
+  $catGroups.querySelectorAll('.cat-card').forEach(card=>{
+    const jump=()=>{const ci=catalogs.findIndex(c=>c.id===card.dataset.cid);if(ci>=0)openReader(ci,parseInt(card.dataset.page))};
+    card.addEventListener('click',e=>{if(e.target.closest('.pp-link')){e.stopPropagation();return}jump()});
+    card.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.target.closest('.pp-link'))jump()});
+  });
+  observeReveal($catGroups.querySelectorAll('.cat-card'));
+}
+function observeReveal(cards){
+  if(!('IntersectionObserver' in window)){cards.forEach(c=>c.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+  cards.forEach(c=>io.observe(c));
+}
 // Fallback if a static cover is ever missing: render page 1 from the PDF
 window.coverFallback=(el,i)=>{
   if(el.dataset.tried)return;
@@ -810,7 +877,7 @@ async function runPrefill(){
   for(let d=1;d<=PRELOAD_RADIUS;d++){
     for(const ix of [anchor-d,anchor+d]){
       if(ix<0||ix>=total)continue;
-      if(pageDivs[ix].dataset.rdy==='1')continue;
+      if(!pageDivs[ix]||pageDivs[ix].dataset.rdy==='1')continue;
       await renderPdfPage(ix+1);
       if(prefillAnchor!==anchor||!pageFlip){updateTocStates();schedulePrefill();return}
       updateTocStates();
