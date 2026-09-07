@@ -739,7 +739,7 @@ function openDrawer(){$contactDrawer.classList.add('active');$drawerOverlay.clas
 function closeDrawer(){$contactDrawer.classList.remove('active');$drawerOverlay.classList.remove('active')}
 
 //===== Reader =====
-let pageRendered={},pgBusy={},pageDivs=[],pgPadIdx=-1,pipelineStop=false,$lazyHint=null;
+let pageRendered={},pgBusy={},pageDivs=[],pgPadIdx=-1;
 
 function renderPdfPage(pn){
   if(pageRendered[pn])return Promise.resolve(true);
@@ -766,43 +766,28 @@ function renderPdfPage(pn){
   return pgBusy[pn];
 }
 
-async function ensureNear(idx,totalItems){
-  for(const ix of [idx-1,idx,idx+1]){
+async function ensureNear(idx,totalItems,radius){
+  radius=radius||1;
+  const jobs=[];
+  for(let d=-radius;d<=radius;d++){
+    const ix=idx+d;
     if(ix<0||ix>=totalItems)continue;
-    if(pageDivs[ix].dataset.rdy!=='1')await renderPdfPage(ix+1);
+    if(pageDivs[ix].dataset.rdy!=='1')jobs.push(renderPdfPage(ix+1));
   }
+  await Promise.all(jobs);
 }
 
-function countReadyPages(totalItems){
-  let c=0;for(let i=0;i<totalItems;i++){if(pageDivs[i]&&pageDivs[i].dataset.rdy==='1')c++}
-  return c;
+// Lightweight lookahead: render a window around the current page after
+// every flip instead of pre-rendering the whole 18MB PDF in the background.
+function refreshNear(idx,totalItems){
+  if(!pageFlip)return;
+  ensureNear(idx,totalItems,2).catch(()=>{});
 }
 
-function updateLazyHint(done,total){
-  if(!$lazyHint){
-    $lazyHint=document.createElement('div');
-    $lazyHint.style.cssText='position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:320;background:rgba(26,26,46,.88);color:#fff;padding:7px 16px;border-radius:20px;font-size:.75rem;pointer-events:none;transition:opacity .4s;font-family:Segoe UI,system-ui,sans-serif;';
-    document.body.appendChild($lazyHint);
-  }
-  if(done>=total){$lazyHint.textContent='All '+total+' pages ready';setTimeout(()=>{$lazyHint.style.opacity='0';setTimeout(()=>{if($lazyHint){$lazyHint.remove();$lazyHint=null}},450)},600)}
-  else{$lazyHint.textContent='Preparing pages '+done+' / '+total+'…';$lazyHint.style.opacity='1'}
-}
-
-function startPipeline(idx0,totalItems){
-  updateLazyHint(countReadyPages(totalItems),totalItems);
-  (async()=>{
-    const seq=[];
-    for(let d=0;d<=totalItems;d++){
-      if(idx0-d>=0)seq.push(idx0-d);
-      if(d>0&&idx0+d<totalItems)seq.push(idx0+d);
-    }
-    for(const i of seq){
-      if(pipelineStop||!pageFlip)return;
-      if(pageDivs[i].dataset.rdy!=='1')await renderPdfPage(i+1);
-      updateLazyHint(countReadyPages(totalItems),totalItems);
-      await sleep(0);
-    }
-  })();
+function onFlipState(){
+  if(!pageFlip)return;
+  updateUI();
+  refreshNear(pageFlip.getCurrentPageIndex(),pageDivs.length);
 }
 
 async function openReader(ci,targetPage){
@@ -817,11 +802,13 @@ async function openReader(ci,targetPage){
 
   try{
     await ensureLibs();
-    currentPdf=await pdfjsLib.getDocument(cat.pdf).promise;totalPages=currentPdf.numPages;
+    // disableAutoFetch: fetch PDF page objects on demand over Range
+    // requests instead of downloading the whole file in the background
+    currentPdf=await pdfjsLib.getDocument({url:cat.pdf,disableAutoFetch:true}).promise;totalPages=currentPdf.numPages;
     const bodyW=$overlay.clientWidth,isMobile=window.matchMedia('(max-width: 768px)').matches;
 
     // Lazy reader: instant placeholder shells, pages rendered on demand
-    pageDivs=[];pageRendered={};pgBusy={};pipelineStop=false;pgPadIdx=-1;
+    pageDivs=[];pageRendered={};pgBusy={};pgPadIdx=-1;
     for(let i=1;i<=totalPages;i++){const div=document.createElement('div');div.className='pg-shell';pageDivs.push(div)}
     if(totalPages%2!==0){const bd=document.createElement('div');bd.className='pg-shell pg-pad';bd.dataset.rdy='1';pageDivs.push(bd);pgPadIdx=pageDivs.length-1}
     const totalItems=pageDivs.length;
@@ -829,16 +816,16 @@ async function openReader(ci,targetPage){
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
     if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!0,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',updateUI);pageFlip.on('flip',updateUI);}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!0,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',onFlipState);pageFlip.on('flip',onFlipState);}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
-    $loadingText.textContent='Preparing pages…';
-    await ensureNear(t,totalItems);
-    if(pipelineStop)return;
+    $loadingText.textContent='Loading pages…';
+    await ensureNear(t,totalItems,1);
+    if(!pageFlip)return;
     pageFlip.turnToPage(t);
     if(!(await tocJsonP))extractTocAuto(currentPdf);
     updateUI();$readerLoading.style.display='none';
-    startPipeline(t,totalItems);
+    refreshNear(t,totalItems);
   }catch(e){console.error(e);$loadingText.textContent='Failed to load: '+e.message;setTimeout(()=>closeReader(),2000)}
 }
 
@@ -906,7 +893,7 @@ function renderToc(){
     html+=`<button class="toc-item${css}" data-page="${item.page}" data-page-end="${item.pageEnd}">${label}</button>`;
   }
   $tocList.innerHTML=html;
-  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',async()=>{if(pageFlip){const t=parseInt(el.dataset.page)-1;await ensureNear(t,pageDivs.length);if(!pipelineStop)pageFlip.turnToPage(t)}}));
+  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',async()=>{if(pageFlip){const t=parseInt(el.dataset.page)-1;await ensureNear(t,pageDivs.length);if(pageFlip)pageFlip.turnToPage(t)}}));
 }
 
 function updateUI(){
@@ -918,18 +905,19 @@ function updateUI(){
 }
 
 function closeReader(){
-  pipelineStop=true;currentPdf=null;totalPages=0;currentToc=null;
+  currentPdf=null;totalPages=0;currentToc=null;
   $btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';
   $overlay.classList.remove('active');document.body.style.overflow='';
-  if($lazyHint){$lazyHint.remove();$lazyHint=null}
   pageDivs=[];pageRendered={};pgBusy={};
 }
 
 //===== Resize =====
 window.addEventListener('resize',()=>{if(!pageFlip)return;clearTimeout(window._rT);window._rT=setTimeout(()=>{const im=window.matchMedia('(max-width: 768px)').matches;const mp=im?$overlay.clientWidth:700;const s=pageFlip.getSettings();s.width=mp;s.height=Math.floor(mp/.72);s.maxWidth=mp;s.minWidth=350;pageFlip.update();updateUI()},300)});
 
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 init();
+// Warm up pdf.js after the homepage is idle so the first reader open
+// does not pay the library download + parse cost.
+window.addEventListener('load',()=>setTimeout(()=>{ensureLibs().catch(()=>{})},1500));
 </script>
 </body>
 </html>
