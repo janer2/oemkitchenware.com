@@ -1,0 +1,178 @@
+{
+ "groups": [
+  {
+   "id": "kitchen",
+   "name": "Kitchen Gadgets",
+   "items": [
+    {
+     "title": "Kitchen Gadgets",
+     "page": 1,
+     "slug": "kitchen-gadgets"
+    },
+    {
+     "title": "Kitchen Utensil",
+     "page": 38,
+     "slug": "kitchen-utensil"
+    },
+    {
+     "title": "Silicone Mat",
+     "page": 41,
+     "slug": "silicone-mat"
+    },
+    {
+     "title": "Silicone Coaster",
+     "page": 51,
+     "slug": "silicone-coaster"
+    },
+    {
+     "title": "Collapsible Strainer",
+     "page": 61,
+     "slug": "collapsible-strainer"
+    },
+    {
+     "title": "Collapsible Food Storage",
+     "page": 66,
+     "slug": "collapsible-food-storage"
+    },
+    {
+     "title": "Food Storage Container",
+     "page": 69,
+     "slug": "food-storage-container"
+    },
+    {
+     "title": "Snack Box",
+     "page": 71,
+     "slug": "snack-box"
+    },
+    {
+     "title": "Silicone Food Storage Bag",
+     "page": 80,
+     "slug": "silicone-food-storage-bag"
+    },
+    {
+     "title": "Collapsible Travel Cup",
+     "page": 83,
+     "slug": "collapsible-travel-cup"
+    },
+    {
+     "title": "Stainless Steel Tumbler",
+     "page": 86,
+     "slug": "stainless-steel-tumbler"
+    },
+    {
+     "title": "BBQ Grill Accessories",
+     "page": 99,
+     "slug": "bbq-grill-accessories"
+    },
+    {
+     "title": "Milk Frother",
+     "page": 108,
+     "slug": "milk-frother"
+    },
+    {
+     "title": "Tea Infuser",
+     "page": 112,
+     "slug": "tea-infuser"
+    },
+    {
+     "title": "Silicone Ice Tray",
+     "page": 118,
+     "slug": "silicone-ice-tray"
+    },
+    {
+     "title": "Ice Cream Tool",
+     "page": 130,
+     "slug": "ice-cream-tool"
+    },
+    {
+     "title": "Sourdough Starter Kit",
+     "page": 144,
+     "slug": "sourdough-starter-kit"
+    },
+    {
+     "title": "Silicone Gummy Mold",
+     "page": 156,
+     "slug": "silicone-gummy-mold"
+    },
+    {
+     "title": "Cookie Cutter",
+     "page": 164,
+     "slug": "cookie-cutter"
+    }
+   ]
+  },
+  {
+   "id": "baby",
+   "name": "Baby Care",
+   "items": [
+    {
+     "title": "Feeding Set",
+     "page": 1,
+     "slug": "feeding-set"
+    },
+    {
+     "title": "Spoon/Fork",
+     "page": 18,
+     "slug": "spoon-fork"
+    },
+    {
+     "title": "Baby Bib",
+     "page": 20,
+     "slug": "baby-bib"
+    },
+    {
+     "title": "Silicone Placemat",
+     "page": 21,
+     "slug": "silicone-placemat"
+    }
+   ]
+  },
+  {
+   "id": "ladies",
+   "name": "Ladies' Appliances",
+   "items": [
+    {
+     "title": "Ice Facial Roller",
+     "page": 1,
+     "slug": "ice-facial-roller"
+    },
+    {
+     "title": "Silicone Cupping Therapy",
+     "page": 3,
+     "slug": "silicone-cupping-therapy"
+    },
+    {
+     "title": "Menstrual Cup",
+     "page": 5,
+     "slug": "menstrual-cup"
+    },
+    {
+     "title": "Applicator",
+     "page": 12,
+     "slug": "applicator"
+    },
+    {
+     "title": "Menstrual Pants",
+     "page": 19,
+     "slug": "menstrual-pants"
+    },
+    {
+     "title": "Silicone Urinal",
+     "page": 21,
+     "slug": "silicone-urinal"
+    }
+   ]
+  },
+  {
+   "id": "balls",
+   "name": "Christmas Balls",
+   "items": [
+    {
+     "title": "Christmas Balls",
+     "page": 1,
+     "slug": "christmas-balls"
+    }
+   ]
+  }
+ ]
+}
