@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="preload" as="image" href="assets/covers/kitchen.jpg" fetchpriority="high">
 <title>Yongli — Silicone Kitchenware Manufacturer | OEM &amp; ODM Wholesale Supplier</title>
 <meta name="description" content="Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM manufacturer of silicone &amp; stainless kitchenware, baby care, personal care and festive decorations since 2010. Browse interactive e-catalogs and get a wholesale quote.">
 <link rel="canonical" href="https://oemkitchenware.com/">
@@ -106,7 +107,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 }
 .catalog-card:hover { transform: translateY(-6px); box-shadow: 0 14px 34px rgba(0,0,0,.1); }
 .catalog-card .card-cover { width: 100%; aspect-ratio: 3/4; background: #f5f4f0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.catalog-card .card-cover canvas { width: 100%; height: 100%; object-fit: contain; }
+.catalog-card .card-cover canvas, .catalog-card .card-cover img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .catalog-card .card-cover .placeholder { color: #bbb; font-size: .9rem; padding: 20px; text-align: center; }
 .catalog-card .card-cover .loading-spin { width: 30px; height: 30px; border: 3px solid #e6e3dc; border-top-color: #1a1a2e; border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -547,12 +548,19 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </div>
 </aside>
 
-<script src="assets/pdfjs/pdf.min.js"></script>
-<script src="assets/pdfjs/page-flip.browser.js"></script>
-
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc='assets/pdfjs/pdf.worker.min.js';
-const StPageFlip=St.PageFlip;
+// pdf.js + St.PageFlip are lazy-loaded on first reader open so the
+// homepage never downloads ~1MB of JS just to show static cover images.
+let libsPromise=null;
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('Failed to load '+src));document.head.appendChild(s)})}
+function ensureLibs(){
+  if(!libsPromise)libsPromise=(async()=>{
+    await loadScript('assets/pdfjs/pdf.min.js');
+    await loadScript('assets/pdfjs/page-flip.browser.js');
+    pdfjsLib.GlobalWorkerOptions.workerSrc='assets/pdfjs/pdf.worker.min.js';
+  })();
+  return libsPromise;
+}
 
 // file:// guard: PDF.js cannot read local PDFs without an HTTP server
 if(location.protocol==='file:'){
@@ -607,14 +615,20 @@ function showView(name){
 //===== Homepage =====
 function renderCatalogCards(){
   if(!catalogs.length){$catalogGrid.innerHTML='<p style="text-align:center;color:#999;padding:60px;">No catalogs found.</p>';return}
-  $catalogGrid.innerHTML=catalogs.map((c,i)=>`<div class="catalog-card" data-index="${i}" role="button" tabindex="0"><div class="card-cover" id="cover-${i}"><div class="loading-spin"></div></div><div class="card-info"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div></div></div>`).join('');
-  catalogs.forEach((c,i)=>loadCover(c,i));
+  $catalogGrid.innerHTML=catalogs.map((c,i)=>`<div class="catalog-card" data-index="${i}" role="button" tabindex="0"><div class="card-cover"><img class="cover-img" src="assets/covers/${esc(c.id)}.jpg" alt="${esc(c.name)} catalog cover" width="640" height="910" loading="${i===0?'eager':'lazy'}" fetchpriority="${i===0?'high':'auto'}" decoding="async" onerror="window.coverFallback(this,${i})"></div><div class="card-info"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div></div></div>`).join('');
 }
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-
-async function loadCover(c,i){
-  const el=document.getElementById('cover-'+i);if(!el)return;
-  try{const pdf=await pdfjsLib.getDocument(c.pdf).promise;const vp=(await pdf.getPage(1)).getViewport({scale:.65});const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;await(await pdf.getPage(1)).render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;el.innerHTML='';el.appendChild(cv)}catch(e){el.innerHTML='<div class="placeholder">Cover unavailable</div>'}
+// Fallback if a static cover is ever missing: render page 1 from the PDF
+window.coverFallback=(el,i)=>{
+  if(el.dataset.tried)return;
+  el.dataset.tried='1';
+  const c=catalogs[i];if(!c)return;
+  const holder=el.parentElement;
+  holder.innerHTML='<div class="loading-spin"></div>';
+  ensureLibs().then(async()=>{
+    try{const pdf=await pdfjsLib.getDocument(c.pdf).promise;const vp=(await pdf.getPage(1)).getViewport({scale:.65});const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;await(await pdf.getPage(1)).render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;holder.innerHTML='';holder.appendChild(cv)}
+    catch(e){holder.innerHTML='<div class="placeholder">Cover unavailable</div>'}
+  });
 }
 
 //===== Events =====
@@ -686,6 +700,7 @@ async function ensureSearchIndex(){
   }catch(e){}
   if(!searchIndex.length){
     $searchDropdown.innerHTML='<div class="sd-loading">Indexing catalogs...</div>';
+    await ensureLibs();
     for(let ci=0;ci<catalogs.length;ci++){
       try{const pdf=await pdfjsLib.getDocument(catalogs[ci].pdf).promise;
         for(let pn=1;pn<=pdf.numPages;pn++){
@@ -796,8 +811,12 @@ async function openReader(ci,targetPage){
   currentCatalogId=cat.id;$readerTitle.textContent=cat.name;$pageIndicator.textContent='--';$btnPrev.disabled=$btnNext.disabled=true;
   $readerLoading.style.display='flex';$loadingText.textContent='Loading PDF...';
   currentPdf=null;totalPages=0;$tocList.innerHTML='<div class="toc-empty">Loading...</div>';
+  // TOC JSON is tiny and independent - load it in parallel so the
+  // contents sidebar appears immediately, not after the PDF finishes.
+  const tocJsonP=loadTocJson(cat.id);
 
   try{
+    await ensureLibs();
     currentPdf=await pdfjsLib.getDocument(cat.pdf).promise;totalPages=currentPdf.numPages;
     const bodyW=$overlay.clientWidth,isMobile=window.matchMedia('(max-width: 768px)').matches;
 
@@ -810,27 +829,30 @@ async function openReader(ci,targetPage){
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
     if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{pageFlip=new StPageFlip($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!0,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',updateUI);pageFlip.on('flip',updateUI);}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!0,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',updateUI);pageFlip.on('flip',updateUI);}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
     $loadingText.textContent='Preparing pages…';
     await ensureNear(t,totalItems);
     if(pipelineStop)return;
     pageFlip.turnToPage(t);
-    extractToc(currentPdf);
+    if(!(await tocJsonP))extractTocAuto(currentPdf);
     updateUI();$readerLoading.style.display='none';
     startPipeline(t,totalItems);
   }catch(e){console.error(e);$loadingText.textContent='Failed to load: '+e.message;setTimeout(()=>closeReader(),2000)}
 }
 
-async function extractToc(pdf){
+async function loadTocJson(cid){
+  const tocUrl='toc-'+cid+'.json';
+  try{const r=await fetch(tocUrl);if(!r.ok)return false;
+    const data=await r.json();
+    currentToc=flattenToc(data);renderToc();return true;
+  }catch(e){return false}
+}
+
+async function extractTocAuto(pdf){
   currentToc=null;$tocList.innerHTML='<div class="toc-empty">Extracting...</div>';
-  // Load manual TOC if exists for this catalog
-  const tocUrl='toc-'+currentCatalogId+'.json';
-  try{const r=await fetch(tocUrl);if(r.ok){const data=await r.json();
-    currentToc=flattenToc(data);renderToc();return}}
-  catch(e){}
-  // Otherwise auto-extract from PDF text (font-size detection, Top 1)
+  // Auto-extract from PDF text (font-size detection, Top 1)
   try{
     const isCode=s=>/^[A-Z]\d*-\d{1,3}$|^[A-Z]{0,2}\d{2,}$|^\d+[A-Z]?$|^No\.\s*\d|^[IVX]+\.?$/i.test(s);
     const isSize=s=>/^\d+[*xX-]\d|^\d+mm|^\d+ml|^\d+g\b|^[\(\)\d\s,.*xX]+$/.test(s);
