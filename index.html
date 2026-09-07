@@ -191,7 +191,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .reader-body { flex: 1; display: flex; min-height: 0; position: relative; }
 .toc-sidebar { width: 220px; flex-shrink: 0; border-right: 1px solid #e8e4dd; background: #f5f2ed; display: flex; flex-direction: column; overflow: hidden; transition: width .25s ease; }
 .toc-sidebar.hidden { width: 0; border: none; }
-.toc-sidebar .toc-title { padding: 12px 14px; font-size: .78rem; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #e8e4dd; flex-shrink: 0; }
+.toc-sidebar .toc-title { padding: 12px 14px; font-size: .78rem; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #e8e4dd; flex-shrink: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.toc-sidebar .toc-title #tocCount { font-weight: 700; font-variant-numeric: tabular-nums; color: #c8c1b4; }
 .toc-list { flex: 1; overflow-y: auto; padding: 6px 0; }
 .toc-item { display: block; width: 100%; text-align: left; background: none; border: none; padding: 7px 14px; font-size: .8rem; color: #555; cursor: pointer; line-height: 1.35; font-family: inherit; transition: background .12s; }
 .toc-item:hover { background: #e8e4dd; }
@@ -199,6 +200,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .toc-item.toc-sub { padding-left: 28px; font-size: .76rem; }
 .toc-item.toc-sub2 { padding-left: 40px; font-size: .74rem; color: #888; }
 .toc-item.toc-heading { font-weight: 600; font-size: .82rem; color: #333; padding-top: 10px; }
+.toc-item.pending { color: #c0b9ad; }
+.toc-item.pending::after { content: ' ·loading'; font-size: .62rem; color: #d2ccc2; }
 .toc-empty { padding: 20px 14px; color: #bbb; font-size: .78rem; text-align: center; }
 .book-area { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .book-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
@@ -495,7 +498,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   </div>
   <div class="reader-body">
     <aside class="toc-sidebar" id="tocSidebar">
-      <div class="toc-title">Contents</div>
+      <div class="toc-title">Contents <span id="tocCount">0/0</span></div>
       <nav class="toc-list" id="tocList"><div class="toc-empty">Loading...</div></nav>
     </aside>
     <div class="book-area">
@@ -777,17 +780,52 @@ async function ensureNear(idx,totalItems,radius){
   await Promise.all(jobs);
 }
 
-// Lightweight lookahead: render a window around the current page after
-// every flip instead of pre-rendering the whole 18MB PDF in the background.
-function refreshNear(idx,totalItems){
-  if(!pageFlip)return;
-  ensureNear(idx,totalItems,2).catch(()=>{});
+// Windowed prefill: keep a contiguous ring of ready pages around the
+// current anchor so consecutive flipping never waits for a fetch. Far
+// pages are only fetched when the user actually jumps to them.
+const PRELOAD_RADIUS=8;
+let prefillAnchor=0,prefillTimer=null;
+
+function updateTocStates(){
+  const $count=document.getElementById('tocCount');
+  let ready=0;
+  for(let i=0;i<pageDivs.length;i++){if(pageDivs[i]&&pageDivs[i].dataset.rdy==='1')ready++}
+  if($count)$count.textContent=ready+'/'+pageDivs.length;
+  if(!currentToc||!$tocList)return;
+  $tocList.querySelectorAll('.toc-item').forEach(el=>{
+    const ix=parseInt(el.dataset.page)-1;
+    const ok=ix>=0&&ix<pageDivs.length&&pageDivs[ix].dataset.rdy==='1';
+    el.classList.toggle('pending',!ok);
+  });
+}
+
+function schedulePrefill(){
+  if(prefillTimer)return;
+  prefillTimer=setTimeout(runPrefill,120);
+}
+async function runPrefill(){
+  prefillTimer=null;
+  if(!pageFlip||!pageDivs.length)return;
+  const anchor=prefillAnchor,total=pageDivs.length;
+  for(let d=1;d<=PRELOAD_RADIUS;d++){
+    for(const ix of [anchor-d,anchor+d]){
+      if(ix<0||ix>=total)continue;
+      if(pageDivs[ix].dataset.rdy==='1')continue;
+      await renderPdfPage(ix+1);
+      if(prefillAnchor!==anchor||!pageFlip){updateTocStates();schedulePrefill();return}
+      updateTocStates();
+    }
+  }
+  updateTocStates();
 }
 
 function onFlipState(){
   if(!pageFlip)return;
   updateUI();
-  refreshNear(pageFlip.getCurrentPageIndex(),pageDivs.length);
+  const c=pageFlip.getCurrentPageIndex();
+  prefillAnchor=c;
+  ensureNear(c,pageDivs.length,2).catch(()=>{});
+  schedulePrefill();
 }
 
 async function openReader(ci,targetPage){
@@ -825,7 +863,7 @@ async function openReader(ci,targetPage){
     pageFlip.turnToPage(t);
     if(!(await tocJsonP))extractTocAuto(currentPdf);
     updateUI();$readerLoading.style.display='none';
-    refreshNear(t,totalItems);
+    prefillAnchor=t;updateTocStates();schedulePrefill();
   }catch(e){console.error(e);$loadingText.textContent='Failed to load: '+e.message;setTimeout(()=>closeReader(),2000)}
 }
 
@@ -893,7 +931,8 @@ function renderToc(){
     html+=`<button class="toc-item${css}" data-page="${item.page}" data-page-end="${item.pageEnd}">${label}</button>`;
   }
   $tocList.innerHTML=html;
-  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',async()=>{if(pageFlip){const t=parseInt(el.dataset.page)-1;await ensureNear(t,pageDivs.length);if(pageFlip)pageFlip.turnToPage(t)}}));
+  $tocList.querySelectorAll('.toc-item').forEach(el=>el.addEventListener('click',async()=>{if(pageFlip){const t=parseInt(el.dataset.page)-1;prefillAnchor=t;await ensureNear(t,pageDivs.length,2);if(pageFlip){pageFlip.turnToPage(t);schedulePrefill()}}}));
+  updateTocStates();
 }
 
 function updateUI(){
@@ -906,6 +945,7 @@ function updateUI(){
 
 function closeReader(){
   currentPdf=null;totalPages=0;currentToc=null;
+  if(prefillTimer){clearTimeout(prefillTimer);prefillTimer=null}
   $btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';
   $overlay.classList.remove('active');document.body.style.overflow='';
   pageDivs=[];pageRendered={};pgBusy={};
