@@ -717,6 +717,7 @@ function bindEvents(){
   $btnPrev.addEventListener('click',()=>{if(pageFlip)pageFlip.flipPrev()});
   $btnNext.addEventListener('click',()=>{if(pageFlip)pageFlip.flipNext()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();pageFlip.flipNext()}else if(e.key==='ArrowLeft'){e.preventDefault();pageFlip.flipPrev()}});
+  window.addEventListener('popstate',()=>{if(pageFlip){readerHistory=false;closeReader()}});
   bindBookZoom();
 
   // Contact drawer
@@ -828,11 +829,14 @@ function renderPdfPage(pn){
       const page=await currentPdf.getPage(pn);
       const vp1=page.getViewport({scale:1});
       const mobile=window.matchMedia('(max-width: 768px)').matches;
-      const dispW=mobile?($overlay.clientWidth||340):340;
+      // Use the real on-screen page width (was hard-coded 340, which
+      // undersampled on wider layouts).
+      const holderW=pageDivs[pn-1]?pageDivs[pn-1].clientWidth:0;
+      const dispW=mobile?($overlay.clientWidth||340):(holderW||Math.max(340,($bookContainer.clientWidth||700)/2));
       const dprCap=Math.min(window.devicePixelRatio||1,2);
       // Render at ~2x the on-screen pixel width (was capped at 1.5, which
       // undersampled on HiDPI screens and blurred when zoomed).
-      const scale=Math.max(1,Math.min(2.5,(dispW*dprCap*1.05)/vp1.width));
+      const scale=Math.max(1,Math.min(3,(dispW*dprCap*1.5)/vp1.width));
       const vp=page.getViewport({scale});
       const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
       await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
@@ -906,6 +910,9 @@ function onFlipState(){
 
 async function openReader(ci,targetPage){
   const cat=catalogs[ci];if(!cat)return;
+  // Trap the browser Back gesture: while the reader is open it closes the
+  // reader instead of navigating away from the site.
+  if(!readerHistory){try{history.pushState({__reader:1},'');readerHistory=true}catch(e){}}
   $overlay.classList.add('active');document.body.style.overflow='hidden';
   currentCatalogId=cat.id;$readerTitle.textContent=cat.name;$pageIndicator.textContent='--';$btnPrev.disabled=$btnNext.disabled=true;
   $readerLoading.style.display='flex';$loadingText.textContent='Loading PDF...';
@@ -940,7 +947,7 @@ async function openReader(ci,targetPage){
     if(!(await tocJsonP))extractTocAuto(currentPdf);
     updateUI();$readerLoading.style.display='none';
     prefillAnchor=t;updateTocStates();schedulePrefill();
-  }catch(e){console.error(e);$loadingText.textContent='Failed to load: '+e.message;setTimeout(()=>closeReader(),2000)}
+  }catch(e){console.error(e);$loadingText.textContent='Failed to load this catalog. Please close and try again.'}
 }
 
 async function loadTocJson(cid){
@@ -1015,7 +1022,7 @@ function renderToc(){
 // The flip book itself is scaled/panned with a CSS transform: click a page
 // to zoom in where you clicked, scroll or pinch to zoom, drag to pan, and
 // click near the left/right edge to flip. Page turns reset the view.
-let viewScale=1,viewX=0,viewY=0,viewDragging=false;
+let viewScale=1,viewX=0,viewY=0,viewDragging=false,readerHistory=false;
 
 function applyView(){$bookContainer.style.transform='translate('+viewX+'px,'+viewY+'px) scale('+viewScale+')'}
 function viewZoomAt(px,py,factor){
@@ -1029,6 +1036,18 @@ function viewZoomAt(px,py,factor){
   viewScale=ns;applyView();
 }
 function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
+
+// True when the point falls on an actual rendered page (paper), used so
+// that only clicks on the surrounding background flip the book.
+function pointOnPage(x,y){
+  for(let i=0;i<pageDivs.length;i++){
+    const d=pageDivs[i];if(!d)continue;
+    const cv=d.querySelector('canvas');if(!cv)continue;
+    const r=cv.getBoundingClientRect();
+    if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return true;
+  }
+  return false;
+}
 
 // When zoomed in, page canvases would just be stretched and look blurry.
 // After the zoom settles, re-render the visible spread at the resolution
@@ -1099,9 +1118,12 @@ function bindBookZoom(){
     down=null;
     if(moved||Date.now()-start.t>450)return;
     const r=area.getBoundingClientRect(),rel=(start.x-r.left)/r.width;
-    if(rel<0.18){if(pageFlip)pageFlip.flipPrev();return}
-    if(rel>0.82){if(pageFlip)pageFlip.flipNext();return}
-    if(viewScale>1.05){viewReset()}else{viewZoomAt(start.x,start.y,1.5);scheduleHiRes()}
+    if(!pointOnPage(start.x,start.y)){
+      // background (outside the paper): left half = previous, right half = next
+      if(pageFlip){if(rel<0.5)pageFlip.flipPrev();else pageFlip.flipNext()}
+      return;
+    }
+    if(viewScale>1.05){viewReset()}else{viewZoomAt(start.x,start.y,2);scheduleHiRes()}
   };
   area.addEventListener('pointerup',endPtr);
   area.addEventListener('pointercancel',e=>{pts.delete(e.pointerId);if(pts.size<2)pinchLast=0;if(pts.size===0){viewDragging=false;area.classList.remove('panning')}down=null});
@@ -1118,6 +1140,7 @@ function updateUI(){
 
 function closeReader(){
   viewReset();
+  if(readerHistory){readerHistory=false;try{history.back()}catch(e){}}
   currentPdf=null;totalPages=0;currentToc=null;
   if(prefillTimer){clearTimeout(prefillTimer);prefillTimer=null}
   $btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';
