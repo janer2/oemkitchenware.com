@@ -247,6 +247,23 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .nav-btn:disabled { opacity: .12; cursor: default; }
 .nav-prev { left: 8px; } .nav-next { right: 8px; }
 .reader-loading { position: absolute; inset: 0; background: rgba(250,249,246,.92); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 250; }
+
+/* ===== Page zoom viewer ===== */
+.zoom-overlay { position: fixed; inset: 0; z-index: 900; background: #14141f; display: none; flex-direction: column; }
+.zoom-overlay.active { display: flex; }
+.zoom-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.08); flex-shrink: 0; }
+.zoom-nav, .zoom-close { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); color: #fff; width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 1.05rem; line-height: 1; flex-shrink: 0; }
+.zoom-nav:hover, .zoom-close:hover { background: rgba(255,255,255,.22); }
+.zoom-label { font-size: .85rem; color: #cfcabc; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.zoom-spacer { flex: 1; }
+.zoom-raw { color: #cfcabc; font-size: .78rem; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.zoom-raw:hover { color: #fff; }
+.zoom-stage { position: relative; flex: 1; overflow: hidden; touch-action: none; cursor: grab; }
+.zoom-stage.dragging { cursor: grabbing; }
+.zoom-wrap { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.zoom-wrap canvas { display: block; background: #fff; box-shadow: 0 12px 44px rgba(0,0,0,.55); }
+.zoom-hint { padding: 8px 14px; text-align: center; font-size: .74rem; color: #8f8a7c; background: rgba(255,255,255,.04); flex-shrink: 0; }
+@media (max-width: 768px) { .zoom-hint { font-size: .68rem; padding: 6px 10px; } .zoom-raw { display: none; } }
 .reader-loading .spinner { width: 36px; height: 36px; border: 3px solid #e0dcd5; border-top-color: #1a1a2e; border-radius: 50%; animation: spin .7s linear infinite; }
 .reader-loading .text { color: #999; font-size: .88rem; }
 .reader-hint { text-align: center; color: #bbb; font-size: .7rem; padding: 8px 20px; flex-shrink: 0; border-top: 1px solid #eee; }
@@ -537,6 +554,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   <div class="reader-header">
     <button class="close-btn" id="btnClose" title="Close (ESC)">✕</button>
     <button class="toc-toggle-btn" id="btnTocToggle" title="Toggle contents">☰</button>
+    <button class="toc-toggle-btn" id="btnZoom" title="Zoom into page (or double-click a page)" aria-label="Zoom into page"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/><line x1="10.5" y1="7.5" x2="10.5" y2="13.5"/><line x1="7.5" y1="10.5" x2="13.5" y2="10.5"/></svg></button>
     <span class="catalog-title" id="readerTitle">Catalog</span>
     <span class="page-indicator" id="pageIndicator">--</span>
   </div>
@@ -554,7 +572,23 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
       </div>
     </div>
   </div>
-  <div class="reader-hint">← → arrow keys | Click page edges | ESC to close</div>
+  <div class="reader-hint">← → arrow keys | Click page edges | Double-click page to zoom | ESC to close</div>
+</div>
+
+<!-- ===== Page zoom viewer ===== -->
+<div class="zoom-overlay" id="zoomOverlay">
+  <div class="zoom-bar">
+    <button class="zoom-nav" id="zoomPrev" aria-label="Previous page">&lsaquo;</button>
+    <span class="zoom-label" id="zoomLabel">Page --</span>
+    <button class="zoom-nav" id="zoomNext" aria-label="Next page">&rsaquo;</button>
+    <span class="zoom-spacer"></span>
+    <a class="zoom-raw" id="zoomRaw" href="#" target="_blank" rel="noopener">Open original PDF</a>
+    <button class="zoom-close" id="zoomClose" aria-label="Close zoom">&times;</button>
+  </div>
+  <div class="zoom-stage" id="zoomStage">
+    <div class="zoom-wrap" id="zoomWrap"><canvas id="zoomCanvas"></canvas></div>
+  </div>
+  <div class="zoom-hint">Scroll or pinch to zoom &middot; drag to pan &middot; double-click to toggle fit / 100%</div>
 </div>
 
 <!-- ===== Contact FAB + Drawer ===== -->
@@ -627,6 +661,11 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
   $readerLoading=document.getElementById('readerLoading'),$loadingText=document.getElementById('readerLoadingText'),
   $readerTitle=document.getElementById('readerTitle'),$pageIndicator=document.getElementById('pageIndicator'),
   $btnPrev=document.getElementById('btnPrev'),$btnNext=document.getElementById('btnNext'),
+  $zoomOverlay=document.getElementById('zoomOverlay'),$zoomStage=document.getElementById('zoomStage'),
+  $zoomWrap=document.getElementById('zoomWrap'),$zoomCanvas=document.getElementById('zoomCanvas'),
+  $zoomLabel=document.getElementById('zoomLabel'),$zoomPrev=document.getElementById('zoomPrev'),
+  $zoomNext=document.getElementById('zoomNext'),$zoomClose=document.getElementById('zoomClose'),
+  $zoomRaw=document.getElementById('zoomRaw'),$btnZoom=document.getElementById('btnZoom'),
   $btnClose=document.getElementById('btnClose'),$btnTocToggle=document.getElementById('btnTocToggle'),
   $tocSidebar=document.getElementById('tocSidebar'),$tocList=document.getElementById('tocList'),
   $catalogGrid=document.getElementById('catalogGrid'),$catGroups=document.getElementById('catGroups'),
@@ -711,7 +750,8 @@ function bindEvents(){
   $btnTocToggle.addEventListener('click',()=>{$tocSidebar.classList.toggle('hidden');$btnTocToggle.classList.toggle('active',!$tocSidebar.classList.contains('hidden'))});
   $btnPrev.addEventListener('click',()=>{if(pageFlip)pageFlip.flipPrev()});
   $btnNext.addEventListener('click',()=>{if(pageFlip)pageFlip.flipNext()});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();pageFlip.flipNext()}else if(e.key==='ArrowLeft'){e.preventDefault();pageFlip.flipPrev()}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(zoomOpenFlag){closeZoom();return}if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(zoomOpenFlag){if(e.key==='ArrowRight'){e.preventDefault();zoomStep(1)}else if(e.key==='ArrowLeft'){e.preventDefault();zoomStep(-1)}return}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();pageFlip.flipNext()}else if(e.key==='ArrowLeft'){e.preventDefault();pageFlip.flipPrev()}});
+  bindZoomEvents();
 
   // Contact drawer
   $contactFab.addEventListener('click',openDrawer);
@@ -1002,6 +1042,98 @@ function renderToc(){
   updateTocStates();
 }
 
+//===== Page zoom viewer =====
+// Renders the page at ~3x (vector text stays sharp, bitmaps at their
+// native resolution) into a dedicated overlay, then zooms/pans it with
+// CSS transforms so users can read spec text and inspect products.
+let zoomOpenFlag=false,zoomPn=0,zoomImgW=0,zoomImgH=0,zScale=1,zX=0,zY=0;
+const ZOOM_MAX_PX=2000;
+
+function zoomApply(){$zoomWrap.style.transform='translate('+zX+'px,'+zY+'px) scale('+zScale+')'}
+function zoomFit(){
+  const sW=$zoomStage.clientWidth,sH=$zoomStage.clientHeight;
+  if(!zoomImgW||!zoomImgH||!sW||!sH)return;
+  zScale=Math.min(sW/zoomImgW,sH/zoomImgH)*0.98;
+  zX=(sW-zoomImgW*zScale)/2;zY=(sH-zoomImgH*zScale)/2;zoomApply();
+}
+function zoomAt(cx,cy,factor){
+  const r=$zoomStage.getBoundingClientRect(),px=cx-r.left,py=cy-r.top;
+  const nz=Math.min(Math.max(zScale*factor,0.05),2.5);
+  if(nz===zScale)return;
+  zX=px-(px-zX)*(nz/zScale);zY=py-(py-zY)*(nz/zScale);zScale=nz;zoomApply();
+}
+async function zoomRender(pn){
+  const page=await currentPdf.getPage(pn);
+  const vp1=page.getViewport({scale:1});
+  const targetW=Math.min(Math.round(vp1.width*3),ZOOM_MAX_PX);
+  const vp=page.getViewport({scale:targetW/vp1.width});
+  const cv=$zoomCanvas;cv.width=Math.round(vp.width);cv.height=Math.round(vp.height);
+  const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
+  await page.render({canvasContext:ctx,viewport:vp}).promise;
+  zoomImgW=cv.width;zoomImgH=cv.height;
+}
+function openZoom(pn){
+  if(!currentPdf||!(pn>=1)||pn>totalPages)return;
+  zoomOpenFlag=true;zoomPn=pn;
+  $zoomLabel.textContent='Page '+pn+' / '+totalPages;
+  const cat=catalogs.find(c=>c.id===currentCatalogId);
+  if(cat)$zoomRaw.href=cat.pdf+'#page='+pn;
+  $zoomOverlay.classList.add('active');
+  zoomImgW=0;zoomImgH=0;
+  $zoomLabel.textContent='Loading page '+pn+'...';
+  zoomRender(pn).then(()=>{$zoomLabel.textContent='Page '+zoomPn+' / '+totalPages;zoomFit()}).catch(e=>{$zoomLabel.textContent='Failed to render page '+pn});
+}
+function closeZoom(){
+  zoomOpenFlag=false;
+  $zoomOverlay.classList.remove('active');
+  $zoomCanvas.width=$zoomCanvas.height=0;zoomImgW=zoomImgH=0;
+}
+function zoomStep(d){
+  const n=zoomPn+d;
+  if(n<1||n>totalPages)return;
+  zoomPn=n;$zoomLabel.textContent='Loading page '+n+'...';
+  zoomRender(n).then(()=>{$zoomLabel.textContent='Page '+zoomPn+' / '+totalPages;zoomFit()}).catch(()=>{$zoomLabel.textContent='Failed to render page '+n});
+}
+function zoomFromEvent(e){
+  const c=pageFlip?pageFlip.getCurrentPageIndex():0;
+  const single=window.matchMedia('(max-width: 768px)').matches;
+  if(single){openZoom(c+1);return}
+  const rect=$bookContainer.getBoundingClientRect();
+  const rightHalf=e.clientX>rect.left+rect.width/2;
+  let pn=rightHalf?c+2:c+1;
+  if(pn>totalPages)pn=totalPages;
+  openZoom(pn);
+}
+function bindZoomEvents(){
+  $btnZoom.addEventListener('click',()=>{const c=pageFlip?pageFlip.getCurrentPageIndex():0;openZoom(c+1)});
+  $bookContainer.addEventListener('dblclick',zoomFromEvent);
+  $zoomClose.addEventListener('click',closeZoom);
+  $zoomPrev.addEventListener('click',()=>zoomStep(-1));
+  $zoomNext.addEventListener('click',()=>zoomStep(1));
+  $zoomStage.addEventListener('wheel',e=>{e.preventDefault();zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0015))},{passive:false});
+  $zoomStage.addEventListener('dblclick',e=>{e.preventDefault();if(zScale<1)zoomAt(e.clientX,e.clientY,1/zScale);else zoomFit()});
+  const pts=new Map();let dragging=false,dLast=0;
+  $zoomStage.addEventListener('pointerdown',e=>{
+    $zoomStage.setPointerCapture(e.pointerId);
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===1){dragging=true;$zoomStage.classList.add('dragging')}
+  });
+  $zoomStage.addEventListener('pointermove',e=>{
+    const prev=pts.get(e.pointerId);if(!prev)return;
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===1&&dragging){zX+=e.clientX-prev.x;zY+=e.clientY-prev.y;zoomApply()}
+    else if(pts.size===2){
+      const v=[...pts.values()],dist=Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y);
+      if(dLast){zoomAt((v[0].x+v[1].x)/2,(v[0].y+v[1].y)/2,dist/dLast)}
+      dLast=dist;
+    }
+  });
+  const endPtr=e=>{pts.delete(e.pointerId);if(pts.size<2)dLast=0;if(pts.size===0){dragging=false;$zoomStage.classList.remove('dragging')}};
+  $zoomStage.addEventListener('pointerup',endPtr);
+  $zoomStage.addEventListener('pointercancel',endPtr);
+  window.addEventListener('resize',()=>{if(zoomOpenFlag)zoomFit()});
+}
+
 function updateUI(){
   if(!pageFlip)return;const c=pageFlip.getCurrentPageIndex();
   if(window.matchMedia('(max-width: 768px)').matches)$pageIndicator.textContent='Page '+(c+1)+' / '+totalPages;
@@ -1011,6 +1143,7 @@ function updateUI(){
 }
 
 function closeReader(){
+  if(zoomOpenFlag)closeZoom();
   currentPdf=null;totalPages=0;currentToc=null;
   if(prefillTimer){clearTimeout(prefillTimer);prefillTimer=null}
   $btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';
