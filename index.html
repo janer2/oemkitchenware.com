@@ -830,7 +830,9 @@ function renderPdfPage(pn){
       const mobile=window.matchMedia('(max-width: 768px)').matches;
       const dispW=mobile?($overlay.clientWidth||340):340;
       const dprCap=Math.min(window.devicePixelRatio||1,2);
-      const scale=Math.max(1,Math.min(1.5,(dispW*dprCap)/vp1.width));
+      // Render at ~2x the on-screen pixel width (was capped at 1.5, which
+      // undersampled on HiDPI screens and blurred when zoomed).
+      const scale=Math.max(1,Math.min(2.5,(dispW*dprCap*1.05)/vp1.width));
       const vp=page.getViewport({scale});
       const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
       await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
@@ -1028,10 +1030,45 @@ function viewZoomAt(px,py,factor){
 }
 function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
 
+// When zoomed in, page canvases would just be stretched and look blurry.
+// After the zoom settles, re-render the visible spread at the resolution
+// the current zoom actually needs (up to 4x page size).
+let viewHiResTimer=null,viewHiResBusy=false;
+function scheduleHiRes(){if(viewHiResTimer)clearTimeout(viewHiResTimer);viewHiResTimer=setTimeout(renderHiResVisible,260)}
+async function renderHiResVisible(){
+  if(viewHiResBusy||!pageFlip||!currentPdf||viewScale<=1.02)return;
+  viewHiResBusy=true;
+  try{
+    const c=pageFlip.getCurrentPageIndex();
+    const single=window.matchMedia('(max-width: 768px)').matches;
+    const idxs=single?[c]:[c,c+1];
+    const dprCap=Math.min(window.devicePixelRatio||1,2);
+    for(const ix of idxs){
+      if(ix<0||ix>=pageDivs.length)continue;
+      const holder=pageDivs[ix];if(!holder)continue;
+      const pn=ix+1;if(pn>totalPages)continue;
+      const cv=holder.querySelector('canvas');if(!cv)continue;
+      const layoutW=holder.clientWidth||0;if(!layoutW)continue;
+      const needW=layoutW*viewScale*dprCap;
+      if(needW<=cv.width*1.12)continue;
+      const page=await currentPdf.getPage(pn);
+      const vp1=page.getViewport({scale:1});
+      const scale=Math.min(needW/vp1.width,4);
+      const vp=page.getViewport({scale});
+      const ncv=document.createElement('canvas');
+      ncv.width=Math.round(vp.width);ncv.height=Math.round(vp.height);
+      await page.render({canvasContext:ncv.getContext('2d'),viewport:vp}).promise;
+      if(!holder.isConnected)continue;
+      holder.innerHTML='';holder.appendChild(ncv);holder.dataset.rdy='1';
+    }
+  }catch(e){console.error('hirez',e)}
+  viewHiResBusy=false;
+}
+
 function bindBookZoom(){
   const area=$bookContainer.parentElement.parentElement;   // .book-area
   const pts=new Map();let down=null,moved=false,pinchLast=0;
-  area.addEventListener('wheel',e=>{e.preventDefault();viewZoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0015))},{passive:false});
+  area.addEventListener('wheel',e=>{e.preventDefault();viewZoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0015));scheduleHiRes()},{passive:false});
   area.addEventListener('pointerdown',e=>{
     try{area.setPointerCapture(e.pointerId)}catch(err){}
     pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
@@ -1057,13 +1094,14 @@ function bindBookZoom(){
     pts.delete(e.pointerId);
     if(pts.size<2)pinchLast=0;
     if(pts.size===0){viewDragging=false;area.classList.remove('panning')}
+    if(pts.size===0&&viewScale>1.02)scheduleHiRes();
     if(!start||pts.size>0)return;
     down=null;
     if(moved||Date.now()-start.t>450)return;
     const r=area.getBoundingClientRect(),rel=(start.x-r.left)/r.width;
     if(rel<0.18){if(pageFlip)pageFlip.flipPrev();return}
     if(rel>0.82){if(pageFlip)pageFlip.flipNext();return}
-    if(viewScale>1.05)viewReset();else viewZoomAt(start.x,start.y,2.4);
+    if(viewScale>1.05){viewReset()}else{viewZoomAt(start.x,start.y,1.5);scheduleHiRes()}
   };
   area.addEventListener('pointerup',endPtr);
   area.addEventListener('pointercancel',e=>{pts.delete(e.pointerId);if(pts.size<2)pinchLast=0;if(pts.size===0){viewDragging=false;area.classList.remove('panning')}down=null});
