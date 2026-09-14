@@ -938,7 +938,7 @@ async function openReader(ci,targetPage){
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
     if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState()});pageFlip.on('flip',onFlipState);}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true)});}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
     $loadingText.textContent='Loading pages…';
@@ -1042,36 +1042,59 @@ function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
 // zoom: the spread is moving, so a zoom applied mid-flip reads as "it zooms
 // and then turns". The library only reports 'read' once it settles, so mirror
 // that with a short time guard.
-const FLIP_MS=560;let flipAt=0;
-function markFlip(){flipAt=Date.now()}
-function flipRunning(){return Date.now()-flipAt<FLIP_MS}
+// Two turn speeds. A deliberate single tap keeps the full 3D turn, while taps
+// that land on top of each other are replayed with a short flick so that
+// hammering an edge advances the book as fast as the clicks arrive instead of
+// making the reader sit through a full turn per click.
+const FLIP_FULL=550,FLIP_FAST=200;let flipAt=0,flipDur=FLIP_FULL;
+function markFlip(ms){if(ms)flipDur=ms;flipAt=Date.now()}
+function flipRunning(){return Date.now()-flipAt<flipDur+40}
+// The library reads settings.flippingTime when a turn starts, so the speed can
+// be switched per turn without rebuilding the reader.
+function applyFlipTime(ms){
+  try{const s=pageFlip.getSettings();if(s&&s.flippingTime!==ms)s.flippingTime=ms}catch(e){}
+}
 // Taps that arrive during a turn are not dropped - they queue up and are
-// replayed one spread at a time as soon as the current turn settles, so
-// clicking five times quickly turns five spreads. The queue is capped so a
-// burst of clicks cannot send the book flying far past what was asked for.
-const FLIP_MAXQ=4;let flipQueue=[],flipDrainTimer=null;
+// replayed one spread at a time the moment the current turn ends, so clicking
+// five times quickly turns five spreads. The queue is capped so a burst of
+// clicks cannot send the book flying far past what was asked for.
+const FLIP_MAXQ=4;let flipQueue=[],flipDrainTimer=null,lastDrainAt=0;
 function flipTo(dir){
   if(!pageFlip)return;
-  if(flipRunning()||flipQueue.length){if(flipQueue.length<FLIP_MAXQ)flipQueue.push(dir);return}
+  // A turn is already on screen: this click belongs to the same burst, so it
+  // is remembered and replayed at the fast speed.
+  if(flipRunning()||flipQueue.length){
+    if(flipQueue.length<FLIP_MAXQ){flipQueue.push(dir);applyFlipTime(FLIP_FAST)}
+    return;
+  }
   const c=pageFlip.getCurrentPageIndex();
   if(dir<0?c<=0:c>=pageDivs.length-1)return;
-  startFlip(dir);
+  applyFlipTime(FLIP_FULL);
+  startFlip(dir,FLIP_FULL);
 }
-function startFlip(dir){
-  markFlip();
+function startFlip(dir,dur){
+  markFlip(dur);
   if(dir<0)pageFlip.flipPrev();else pageFlip.flipNext();
   if(flipDrainTimer)clearTimeout(flipDrainTimer);
-  flipDrainTimer=setTimeout(()=>{flipDrainTimer=null;drainFlips()},FLIP_MS+60);
+  // Safety net only: normally the turn's own end event drains the queue, this
+  // just makes sure a missing event cannot strand the queue for good.
+  flipDrainTimer=setTimeout(()=>{flipDrainTimer=null;drainFlips()},dur+260);
 }
-function drainFlips(){
+function drainFlips(settled){
   if(!pageFlip||!flipQueue.length)return;
-  // The guard is time-based, so a late state event can still mark the turn as
-  // running - keep checking instead of stalling the queue for good.
-  if(flipRunning()){if(!flipDrainTimer)flipDrainTimer=setTimeout(()=>{flipDrainTimer=null;drainFlips()},100);return}
+  // The turn ends once, but two events can report it. Without this the second
+  // one would start a turn on top of the one just started and skip a spread.
+  if(Date.now()-lastDrainAt<100)return;
+  if(!settled&&flipRunning()){
+    if(!flipDrainTimer)flipDrainTimer=setTimeout(()=>{flipDrainTimer=null;drainFlips()},80);
+    return;
+  }
+  if(flipDrainTimer){clearTimeout(flipDrainTimer);flipDrainTimer=null}
   const dir=flipQueue.shift();
   const c=pageFlip.getCurrentPageIndex();
   if(dir<0?c<=0:c>=pageDivs.length-1){flipQueue.length=0;return}
-  startFlip(dir);
+  lastDrainAt=Date.now();
+  startFlip(dir,FLIP_FAST);
 }
 // Jumping somewhere directly (TOC, opening a catalog) invalidates the queue.
 function cancelFlips(){flipQueue.length=0;if(flipDrainTimer){clearTimeout(flipDrainTimer);flipDrainTimer=null}}
