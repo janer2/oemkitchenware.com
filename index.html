@@ -1037,18 +1037,6 @@ function viewZoomAt(px,py,factor){
 }
 function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
 
-// True when the point falls on an actual rendered page (paper), used so
-// that only clicks on the surrounding background flip the book.
-function pointOnPage(x,y){
-  for(let i=0;i<pageDivs.length;i++){
-    const d=pageDivs[i];if(!d)continue;
-    const cv=d.querySelector('canvas');if(!cv)continue;
-    const r=cv.getBoundingClientRect();
-    if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return true;
-  }
-  return false;
-}
-
 // When zoomed in, page canvases would just be stretched and look blurry.
 // After the zoom settles, re-render the visible spread at the resolution
 // the current zoom actually needs (up to 4x page size).
@@ -1118,11 +1106,10 @@ function bindBookZoom(){
     down=null;
     if(moved||Date.now()-start.t>450)return;
     const r=area.getBoundingClientRect(),rel=(start.x-r.left)/r.width;
-    if(!pointOnPage(start.x,start.y)){
-      // background (outside the paper): left half = previous, right half = next
-      if(pageFlip){if(rel<0.5)pageFlip.flipPrev();else pageFlip.flipNext()}
-      return;
-    }
+    // Edge zones: the outer 18% on each side flips the page. A flip resets
+    // the view back to fit (see onFlipState).
+    if(pageFlip&&rel<0.18){pageFlip.flipPrev();return}
+    if(pageFlip&&rel>0.82){pageFlip.flipNext();return}
     if(viewScale>1.05){viewReset()}else{viewZoomAt(start.x,start.y,2);scheduleHiRes()}
   };
   area.addEventListener('pointerup',endPtr);
