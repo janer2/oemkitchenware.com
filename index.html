@@ -714,9 +714,9 @@ function bindEvents(){
   $catalogGrid.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))}});
   $btnClose.addEventListener('click',closeReader);
   $btnTocToggle.addEventListener('click',()=>{$tocSidebar.classList.toggle('hidden');$btnTocToggle.classList.toggle('active',!$tocSidebar.classList.contains('hidden'))});
-  $btnPrev.addEventListener('click',()=>{if(pageFlip)pageFlip.flipPrev()});
-  $btnNext.addEventListener('click',()=>{if(pageFlip)pageFlip.flipNext()});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();pageFlip.flipNext()}else if(e.key==='ArrowLeft'){e.preventDefault();pageFlip.flipPrev()}});
+  $btnPrev.addEventListener('click',()=>flipTo(-1));
+  $btnNext.addEventListener('click',()=>flipTo(1));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();flipTo(1)}else if(e.key==='ArrowLeft'){e.preventDefault();flipTo(-1)}});
   window.addEventListener('popstate',()=>{if(pageFlip){readerHistory=false;closeReader()}});
   bindBookZoom();
 
@@ -937,7 +937,7 @@ async function openReader(ci,targetPage){
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
     if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',onFlipState);pageFlip.on('flip',onFlipState);}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState()});pageFlip.on('flip',onFlipState);}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
     $loadingText.textContent='Loading pages…';
@@ -1037,6 +1037,40 @@ function viewZoomAt(px,py,factor){
 }
 function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
 
+// A tap that lands while a page-turn animation is still running must be
+// ignored: the spread is moving, so a zoom applied mid-flip reads as "it
+// zooms and then turns". The library only reports 'read' once it settles, so
+// mirror that with a short time guard.
+const FLIP_MS=560;let flipAt=0;
+function markFlip(){flipAt=Date.now()}
+function flipRunning(){return Date.now()-flipAt<FLIP_MS}
+function flipTo(dir){
+  if(!pageFlip||flipRunning())return;
+  const c=pageFlip.getCurrentPageIndex();
+  if(dir<0?c<=0:c>=pageDivs.length-1)return;
+  markFlip();if(dir<0)pageFlip.flipPrev();else pageFlip.flipNext();
+}
+// The printed pages themselves, so taps that are not on a page image can be
+// told apart from taps on the page content. The flip wrapper fills the whole
+// area, so the elements are no use - the canvases are drawn inside their boxes
+// with object-fit:contain, and it is that drawn rectangle that is the visible
+// "PDF" (each page is kept separately, so the gutter between the two facing
+// pages counts as outside).
+function paperBox(){
+  const cvs=$bookContainer.querySelectorAll('.stf__item canvas');
+  let l=Infinity,t=Infinity,r=-Infinity,b=-Infinity;const pages=[];
+  for(const cv of cvs){
+    const cr=cv.getBoundingClientRect();
+    if(!cr.width||!cr.height)continue;
+    const s=Math.min(cr.width/(cv.width||cr.width),cr.height/(cv.height||cr.height));
+    const w=(cv.width||cr.width)*s,h=(cv.height||cr.height)*s;
+    const x=cr.left+(cr.width-w)/2,y=cr.top+(cr.height-h)/2;
+    pages.push({left:x,top:y,right:x+w,bottom:y+h});
+    l=Math.min(l,x);t=Math.min(t,y);r=Math.max(r,x+w);b=Math.max(b,y+h);
+  }
+  return isFinite(l)?{left:l,top:t,right:r,bottom:b,width:r-l,height:b-t,pages:pages}:null;
+}
+
 // When zoomed in, page canvases would just be stretched and look blurry.
 // After the zoom settles, re-render the visible spread at the resolution
 // the current zoom actually needs (up to 4x page size).
@@ -1075,7 +1109,7 @@ async function renderHiResVisible(){
 function bindBookZoom(){
   const area=$bookContainer.parentElement.parentElement;   // .book-area
   const pts=new Map();let down=null,moved=false,pinchLast=0;
-  area.addEventListener('wheel',e=>{e.preventDefault();viewZoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0015));scheduleHiRes()},{passive:false});
+  area.addEventListener('wheel',e=>{e.preventDefault();if(flipRunning())return;viewZoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0015));scheduleHiRes()},{passive:false});
   area.addEventListener('pointerdown',e=>{
     try{area.setPointerCapture(e.pointerId)}catch(err){}
     pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
@@ -1092,7 +1126,7 @@ function bindBookZoom(){
       }
     }else if(pts.size===2){
       const v=[...pts.values()],dist=Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y);
-      if(pinchLast)viewZoomAt((v[0].x+v[1].x)/2,(v[0].y+v[1].y)/2,dist/pinchLast);
+      if(pinchLast&&!flipRunning())viewZoomAt((v[0].x+v[1].x)/2,(v[0].y+v[1].y)/2,dist/pinchLast);
       pinchLast=dist;moved=true;
     }
   });
@@ -1105,11 +1139,22 @@ function bindBookZoom(){
     if(!start||pts.size>0)return;
     down=null;
     if(moved||Date.now()-start.t>450)return;
+    // Never act on a tap that arrives during the turn animation (see markFlip).
+    if(flipRunning())return;
+    // The arrow buttons turn the page themselves - don't turn it twice.
+    if(e.target&&e.target.closest&&e.target.closest('.nav-btn'))return;
     const r=area.getBoundingClientRect(),rel=(start.x-r.left)/r.width;
     // Edge zones: the outer 18% on each side flips the page. A flip resets
     // the view back to fit (see onFlipState).
-    if(pageFlip&&rel<0.18){pageFlip.flipPrev();return}
-    if(pageFlip&&rel>0.82){pageFlip.flipNext();return}
+    if(pageFlip&&rel<0.18){flipTo(-1);return}
+    if(pageFlip&&rel>0.82){flipTo(1);return}
+    // Anything that is not on a page image turns the page too - it must never
+    // zoom. That covers the grey gutter between the two facing pages and the
+    // margins around them, i.e. everything "outside the PDF".
+    const paper=viewScale<=1.02?paperBox():null;
+    if(paper&&!paper.pages.some(q=>start.x>=q.left-2&&start.x<=q.right+2&&start.y>=q.top-2&&start.y<=q.bottom+2)){
+      flipTo(start.x<(paper.left+paper.right)/2?-1:1);return;
+    }
     if(viewScale>1.05){viewReset()}else{viewZoomAt(start.x,start.y,2);scheduleHiRes()}
   };
   area.addEventListener('pointerup',endPtr);
