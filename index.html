@@ -57,11 +57,14 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: #fff; border-bottom: 1px solid #eee;
-  display: flex; align-items: center; gap: 32px; padding: 12px 32px;
+  /* grid (not flex) so the two side columns are equal and the nav really sits
+     in the middle of the page instead of midway between logo and search box */
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 24px; padding: 12px 32px;
 }
-.site-header .logo { display: flex; align-items: center; flex-shrink: 0; }
-.site-header .logo img { height: 38px; width: auto; display: block; }
-.main-nav { display: flex; align-items: center; gap: 6px; margin: 0 auto; }
+.site-header .logo { display: flex; align-items: center; justify-self: start; }
+.site-header .logo img { height: 44px; width: auto; display: block; }
+.main-nav { display: flex; align-items: center; gap: 6px; justify-self: center; }
 .main-nav a {
   text-decoration: none; color: #444; font-size: .95rem; font-weight: 500;
   padding: 8px 16px; border-radius: 6px; transition: background .15s, color .15s; cursor: pointer;
@@ -81,7 +84,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 @media (max-width: 768px) { .nav-dropdown { padding: 12px 14px; } .nd-item { width: 140px; } }
 
 /* Search */
-.search-wrap { position: relative; width: 220px; flex-shrink: 0; }
+.search-wrap { position: relative; width: 220px; justify-self: end; }
 .search-wrap .search-box {
   display: flex; align-items: center; gap: 8px;
   border: 1px solid #ddd; border-radius: 24px; padding: 7px 14px;
@@ -346,11 +349,11 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 /* ===== Mobile ===== */
 @media (max-width: 768px) {
-  .site-header { padding: 10px 16px; gap: 12px; flex-wrap: wrap; }
-  .site-header .logo img { height: 30px; }
-  .main-nav { order: 3; width: 100%; justify-content: center; margin: 4px 0 0; }
+  .site-header { padding: 10px 16px; gap: 8px 12px; grid-template-columns: 1fr auto; grid-template-rows: auto auto; }
+  .site-header .logo img { height: 34px; }
+  .main-nav { grid-column: 1 / -1; grid-row: 2; margin: 0; }
   .main-nav a { font-size: .85rem; padding: 6px 12px; }
-  .search-wrap { margin-left: auto; width: 170px; }
+  .search-wrap { grid-column: 2; grid-row: 1; width: 170px; margin: 0; }
   .hero h1 { font-size: 1.7rem; }
   .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; padding: 0 14px 40px; }
   .reader-header { padding: 8px 12px; gap: 8px; }
@@ -373,10 +376,11 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 /* Small phones <=480px */
 @media (max-width: 480px) {
-  .site-header { padding: 10px 12px; gap: 10px; }
-  .site-header .logo img { height: 26px; }
+  .site-header { padding: 10px 12px; gap: 8px; grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+  .site-header .logo img { height: 28px; }
+  .main-nav { grid-column: 1; grid-row: 2; }
   .main-nav a { font-size: .8rem; padding: 6px 10px; }
-  .search-wrap { width: 100%; order: 4; margin: 2px 0 0; }
+  .search-wrap { grid-column: 1; grid-row: 3; width: 100%; margin: 2px 0 0; }
   .search-dropdown { max-height: 260px; }
   .hero { padding: 34px 16px 28px; }
   .hero h1 { font-size: 1.35rem; letter-spacing: 0; }
@@ -402,7 +406,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 <!-- ===== Header ===== -->
 <header class="site-header">
-  <a class="logo" data-view-link="catalog"><img src="assets/logo.png" alt="Yongli"></a>
+  <a class="logo" data-view-link="catalog"><img src="assets/logo-mark.png" alt="Yongli" width="382" height="150"></a>
   <nav class="main-nav">
     <a data-view-link="catalog" class="active">Catalog</a>
     <a data-view-link="customize">Customize</a>
@@ -773,17 +777,37 @@ window.coverFallback=(el,i)=>{
 
 //===== Events =====
 function bindEvents(){
-  // Nav
+  // Nav. The Catalog item drops down the row of PDF catalogues while the mouse
+  // is on it; touch devices have no hover, so there a tap toggles it instead.
+  const navBox=document.getElementById('navCatalogDropdown');
+  const navCatalogLink=document.querySelector('.main-nav [data-view-link="catalog"]');
+  const canHover=window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  let navBoxTimer=null;
+  const openNavBox=()=>{
+    if(!navBox)return;
+    if(navBoxTimer){clearTimeout(navBoxTimer);navBoxTimer=null}
+    renderNavDropdown();
+    navBox.classList.add('active');
+  };
+  // A small delay lets the pointer cross the gap between the link and the panel.
+  const closeNavBoxSoon=()=>{
+    if(!navBox)return;
+    if(navBoxTimer)clearTimeout(navBoxTimer);
+    navBoxTimer=setTimeout(()=>{navBox.classList.remove('active');navBoxTimer=null},240);
+  };
+  if(canHover&&navCatalogLink&&navBox){
+    [navCatalogLink,navBox].forEach(el=>{
+      el.addEventListener('mouseenter',openNavBox);
+      el.addEventListener('mouseleave',closeNavBoxSoon);
+    });
+  }
   document.querySelectorAll('[data-view-link]').forEach(a=>a.addEventListener('click',()=>{
     const v=a.dataset.viewLink;
     showView(v);
-    const box=document.getElementById('navCatalogDropdown');
-    if(!box)return;
-    // Clicking "Catalog" again reveals the catalogue row; anything else hides it.
+    if(!navBox)return;
     if(v==='catalog'&&a.closest('.main-nav')){
-      renderNavDropdown();
-      box.classList.toggle('active');
-    }else box.classList.remove('active');
+      if(canHover)openNavBox(); else navBox.classList.toggle('active');
+    }else navBox.classList.remove('active');
   }));
   $catalogGrid.addEventListener('click',e=>{const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))});
   $catalogGrid.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))}});
@@ -920,7 +944,7 @@ function searchRows(q){
   const ql=q.toLowerCase();
   const tokens=ql.split(/\s+/).filter(t=>t.length>1);
   if(!tokens.length)return [];
-  const rows=[];
+  const rows=[],fallback=[];
   for(const e of searchIndex){
     const text=e.text;
     let score=0;
@@ -940,14 +964,21 @@ function searchRows(q){
     if(!matched.length)matched=items.filter(it=>it.c&&it.c.toLowerCase().indexOf(ql)>=0);
     if(matched.length){
       for(const it of matched.slice(0,3)){
-        rows.push({ci:e.ci,pn:e.pn,section:e.section,catalogName:e.catalogName,name:it.n,code:it.c,score:score+(it.n?60:20)});
+        // A row that carries a code is the product the visitor can actually ask
+        // for; a "Kit A · Part B · Part C" contents line is not, so rank below.
+        let rank=it.c?80:(it.n?50:10);
+        if(it.n&&it.n.indexOf('\u00b7')>=0)rank-=30;
+        rows.push({ci:e.ci,pn:e.pn,section:e.section,catalogName:e.catalogName,name:it.n,code:it.c,score:score+rank});
       }
     }else{
-      rows.push({ci:e.ci,pn:e.pn,section:e.section,catalogName:e.catalogName,name:'',code:'',score:score});
+      fallback.push({ci:e.ci,pn:e.pn,section:e.section,catalogName:e.catalogName,name:'',code:'',score:score});
     }
   }
-  rows.sort((a,b)=>b.score-a.score);
-  return rows.slice(0,14);
+  // A page hit that cannot name a product is only worth showing when no page
+  // named one: listing "Kitchen Gadgets" as a result tells the visitor nothing.
+  const pool=rows.length?rows:fallback;
+  pool.sort((a,b)=>b.score-a.score);
+  return pool.slice(0,14);
 }
 // One search implementation, shared by the site header and the reader header.
 async function searchInto(inputEl,dropdownEl,onPick){
@@ -959,10 +990,11 @@ async function searchInto(inputEl,dropdownEl,onPick){
   if(!rows.length){dropdownEl.innerHTML='<div class="sd-empty">No results for &ldquo;'+esc(q)+'&rdquo;</div>';return}
   dropdownEl.innerHTML=rows.map(r=>{
     const title=r.name?esc(r.name):(r.code?esc(r.code):esc(r.section||'Match'));
+    // Keep the row to product + code + category: the catalog/page the hit came
+    // from only made the list harder to scan.
     const bits=[];
     if(r.code)bits.push('<span class="sd-code">'+esc(r.code)+'</span>');
     if(r.section)bits.push('<span class="sd-cat">'+esc(r.section)+'</span>');
-    bits.push('<span class="sd-pg">'+esc(r.catalogName)+' &middot; Page '+r.pn+'</span>');
     return '<div class="sd-item" data-ci="'+r.ci+'" data-pn="'+r.pn+'"><div class="sd-prod">'+title+'</div><div class="sd-meta">'+bits.join('<span class="sd-dot">&middot;</span>')+'</div></div>';
   }).join('');
   dropdownEl.querySelectorAll('.sd-item').forEach(el=>el.addEventListener('click',()=>{

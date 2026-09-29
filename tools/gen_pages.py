@@ -463,11 +463,16 @@ def hub_html(cats_built):
     return html
 
 
-CODE_RE = re.compile(r"^[A-Z]{1,4}-?\d{3,7}$")
+CODE_RE = re.compile(r"^[A-Z]{1,5}-?\d{2,7}$")
 # A name is only believable if it reads like a product, not like a spec line or
 # a stray OCR fragment from the neighbouring column.
-SPEC_RE = re.compile(r"^(material|size|weight|color|colour|capacity|packing|qty|logo|moq)\b", re.I)
+SPEC_RE = re.compile(
+    r"^(material|size|weight|color|colour|capacity|packing|qty|logo|moq|height|"
+    r"width|length|depth|thickness|dia|diameter|bottom|base|top)\b", re.I)
 MEASURE_RE = re.compile(r"^[\d\s.,:x*×/\-]+(mm|cm|g|kg|ml|l|oz|pcs)?$", re.I)
+LINE_GAP = 22      # lines closer than this belong to the same product cell
+COL_TOL = 90       # half-width of one product column
+RUN_LIMIT = 170    # how far a name may sit from its code
 
 
 def is_product_name(text):
@@ -485,55 +490,94 @@ def is_product_name(text):
 
 
 def page_items(doc, pno, max_items=60):
-    """Pair every product code on a page with the product name above it.
+    """Pair every product code on a page with its product name.
 
-    The catalogs print the code on its own line under the product name, so OCR
-    gives us separate name and code lines; the boxes are what tell us which code
-    belongs to which name (nearest name above, same column).
+    The decks lay their cells out differently: the landscape catalogs print the
+    code on the line under the name, the portrait ones print it on the line
+    above, and long names wrap onto a second line. So instead of only looking
+    above the code we walk the column both ways, glue wrapped lines back
+    together and keep the run that actually reads like a product.
     """
     try:
         data = doc[pno].get_text("dict")
     except Exception:
         return []
-    spans = []
+    lines = []
     for blk in data.get("blocks", []):
         for ln in blk.get("lines", []):
             txt = "".join(sp.get("text", "") for sp in ln.get("spans", [])).strip()
             if txt:
                 x0, y0, x1, y1 = ln["bbox"]
-                spans.append((txt, x0, y0, x1, y1))
-    if not spans:
+                lines.append((txt, x0, y0, x1, y1))
+    if not lines:
         return []
-    spans.sort(key=lambda t: (t[2], t[1]))
-    codes = [s for s in spans if CODE_RE.match(s[0].upper().replace(" ", ""))]
-    names = [s for s in spans if s not in codes]
+    lines.sort(key=lambda t: (t[2], t[1]))
 
-    def name_above(anchor, limit=170):
-        ax = (anchor[1] + anchor[3]) / 2.0
-        best, best_dy = None, 1e9
-        for nm in names:
-            nx = (nm[1] + nm[3]) / 2.0
-            if abs(nx - ax) > 90:          # a different product column
+    def is_code(txt):
+        return bool(CODE_RE.match(txt.upper().replace(" ", "")))
+
+    def is_spec(txt):
+        return bool(SPEC_RE.match(txt) or MEASURE_RE.match(txt))
+
+    def run_against(anchor, direction):
+        """Lines stacked against `anchor`, going up (-1) or down (1).
+
+        Returns (text in reading order, distance to the nearest line). Stops at
+        a code or spec line so a run never swallows the neighbouring product.
+        """
+        cx = (anchor[1] + anchor[3]) / 2.0
+        col = [s for s in lines
+               if s is not anchor and abs((s[1] + s[3]) / 2.0 - cx) <= COL_TOL]
+        top, bottom, out, gap = anchor[2], anchor[4], [], None
+        while len(out) < 3:
+            if direction < 0:
+                cand = [s for s in col if -3 <= top - s[4] <= LINE_GAP]
+                nxt = max(cand, key=lambda s: s[4]) if cand else None
+            else:
+                cand = [s for s in col if -3 <= s[2] - bottom <= LINE_GAP]
+                nxt = min(cand, key=lambda s: s[2]) if cand else None
+            if nxt is None:
+                break
+            txt = nxt[0].strip()
+            # a name may start with a digit ("8-Piece Kitchen Utensil Set"),
+            # a measurement may not be mostly digits ("165 x 55 mm", "111")
+            if is_code(txt) or is_spec(txt):
+                break
+            if sum(ch.isdigit() for ch in txt) > len(txt) * 0.5:
+                break
+            if gap is None:
+                edge = nxt[4] if direction < 0 else nxt[2]
+                gap = abs(edge - (anchor[2] if direction < 0 else anchor[4]))
+            out.append(txt)
+            top, bottom = min(top, nxt[2]), max(bottom, nxt[4])
+            if len(" ".join(out)) > 70:
+                break
+        text = " ".join(reversed(out)) if direction < 0 else " ".join(out)
+        return text, (gap if gap is not None else 1e9)
+
+    def partner(anchor, limit=RUN_LIMIT):
+        """The product name belonging to `anchor`, whichever side it sits on."""
+        best, best_gap = "", 1e9
+        for direction in (-1, 1):
+            text, gap = run_against(anchor, direction)
+            if gap > limit or not is_product_name(text):
                 continue
-            dy = anchor[2] - nm[4]         # name bottom -> anchor top
-            if dy < -2 or dy > limit:
-                continue
-            if dy < best_dy:
-                best, best_dy = nm, dy
-        return best[0] if best and is_product_name(best[0]) else ""
+            if gap < best_gap:
+                best, best_gap = text, gap
+        return best
 
     items, seen = [], set()
-    for code in codes[:max_items]:
-        nm = name_above(code)
+    for code in [s for s in lines if is_code(s[0])][:max_items]:
+        nm = partner(code)
         items.append([nm, code[0].upper().replace(" ", "")])
         if nm:
             seen.add(nm.lower())
     # Catalogs whose products carry no printed code are still worth an entry:
     # the name sits directly above its "Material:/Size:" block.
-    for sp in spans[:max_items * 3]:
-        if not SPEC_RE.match(sp[0].strip()):
+    for sp in lines[:max_items * 3]:
+        if not is_spec(sp[0].strip()):
             continue
-        nm = name_above(sp, limit=220)
+        nm = partner(sp)
         if nm and nm.lower() not in seen:
             seen.add(nm.lower())
             items.append([nm, ""])
