@@ -92,6 +92,15 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .search-dropdown .sd-item .sd-snippet { font-size: .75rem; color: #777; margin-top: 2px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .search-dropdown .sd-empty, .search-dropdown .sd-loading { padding: 20px; text-align: center; color: #999; font-size: .82rem; }
 
+/* Search inside the PDF reader header */
+.reader-header .reader-search { position: relative; flex: 0 1 230px; min-width: 132px; }
+.reader-header .reader-search .rs-box { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid #e0dcd4; border-radius: 8px; background: #f7f5f2; }
+.reader-header .reader-search .rs-box:focus-within { border-color: #1a1a2e; background: #fff; }
+.reader-header .reader-search .rs-box svg { width: 14px; height: 14px; fill: none; stroke: #999; stroke-width: 2; flex-shrink: 0; }
+.reader-header .reader-search .rs-box input { border: none; outline: none; background: none; font-size: .83rem; width: 100%; color: #333; }
+.reader-header .reader-search .rs-box input::placeholder { color: #aaa; }
+.reader-header .reader-search .search-dropdown { width: 320px; max-width: 76vw; z-index: 600; }
+
 /* ===== Views ===== */
 .view { display: none; }
 .view.active { display: block; }
@@ -543,6 +552,13 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <button class="close-btn" id="btnClose" title="Close (ESC)">✕</button>
     <button class="toc-toggle-btn" id="btnTocToggle" title="Toggle contents">☰</button>
     <span class="catalog-title" id="readerTitle">Catalog</span>
+    <div class="reader-search" id="readerSearch">
+      <div class="rs-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <input type="text" id="readerSearchInput" placeholder="Search products" autocomplete="off">
+      </div>
+      <div class="search-dropdown" id="readerSearchDropdown"></div>
+    </div>
     <span class="page-indicator" id="pageIndicator">--</span>
   </div>
   <div class="reader-body">
@@ -636,6 +652,7 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
   $tocSidebar=document.getElementById('tocSidebar'),$tocList=document.getElementById('tocList'),
   $catalogGrid=document.getElementById('catalogGrid'),$catGroups=document.getElementById('catGroups'),
   $searchInput=document.getElementById('searchInput'),$searchDropdown=document.getElementById('searchDropdown'),
+  $readerSearchInput=document.getElementById('readerSearchInput'),$readerSearchDropdown=document.getElementById('readerSearchDropdown'),
   $contactFab=document.getElementById('contactFab'),$drawerOverlay=document.getElementById('drawerOverlay'),
   $contactDrawer=document.getElementById('contactDrawer'),$drawerClose=document.getElementById('drawerClose'),
   $contactForm=document.getElementById('contactForm'),$sendSuccess=document.getElementById('sendSuccess');
@@ -754,10 +771,14 @@ function bindEvents(){
     }
   });
 
-  // Search
+  // Search (header) and the same search inside the reader header
   let searchTimer;
   $searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(doSearch,350)});
-  document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$searchDropdown.classList.remove('active')});
+  $readerSearchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(doReaderSearch,350)});
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.search-wrap'))$searchDropdown.classList.remove('active');
+    if(!e.target.closest('.reader-search'))$readerSearchDropdown.classList.remove('active');
+  });
 }
 
 //===== Search =====
@@ -791,24 +812,36 @@ async function ensureSearchIndex(){
   }
   searchIndexBusy=false;
 }
-function doSearch(){
-  const q=$searchInput.value.trim().toLowerCase();
-  if(q.length<2){$searchDropdown.classList.remove('active');return}
-  if(!searchIndex){ensureSearchIndex().then(()=>doSearch());return}
-  $searchDropdown.classList.add('active');
+// One search implementation, shared by the site header and the reader header.
+async function searchInto(inputEl,dropdownEl,onPick){
+  const q=inputEl.value.trim().toLowerCase();
+  if(q.length<2){dropdownEl.classList.remove('active');return}
+  if(!searchIndex)await ensureSearchIndex();
+  dropdownEl.classList.add('active');
   const results=searchIndex.filter(r=>r.text.includes(q)).slice(0,10);
-  if(!results.length){$searchDropdown.innerHTML='<div class="sd-empty">No results for &ldquo;'+esc(q)+'&rdquo;</div>';return}
-  $searchDropdown.innerHTML=results.map(r=>{
+  if(!results.length){dropdownEl.innerHTML='<div class="sd-empty">No results for &ldquo;'+esc(q)+'&rdquo;</div>';return}
+  dropdownEl.innerHTML=results.map(r=>{
     const idx=r.text.indexOf(q),start=Math.max(0,idx-40),end=Math.min(r.text.length,idx+q.length+40);
     let snippet=(start>0?'…':'')+r.text.slice(start,end)+(end<r.text.length?'…':'');
     const hilite=snippet.replace(new RegExp(escRegex(q),'gi'),m=>'<b style="color:#1a1a2e">'+m+'</b>');
     return `<div class="sd-item" data-ci="${r.ci}" data-pn="${r.pn}"><div class="sd-title">${esc(r.catalogName)} — Page ${r.pn}</div><div class="sd-snippet">${hilite}</div></div>`;
   }).join('');
-  $searchDropdown.querySelectorAll('.sd-item').forEach(el=>el.addEventListener('click',()=>{
-    $searchDropdown.classList.remove('active');$searchInput.value='';
-    openReader(parseInt(el.dataset.ci),parseInt(el.dataset.pn));
+  dropdownEl.querySelectorAll('.sd-item').forEach(el=>el.addEventListener('click',()=>{
+    dropdownEl.classList.remove('active');inputEl.value='';
+    onPick(parseInt(el.dataset.ci),parseInt(el.dataset.pn));
   }));
 }
+function doSearch(){searchInto($searchInput,$searchDropdown,(ci,pn)=>openReader(ci,pn))}
+// Reader search: jump inside the catalog that is already open, otherwise open
+// the catalog that holds the match.
+function doReaderSearch(){searchInto($readerSearchInput,$readerSearchDropdown,(ci,pn)=>{
+  const cur=catalogs.findIndex(c=>c.id===currentCatalogId);
+  if(ci===cur&&pageFlip){
+    const t=Math.max(0,Math.min(pn-1,pageDivs.length-1));
+    prefillAnchor=t;cancelFlips();
+    ensureNear(t,pageDivs.length,2).then(()=>{if(pageFlip)pageFlip.turnToPage(t);schedulePrefill()});
+  }else openReader(ci,pn);
+})}
 function escRegex(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 
 //===== Contact Drawer =====

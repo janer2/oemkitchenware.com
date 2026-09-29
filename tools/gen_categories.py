@@ -36,7 +36,10 @@ missing = []
 for cat in CATALOGS:
     cid = cat["id"]
     toc = ROOT / ("toc-%s.json" % cid)
-    if toc.exists():
+    # A catalog can carry a reader-only outline (gridFromToc: false): the flip
+    # book then gets section links while the homepage keeps a single card, so
+    # the grid does not sprout near-duplicate categories.
+    if toc.exists() and cat.get("gridFromToc", True):
         items = leaves(json.loads(toc.read_text(encoding="utf-8")))
     else:
         items = [{"title": c["title"], "page": int(c["page"])} for c in manifest[cid]["cats"]]
