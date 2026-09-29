@@ -463,6 +463,83 @@ def hub_html(cats_built):
     return html
 
 
+CODE_RE = re.compile(r"^[A-Z]{1,4}-?\d{3,7}$")
+# A name is only believable if it reads like a product, not like a spec line or
+# a stray OCR fragment from the neighbouring column.
+SPEC_RE = re.compile(r"^(material|size|weight|color|colour|capacity|packing|qty|logo|moq)\b", re.I)
+MEASURE_RE = re.compile(r"^[\d\s.,:x*×/\-]+(mm|cm|g|kg|ml|l|oz|pcs)?$", re.I)
+
+
+def is_product_name(text):
+    t = text.strip()
+    if len(t) < 8 or " " not in t:
+        return False
+    if SPEC_RE.match(t) or MEASURE_RE.match(t):
+        return False
+    if sum(ch.isalpha() for ch in t) < 6:
+        return False
+    # "1200ml:200x164 mm, 490g" is a spec block, not a name
+    if sum(ch.isdigit() for ch in t) / float(len(t)) > 0.25:
+        return False
+    return len(t.split()) >= 2
+
+
+def page_items(doc, pno, max_items=60):
+    """Pair every product code on a page with the product name above it.
+
+    The catalogs print the code on its own line under the product name, so OCR
+    gives us separate name and code lines; the boxes are what tell us which code
+    belongs to which name (nearest name above, same column).
+    """
+    try:
+        data = doc[pno].get_text("dict")
+    except Exception:
+        return []
+    spans = []
+    for blk in data.get("blocks", []):
+        for ln in blk.get("lines", []):
+            txt = "".join(sp.get("text", "") for sp in ln.get("spans", [])).strip()
+            if txt:
+                x0, y0, x1, y1 = ln["bbox"]
+                spans.append((txt, x0, y0, x1, y1))
+    if not spans:
+        return []
+    spans.sort(key=lambda t: (t[2], t[1]))
+    codes = [s for s in spans if CODE_RE.match(s[0].upper().replace(" ", ""))]
+    names = [s for s in spans if s not in codes]
+
+    def name_above(anchor, limit=170):
+        ax = (anchor[1] + anchor[3]) / 2.0
+        best, best_dy = None, 1e9
+        for nm in names:
+            nx = (nm[1] + nm[3]) / 2.0
+            if abs(nx - ax) > 90:          # a different product column
+                continue
+            dy = anchor[2] - nm[4]         # name bottom -> anchor top
+            if dy < -2 or dy > limit:
+                continue
+            if dy < best_dy:
+                best, best_dy = nm, dy
+        return best[0] if best and is_product_name(best[0]) else ""
+
+    items, seen = [], set()
+    for code in codes[:max_items]:
+        nm = name_above(code)
+        items.append([nm, code[0].upper().replace(" ", "")])
+        if nm:
+            seen.add(nm.lower())
+    # Catalogs whose products carry no printed code are still worth an entry:
+    # the name sits directly above its "Material:/Size:" block.
+    for sp in spans[:max_items * 3]:
+        if not SPEC_RE.match(sp[0].strip()):
+            continue
+        nm = name_above(sp, limit=220)
+        if nm and nm.lower() not in seen:
+            seen.add(nm.lower())
+            items.append([nm, ""])
+    return items[:max_items]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="catalog id to build")
@@ -576,11 +653,33 @@ def main():
     else:
         entries = []
         for c in idx_ids:
+            # page -> section title, so a search hit can name its category
+            sec = {}
+            toc_rel = c.get("toc") or ("toc-%s.json" % c["id"])
+            toc_file = ROOT / toc_rel
+            if toc_file.exists():
+                try:
+                    leaves = [l for l in flatten_toc(json.loads(toc_file.read_text(encoding="utf-8")))]
+                    for i, lf in enumerate(leaves):
+                        start = int(lf["page"])
+                        end = int(leaves[i + 1]["page"]) - 1 if i + 1 < len(leaves) else 10 ** 6
+                        for p in range(start, end + 1):
+                            if p not in sec:
+                                sec[p] = re.sub(r"<[^>]+>", "", str(lf["title"])).strip()
+                except Exception as exc:
+                    print("  ! outline not usable for sections:", exc)
             with pymupdf.open(str(ROOT / c["pdf"])) as doc:
                 for pn in range(1, doc.page_count + 1):
                     txt = re.sub(r"\s+", " ", doc[pn - 1].get_text()).strip()
-                    if txt:
-                        entries.append({"id": c["id"], "pn": pn, "text": txt[:4000]})
+                    if not txt:
+                        continue
+                    e = {"id": c["id"], "pn": pn, "text": txt[:4000]}
+                    if sec.get(pn):
+                        e["section"] = sec[pn]
+                    items = page_items(doc, pn - 1)
+                    if items:
+                        e["items"] = items
+                    entries.append(e)
         idx_path.write_text(json.dumps(entries, ensure_ascii=False, separators=(",", ":")),
                             encoding="utf-8")
         manifest["_search"] = {"sha": key}

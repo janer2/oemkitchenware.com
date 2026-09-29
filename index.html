@@ -68,6 +68,17 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 }
 .main-nav a:hover { color: #1a1a2e; background: #f5f5f5; }
 .main-nav a.active { color: #fff; background: #1a1a2e; }
+/* Catalogues dropdown under the nav: one row of the PDF catalogues */
+.nav-dropdown { position: absolute; left: 0; right: 0; top: 100%; background: #fff; border-top: 1px solid #f0ede7; box-shadow: 0 16px 34px rgba(0,0,0,.09); display: none; padding: 16px 32px 18px; z-index: 120; }
+.nav-dropdown.active { display: block; }
+.nav-dropdown .nd-hint { font-size: .72rem; text-transform: uppercase; letter-spacing: .6px; color: #b5aea1; margin-bottom: 10px; }
+.nd-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 4px; }
+.nd-item { flex: 0 0 auto; width: 176px; cursor: pointer; }
+.nd-item img { width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #f5f4f0; border-radius: 8px; display: block; }
+.nd-item .nd-name { margin-top: 7px; font-size: .84rem; font-weight: 600; color: #1a1a2e; }
+.nd-item .nd-sub { font-size: .72rem; color: #a9a294; }
+.nd-item:hover .nd-name { color: #8a6d2f; }
+@media (max-width: 768px) { .nav-dropdown { padding: 12px 14px; } .nd-item { width: 140px; } }
 
 /* Search */
 .search-wrap { position: relative; width: 220px; flex-shrink: 0; }
@@ -92,14 +103,27 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .search-dropdown .sd-item .sd-snippet { font-size: .75rem; color: #777; margin-top: 2px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .search-dropdown .sd-empty, .search-dropdown .sd-loading { padding: 20px; text-align: center; color: #999; font-size: .82rem; }
 
-/* Search inside the PDF reader header */
+/* Search inside the reader (header on desktop, contents drawer on phones) */
 .reader-header .reader-search { position: relative; flex: 0 1 230px; min-width: 132px; }
-.reader-header .reader-search .rs-box { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid #e0dcd4; border-radius: 8px; background: #f7f5f2; }
-.reader-header .reader-search .rs-box:focus-within { border-color: #1a1a2e; background: #fff; }
-.reader-header .reader-search .rs-box svg { width: 14px; height: 14px; fill: none; stroke: #999; stroke-width: 2; flex-shrink: 0; }
-.reader-header .reader-search .rs-box input { border: none; outline: none; background: none; font-size: .83rem; width: 100%; color: #333; }
-.reader-header .reader-search .rs-box input::placeholder { color: #aaa; }
-.reader-header .reader-search .search-dropdown { width: 320px; max-width: 76vw; z-index: 600; }
+.reader-search .rs-box, .toc-search .rs-box { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid #e0dcd4; border-radius: 8px; background: #f7f5f2; }
+.reader-search .rs-box:focus-within, .toc-search .rs-box:focus-within { border-color: #1a1a2e; background: #fff; }
+.reader-search .rs-box svg, .toc-search .rs-box svg { width: 14px; height: 14px; fill: none; stroke: #999; stroke-width: 2; flex-shrink: 0; }
+.reader-search .rs-box input, .toc-search .rs-box input { border: none; outline: none; background: none; font-size: .83rem; width: 100%; color: #333; }
+.reader-search .rs-box input::placeholder, .toc-search .rs-box input::placeholder { color: #aaa; }
+.reader-search .search-dropdown { width: 320px; max-width: 76vw; z-index: 600; }
+.toc-search { display: none; position: relative; padding: 10px 12px; border-bottom: 1px solid #e8e4dd; flex-shrink: 0; }
+.toc-search .search-dropdown { left: 12px; right: 12px; width: auto; z-index: 600; }
+
+/* Result rows: one product per row, then its code, category and location */
+.search-dropdown .sd-prod { font-size: .86rem; font-weight: 600; color: #1a1a2e; line-height: 1.3; }
+.search-dropdown .sd-meta { margin-top: 4px; font-size: .73rem; color: #8b8577; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.search-dropdown .sd-code { font-weight: 700; color: #1a1a2e; background: #f3f0e9; border-radius: 4px; padding: 1px 5px; letter-spacing: .02em; }
+.search-dropdown .sd-cat { color: #a08b5f; }
+.search-dropdown .sd-dot { color: #cfc8ba; }
+@media (max-width: 768px) {
+  .reader-header .reader-search { display: none; }
+  .toc-search { display: block; }
+}
 
 /* ===== Views ===== */
 .view { display: none; }
@@ -384,6 +408,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     <a data-view-link="customize">Customize</a>
     <a data-view-link="about">About Us</a>
   </nav>
+  <div class="nav-dropdown" id="navCatalogDropdown"></div>
   <div class="search-wrap">
     <div class="search-box">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
@@ -564,6 +589,13 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   <div class="reader-body">
     <aside class="toc-sidebar" id="tocSidebar">
       <div class="toc-title">Contents <span id="tocCount">0/0</span></div>
+      <div class="toc-search reader-search" id="tocSearch">
+        <div class="rs-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          <input type="text" id="tocSearchInput" placeholder="Search products" autocomplete="off">
+        </div>
+        <div class="search-dropdown" id="tocSearchDropdown"></div>
+      </div>
       <nav class="toc-list" id="tocList"><div class="toc-empty">Loading...</div></nav>
     </aside>
     <div class="book-area">
@@ -653,6 +685,7 @@ const $overlay=document.getElementById('readerOverlay'),$bookContainer=document.
   $catalogGrid=document.getElementById('catalogGrid'),$catGroups=document.getElementById('catGroups'),
   $searchInput=document.getElementById('searchInput'),$searchDropdown=document.getElementById('searchDropdown'),
   $readerSearchInput=document.getElementById('readerSearchInput'),$readerSearchDropdown=document.getElementById('readerSearchDropdown'),
+  $tocSearchInput=document.getElementById('tocSearchInput'),$tocSearchDropdown=document.getElementById('tocSearchDropdown'),
   $contactFab=document.getElementById('contactFab'),$drawerOverlay=document.getElementById('drawerOverlay'),
   $contactDrawer=document.getElementById('contactDrawer'),$drawerClose=document.getElementById('drawerClose'),
   $contactForm=document.getElementById('contactForm'),$sendSuccess=document.getElementById('sendSuccess');
@@ -678,6 +711,21 @@ function handleDeepLink(){
 }
 
 //===== View Switching =====
+// The Catalog nav item drops down a single row of the PDF catalogues.
+function renderNavDropdown(){
+  const box=document.getElementById('navCatalogDropdown');
+  if(!box||!catalogs.length)return;
+  box.innerHTML='<div class="nd-hint">Open a catalogue</div><div class="nd-row">'+catalogs.map((c,i)=>
+    '<div class="nd-item" data-ci="'+i+'" role="button" tabindex="0">'+
+      '<img src="assets/covers/'+esc(c.id)+'.jpg" alt="'+esc(c.name)+'" loading="lazy" decoding="async">'+
+      '<div class="nd-name">'+esc(c.name)+'</div><div class="nd-sub">'+esc(c.sub)+'</div>'+
+    '</div>').join('')+'</div>';
+  box.querySelectorAll('.nd-item').forEach(el=>el.addEventListener('click',()=>{
+    box.classList.remove('active');
+    openReader(parseInt(el.dataset.ci));
+  }));
+}
+
 function showView(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('active');
@@ -726,7 +774,17 @@ window.coverFallback=(el,i)=>{
 //===== Events =====
 function bindEvents(){
   // Nav
-  document.querySelectorAll('[data-view-link]').forEach(a=>a.addEventListener('click',()=>showView(a.dataset.viewLink)));
+  document.querySelectorAll('[data-view-link]').forEach(a=>a.addEventListener('click',()=>{
+    const v=a.dataset.viewLink;
+    showView(v);
+    const box=document.getElementById('navCatalogDropdown');
+    if(!box)return;
+    // Clicking "Catalog" again reveals the catalogue row; anything else hides it.
+    if(v==='catalog'&&a.closest('.main-nav')){
+      renderNavDropdown();
+      box.classList.toggle('active');
+    }else box.classList.remove('active');
+  }));
   $catalogGrid.addEventListener('click',e=>{const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))});
   $catalogGrid.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))}});
   $btnClose.addEventListener('click',closeReader);
@@ -734,7 +792,12 @@ function bindEvents(){
   $btnPrev.addEventListener('click',()=>flipTo(-1));
   $btnNext.addEventListener('click',()=>flipTo(1));
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();flipTo(1)}else if(e.key==='ArrowLeft'){e.preventDefault();flipTo(-1)}});
-  window.addEventListener('popstate',()=>{if(pageFlip){readerHistory=false;closeReader()}});
+  window.addEventListener('popstate',()=>{
+    // Ignore the popstate our own closeReader() triggered, otherwise closing a
+    // catalog and immediately opening another would close the new reader.
+    if(backFromReader){backFromReader=false;return}
+    if(pageFlip){readerHistory=false;closeReader()}
+  });
   bindBookZoom();
 
   // Contact drawer
@@ -775,9 +838,12 @@ function bindEvents(){
   let searchTimer;
   $searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(doSearch,350)});
   $readerSearchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(doReaderSearch,350)});
+  $tocSearchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>searchInto($tocSearchInput,$tocSearchDropdown,jumpFromReaderSearch),350)});
   document.addEventListener('click',e=>{
     if(!e.target.closest('.search-wrap'))$searchDropdown.classList.remove('active');
-    if(!e.target.closest('.reader-search'))$readerSearchDropdown.classList.remove('active');
+    if(!e.target.closest('.reader-search')){$readerSearchDropdown.classList.remove('active');$tocSearchDropdown.classList.remove('active')}
+    const nd=document.getElementById('navCatalogDropdown');
+    if(nd&&!e.target.closest('.main-nav')&&!e.target.closest('.nav-dropdown'))nd.classList.remove('active');
   });
 }
 
@@ -792,8 +858,14 @@ async function ensureSearchIndex(){
       const data=await r.json();
       for(const it of data){
         const ci=catalogs.findIndex(c=>c.id===it.id);
-        if(ci>=0&&it.text&&it.text.trim().length>5)searchIndex.push({ci,catalogName:catalogs[ci].name,pn:it.pn,text:it.text.toLowerCase()});
+        if(ci<0||!it.text||it.text.trim().length<=5)continue;
+        searchIndex.push({
+          ci:ci,catalogName:catalogs[ci].name,pn:it.pn,text:it.text.toLowerCase(),
+          section:it.section||'',
+          items:(it.items||[]).map(x=>({n:x[0]||'',c:x[1]||'',l:String(x[0]||'').toLowerCase()}))
+        });
       }
+      fuzzyWords=null;
     }
   }catch(e){}
   if(!searchIndex.length){
@@ -812,19 +884,86 @@ async function ensureSearchIndex(){
   }
   searchIndexBusy=false;
 }
+// --- typo-tolerant word matching -----------------------------------------
+let fuzzyWords=null;
+function wordList(){
+  if(fuzzyWords)return fuzzyWords;
+  const set=new Set();
+  for(const e of searchIndex)for(const w of e.text.split(/[^a-z0-9&'-]+/))if(w.length>=4)set.add(w);
+  fuzzyWords=Array.from(set);
+  return fuzzyWords;
+}
+function within1(a,b){
+  if(a===b)return true;
+  if(Math.abs(a.length-b.length)>1)return false;
+  let i=0,j=0,diff=0;
+  while(i<a.length&&j<b.length){
+    if(a[i]===b[j]){i++;j++;continue}
+    if(++diff>1)return false;
+    if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++}
+  }
+  return true;
+}
+function nearWords(token){
+  const out=[token];
+  if(token.length<4)return out;
+  for(const w of wordList()){
+    if(w[0]!==token[0])continue;
+    if(w.length<token.length-1||w.length>token.length+1)continue;
+    if(within1(w,token))out.push(w);
+    if(out.length>7)break;
+  }
+  return out;
+}
+// One row per product (name + code + category), not one blob per page.
+function searchRows(q){
+  const ql=q.toLowerCase();
+  const tokens=ql.split(/\s+/).filter(t=>t.length>1);
+  if(!tokens.length)return [];
+  const rows=[];
+  for(const e of searchIndex){
+    const text=e.text;
+    let score=0;
+    if(text.includes(ql))score=1000;
+    else{
+      let hit=0;
+      for(const t of tokens){
+        if(text.includes(t))hit++;
+        else if(nearWords(t).some(w=>text.includes(w)))hit+=0.75;
+      }
+      score=Math.round(900*hit/tokens.length);
+      if(score<560)continue;
+    }
+    const items=e.items||[];
+    let matched=items.filter(it=>it.l&&tokens.every(t=>it.l.includes(t)||nearWords(t).some(w=>it.l.includes(w))));
+    if(!matched.length)matched=items.filter(it=>it.l&&it.l.indexOf(ql)>=0);
+    if(!matched.length)matched=items.filter(it=>it.c&&it.c.toLowerCase().indexOf(ql)>=0);
+    if(matched.length){
+      for(const it of matched.slice(0,3)){
+        rows.push({ci:e.ci,pn:e.pn,section:e.section,catalogName:e.catalogName,name:it.n,code:it.c,score:score+(it.n?60:20)});
+      }
+    }else{
+      rows.push({ci:e.ci,pn:e.pn,section:e.section,catalogName:e.catalogName,name:'',code:'',score:score});
+    }
+  }
+  rows.sort((a,b)=>b.score-a.score);
+  return rows.slice(0,14);
+}
 // One search implementation, shared by the site header and the reader header.
 async function searchInto(inputEl,dropdownEl,onPick){
   const q=inputEl.value.trim().toLowerCase();
   if(q.length<2){dropdownEl.classList.remove('active');return}
   if(!searchIndex)await ensureSearchIndex();
   dropdownEl.classList.add('active');
-  const results=searchIndex.filter(r=>r.text.includes(q)).slice(0,10);
-  if(!results.length){dropdownEl.innerHTML='<div class="sd-empty">No results for &ldquo;'+esc(q)+'&rdquo;</div>';return}
-  dropdownEl.innerHTML=results.map(r=>{
-    const idx=r.text.indexOf(q),start=Math.max(0,idx-40),end=Math.min(r.text.length,idx+q.length+40);
-    let snippet=(start>0?'…':'')+r.text.slice(start,end)+(end<r.text.length?'…':'');
-    const hilite=snippet.replace(new RegExp(escRegex(q),'gi'),m=>'<b style="color:#1a1a2e">'+m+'</b>');
-    return `<div class="sd-item" data-ci="${r.ci}" data-pn="${r.pn}"><div class="sd-title">${esc(r.catalogName)} — Page ${r.pn}</div><div class="sd-snippet">${hilite}</div></div>`;
+  const rows=searchRows(q);
+  if(!rows.length){dropdownEl.innerHTML='<div class="sd-empty">No results for &ldquo;'+esc(q)+'&rdquo;</div>';return}
+  dropdownEl.innerHTML=rows.map(r=>{
+    const title=r.name?esc(r.name):(r.code?esc(r.code):esc(r.section||'Match'));
+    const bits=[];
+    if(r.code)bits.push('<span class="sd-code">'+esc(r.code)+'</span>');
+    if(r.section)bits.push('<span class="sd-cat">'+esc(r.section)+'</span>');
+    bits.push('<span class="sd-pg">'+esc(r.catalogName)+' &middot; Page '+r.pn+'</span>');
+    return '<div class="sd-item" data-ci="'+r.ci+'" data-pn="'+r.pn+'"><div class="sd-prod">'+title+'</div><div class="sd-meta">'+bits.join('<span class="sd-dot">&middot;</span>')+'</div></div>';
   }).join('');
   dropdownEl.querySelectorAll('.sd-item').forEach(el=>el.addEventListener('click',()=>{
     dropdownEl.classList.remove('active');inputEl.value='';
@@ -834,14 +973,15 @@ async function searchInto(inputEl,dropdownEl,onPick){
 function doSearch(){searchInto($searchInput,$searchDropdown,(ci,pn)=>openReader(ci,pn))}
 // Reader search: jump inside the catalog that is already open, otherwise open
 // the catalog that holds the match.
-function doReaderSearch(){searchInto($readerSearchInput,$readerSearchDropdown,(ci,pn)=>{
+function jumpFromReaderSearch(ci,pn){
   const cur=catalogs.findIndex(c=>c.id===currentCatalogId);
   if(ci===cur&&pageFlip){
     const t=Math.max(0,Math.min(pn-1,pageDivs.length-1));
     prefillAnchor=t;cancelFlips();
     ensureNear(t,pageDivs.length,2).then(()=>{if(pageFlip)pageFlip.turnToPage(t);schedulePrefill()});
   }else openReader(ci,pn);
-})}
+}
+function doReaderSearch(){searchInto($readerSearchInput,$readerSearchDropdown,jumpFromReaderSearch)}
 function escRegex(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 
 //===== Contact Drawer =====
@@ -865,11 +1005,26 @@ function renderPdfPage(pn){
       // Use the real on-screen page width (was hard-coded 340, which
       // undersampled on wider layouts).
       const holderW=pageDivs[pn-1]?pageDivs[pn-1].clientWidth:0;
-      const dispW=mobile?($overlay.clientWidth||340):(holderW||Math.max(340,($bookContainer.clientWidth||700)/2));
+      // Before the first layout the page box has no width yet; falling back to a
+      // small number would render the page undersized and then stretch it (the
+      // "blurry page" symptom), so fall back to the geometry we just computed.
+      const fallbackW=bookGeom.wide
+        ?(bookGeom.pageW||Math.min(($overlay.clientWidth||700)*0.74,1000))
+        :Math.max(340,($bookContainer.clientWidth||700)/2);
+      const dispW=mobile?($overlay.clientWidth||340):(holderW||fallbackW);
       const dprCap=Math.min(window.devicePixelRatio||1,2);
-      // Render at ~2x the on-screen pixel width (was capped at 1.5, which
-      // undersampled on HiDPI screens and blurred when zoomed).
-      const scale=Math.max(1,Math.min(3,(dispW*dprCap*1.5)/vp1.width));
+      // Render just above the on-screen pixel size. Extra headroom costs memory
+      // and raster time on every single page turn for no visible gain, and the
+      // pixel cap stops a full-bleed deck (a 1920x1080 image per page) from
+      // allocating ~12MB per page.
+      let scale=Math.max(1,Math.min(3,(dispW*dprCap*1.15)/vp1.width));
+      // The deck's page images are 1920px wide, so that is the useful ceiling.
+      const CAP_PX=1920;
+      if(vp1.width*scale>CAP_PX)scale=CAP_PX/vp1.width;
+      // How much read-ahead this catalog can afford: a big landscape page is
+      // ~10x the raster work of a portrait catalog page.
+      const rasPx=Math.round(vp1.width*scale)*Math.round(vp1.height*scale);
+      PRELOAD_RADIUS=rasPx>3.0e6?2:(rasPx>1.2e6?4:8);
       const vp=page.getViewport({scale});
       const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
       await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
@@ -895,7 +1050,7 @@ async function ensureNear(idx,totalItems,radius){
 // Windowed prefill: keep a contiguous ring of ready pages around the
 // current anchor so consecutive flipping never waits for a fetch. Far
 // pages are only fetched when the user actually jumps to them.
-const PRELOAD_RADIUS=8;
+let PRELOAD_RADIUS=8,bookGeom={wide:false,aspect:.72};
 let prefillAnchor=0,prefillTimer=null;
 
 function updateTocStates(){
@@ -976,10 +1131,12 @@ async function openReader(ci,targetPage){
     const vp1=(await currentPdf.getPage(1)).getViewport({scale:1});
     const aspect=vp1.width/Math.max(vp1.height,1);
     const wide=aspect>=1.05;
+    bookGeom={wide:wide,aspect:aspect,pageW:0};
     const bookW=wide?(isMobile?Math.max(280,bodyW-24):Math.min(Math.round(bodyW*0.74),1000)):maxPW;
     const bookH=wide?Math.round(bookW/aspect):Math.floor(maxPW/.72);
     const bookMaxW=wide?bookW:maxPW;
     const bookMinW=wide?(isMobile?350:Math.ceil(bodyW*0.55)+10):350;
+    bookGeom.pageW=bookW;
     if(pageFlip){const s=pageFlip.getSettings();s.width=bookW;s.height=bookH;s.maxWidth=bookMaxW;s.minWidth=bookMinW;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
     else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:bookW,height:bookH,size:'stretch',maxWidth:bookMaxW,minWidth:bookMinW,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true)});}
 
@@ -1066,7 +1223,7 @@ function renderToc(){
 // The flip book itself is scaled/panned with a CSS transform: click a page
 // to zoom in where you clicked, scroll or pinch to zoom, drag to pan, and
 // click near the left/right edge to flip. Page turns reset the view.
-let viewScale=1,viewX=0,viewY=0,viewDragging=false,readerHistory=false;
+let viewScale=1,viewX=0,viewY=0,viewDragging=false,readerHistory=false,backFromReader=false;
 
 function applyView(){$bookContainer.style.transform='translate('+viewX+'px,'+viewY+'px) scale('+viewScale+')'}
 function viewZoomAt(px,py,factor){
@@ -1274,7 +1431,11 @@ function updateUI(){
 
 function closeReader(){
   viewReset();cancelFlips();
-  if(readerHistory){readerHistory=false;try{history.back()}catch(e){}}
+  if(readerHistory){
+    readerHistory=false;backFromReader=true;
+    setTimeout(()=>{backFromReader=false},800);
+    try{history.back()}catch(e){}
+  }
   currentPdf=null;totalPages=0;currentToc=null;
   if(prefillTimer){clearTimeout(prefillTimer);prefillTimer=null}
   $btnPrev.disabled=$btnNext.disabled=true;$pageIndicator.textContent='--';
@@ -1283,7 +1444,22 @@ function closeReader(){
 }
 
 //===== Resize =====
-window.addEventListener('resize',()=>{if(!pageFlip)return;clearTimeout(window._rT);window._rT=setTimeout(()=>{const im=window.matchMedia('(max-width: 768px)').matches;const mp=im?$overlay.clientWidth:700;const s=pageFlip.getSettings();s.width=mp;s.height=Math.floor(mp/.72);s.maxWidth=mp;s.minWidth=350;pageFlip.update();updateUI()},300)});
+  window.addEventListener('resize',()=>{if(!pageFlip)return;clearTimeout(window._rT);window._rT=setTimeout(()=>{
+    const im=window.matchMedia('(max-width: 768px)').matches;
+    const s=pageFlip.getSettings();
+    const bw=$overlay.clientWidth;
+    // Keep the catalog's own aspect: a landscape deck must not snap back to
+    // portrait page slots when the window is resized.
+    if(bookGeom.wide){
+      const w=im?Math.max(280,bw-24):Math.min(Math.round(bw*0.74),1000);
+      s.width=w;s.height=Math.round(w/bookGeom.aspect);s.maxWidth=w;
+      s.minWidth=im?350:Math.ceil(bw*0.55)+10;
+    }else{
+      const mp=im?bw:700;
+      s.width=mp;s.height=Math.floor(mp/.72);s.maxWidth=mp;s.minWidth=350;
+    }
+    pageFlip.update();updateUI()
+  },300)});
 
 init();
 // Warm up pdf.js after the homepage is idle so the first reader open

@@ -22,8 +22,15 @@ for cat in CATALOGS:
     doc = pymupdf.open(pdf_path)
     page = doc[0]
     rect = page.rect
-    zoom = WIDTH / max(rect.width, 1)
-    pix = page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False)
+    # A landscape cover is a wide poster with its title on the left; showing the
+    # whole thing in a portrait card leaves that text unreadably small, so the
+    # card gets the left portion instead (the full page is still in the reader).
+    clip = None
+    if rect.width > rect.height * 1.3:
+        clip = pymupdf.Rect(rect.x0, rect.y0, rect.x0 + rect.width * 0.56, rect.y1)
+    src = clip or rect
+    zoom = WIDTH / max(src.width, 1)
+    pix = page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False, clip=clip)
     OUT.mkdir(parents=True, exist_ok=True)
     out.write_bytes(pix.tobytes("jpeg", jpg_quality=QUALITY))
     print(f"{cat['id']:8s} page={rect.width:.0f}x{rect.height:.0f}pt "
