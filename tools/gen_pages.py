@@ -38,6 +38,10 @@ BRAND_LINE = ("BSCI & ISO 9001 certified OEM/ODM manufacturer since 2010. "
               "design and logistics. Vision: Make Globe Trade Easy.")
 
 CATS = [
+    {"id": "new2026", "pdf": "assets/catalog-2026new.pdf", "toc": None,
+     "name": "2026 New", "sub": "2026 Product Catalog",
+     "theme": "the complete 2026 product range across kitchen, beauty, baby, pet and outdoor lines",
+     "materials": "Food-grade silicone, stainless steel, BPA-free plastics and CE/RoHS compliant electronics"},
     {"id": "kitchen", "pdf": "assets/catalog-kitchen.pdf", "toc": "toc-kitchen.json",
      "name": "Kitchen Gadgets", "sub": "Kitchen Items",
      "theme": "silicone and stainless steel kitchenware",

@@ -302,6 +302,23 @@
   ]
  },
  "_search": {
-  "sha": "9ab34db60b63d2c05cb7e59e75503d7f2eedca66"
+  "sha": "5a90ad9ece0edf5f32bcf6aaa3952b7814652618"
+ },
+ "new2026": {
+  "pdf": "b7665ac0b4dbeac9224cd285ecac246d5d3d7b9c",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "2026 New",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/new2026/2026-new/",
+    "monthly",
+    "0.7"
+   ]
+  ]
  }
 }

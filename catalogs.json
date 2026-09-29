@@ -1,5 +1,11 @@
 [
   {
+    "id": "new2026",
+    "name": "2026 New",
+    "sub": "2026 Product Catalog",
+    "pdf": "assets/catalog-2026new.pdf"
+  },
+  {
     "id": "kitchen",
     "name": "Kitchen Gadgets",
     "sub": "Kitchen Items",

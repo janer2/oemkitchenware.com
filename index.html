@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="apple-touch-icon" href="assets/logo.png">
-<link rel="preload" as="image" href="assets/covers/kitchen.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/covers/new2026.jpg" fetchpriority="high">
 <title>Yongli — Silicone Kitchenware Manufacturer | OEM &amp; ODM Wholesale Supplier</title>
 <meta name="description" content="Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM manufacturer of silicone &amp; stainless kitchenware, baby care, personal care and festive decorations since 2010. Browse interactive e-catalogs and get a wholesale quote.">
 <link rel="canonical" href="https://oemkitchenware.com/">
@@ -937,8 +937,18 @@ async function openReader(ci,targetPage){
 
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
-    if(pageFlip){const s=pageFlip.getSettings();s.width=maxPW;s.height=Math.floor(maxPW/.72);s.maxWidth=maxPW;s.minWidth=350;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:maxPW,height:Math.floor(maxPW/.72),size:'stretch',maxWidth:maxPW,minWidth:350,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true)});}
+    // Page geometry follows the catalog's real page aspect. A landscape catalog
+    // is a slide deck and gets one page per view instead of being squeezed into
+    // two portrait-shaped slots.
+    const vp1=(await currentPdf.getPage(1)).getViewport({scale:1});
+    const aspect=vp1.width/Math.max(vp1.height,1);
+    const wide=aspect>=1.05;
+    const bookW=wide?(isMobile?Math.max(280,bodyW-24):Math.min(Math.round(bodyW*0.74),1000)):maxPW;
+    const bookH=wide?Math.round(bookW/aspect):Math.floor(maxPW/.72);
+    const bookMaxW=wide?bookW:maxPW;
+    const bookMinW=wide?(isMobile?350:Math.ceil(bodyW*0.55)+10):350;
+    if(pageFlip){const s=pageFlip.getSettings();s.width=bookW;s.height=bookH;s.maxWidth=bookMaxW;s.minWidth=bookMinW;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:bookW,height:bookH,size:'stretch',maxWidth:bookMaxW,minWidth:bookMinW,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true)});}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
     $loadingText.textContent='Loading pages…';
@@ -1219,7 +1229,11 @@ function bindBookZoom(){
 
 function updateUI(){
   if(!pageFlip)return;const c=pageFlip.getCurrentPageIndex();
-  if(window.matchMedia('(max-width: 768px)').matches)$pageIndicator.textContent='Page '+(c+1)+' / '+totalPages;
+  // Follow the actual view mode: a landscape catalog (and mobile) shows one
+  // page at a time, so a spread-style "1-2" label would be wrong there.
+  let single=window.matchMedia('(max-width: 768px)').matches;
+  try{const rd=pageFlip.getRender&&pageFlip.getRender();if(rd&&rd.getOrientation)single=rd.getOrientation()==='portrait'}catch(e){}
+  if(single)$pageIndicator.textContent='Page '+(c+1)+' / '+totalPages;
   else{const l=c+1,r=Math.min(c+2,totalPages);$pageIndicator.textContent='Pages '+l+'-'+r+' / '+totalPages}
   $btnPrev.disabled=c<=0;$btnNext.disabled=c>=totalPages-1;
   if(currentToc){$tocList.querySelectorAll('.toc-item').forEach(el=>{const ps=parseInt(el.dataset.page),pe=parseInt(el.dataset.pageEnd);const cur=(c+1);const on=cur>=ps&&cur<=pe;el.classList.toggle('active',on);if(on)el.scrollIntoView({block:'nearest',behavior:'smooth'})})}

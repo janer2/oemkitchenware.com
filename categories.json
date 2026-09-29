@@ -1,6 +1,17 @@
 {
  "groups": [
   {
+   "id": "new2026",
+   "name": "2026 New",
+   "items": [
+    {
+     "title": "2026 New",
+     "page": 1,
+     "slug": "2026-new"
+    }
+   ]
+  },
+  {
    "id": "kitchen",
    "name": "Kitchen Gadgets",
    "items": [
