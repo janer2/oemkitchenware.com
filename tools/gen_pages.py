@@ -673,20 +673,32 @@ def main():
                         encoding="utf-8")
     print("manifest written")
 
-    # ---- Static full-text search index (rebuild when any catalog input changed) ----
-    idx_ids = [c for c in CATS if (not args.only or c["id"] == args.only) and (ROOT / c["pdf"]).exists()]
-    parts = []
-    for c in idx_ids:
-        rec = manifest.get(c["id"]) or {}
-        parts.append(f'{c["id"]}:{rec.get("pdf") or sha1_file(ROOT / c["pdf"])}')
-    key = hashlib.sha1("\n".join(sorted(parts)).encode("utf-8")).hexdigest()
-    info = manifest.get("_search") or {}
+    # ---- Static full-text search index ----
+    # Scanning every deck for product codes and names is the slow half of this
+    # script (the kitchen deck alone is 168 pages), so each catalog's rows are
+    # cached under its PDF hash: change one deck and only that deck is re-scanned.
+    # --force still re-scans everything, which is what you want after editing
+    # page_items() rather than a PDF.
     idx_path = ROOT / "search-index.json"
-    if info.get("sha") == key and idx_path.exists() and not args.force:
-        print("search-index.json unchanged, skip")
-    else:
-        entries = []
-        for c in idx_ids:
+    idx_cache_path = ROOT / ".search-cache.json"
+    idx_cache = {}
+    if idx_cache_path.exists() and not args.force:
+        try:
+            idx_cache = json.loads(idx_cache_path.read_text(encoding="utf-8"))
+        except Exception:
+            idx_cache = {}
+    idx_ids = [c for c in CATS if (ROOT / c["pdf"]).exists()]
+    pdf_sha = {c["id"]: (manifest.get(c["id"]) or {}).get("pdf") or sha1_file(ROOT / c["pdf"])
+               for c in idx_ids}
+    entries = []
+    for c in idx_ids:
+        cached = idx_cache.get(c["id"])
+        mark = len(entries)
+        if (cached and cached.get("sha") == pdf_sha[c["id"]] and not args.force
+                and not (args.only and args.only != c["id"])):
+            entries.extend(cached.get("entries", []))
+            print("  index reused:", c["id"], len(cached.get("entries", [])), "entries")
+        else:
             # page -> section title, so a search hit can name its category
             sec = {}
             toc_rel = c.get("toc") or ("toc-%s.json" % c["id"])
@@ -714,19 +726,22 @@ def main():
                     if items:
                         e["items"] = items
                     entries.append(e)
-        # Self-describing file: the reader can tell a product-level index from
-        # the older page-level one, and look up catalog names without guessing.
-        payload = {
-            "v": 2,
-            "unit": "product",
-            "catalogs": {c["id"]: c["name"] for c in idx_ids},
-            "entries": entries,
-        }
-        idx_path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
-                            encoding="utf-8")
-        manifest["_search"] = {"sha": key}
-        print("search-index.json updated:", len(entries), "entries,",
-               round(idx_path.stat().st_size / 1024), "KB")
+            idx_cache[c["id"]] = {"sha": pdf_sha[c["id"]], "entries": entries[mark:]}
+            print("  index scanned:", c["id"], len(entries) - mark, "entries")
+
+    # Self-describing file: the reader can tell a product-level index from the
+    # older page-level one, and look up catalog names without guessing.
+    payload = {
+        "v": 2,
+        "unit": "product",
+        "catalogs": {c["id"]: c["name"] for c in idx_ids},
+        "entries": entries,
+    }
+    idx_path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+                        encoding="utf-8")
+    idx_cache_path.write_text(json.dumps(idx_cache, ensure_ascii=False), encoding="utf-8")
+    print("search-index.json updated:", len(entries), "entries,",
+          round(idx_path.stat().st_size / 1024), "KB")
 
     if args.report:
         rows = []

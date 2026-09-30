@@ -9,6 +9,10 @@ _*
 __pycache__/
 *.pyc
 
+# Per-page OCR results from tools/ocr_text_layer.py, keyed by page image hash so
+# only pages whose picture changed get recognised again. Regenerable.
+.ocr-cache/
+
 # Draft outlines from tools/gen_toc.py: regenerable, and the checked-in toc-*.json
 # stays the verified source. toc-review.md (the human-facing comparison) is tracked.
 toc-*.proposed.json
@@ -25,3 +29,6 @@ stpageflip-demo.html
 Thumbs.db
 .DS_Store
 desktop.ini
+
+# Per-catalog search-index rows from tools/gen_pages.py, keyed by PDF hash.
+.search-cache.json
