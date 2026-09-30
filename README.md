@@ -39,7 +39,6 @@ pages).
 ```bash
 python tools/gen_pages.py --force --report   # category pages, hub, sitemap, search index
 python tools/gen_covers.py                   # static cover JPGs
-python tools/gen_categories.py               # homepage category grid
 ```
 
 - `--force` is required when only the generator changed: the search-index cache
