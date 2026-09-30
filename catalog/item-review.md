@@ -7,16 +7,16 @@ without a code (or miss entirely).
 
 ## 2026 New (new2026)
 
-- pages with products: **110**
+- pages with products: **124**
 - codes found: **810**, paired with a name: **810** (100.0%)
 - rows without a code: **14**
 
 | page | issue | text |
 |---|---|---|
 | 1 | row without code | 10 row(s) on this page |
-| 61 | row without code | 1 row(s) on this page |
-| 77 | row without code | 1 row(s) on this page |
-| 100 | row without code | 2 row(s) on this page |
+| 67 | row without code | 1 row(s) on this page |
+| 85 | row without code | 1 row(s) on this page |
+| 113 | row without code | 2 row(s) on this page |
 
 ## Kitchen Gadgets (kitchen)
 

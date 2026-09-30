@@ -1,16 +1,58 @@
 [
-  { "title": "Kitchen Tools", "page": 5 },
-  { "title": "Knives & Cutting Boards", "page": 27 },
-  { "title": "Baking Tools", "page": 33 },
-  { "title": "Ice Cream & Ice Tools", "page": 47 },
-  { "title": "Coffee & Tea", "page": 51 },
-  { "title": "Drinkware & Bottles", "page": 56 },
-  { "title": "Kitchen Storage & Organization", "page": 62 },
-  { "title": "Tableware", "page": 77 },
-  { "title": "Cleaning Supplies", "page": 83 },
-  { "title": "Beauty & Personal Care", "page": 86 },
-  { "title": "Kids Tableware", "page": 89 },
-  { "title": "Pet Supplies", "page": 97 },
-  { "title": "Outdoor & BBQ", "page": 100 },
-  { "title": "Household Essentials", "page": 103 }
+  {
+    "title": "Kitchen Tools",
+    "page": 5
+  },
+  {
+    "title": "Knives & Cutting Boards",
+    "page": 28
+  },
+  {
+    "title": "Baking Tools",
+    "page": 35
+  },
+  {
+    "title": "Ice Cream & Ice Tools",
+    "page": 50
+  },
+  {
+    "title": "Coffee & Tea",
+    "page": 55
+  },
+  {
+    "title": "Drinkware & Bottles",
+    "page": 61
+  },
+  {
+    "title": "Kitchen Storage & Organization",
+    "page": 68
+  },
+  {
+    "title": "Tableware",
+    "page": 84
+  },
+  {
+    "title": "Cleaning Supplies",
+    "page": 91
+  },
+  {
+    "title": "Beauty & Personal Care",
+    "page": 95
+  },
+  {
+    "title": "Kids Tableware",
+    "page": 99
+  },
+  {
+    "title": "Pet Supplies",
+    "page": 108
+  },
+  {
+    "title": "Outdoor & BBQ",
+    "page": 112
+  },
+  {
+    "title": "Household Essentials",
+    "page": 116
+  }
 ]

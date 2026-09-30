@@ -13,20 +13,20 @@ source: **printed contents page** | checked-in outline: **14** sections | propos
 
 | proposed section | contents no. | page located | status |
 |---|---|---|---|
-| Kitchen Tools | 1 | — | !! title not found in the text layer |
-| Knives & Cutting Boards | 2 | — | !! title not found in the text layer |
-| Baking Tools | 3 | — | !! title not found in the text layer |
-| Ice Cream & Ice Tools | 4 | — | !! title not found in the text layer |
-| Coffee & Tea | 5 | — | !! title not found in the text layer |
-| Drinkware & Bottles | 6 | — | !! title not found in the text layer |
+| Kitchen Tools | 1 | 5 | ok |
+| Knives & Cutting Boards | 2 | 28 | ok |
+| Baking Tools | 3 | 35 | ok |
+| Ice Cream & Ice Tools | 4 | 50 | ok |
+| Coffee & Tea | 5 | 55 | ok |
+| Drinkware & Bottles | 6 | 61 | ok |
 | Kitchen Storage & Organization | 7 | — | !! title not found in the text layer |
-| Tableware | 8 | — | !! title not found in the text layer |
+| Tableware | 8 | 84 | ok |
 | Cleaning Supplies | 9 | — | !! title not found in the text layer |
-| Beauty & Personal Care | 10 | — | !! title not found in the text layer |
+| Beauty & Personal Care | 10 | 95 | ok |
 | Baby & Kids | 11 | — | !! title not found in the text layer |
-| Pet Supplies | 12 | — | !! title not found in the text layer |
-| Outdoor & BBQ | 13 | — | !! title not found in the text layer |
-| Household Essentials | 14 | — | !! title not found in the text layer |
+| Pet Supplies | 12 | 108 | ok |
+| Outdoor & BBQ | 13 | 112 | ok |
+| Household Essentials | 14 | 116 | ok |
 
 Name check (after normalising):
 
