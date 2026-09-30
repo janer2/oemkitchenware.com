@@ -265,6 +265,33 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .contact-block .cb-item h4 { font-size: .82rem; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
 .contact-block .cb-item p { font-size: .9rem; color: #333; line-height: 1.5; }
 
+/* ===== Inquiry form (About page) ===== */
+.inquiry-form { max-width: 720px; margin: 0 auto; }
+.inquiry-form label { display: block; font-size: .82rem; font-weight: 600; color: #444; margin-bottom: 16px; }
+.iq-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.inquiry-form input[type="text"], .inquiry-form input[type="email"], .inquiry-form input[type="tel"], .inquiry-form textarea {
+  width: 100%; margin-top: 6px; padding: 11px 13px; border: 1px solid #e0dcd4; border-radius: 9px;
+  background: #faf9f7; font: inherit; font-size: .9rem; font-weight: 400; color: #222; resize: vertical;
+}
+.inquiry-form input:focus, .inquiry-form textarea:focus { outline: none; border-color: #1a1a2e; background: #fff; }
+.iq-req { color: #c0392b; }
+.honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.iq-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 4px; }
+.iq-actions .cta-btn { font-family: inherit; }
+.iq-hint { font-size: .8rem; color: #a9a294; }
+.iq-hint a { color: #8a6d2f; }
+.iq-status { display: none; margin-top: 14px; font-size: .84rem; line-height: 1.6; color: #b3261e; background: #fdf0ef; border: 1px solid #f3c1bd; border-radius: 9px; padding: 12px 14px; }
+.iq-status.show { display: block; }
+.iq-status strong { display: block; margin-bottom: 6px; }
+.iq-status .send-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 9px 0; }
+.iq-status .send-mailto { display: inline-block; background: #fff; border: 1px solid #d9a9a4; color: #b3261e; border-radius: 8px; padding: 7px 12px; font-size: .8rem; font-weight: 600; text-decoration: none; }
+.iq-status .send-mailto:hover { background: #fdf0ef; }
+.iq-status .send-alt { display: block; color: #8a6d2f; font-size: .8rem; }
+.iq-ok { display: none; margin-top: 14px; font-size: .9rem; color: #2e7d32; background: #eef7ee; border: 1px solid #c6e2c6; border-radius: 9px; padding: 14px 16px; }
+.iq-ok.show { display: block; }
+.inquiry-form.sent label, .inquiry-form.sent .iq-actions { display: none; }
+@media (max-width: 640px) { .iq-row { grid-template-columns: 1fr; gap: 0; } }
+
 /* ===== Site Footer ===== */
 .site-footer { border-top: 1px solid #eee; text-align: center; padding: 30px 20px; color: #aaa; font-size: .8rem; }
 
@@ -465,7 +492,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <!-- ===== Catalog View ===== -->
 <section id="viewCatalog" class="view active">
   <div class="hero">
-    <h1>Kitchenware, Dinnerware, Baking &amp; Pastry Tools &mdash; Wholesale Catalog Collection</h1>
+    <h1>Kitchenware, Dinnerware, Baking &amp; Pastry Tools</h1>
     <p>Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM manufacturer in Huizhou, China, making food-grade silicone kitchenware, baby care, personal care and festive decoration products since 2010. Open any of the five catalogues below as a searchable flip-book, or jump straight to a product range.</p>
   </div>
   <div id="catalogGrid" class="catalog-grid"></div>
@@ -611,6 +638,30 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   <div class="about-section">
     <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 5.7 4 9s-1.5 6.4-4 9c-2.5-2.6-4-5.7-4-9s1.5-6.4 4-9z"/></svg></span>Customers Around the World</h2>
     <p class="about-text" style="text-align:center;max-width:640px;margin:0 auto;">Our clients are located in 34 countries and regions. With 16 years of professional industry experience, we serve markets across Europe, America, the Middle East and beyond.</p>
+  </div>
+  <div class="about-section">
+    <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 9h8M8 13h8M8 17h4"/></svg></span>Send an Inquiry</h2>
+    <p class="section-sub">Tell us the products, the quantity you need and your market. We reply with a quotation, MOQ and lead time &mdash; usually within one working day.</p>
+    <form class="inquiry-form" id="aboutForm" novalidate>
+      <div class="iq-row">
+        <label>Name <span class="iq-req">*</span><input type="text" id="aqName" required placeholder="Your name" autocomplete="name"></label>
+        <label>E-mail <span class="iq-req">*</span><input type="email" id="aqEmail" required placeholder="you@company.com" autocomplete="email"></label>
+      </div>
+      <div class="iq-row">
+        <label>Company<input type="text" id="aqCompany" placeholder="Optional" autocomplete="organization"></label>
+        <label>Phone / WhatsApp<input type="tel" id="aqPhone" placeholder="Optional" autocomplete="tel"></label>
+      </div>
+      <label>What do you need? <span class="iq-req">*</span>
+        <textarea id="aqMessage" rows="5" required placeholder="e.g. 5,000 pcs silicone spatula sets, FOB Shenzhen, delivery by March"></textarea>
+      </label>
+      <input type="text" id="aqHoney" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="iq-actions">
+        <button type="submit" class="cta-btn">SEND INQUIRY</button>
+        <span class="iq-hint">or message us on WhatsApp: <a href="https://wa.me/8613824296558" target="_blank" rel="noopener">+86 138 2429 6558</a></span>
+      </div>
+      <p class="iq-status" id="aqError" role="alert"></p>
+      <p class="iq-ok" id="aqOk">Thank you &mdash; your inquiry has been sent. We usually reply within one working day.</p>
+    </form>
   </div>
   <div class="about-section">
     <h2 class="center"><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l1.5 4-2 1.5a12 12 0 0 0 6 6L16 13l4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>Contact</h2>
@@ -823,6 +874,44 @@ window.coverFallback=(el,i)=>{
   });
 }
 
+//===== Inquiry delivery =====
+// One relay for both forms (the contact drawer and the About page). Web3Forms is
+// called from the browser on purpose: the key is bound to the recipient address,
+// and their API refuses server-side calls outright. It replaced FormSubmit, whose
+// submission API started returning its own 500 error page for every address.
+const W3F_KEY='1c258426-1605-412d-ae14-b92628d5a9ef';
+const W3F_URL='https://api.web3forms.com/submit';
+const WA_NUMBER='8613824296558';
+
+function postInquiry(d,honey){
+  return fetch(W3F_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      access_key:W3F_KEY,
+      subject:'Wholesale Inquiry - '+(d.name||'website'),
+      from_name:'Yongli website',
+      name:d.name||'',email:d.email||'',phone:d.phone||'-',
+      company:d.company||'',message:d.message||'',
+      botcheck:honey||''
+    })
+  }).then(r=>r.json());
+}
+// A failed send must still leave the visitor a way through, so hand back a
+// prefilled message instead of an apology.
+function inquiryFallbackHtml(d){
+  const body='Name: '+d.name+'\nEmail: '+d.email+
+    (d.company?'\nCompany: '+d.company:'')+'\nPhone: '+(d.phone||'-')+'\n\n'+d.message;
+  const mail='mailto:info@yonglicc.com?subject='+encodeURIComponent('Wholesale Inquiry - '+d.name)+'&body='+encodeURIComponent(body);
+  const wa='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent('Wholesale Inquiry\n\n'+body);
+  return '<strong>That did not go through.</strong>'+
+    '<span class="send-actions">'+
+      '<a class="send-mailto" href="'+mail+'">Send by email &rarr;</a>'+
+      '<a class="send-mailto" href="'+wa+'" target="_blank" rel="noopener">Send on WhatsApp &rarr;</a>'+
+    '</span>'+
+    '<span class="send-alt">Your message is already written - either button opens it ready to send.</span>';
+}
+
 //===== Events =====
 function bindEvents(){
   // Nav. The Catalog item drops down the row of PDF catalogues while the mouse
@@ -872,6 +961,34 @@ function bindEvents(){
   });
   bindBookZoom();
 
+  // About page inquiry form: same relay, its own status line.
+  const $aboutForm=document.getElementById('aboutForm');
+  if($aboutForm)$aboutForm.addEventListener('submit',e=>{e.preventDefault();
+    const d={
+      name:document.getElementById('aqName').value.trim(),
+      email:document.getElementById('aqEmail').value.trim(),
+      company:document.getElementById('aqCompany').value.trim(),
+      phone:document.getElementById('aqPhone').value.trim(),
+      message:document.getElementById('aqMessage').value.trim()
+    };
+    const $err=document.getElementById('aqError'),$ok=document.getElementById('aqOk'),
+      btn=$aboutForm.querySelector('.cta-btn');
+    $err.textContent='';$err.classList.remove('show');
+    if(!d.name||!d.email||!d.message){
+      $err.textContent='Please fill in your name, e-mail and what you need.';
+      $err.classList.add('show');return;
+    }
+    btn.disabled=true;const label=btn.textContent;btn.textContent='Sending...';
+    const failed=()=>{btn.disabled=false;btn.textContent=label;
+      $err.innerHTML=inquiryFallbackHtml(d);$err.classList.add('show')};
+    postInquiry(d,document.getElementById('aqHoney').value).then(r=>{
+      btn.disabled=false;btn.textContent=label;
+      if(r&&r.success&&String(r.success)!=='false'){
+        $aboutForm.classList.add('sent');$ok.classList.add('show');
+      }else failed();
+    }).catch(failed);
+  });
+
   // Contact drawer
   $contactFab.addEventListener('click',openDrawer);
   $drawerClose.addEventListener('click',closeDrawer);
@@ -884,17 +1001,9 @@ function bindEvents(){
     $sendError.classList.remove('show');
     if(!n||!em||!msg)return;
     btn.disabled=true;btn.textContent='Sending...';
-    fetch('https://formsubmit.co/ajax/info@yonglicc.com',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        name:n,email:em,phone:ph||'-',message:msg,
-        _subject:'Wholesale Inquiry - '+n,
-        _template:'table',
-        _captcha:'false',
-        _honey:document.getElementById('fHoney').value
-      })
-    }).then(r=>r.json()).then(d=>{
+    postInquiry({name:n,email:em,phone:ph,message:msg},
+                document.getElementById('fHoney').value)
+    .then(d=>{
       btn.disabled=false;btn.textContent='Send';
       if(d&&d.success&&String(d.success)!=='false'){
         $contactForm.style.display='none';$sendSuccess.classList.add('show');

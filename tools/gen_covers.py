@@ -16,6 +16,11 @@ QUALITY = 76
 for cat in CATALOGS:
     pdf_path = BASE / cat["pdf"]
     out = OUT / (cat["id"] + ".jpg")
+    # A catalogue can carry a designed cover instead of page 1 of its PDF; then
+    # the artwork is installed with tools/set_cover.py and left untouched here.
+    if cat.get("coverLocked"):
+        print(f"{cat['id']:8s} cover locked, keeping {out.name}")
+        continue
     if not pdf_path.exists():
         print("MISSING PDF:", pdf_path)
         continue
