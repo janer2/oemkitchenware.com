@@ -4,30 +4,45 @@
     "name": "2026 New",
     "sub": "2026 Product Catalog",
     "pdf": "assets/catalog-2026new.pdf",
-    "gridFromToc": false
+    "toc": null,
+    "gridFromToc": false,
+    "theme": "the complete 2026 product range across kitchen, beauty, baby, pet and outdoor lines",
+    "materials": "Food-grade silicone, stainless steel, BPA-free plastics and CE/RoHS compliant electronics"
   },
   {
     "id": "kitchen",
     "name": "Kitchen Gadgets",
     "sub": "Kitchen Items",
-    "pdf": "assets/catalog-kitchen.pdf"
+    "pdf": "assets/catalog-kitchen.pdf",
+    "toc": "toc-kitchen.json",
+    "theme": "silicone and stainless steel kitchenware",
+    "materials": "Food-grade silicone, stainless steel, BPA-free plastic"
   },
   {
     "id": "baby",
     "name": "Baby Care",
     "sub": "Infant & Nursery Products",
-    "pdf": "assets/catalog-baby.pdf"
+    "pdf": "assets/catalog-baby.pdf",
+    "toc": "toc-baby.json",
+    "theme": "food-grade silicone baby care products",
+    "materials": "Food-grade silicone, BPA-free materials, EN71 & FDA compliant"
   },
   {
     "id": "ladies",
     "name": "Ladies' Appliances",
     "sub": "Personal Care & Beauty Devices",
-    "pdf": "assets/catalog-ladies.pdf"
+    "pdf": "assets/catalog-ladies.pdf",
+    "toc": "toc-ladies.json",
+    "theme": "personal care and beauty devices",
+    "materials": "Safe, body-friendly materials with CE/RoHS compliant electronics"
   },
   {
     "id": "balls",
     "name": "Christmas Balls",
     "sub": "Festival Decorations",
-    "pdf": "assets/catalog-balls.pdf"
+    "pdf": "assets/catalog-balls.pdf",
+    "toc": null,
+    "theme": "festive Christmas and holiday decorations",
+    "materials": "High-quality festive finishes, drop-safe decoration materials"
   }
 ]

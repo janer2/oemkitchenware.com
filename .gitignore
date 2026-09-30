@@ -1,0 +1,27 @@
+# Scratch files: probes, one-off reports and intermediate builds. They used to
+# get committed by `git add -A` (once a 15MB OCR intermediate went in), so they
+# are ignored by pattern rather than by memory.
+_*
+*.tmp
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Draft outlines from tools/gen_toc.py: regenerable, and the checked-in toc-*.json
+# stays the verified source. toc-review.md (the human-facing comparison) is tracked.
+toc-*.proposed.json
+
+# Local-only helpers: the Windows scheduled task runs start-server.bat from this
+# folder, but the public repo does not need it (it also leaks local paths).
+start-server.bat
+start-server-hidden.vbs
+
+# Local dev page for the flip-book library; not part of the site
+stpageflip-demo.html
+
+# OS noise
+Thumbs.db
+.DS_Store
+desktop.ini

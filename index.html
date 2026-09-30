@@ -185,6 +185,25 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   .cat-card .cat-cover::after { display: none; }
 }
 
+/* ===== Full catalogue index (plain HTML, generated into the markers above) =====
+   The cards are drawn by JS, so this block is what a crawler actually reads. */
+.home-index { max-width: 1280px; margin: 0 auto; padding: 8px 24px 56px; }
+.home-index h2 { font-size: 1.35rem; font-weight: 700; color: #1a1a2e; letter-spacing: -.02em; }
+.hi-lede { color: #999; font-size: .88rem; line-height: 1.65; margin: 8px 0 26px; max-width: 780px; }
+.hi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 26px; }
+.hi-col h3 { font-size: .95rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #8a8172; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee9e1; }
+.hi-sub { font-size: .78rem; color: #b5aea1; margin-bottom: 12px; }
+.hi-col ul { list-style: none; }
+.hi-col li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 5px 0; border-bottom: 1px solid #f6f4f0; }
+.hi-col li a { color: #1a1a2e; text-decoration: none; font-size: .86rem; }
+.hi-col li a:hover { color: #8a6d2f; text-decoration: underline; text-underline-offset: 3px; }
+.hi-col li span { color: #c4bcae; font-size: .74rem; white-space: nowrap; }
+.hi-all { display: inline-block; margin-top: 12px; font-size: .82rem; color: #8a6d2f; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 768px) {
+  .home-index { padding: 8px 14px 40px; }
+  .hi-col li a { font-size: .82rem; }
+}
+
 /* ===== Customize View ===== */
 .customize-hero { text-align: center; padding: 60px 24px 48px; background: linear-gradient(180deg, #faf9f7 0%, #fff 100%); }
 .customize-hero h1 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
@@ -346,6 +365,27 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .send-error { display: none; background: #fdf0ef; border: 1px solid #f3c1bd; color: #b3261e; border-radius: 8px; padding: 10px 12px; font-size: .82rem; line-height: 1.5; margin-bottom: 14px; }
 .send-error.show { display: block; }
 .send-error a { color: #b3261e; font-weight: 600; }
+.send-error strong { display: block; margin-bottom: 6px; }
+.send-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 9px 0; }
+.send-error .send-mailto, .send-error .send-copy {
+  display: inline-block; background: #fff; border: 1px solid #d9a9a4; color: #b3261e;
+  border-radius: 8px; padding: 7px 12px; font-size: .8rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; font-family: inherit;
+}
+.send-error .send-mailto:hover, .send-error .send-copy:hover { background: #fdf0ef; }
+.send-alt { display: block; color: #8a6d2f; font-weight: 400; }
+
+/* ===== Keyboard & motion preferences ===== */
+.cat-card:focus-visible, .catalog-card:focus-visible, .nd-item:focus-visible,
+.main-nav a:focus-visible, .hi-col a:focus-visible {
+  outline: 2px solid #8a6d2f; outline-offset: 3px; border-radius: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cat-card { opacity: 1; transform: none; transition: none; }
+  .catalog-card, .value-card, .cat-cover img, .view-more { transition: none; }
+  .cat-card:hover .cat-cover img, .cat-card:focus-visible .cat-cover img { transform: none; }
+}
 
 /* ===== Mobile ===== */
 @media (max-width: 768px) {
@@ -425,8 +465,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <!-- ===== Catalog View ===== -->
 <section id="viewCatalog" class="view active">
   <div class="hero">
-    <h1>Product Catalog Collection</h1>
-    <p>Browse our complete product catalogs. Click any catalog to open the 3D flip-book reader, or search across all catalogs.</p>
+    <h1>Silicone Kitchenware &amp; Home Goods &mdash; Wholesale Catalog Collection</h1>
+    <p>Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM manufacturer in Huizhou, China, making food-grade silicone kitchenware, baby care, personal care and festive decoration products since 2010. Open any of the five catalogues below as a searchable flip-book, or jump straight to a product range.</p>
   </div>
   <div id="catalogGrid" class="catalog-grid"></div>
 
@@ -438,6 +478,14 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
     </div>
     <div id="catGroups"></div>
   </section>
+
+  <!-- INDEX:BEGIN -->
+<div class="home-index">
+<h2>Full catalogue index</h2>
+<p class="hi-lede">Every section of every catalogue, listed as printed in the PDFs. Open the flip-book reader or jump straight to a section page - each one lists the products, codes and materials for that range.</p>
+<div class="hi-grid"><div class="hi-col"><h3>2026 New</h3><p class="hi-sub">2026 Product Catalog</p><ul><li><a href="/catalog/new2026/2026-new/">2026 New</a><span>p.1</span></li></ul><a class="hi-all" href="/catalog/new2026/">Browse all 2026 New &rarr;</a></div><div class="hi-col"><h3>Kitchen Gadgets</h3><p class="hi-sub">Kitchen Items</p><ul><li><a href="/catalog/kitchen/kitchen-gadgets/">Kitchen Gadgets</a><span>p.1</span></li><li><a href="/catalog/kitchen/kitchen-utensil/">Kitchen Utensil</a><span>p.38</span></li><li><a href="/catalog/kitchen/silicone-mat/">Silicone Mat</a><span>p.41</span></li><li><a href="/catalog/kitchen/silicone-coaster/">Silicone Coaster</a><span>p.51</span></li><li><a href="/catalog/kitchen/collapsible-strainer/">Collapsible Strainer</a><span>p.61</span></li><li><a href="/catalog/kitchen/collapsible-food-storage/">Collapsible Food Storage</a><span>p.66</span></li><li><a href="/catalog/kitchen/food-storage-container/">Food Storage Container</a><span>p.69</span></li><li><a href="/catalog/kitchen/snack-box/">Snack Box</a><span>p.71</span></li><li><a href="/catalog/kitchen/silicone-food-storage-bag/">Silicone Food Storage Bag</a><span>p.80</span></li><li><a href="/catalog/kitchen/collapsible-travel-cup/">Collapsible Travel Cup</a><span>p.83</span></li><li><a href="/catalog/kitchen/stainless-steel-tumbler/">Stainless Steel Tumbler</a><span>p.86</span></li><li><a href="/catalog/kitchen/bbq-grill-accessories/">BBQ Grill Accessories</a><span>p.99</span></li><li><a href="/catalog/kitchen/milk-frother/">Milk Frother</a><span>p.108</span></li><li><a href="/catalog/kitchen/tea-infuser/">Tea Infuser</a><span>p.112</span></li><li><a href="/catalog/kitchen/silicone-ice-tray/">Silicone Ice Tray</a><span>p.118</span></li><li><a href="/catalog/kitchen/ice-cream-tool/">Ice Cream Tool</a><span>p.130</span></li><li><a href="/catalog/kitchen/sourdough-starter-kit/">Sourdough Starter Kit</a><span>p.144</span></li><li><a href="/catalog/kitchen/silicone-gummy-mold/">Silicone Gummy Mold</a><span>p.156</span></li><li><a href="/catalog/kitchen/cookie-cutter/">Cookie Cutter</a><span>p.164</span></li></ul><a class="hi-all" href="/catalog/kitchen/">Browse all Kitchen Gadgets &rarr;</a></div><div class="hi-col"><h3>Baby Care</h3><p class="hi-sub">Infant &amp; Nursery Products</p><ul><li><a href="/catalog/baby/feeding-set/">Feeding Set</a><span>p.1</span></li><li><a href="/catalog/baby/spoon-fork/">Spoon/Fork</a><span>p.18</span></li><li><a href="/catalog/baby/baby-bib/">Baby Bib</a><span>p.20</span></li><li><a href="/catalog/baby/silicone-placemat/">Silicone Placemat</a><span>p.21</span></li></ul><a class="hi-all" href="/catalog/baby/">Browse all Baby Care &rarr;</a></div><div class="hi-col"><h3>Ladies' Appliances</h3><p class="hi-sub">Personal Care &amp; Beauty Devices</p><ul><li><a href="/catalog/ladies/ice-facial-roller/">Ice Facial Roller</a><span>p.1</span></li><li><a href="/catalog/ladies/silicone-cupping-therapy/">Silicone Cupping Therapy</a><span>p.3</span></li><li><a href="/catalog/ladies/menstrual-cup/">Menstrual Cup</a><span>p.5</span></li><li><a href="/catalog/ladies/applicator/">Applicator</a><span>p.12</span></li><li><a href="/catalog/ladies/menstrual-pants/">Menstrual Pants</a><span>p.19</span></li><li><a href="/catalog/ladies/silicone-urinal/">Silicone Urinal</a><span>p.21</span></li></ul><a class="hi-all" href="/catalog/ladies/">Browse all Ladies' Appliances &rarr;</a></div><div class="hi-col"><h3>Christmas Balls</h3><p class="hi-sub">Festival Decorations</p><ul><li><a href="/catalog/balls/christmas-balls/">Christmas Balls</a><span>p.1</span></li></ul><a class="hi-all" href="/catalog/balls/">Browse all Christmas Balls &rarr;</a></div></div>
+</div>
+<!-- INDEX:END -->
 
   <footer class="site-footer">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.<br><a href="catalog/" style="color:#1a1a2e;font-weight:600;display:inline-block;margin-top:8px">Browse Product Category Pages &rarr;</a></footer>
 </section>
@@ -852,9 +900,41 @@ function bindEvents(){
         $contactForm.style.display='none';$sendSuccess.classList.add('show');
       }else{showSendError()}
     }).catch(()=>{btn.disabled=false;btn.textContent='Send';showSendError()});
+    // The mail relay can fail (their API has gone down before), and an inquiry is
+    // the whole point of the page - so a failure hands the visitor a prefilled
+    // message instead of just telling them it did not work.
     function showSendError(){
-      $sendError.innerHTML='Message failed to send. Please email us directly at <a href="mailto:info@yonglicc.com">info@yonglicc.com</a> or try again.';
+      const body='Name: '+n+'\nEmail: '+em+'\nPhone: '+ph+'\n\n'+msg;
+      const mail='mailto:info@yonglicc.com?subject='+encodeURIComponent('Wholesale Inquiry - '+n)+'&body='+encodeURIComponent(body);
+      $sendError.innerHTML='<strong>We could not send that automatically</strong> &mdash; your message is ready, just pick one:'+
+        '<span class="send-actions">'+
+          '<a class="send-mailto" href="'+mail+'">Open it in your email app &rarr;</a>'+
+          '<button type="button" class="send-copy">Copy the message</button>'+
+        '</span>'+
+        '<span class="send-alt">Or write to <a href="mailto:info@yonglicc.com">info@yonglicc.com</a> / WhatsApp <a href="https://wa.me/8613824296558" target="_blank" rel="noopener">+86 138 2429 6558</a>.</span>';
       $sendError.classList.add('show');
+      const btn=$sendError.querySelector('.send-copy');
+      if(btn)btn.addEventListener('click',()=>{
+        // Report what actually happened: the clipboard API is refused in plenty of
+        // contexts, and a button that silently does nothing is worse than none.
+        let settled=false;
+        const done=ok=>{if(settled)return;settled=true;
+          btn.textContent=ok?'Copied':'Copy failed - use your email app';
+          setTimeout(()=>{btn.textContent='Copy the message'},2600)};
+        const legacy=()=>{
+          const ta=document.createElement('textarea');ta.value=body;ta.setAttribute('readonly','');
+          ta.style.position='fixed';ta.style.top='-1000px';document.body.appendChild(ta);
+          ta.select();let ok=false;
+          try{ok=document.execCommand('copy')}catch(e){ok=false}
+          document.body.removeChild(ta);done(ok);
+        };
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(body).then(()=>done(true),legacy);
+          // writeText can stay pending forever when the page has no user
+          // activation, so the button must not wait on it to say something.
+          setTimeout(()=>{if(!settled)legacy()},800);
+        }else legacy();
+      });
     }
   });
 
@@ -880,7 +960,9 @@ async function ensureSearchIndex(){
     const r=await fetch('search-index.json',{cache:'no-cache'});
     if(r.ok){
       const data=await r.json();
-      for(const it of data){
+      // v2 wraps the rows with metadata ({v,unit,catalogs,entries}); v1 was a bare array.
+      const list=Array.isArray(data)?data:(data.entries||[]);
+      for(const it of list){
         const ci=catalogs.findIndex(c=>c.id===it.id);
         if(ci<0||!it.text||it.text.trim().length<=5)continue;
         searchIndex.push({
@@ -1278,7 +1360,9 @@ function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
 // that land on top of each other are replayed with a short flick so that
 // hammering an edge advances the book as fast as the clicks arrive instead of
 // making the reader sit through a full turn per click.
-const FLIP_FULL=550,FLIP_FAST=200;let flipAt=0,flipDur=FLIP_FULL;
+// Readers who ask the OS to reduce motion get the turn without the animation.
+const REDUCED_MOTION=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FLIP_FULL=REDUCED_MOTION?60:550,FLIP_FAST=REDUCED_MOTION?40:200;let flipAt=0,flipDur=FLIP_FULL;
 function markFlip(ms){if(ms)flipDur=ms;flipAt=Date.now()}
 function flipRunning(){return Date.now()-flipAt<flipDur+40}
 // The library reads settings.flippingTime when a turn starts, so the speed can

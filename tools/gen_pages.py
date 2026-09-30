@@ -37,28 +37,35 @@ BRAND_LINE = ("BSCI & ISO 9001 certified OEM/ODM manufacturer since 2010. "
               "Serving customers in 34 countries with one-stop OEM, packaging, "
               "design and logistics. Vision: Make Globe Trade Easy.")
 
-CATS = [
-    {"id": "new2026", "pdf": "assets/catalog-2026new.pdf", "toc": None,
-     "name": "2026 New", "sub": "2026 Product Catalog",
-     "theme": "the complete 2026 product range across kitchen, beauty, baby, pet and outdoor lines",
-     "materials": "Food-grade silicone, stainless steel, BPA-free plastics and CE/RoHS compliant electronics"},
-    {"id": "kitchen", "pdf": "assets/catalog-kitchen.pdf", "toc": "toc-kitchen.json",
-     "name": "Kitchen Gadgets", "sub": "Kitchen Items",
-     "theme": "silicone and stainless steel kitchenware",
-     "materials": "Food-grade silicone, stainless steel, BPA-free plastic"},
-    {"id": "baby", "pdf": "assets/catalog-baby.pdf", "toc": "toc-baby.json",
-     "name": "Baby Care", "sub": "Infant & Nursery Products",
-     "theme": "food-grade silicone baby care products",
-     "materials": "Food-grade silicone, BPA-free materials, EN71 & FDA compliant"},
-    {"id": "ladies", "pdf": "assets/catalog-ladies.pdf", "toc": "toc-ladies.json",
-     "name": "Ladies' Appliances", "sub": "Personal Care & Beauty Devices",
-     "theme": "personal care and beauty devices",
-     "materials": "Safe, body-friendly materials with CE/RoHS compliant electronics"},
-    {"id": "balls", "pdf": "assets/catalog-balls.pdf", "toc": None,
-     "name": "Christmas Balls", "sub": "Festival Decorations",
-     "theme": "festive Christmas and holiday decorations",
-     "materials": "High-quality festive finishes, drop-safe decoration materials"},
-]
+# catalogs.json is the single source of truth: it feeds the homepage, the cover
+# renderer, the category grid and this generator. It used to be duplicated as a
+# literal here, and adding a catalog meant editing both lists (forget one and the
+# build silently lost it), so CATS is derived from the JSON instead.
+CATALOGS_FILE = ROOT / "catalogs.json"
+
+
+def load_catalogs():
+    raw = json.loads(CATALOGS_FILE.read_text(encoding="utf-8"))
+    out = []
+    for c in raw:
+        if not c.get("id") or not c.get("pdf"):
+            raise SystemExit("catalogs.json entry needs an id and a pdf: %r" % (c,))
+        out.append({
+            "id": c["id"],
+            "pdf": c["pdf"],
+            # toc = outline used to cut this PDF into category pages; catalogs
+            # whose outline should not spawn near-duplicate pages keep it null
+            "toc": c.get("toc") or None,
+            "name": c.get("name") or c["id"],
+            "sub": c.get("sub") or "",
+            "gridFromToc": c.get("gridFromToc", True),
+            "theme": c.get("theme") or c.get("name") or c["id"],
+            "materials": c.get("materials") or "Food-grade materials",
+        })
+    return out
+
+
+CATS = load_catalogs()
 
 # Sitemap entries the generator owns (rewritten each run)
 SITEMAP_STATIC = [
@@ -164,120 +171,6 @@ def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             .replace('"', "&quot;"))
 
-
-# ---- per-page mirrors (one static HTML page per catalog PDF page) ----
-def clean_page_lines(txt):
-    lines = []
-    for ln in txt.split("\n"):
-        ln = re.sub(r"\s+", " ", ln).strip()
-        if len(ln) >= 2:
-            lines.append(ln)
-    return lines
-
-
-def pick_headline(lines):
-    for ln in lines:
-        if len(ln) < 8:
-            continue
-        low = ln.lower()
-        if low.startswith(("http", "www", "tel:", "mailto")) or "@" in ln:
-            continue
-        if re.match(r"^[\d\s.,\-/x×*()+]+$", ln):
-            continue
-        return ln[:90]
-    return None
-
-
-def mirror_page_html(cat, pn, n, head, lines, leaf):
-    title = (head or "Catalog Page %d" % pn) + " | Yongli " + cat["name"] + " Wholesale"
-    desc = (" ".join(lines[:3])[:155]) if lines else ("Page %d of the " % pn) + cat["name"] + " catalog."
-    url = "%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn)
-    parent = ("%s/catalog/%s/%s/" % (SITE, cat["id"], slugify(leaf["title"]))) if leaf else None
-    prev_u = ("%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn - 1)) if pn > 1 else None
-    next_u = ("%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn + 1)) if pn < n else None
-    crumb_items = [
-        {"name": "Home", "url": SITE + "/"},
-        {"name": "Catalog", "url": SITE + "/catalog/"},
-        {"name": cat["name"], "url": "%s/catalog/%s/" % (SITE, cat["id"])},
-    ]
-    if leaf:
-        crumb_items.append({"name": leaf["title"], "url": parent})
-    crumb_items.append({"name": "Page %d" % pn, "url": url})
-    ld = json.dumps({
-        "@context": "https://schema.org", "@type": "BreadcrumbList",
-        "itemListElement": [{"@type": "ListItem", "position": i + 1,
-                             "name": it["name"], "item": it["url"]}
-                            for i, it in enumerate(crumb_items)]},
-        ensure_ascii=False)
-    paras = "\n".join('<p class="ln">%s</p>' % esc(ln) for ln in lines)
-    nav = []
-    if prev_u:
-        nav.append('<a class="pgbtn" rel="prev" href="%s">&larr; Page %d</a>' % (prev_u, pn - 1))
-    else:
-        nav.append('<span class="pgbtn off">Start</span>')
-    nav.append('<a class="pgbtn primary" href="%s/?catalog=%s&page=%d">Open in 3D Flip Catalog</a>'
-               % (SITE, cat["id"], pn))
-    if next_u:
-        nav.append('<a class="pgbtn" rel="next" href="%s">Page %d &rarr;</a>' % (next_u, pn + 1))
-    else:
-        nav.append('<span class="pgbtn off">End</span>')
-    parent_link = ('<a href="%s">%s</a>' % (parent, esc(leaf["title"]))) if leaf else ""
-    return ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n"
-            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-            "<title>%s</title>\n"
-            "<meta name=\"description\" content=\"%s\">\n"
-            "<link rel=\"canonical\" href=\"%s\">\n"
-            "<meta property=\"og:title\" content=\"%s\">\n"
-            "<meta property=\"og:type\" content=\"website\">\n"
-            "<meta property=\"og:url\" content=\"%s\">\n"
-            "<meta property=\"og:image\" content=\"%s/assets/logo.png\">\n"
-            "<script type=\"application/ld+json\">%s</script>\n"
-            "<style>body{font-family:'Segoe UI',system-ui,sans-serif;color:#1a1a2e;background:#faf9f7;margin:0}"
-            ".wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px}"
-            ".crumbs{font-size:.8rem;color:#888;margin-bottom:18px}.crumbs a{color:#1a1a2e;text-decoration:none}"
-            "h1{font-size:1.6rem;margin:0 0 6px}.pg{color:#888;font-size:.85rem;margin-bottom:18px}"
-            ".ln{margin:.5em 0;font-size:.95rem;line-height:1.6;color:#333}"
-            ".cta{margin:20px 0;display:flex;gap:10px;flex-wrap:wrap}"
-            ".pgbtn{display:inline-block;padding:9px 18px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a2e;text-decoration:none;font-size:.88rem;font-weight:600}"
-            ".pgbtn.primary{background:#1a1a2e;color:#fff;border-color:#1a1a2e}"
-            ".pgbtn.off{color:#bbb;background:#f1efec}"
-            ".note{font-size:.85rem;color:#888;margin:22px 0 0}"
-            "footer{margin-top:36px;font-size:.8rem;color:#999;border-top:1px solid #eee;padding-top:16px}"
-            "footer a{color:#1a1a2e;text-decoration:none}</style>\n"
-            "</head>\n<body>\n<div class=\"wrap\">\n"
-            "<div class=\"crumbs\"><a href=\"/\">Home</a> &rsaquo; <a href=\"/catalog/\">Catalog</a>"
-            " &rsaquo; <a href=\"/catalog/%s/\">%s</a>%s%s</div>\n"
-            "<h1>%s</h1>\n<p class=\"pg\">%s &mdash; catalog PDF page %d of %d</p>\n"
-            "<div class=\"cta\">%s</div>\n"
-            "%s\n"
-            "<p class=\"note\">Product details above are as printed in the official catalog PDF. "
-            "Pricing, MOQ and customization available on request.</p>\n"
-            "<footer>&copy; 2026 Huizhou Yongli Industrial Co., Ltd. <a href=\"/\">Back to 3D catalog</a></footer>\n"
-            "</div>\n</body>\n</html>\n") % (
-            esc(title), esc(desc), url, esc(title), url, SITE, ld,
-            cat["id"], esc(cat["name"]),
-            ((" &rsaquo; " + parent_link) if leaf else ""),
-            (" &rsaquo; Page %d" % pn), esc(head or ("Catalog Page %d" % pn)),
-            esc(cat["name"]), pn, n, " ".join(nav), paras or "<p class=\"ln\">(image page)</p>")
-
-
-def build_page_mirrors(cat, leaves, doc):
-    n = doc.page_count
-    catmap = [None] * (n + 1)
-    for lf in leaves:
-        for pn in range(lf["page"], min(lf.get("end", n), n) + 1):
-            catmap[pn] = lf
-    urls = []
-    base = OUT / cat["id"] / "pages"
-    for pn in range(1, n + 1):
-        lines = clean_page_lines(doc[pn - 1].get_text())
-        head = pick_headline(lines)
-        d = base / str(pn)
-        d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(
-            mirror_page_html(cat, pn, n, head, lines, catmap[pn]), encoding="utf-8")
-        urls.append(("%s/catalog/%s/pages/%d/" % (SITE, cat["id"], pn), "monthly", "0.5"))
-    return urls
 
 
 def page_text(doc, start, end, limit=420):
@@ -489,15 +382,8 @@ def is_product_name(text):
     return len(t.split()) >= 2
 
 
-def page_items(doc, pno, max_items=60):
-    """Pair every product code on a page with its product name.
-
-    The decks lay their cells out differently: the landscape catalogs print the
-    code on the line under the name, the portrait ones print it on the line
-    above, and long names wrap onto a second line. So instead of only looking
-    above the code we walk the column both ways, glue wrapped lines back
-    together and keep the run that actually reads like a product.
-    """
+def page_lines(doc, pno):
+    """Every text line of a page as (text, x0, y0, x1, y1), sorted top-to-bottom."""
     try:
         data = doc[pno].get_text("dict")
     except Exception:
@@ -509,9 +395,22 @@ def page_items(doc, pno, max_items=60):
             if txt:
                 x0, y0, x1, y1 = ln["bbox"]
                 lines.append((txt, x0, y0, x1, y1))
+    lines.sort(key=lambda t: (t[2], t[1]))
+    return lines
+
+
+def page_items(doc, pno, max_items=60):
+    """Pair every product code on a page with its product name.
+
+    The decks lay their cells out differently: the landscape catalogs print the
+    code on the line under the name, the portrait ones print it on the line
+    above, and long names wrap onto a second line. So instead of only looking
+    above the code we walk the column both ways, glue wrapped lines back
+    together and keep the run that actually reads like a product.
+    """
+    lines = page_lines(doc, pno)
     if not lines:
         return []
-    lines.sort(key=lambda t: (t[2], t[1]))
 
     def is_code(txt):
         return bool(CODE_RE.match(txt.upper().replace(" ", "")))
@@ -584,11 +483,101 @@ def page_items(doc, pno, max_items=60):
     return items[:max_items]
 
 
+def item_audit(doc, pno):
+    """What the pairing could *not* resolve on a page, for the review report.
+
+    The rules above are tuned heuristics (code shapes, spec words, line gaps), so
+    every catalog change can quietly shift what pairs with what. Rather than
+    re-inventing a probe each time, the generator can print the leftovers.
+    """
+    lines = page_lines(doc, pno)
+    if not lines:
+        return None
+    items = page_items(doc, pno)
+    paired_codes = set(it[1] for it in items if it[1])
+    codes = [s[0].upper().replace(" ", "") for s in lines
+             if CODE_RE.match(s[0].upper().replace(" ", ""))]
+    names = [it[0] for it in items if it[0]]
+    return {
+        "codes": len(codes),
+        "codes_unpaired": [c for c in codes if c not in paired_codes],
+        "named": len(names),
+        "unnamed": len([it for it in items if not it[1]]),
+    }
+
+
+def write_home_index(cats_built):
+    """Rewrite the crawlable catalogue index inside index.html.
+
+    The homepage cards are drawn by JavaScript, so a crawler that does not execute
+    scripts sees almost no text on the most important URL of the site. This block
+    is plain HTML - every catalog, every section, every section landing page.
+    """
+    cols = []
+    for cat, cat_pages in cats_built:
+        links = "".join(
+            '<li><a href="/catalog/%s/%s/">%s</a><span>p.%d</span></li>'
+            % (cat["id"], slugify(p["title"]), esc(p["title"]), int(p["page"]))
+            for p in cat_pages)
+        cols.append('<div class="hi-col"><h3>%s</h3><p class="hi-sub">%s</p><ul>%s</ul>'
+                    '<a class="hi-all" href="/catalog/%s/">Browse all %s &rarr;</a></div>'
+                    % (esc(cat["name"]), esc(cat["sub"]), links, cat["id"], esc(cat["name"])))
+    block = ("<!-- INDEX:BEGIN -->\n"
+             '<div class="home-index">\n'
+             "<h2>Full catalogue index</h2>\n"
+             '<p class="hi-lede">Every section of every catalogue, listed as printed in the '
+             "PDFs. Open the flip-book reader or jump straight to a section page - each one "
+             "lists the products, codes and materials for that range.</p>\n"
+             '<div class="hi-grid">%s</div>\n'
+             "</div>\n"
+             "<!-- INDEX:END -->" % "".join(cols))
+    path = ROOT / "index.html"
+    html = path.read_text(encoding="utf-8")
+    if "<!-- INDEX:BEGIN -->" not in html:
+        print("home index markers missing in index.html - skipped")
+        return
+    path.write_text(re.sub(r"<!-- INDEX:BEGIN -->.*?<!-- INDEX:END -->", block, html, flags=re.S),
+                    encoding="utf-8")
+    print("home index block rewritten:", sum(len(p) for _, p in cats_built), "section links")
+
+
+def write_item_report(rows):
+    """catalog/item-review.md — a short human-checkable list per catalog."""
+    out = ["# Search-index pairing review",
+           "",
+           "Generated by `python tools/gen_pages.py --report`. Use it to spot-check the",
+           "heuristics in `page_items()` after a catalog changes: anything listed under",
+           "*unpaired codes* or *unnamed rows* is a product the search index may show",
+           "without a code (or miss entirely).",
+           ""]
+    for cid, name, stats, samples in rows:
+        out.append("## %s (%s)" % (name, cid))
+        out.append("")
+        out.append("- pages with products: **%d**" % stats["pages"])
+        out.append("- codes found: **%d**, paired with a name: **%d** (%.1f%%)"
+                   % (stats["codes"], stats["codes"] - stats["unpaired"],
+                      100.0 * (stats["codes"] - stats["unpaired"]) / max(1, stats["codes"])))
+        out.append("- rows without a code: **%d**" % stats["unnamed"])
+        if samples:
+            out.append("")
+            out.append("| page | issue | text |")
+            out.append("|---|---|---|")
+            for pn, kind, txt in samples:
+                out.append("| %d | %s | %s |" % (pn, kind, txt.replace("|", "/")))
+        out.append("")
+    path = OUT / "item-review.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(out), encoding="utf-8")
+    print("item review written:", path.relative_to(ROOT))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="catalog id to build")
-    ap.add_argument("--pages", help="catalog ids that also get one HTML page per PDF page, e.g. kitchen")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--report", action="store_true",
+                    help="also write catalog/item-review.md: how many product "
+                         "codes/names failed to pair, with samples to check")
     args = ap.parse_args()
 
     try:
@@ -620,7 +609,6 @@ def main():
             print("unchanged, skip:", cat["id"])
             cats_built.append((cat, rec.get("cats", [])))
             out_pages.extend(rec.get("pages", []))
-            out_pages.extend(rec.get("mirrors", []))
             continue
 
         leaves = build_categories(cat)
@@ -655,6 +643,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "index.html").write_text(hub_html(cats_built), encoding="utf-8")
     print("hub written: catalog/index.html")
+
+    write_home_index(cats_built)
 
     urls = []
     for u, cf, pr in SITEMAP_STATIC:
@@ -724,11 +714,46 @@ def main():
                     if items:
                         e["items"] = items
                     entries.append(e)
-        idx_path.write_text(json.dumps(entries, ensure_ascii=False, separators=(",", ":")),
+        # Self-describing file: the reader can tell a product-level index from
+        # the older page-level one, and look up catalog names without guessing.
+        payload = {
+            "v": 2,
+            "unit": "product",
+            "catalogs": {c["id"]: c["name"] for c in idx_ids},
+            "entries": entries,
+        }
+        idx_path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
                             encoding="utf-8")
         manifest["_search"] = {"sha": key}
         print("search-index.json updated:", len(entries), "entries,",
-              round(idx_path.stat().st_size / 1024), "KB")
+               round(idx_path.stat().st_size / 1024), "KB")
+
+    if args.report:
+        rows = []
+        for c in CATS:
+            pdf = ROOT / c["pdf"]
+            if not pdf.exists():
+                continue
+            stats = {"pages": 0, "codes": 0, "unpaired": 0, "unnamed": 0}
+            samples = []
+            with pymupdf.open(str(pdf)) as doc:
+                for pn in range(1, doc.page_count + 1):
+                    au = item_audit(doc, pn - 1)
+                    if not au:
+                        continue
+                    stats["pages"] += 1
+                    stats["codes"] += au["codes"]
+                    stats["unpaired"] += len(au["codes_unpaired"])
+                    stats["unnamed"] += au["unnamed"]
+                    for code in au["codes_unpaired"][:2]:
+                        if len([s for s in samples if s[0] == pn and s[1] == "unpaired code"]) < 2:
+                            samples.append((pn, "unpaired code", code))
+                    if au["unnamed"] and len(samples) < 24:
+                        samples.append((pn, "row without code",
+                                        "%d row(s) on this page" % au["unnamed"]))
+            rows.append((c["id"], c["name"], stats, samples[:24]))
+            print("audit:", c["id"], stats)
+        write_item_report(rows)
 
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=1),
                         encoding="utf-8")
