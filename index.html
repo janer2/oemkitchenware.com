@@ -1261,66 +1261,26 @@ function onFlipState(){
   schedulePrefill();
 }
 
-// Load a PDF over byte ranges we control.
+// Load a catalog PDF.
 //
-// Two problems, both fixed here. pdf.js's own disableAutoFetch pulled the whole
-// deck down in a single 200 response (measured: 17.2 MB per reader open on the
-// 2026 catalog). Feeding it a PDFDataRangeTransport fixes that, but pdf.js then
-// asked for 64 KB at a time - 139 round trips for one open, and the latency of
-// 139 sequential requests is what kept the first page waiting. So we fetch on
-// 1 MB block boundaries and serve requests out of that cache: the same bytes,
-// roughly a tenth of the round trips. Any failure falls back to the plain URL
-// load, so the reader can never end up worse off than before.
-// Measured on pdf.js 3.11.174, with the 2026 catalog (17.2 MB), opening once:
-//   URL + disableAutoFetch      -> one 200, 17,243,269 B
-//   range transport, 64 KB      -> 145 requests, 9,487,685 B   <-- best bytes
-//   range transport, 128 KB     -> 122 requests, 15,968,849 B
-//   range transport, 1 MB       -> 17 requests, 17,249,xxx B
-// pdf.js only forwards disableRange/disableStream to the transport (it never
-// reads disableAutoFetch there), and its transport streams the document from
-// front to back in both directions of that table - so no option combination
-// gives true on-demand page loading. 64 KB keeps the bytes lowest.
-const PDF_BLOCK=65536;
-function rangedTransportClass(url,head){
-  return class extends pdfjsLib.PDFDataRangeTransport{
-    constructor(length,init){super(length,init);this._url=url;this._blocks=new Map([[0,head]])}
-    _block(b){
-      let p=this._blocks.get(b);
-      if(p)return Promise.resolve(p);
-      p=fetch(this._url,{headers:{Range:'bytes='+(b*PDF_BLOCK)+'-'+((b+1)*PDF_BLOCK-1)}})
-        .then(r=>r.arrayBuffer()).then(buf=>{const u=new Uint8Array(buf);this._blocks.set(b,u);return u;});
-      this._blocks.set(b,p);
-      return p;
-    }
-    requestDataRange(begin,end){
-      const first=Math.floor(begin/PDF_BLOCK),last=Math.floor(Math.max(begin,end-1)/PDF_BLOCK);
-      const jobs=[];
-      for(let b=first;b<=last;b++)jobs.push(this._block(b));
-      Promise.all(jobs).then(()=>{
-        let out=new Uint8Array(end-begin),off=0;
-        for(let b=first;b<=last;b++){
-          const u=this._blocks.get(b);
-          if(!u||typeof u.then==='function')continue;
-          const from=Math.max(0,begin-b*PDF_BLOCK),to=Math.min(u.length,end-b*PDF_BLOCK);
-          if(to>from){out.set(u.subarray(from,to),off);off+=to-from;}
-        }
-        if(off>0)this.onDataRange(begin,out.subarray(0,off));
-      }).catch(()=>{});
-    }
-    abort(){}
-  };
-}
-async function openPdfRanged(url){
-  const plain=()=>pdfjsLib.getDocument({url:url,disableAutoFetch:true}).promise;
-  try{
-    const probe=await fetch(url,{headers:{Range:'bytes=0-'+(PDF_BLOCK-1)}});
-    if(probe.status!==206)return plain();
-    const total=parseInt(((probe.headers.get('Content-Range')||'').split('/')[1]||'').trim(),10);
-    const head=new Uint8Array(await probe.arrayBuffer());
-    if(!total||head.length<8)return plain();
-    const T=rangedTransportClass(url,head);
-    return await pdfjsLib.getDocument({range:new T(total,head),disableAutoFetch:true}).promise;
-  }catch(e){return plain()}
+// DO NOT put a PDFDataRangeTransport back here without reading this. pdf.js
+// 3.11.174 only forwards disableRange/disableStream to a custom transport (it
+// never reads disableAutoFetch there), and its transport reads the document
+// front to back, so a range transport turns one download into 120-150
+// serialised HTTP requests. Measured on the 2026 catalog (17.2 MB), one open:
+//
+//   URL + disableAutoFetch   -> 1 request, 17,243,269 B, reader works
+//   range transport, 64 KB   -> 145 requests, 9,487,685 B
+//   range transport, 128 KB  -> 122 requests, 15,968,849 B
+//   range transport, 1 MB    -> 17 requests, 17,249,xxx B
+//
+// The bytes go down but the wall time goes up, and on a mobile connection the
+// serialised round trips leave the reader stuck on "Loading PDF..." (reported
+// 2026-10-08: contents showed 0/0 and never resolved). So: one plain request,
+// and page 1 is shown from the build-time still (assets/page1/*.jpg) while it
+// arrives.
+function openCatalogPdf(url){
+  return pdfjsLib.getDocument({url:url,disableAutoFetch:true}).promise;
 }
 
 async function openReader(ci,targetPage){
@@ -1332,6 +1292,12 @@ async function openReader(ci,targetPage){
   cancelFlips();
   currentCatalogId=cat.id;$readerTitle.textContent=cat.name;$pageIndicator.textContent='--';$btnPrev.disabled=$btnNext.disabled=true;
   $readerLoading.style.display='flex';$loadingText.textContent='Loading PDF...';
+  // Show the build-time still of page 1 behind the spinner, so a catalog looks
+  // open immediately instead of showing a blank page for the whole download.
+  $readerLoading.style.backgroundImage="url('assets/page1/"+cat.id+".jpg')";
+  $readerLoading.style.backgroundSize='contain';
+  $readerLoading.style.backgroundPosition='center';
+  $readerLoading.style.backgroundRepeat='no-repeat';
   currentPdf=null;totalPages=0;$tocList.innerHTML='<div class="toc-empty">Loading...</div>';
   // TOC JSON is tiny and independent - load it in parallel so the
   // contents sidebar appears immediately, not after the PDF finishes.
@@ -1341,7 +1307,7 @@ async function openReader(ci,targetPage){
     await ensureLibs();
     // disableAutoFetch: fetch PDF page objects on demand over Range
     // requests instead of downloading the whole file in the background
-    currentPdf=await openPdfRanged(cat.pdf);totalPages=currentPdf.numPages;
+    currentPdf=await openCatalogPdf(cat.pdf);totalPages=currentPdf.numPages;
     const bodyW=$overlay.clientWidth,isMobile=window.matchMedia('(max-width: 768px)').matches;
     // Mobile starts with the contents drawer closed - it covers most of the page.
     $tocSidebar.classList.toggle('hidden',isMobile);
