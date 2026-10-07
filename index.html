@@ -1298,6 +1298,14 @@ async function openReader(ci,targetPage){
   $readerLoading.style.backgroundSize='contain';
   $readerLoading.style.backgroundPosition='center';
   $readerLoading.style.backgroundRepeat='no-repeat';
+  // Safety net: a 17 MB deck can take a long time on a slow link, and a stalled
+  // download would otherwise leave this screen spinning forever. After 40s offer
+  // the raw PDF, which the browser can show natively without pdf.js.
+  clearTimeout(window.__readerSlowT);
+  window.__readerSlowT=setTimeout(()=>{
+    if($readerLoading.style.display==='none')return;
+    $loadingText.innerHTML='Still loading... <a href="'+cat.pdf+'" target="_blank" rel="noopener" style="color:#8a6d2f;font-weight:600">open the PDF directly</a>';
+  },40000);
   currentPdf=null;totalPages=0;$tocList.innerHTML='<div class="toc-empty">Loading...</div>';
   // TOC JSON is tiny and independent - load it in parallel so the
   // contents sidebar appears immediately, not after the PDF finishes.
