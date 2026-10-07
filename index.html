@@ -1267,7 +1267,7 @@ function onFlipState(){
 // 1 MB block boundaries and serve requests out of that cache: the same bytes,
 // roughly a tenth of the round trips. Any failure falls back to the plain URL
 // load, so the reader can never end up worse off than before.
-const PDF_BLOCK=262144;
+const PDF_BLOCK=65536;
 function rangedTransportClass(url,head){
   return class extends pdfjsLib.PDFDataRangeTransport{
     constructor(length,init){super(length,init);this._url=url;this._blocks=new Map([[0,head]])}
