@@ -1271,6 +1271,11 @@ const PDF_BLOCK=65536;
 function rangedTransportClass(url,head){
   return class extends pdfjsLib.PDFDataRangeTransport{
     constructor(length,init){super(length,init);this._url=url;this._blocks=new Map([[0,head]])}
+    // pdf.js reads this flag off the transport object, not off the options we
+    // passed to getDocument. Without it the stream behaves as "fetch the whole
+    // document" and walks the entire file in 64 KB steps - measured as the
+    // reason a reader open pulled 145 chunks / 9.5 MB (and still climbing).
+    get disableAutoFetch(){return true}
     _block(b){
       let p=this._blocks.get(b);
       if(p)return Promise.resolve(p);
