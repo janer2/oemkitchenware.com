@@ -42,3 +42,26 @@ for cat in CATALOGS:
           f"-> {out.name} {out.stat().st_size//1024} KB "
           f"({pix.width}x{pix.height})")
     doc.close()
+
+# assets/page1/{id}.jpg - the reader paints this the instant a catalog opens, so
+# there is something on screen while pdf.js streams the document in. Always the
+# real first page of the PDF, even for a catalog whose card cover is a designed
+# piece of artwork.
+P1 = BASE / "assets" / "page1"
+P1_W, P1_Q = 760, 80
+for cat in CATALOGS:
+    pdf_path = BASE / cat["pdf"]
+    if not pdf_path.exists():
+        print("MISSING PDF:", pdf_path)
+        continue
+    doc = pymupdf.open(pdf_path)
+    page = doc[0]
+    rect = page.rect
+    zoom = P1_W / max(rect.width, 1)
+    pix = page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False)
+    P1.mkdir(parents=True, exist_ok=True)
+    out = P1 / (cat["id"] + ".jpg")
+    out.write_bytes(pix.tobytes("jpeg", jpg_quality=P1_Q))
+    print(f"{cat['id']:8s} page1 -> {out.name} {out.stat().st_size//1024} KB "
+          f"({pix.width}x{pix.height})")
+    doc.close()

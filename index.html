@@ -374,6 +374,9 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .main-nav a:focus-visible, .hi-col a:focus-visible {
   outline: 2px solid #8a6d2f; outline-offset: 3px; border-radius: 12px;
 }
+/* First-page still, shown while the PDF streams in (dropped once page 1 paints) */
+.pg-ghost { background-color: #fff; background-position: center; background-size: contain; background-repeat: no-repeat; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .catalog-card, .value-card { transition: none; }
@@ -1190,6 +1193,7 @@ function renderPdfPage(pn){
       const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
       await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
       if(holder.innerHTML==='')holder.appendChild(cv);
+      holder.classList.remove('pg-ghost');holder.style.backgroundImage='';
       holder.dataset.rdy='1';pageRendered[pn]=true;
       return true;
     }catch(e){console.error('render page',pn,e);return false}
@@ -1267,15 +1271,19 @@ function onFlipState(){
 // 1 MB block boundaries and serve requests out of that cache: the same bytes,
 // roughly a tenth of the round trips. Any failure falls back to the plain URL
 // load, so the reader can never end up worse off than before.
+// Measured on pdf.js 3.11.174, with the 2026 catalog (17.2 MB), opening once:
+//   URL + disableAutoFetch      -> one 200, 17,243,269 B
+//   range transport, 64 KB      -> 145 requests, 9,487,685 B   <-- best bytes
+//   range transport, 128 KB     -> 122 requests, 15,968,849 B
+//   range transport, 1 MB       -> 17 requests, 17,249,xxx B
+// pdf.js only forwards disableRange/disableStream to the transport (it never
+// reads disableAutoFetch there), and its transport streams the document from
+// front to back in both directions of that table - so no option combination
+// gives true on-demand page loading. 64 KB keeps the bytes lowest.
 const PDF_BLOCK=65536;
 function rangedTransportClass(url,head){
   return class extends pdfjsLib.PDFDataRangeTransport{
     constructor(length,init){super(length,init);this._url=url;this._blocks=new Map([[0,head]])}
-    // pdf.js reads this flag off the transport object, not off the options we
-    // passed to getDocument. Without it the stream behaves as "fetch the whole
-    // document" and walks the entire file in 64 KB steps - measured as the
-    // reason a reader open pulled 145 chunks / 9.5 MB (and still climbing).
-    get disableAutoFetch(){return true}
     _block(b){
       let p=this._blocks.get(b);
       if(p)return Promise.resolve(p);
@@ -1344,6 +1352,10 @@ async function openReader(ci,targetPage){
     for(let i=1;i<=totalPages;i++){const div=document.createElement('div');div.className='pg-shell';pageDivs.push(div)}
     if(totalPages%2!==0){const bd=document.createElement('div');bd.className='pg-shell pg-pad';bd.dataset.rdy='1';pageDivs.push(bd);pgPadIdx=pageDivs.length-1}
     const totalItems=pageDivs.length;
+    // Paint page 1 with the still image the build already rendered, so a catalog
+    // shows something the moment it opens instead of a blank sheet while the PDF
+    // streams in. The ghost is dropped as soon as the real page is drawn.
+    if(pageDivs[0]&&cat.id){pageDivs[0].classList.add('pg-ghost');pageDivs[0].style.backgroundImage="url('assets/page1/"+cat.id+".jpg')"}
 
     $loadingText.textContent='Building flip book...';
     const maxPW=isMobile?bodyW:700;
