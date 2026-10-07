@@ -26,28 +26,47 @@ a { color: #1a1a2e; }
 .topbar nav a { text-decoration: none; color: #444; font-size: .88rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; }
 .topbar nav a:hover { color: #1a1a2e; background: #f5f5f5; }
 .topbar nav a.wa { color: #1a1a2e; border: 1px solid #25d366; }
-.wrap { max-width: 980px; margin: 0 auto; padding: 26px 20px 60px; }
-.crumbs { font-size: .8rem; color: #999; margin-bottom: 14px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 34px 22px 76px; }
+.crumbs { font-size: .82rem; color: #999; margin-bottom: 18px; letter-spacing: .01em; }
 .crumbs a { color: #1a1a2e; text-decoration: none; }
 .crumbs a:hover { text-decoration: underline; }
-h1 { font-size: 1.9rem; color: #1a1a2e; margin: 4px 0 10px; }
-.lede { color: #555; max-width: 760px; margin-bottom: 24px; }
-.cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 28px; }
-.cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 30px; text-decoration: none; font-size: .92rem; font-weight: 600; transition: background .2s, transform .2s; }
+h1 { font-size: clamp(1.55rem, 3.6vw, 2.15rem); line-height: 1.24; color: #1a1a2e; margin: 6px 0 16px; letter-spacing: -.015em; }
+.lede { color: #555; font-size: 1.02rem; line-height: 1.78; max-width: 74ch; margin-bottom: 26px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 14px; }
+.cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 30px; text-decoration: none; font-size: .93rem; font-weight: 600; transition: background .2s, transform .2s; }
 .cta.primary { background: #1a1a2e; color: #fff; }
 .cta.primary:hover { background: #2b2b4a; transform: translateY(-1px); }
 .cta.whatsapp { background: #25d366; color: #fff; }
 .cta.whatsapp:hover { filter: brightness(.95); transform: translateY(-1px); }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 10px 0 30px; }
-.thumbs figure { border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #faf9f7; }
+.stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 30px; }
+.stat { background: #faf9f7; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.stat .k { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #a0a0a0; margin-bottom: 6px; }
+.stat .v { display: block; font-size: 1.05rem; font-weight: 700; color: #1a1a2e; line-height: 1.45; }
+.stat .v.sm { font-size: .9rem; font-weight: 600; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin: 6px 0 32px; }
+.thumbs figure { border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #faf9f7; margin: 0; }
+.thumbs a { display: block; position: relative; }
 .thumbs img { width: 100%; height: auto; display: block; }
-.thumbs figcaption { padding: 8px 12px; font-size: .76rem; color: #999; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-section.block { margin-bottom: 30px; }
-section.block h2 { font-size: 1.15rem; color: #1a1a2e; margin-bottom: 10px; border-bottom: 2px solid #e8a840; display: inline-block; padding-bottom: 4px; }
+.thumbs figcaption { padding: 10px 14px; font-size: .78rem; color: #999; border-top: 1px solid #f2f2f2; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+section.block { margin-bottom: 20px; background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 22px 24px; }
+section.block.plain { border: 0; padding: 0; background: none; }
+section.block h2 { font-size: 1.12rem; line-height: 1.35; color: #1a1a2e; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid #e8a840; }
+.block-sub { font-size: .87rem; color: #999; line-height: 1.7; margin: -6px 0 16px; }
 ul.ticks { list-style: none; }
-ul.ticks li { padding: 5px 0 5px 26px; position: relative; color: #444; font-size: .9rem; }
-ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; width: 9px; height: 9px; border-radius: 50%; background: #e8a840; }
+ul.ticks li { padding: 8px 0 8px 26px; position: relative; color: #444; font-size: .92rem; line-height: 1.65; }
+ul.ticks li + li { border-top: 1px solid #f6f6f6; }
+ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; width: 9px; height: 9px; border-radius: 50%; background: #e8a840; }
+.range-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 4px; }
+.range-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; border: 1px solid #e6e6e6; border-radius: 10px; text-decoration: none; color: #1a1a2e; font-size: .9rem; background: #fff; transition: border-color .15s, background .15s; }
+.range-link:hover { border-color: #1a1a2e; background: #faf9f7; }
+.range-link .pg { color: #b9a266; font-size: .78rem; font-weight: 700; white-space: nowrap; }
+.dir-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
+.dir-table th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; }
+.dir-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; line-height: 1.55; vertical-align: top; }
+.dir-table td.code { white-space: nowrap; color: #8a6d2f; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dir-table tr:last-child td { border-bottom: 0; }
+.dir-note { font-size: .8rem; color: #aaa; margin-top: 12px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .chip { border: 1px solid #ddd; border-radius: 20px; padding: 5px 14px; font-size: .78rem; color: #444; }
 .siblings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
@@ -57,10 +76,17 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
 @media (max-width: 768px) {
   .topbar { padding: 10px 14px; gap: 10px; }
   .topbar nav a { padding: 6px 10px; font-size: .82rem; }
-  .wrap { padding: 18px 14px 44px; }
-  h1 { font-size: 1.5rem; }
-  .grid2 { grid-template-columns: 1fr; gap: 20px; }
+  .wrap { padding: 22px 16px 56px; }
+  .lede { font-size: .97rem; line-height: 1.72; }
+  .cta-row { gap: 9px; }
+  .cta { width: 100%; justify-content: center; padding: 12px 18px; }
+  .stat-strip { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 { grid-template-columns: 1fr; gap: 14px; }
   .thumbs { grid-template-columns: 1fr; }
+  .range-grid { grid-template-columns: 1fr; }
+  section.block { padding: 18px 16px; }
+  .dir-table { font-size: .84rem; }
+  .dir-table td.code { white-space: normal; }
 }
 </style>
 </head>
@@ -86,7 +112,8 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
   <div class="thumbs"><figure><img src="https://oemkitchenware.com/assets/covers/kitchen.jpg" alt="Kitchen Gadgets catalogue cover"><figcaption>Kitchen Items — catalogue cover</figcaption></figure></div>
   <section class="block">
     <h2>Sections in this catalogue</h2>
-    <div class="siblings"><a class='sibling' href='/catalog/kitchen/kitchen-gadgets/'>Kitchen Gadgets <span style='color:#bbb;font-size:.75rem'>p.1</span></a><a class='sibling' href='/catalog/kitchen/kitchen-utensil/'>Kitchen Utensil <span style='color:#bbb;font-size:.75rem'>p.38</span></a><a class='sibling' href='/catalog/kitchen/silicone-mat/'>Silicone Mat <span style='color:#bbb;font-size:.75rem'>p.41</span></a><a class='sibling' href='/catalog/kitchen/silicone-coaster/'>Silicone Coaster <span style='color:#bbb;font-size:.75rem'>p.51</span></a><a class='sibling' href='/catalog/kitchen/collapsible-strainer/'>Collapsible Strainer <span style='color:#bbb;font-size:.75rem'>p.61</span></a><a class='sibling' href='/catalog/kitchen/collapsible-food-storage/'>Collapsible Food Storage <span style='color:#bbb;font-size:.75rem'>p.66</span></a><a class='sibling' href='/catalog/kitchen/food-storage-container/'>Food Storage Container <span style='color:#bbb;font-size:.75rem'>p.69</span></a><a class='sibling' href='/catalog/kitchen/snack-box/'>Snack Box <span style='color:#bbb;font-size:.75rem'>p.71</span></a><a class='sibling' href='/catalog/kitchen/silicone-food-storage-bag/'>Silicone Food Storage Bag <span style='color:#bbb;font-size:.75rem'>p.80</span></a><a class='sibling' href='/catalog/kitchen/collapsible-travel-cup/'>Collapsible Travel Cup <span style='color:#bbb;font-size:.75rem'>p.83</span></a><a class='sibling' href='/catalog/kitchen/stainless-steel-tumbler/'>Stainless Steel Tumbler <span style='color:#bbb;font-size:.75rem'>p.86</span></a><a class='sibling' href='/catalog/kitchen/bbq-grill-accessories/'>BBQ Grill Accessories <span style='color:#bbb;font-size:.75rem'>p.99</span></a><a class='sibling' href='/catalog/kitchen/milk-frother/'>Milk Frother <span style='color:#bbb;font-size:.75rem'>p.108</span></a><a class='sibling' href='/catalog/kitchen/tea-infuser/'>Tea Infuser <span style='color:#bbb;font-size:.75rem'>p.112</span></a><a class='sibling' href='/catalog/kitchen/silicone-ice-tray/'>Silicone Ice Tray <span style='color:#bbb;font-size:.75rem'>p.118</span></a><a class='sibling' href='/catalog/kitchen/ice-cream-tool/'>Ice Cream Tool <span style='color:#bbb;font-size:.75rem'>p.130</span></a><a class='sibling' href='/catalog/kitchen/sourdough-starter-kit/'>Sourdough Starter Kit <span style='color:#bbb;font-size:.75rem'>p.144</span></a><a class='sibling' href='/catalog/kitchen/silicone-gummy-mold/'>Silicone Gummy Mold <span style='color:#bbb;font-size:.75rem'>p.156</span></a><a class='sibling' href='/catalog/kitchen/cookie-cutter/'>Cookie Cutter <span style='color:#bbb;font-size:.75rem'>p.164</span></a></div>
+    <p class="block-sub">Open a section for its products and codes, or click the page number to jump straight into the flip-book at that page.</p>
+    <div class="range-grid"><div class='range-link'><a href='/catalog/kitchen/kitchen-gadgets/' style='flex:1;text-decoration:none;color:#1a1a2e'>Kitchen Gadgets</a><a class='pg' href='/?catalog=kitchen&amp;page=1' title='Open page 1 in the flip-book'>p.1 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/kitchen-utensil/' style='flex:1;text-decoration:none;color:#1a1a2e'>Kitchen Utensil</a><a class='pg' href='/?catalog=kitchen&amp;page=38' title='Open page 38 in the flip-book'>p.38 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/silicone-mat/' style='flex:1;text-decoration:none;color:#1a1a2e'>Silicone Mat</a><a class='pg' href='/?catalog=kitchen&amp;page=41' title='Open page 41 in the flip-book'>p.41 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/silicone-coaster/' style='flex:1;text-decoration:none;color:#1a1a2e'>Silicone Coaster</a><a class='pg' href='/?catalog=kitchen&amp;page=51' title='Open page 51 in the flip-book'>p.51 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/collapsible-strainer/' style='flex:1;text-decoration:none;color:#1a1a2e'>Collapsible Strainer</a><a class='pg' href='/?catalog=kitchen&amp;page=61' title='Open page 61 in the flip-book'>p.61 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/collapsible-food-storage/' style='flex:1;text-decoration:none;color:#1a1a2e'>Collapsible Food Storage</a><a class='pg' href='/?catalog=kitchen&amp;page=66' title='Open page 66 in the flip-book'>p.66 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/food-storage-container/' style='flex:1;text-decoration:none;color:#1a1a2e'>Food Storage Container</a><a class='pg' href='/?catalog=kitchen&amp;page=69' title='Open page 69 in the flip-book'>p.69 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/snack-box/' style='flex:1;text-decoration:none;color:#1a1a2e'>Snack Box</a><a class='pg' href='/?catalog=kitchen&amp;page=71' title='Open page 71 in the flip-book'>p.71 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/silicone-food-storage-bag/' style='flex:1;text-decoration:none;color:#1a1a2e'>Silicone Food Storage Bag</a><a class='pg' href='/?catalog=kitchen&amp;page=80' title='Open page 80 in the flip-book'>p.80 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/collapsible-travel-cup/' style='flex:1;text-decoration:none;color:#1a1a2e'>Collapsible Travel Cup</a><a class='pg' href='/?catalog=kitchen&amp;page=83' title='Open page 83 in the flip-book'>p.83 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/stainless-steel-tumbler/' style='flex:1;text-decoration:none;color:#1a1a2e'>Stainless Steel Tumbler</a><a class='pg' href='/?catalog=kitchen&amp;page=86' title='Open page 86 in the flip-book'>p.86 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/bbq-grill-accessories/' style='flex:1;text-decoration:none;color:#1a1a2e'>BBQ Grill Accessories</a><a class='pg' href='/?catalog=kitchen&amp;page=99' title='Open page 99 in the flip-book'>p.99 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/milk-frother/' style='flex:1;text-decoration:none;color:#1a1a2e'>Milk Frother</a><a class='pg' href='/?catalog=kitchen&amp;page=108' title='Open page 108 in the flip-book'>p.108 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/tea-infuser/' style='flex:1;text-decoration:none;color:#1a1a2e'>Tea Infuser</a><a class='pg' href='/?catalog=kitchen&amp;page=112' title='Open page 112 in the flip-book'>p.112 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/silicone-ice-tray/' style='flex:1;text-decoration:none;color:#1a1a2e'>Silicone Ice Tray</a><a class='pg' href='/?catalog=kitchen&amp;page=118' title='Open page 118 in the flip-book'>p.118 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/ice-cream-tool/' style='flex:1;text-decoration:none;color:#1a1a2e'>Ice Cream Tool</a><a class='pg' href='/?catalog=kitchen&amp;page=130' title='Open page 130 in the flip-book'>p.130 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/sourdough-starter-kit/' style='flex:1;text-decoration:none;color:#1a1a2e'>Sourdough Starter Kit</a><a class='pg' href='/?catalog=kitchen&amp;page=144' title='Open page 144 in the flip-book'>p.144 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/silicone-gummy-mold/' style='flex:1;text-decoration:none;color:#1a1a2e'>Silicone Gummy Mold</a><a class='pg' href='/?catalog=kitchen&amp;page=156' title='Open page 156 in the flip-book'>p.156 &rarr;</a></div><div class='range-link'><a href='/catalog/kitchen/cookie-cutter/' style='flex:1;text-decoration:none;color:#1a1a2e'>Cookie Cutter</a><a class='pg' href='/?catalog=kitchen&amp;page=164' title='Open page 164 in the flip-book'>p.164 &rarr;</a></div></div>
   </section>
   <div class="grid2">
     <section class="block">

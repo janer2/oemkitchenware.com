@@ -83,28 +83,47 @@ a { color: #1a1a2e; }
 .topbar nav a { text-decoration: none; color: #444; font-size: .88rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; }
 .topbar nav a:hover { color: #1a1a2e; background: #f5f5f5; }
 .topbar nav a.wa { color: #1a1a2e; border: 1px solid #25d366; }
-.wrap { max-width: 980px; margin: 0 auto; padding: 26px 20px 60px; }
-.crumbs { font-size: .8rem; color: #999; margin-bottom: 14px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 34px 22px 76px; }
+.crumbs { font-size: .82rem; color: #999; margin-bottom: 18px; letter-spacing: .01em; }
 .crumbs a { color: #1a1a2e; text-decoration: none; }
 .crumbs a:hover { text-decoration: underline; }
-h1 { font-size: 1.9rem; color: #1a1a2e; margin: 4px 0 10px; }
-.lede { color: #555; max-width: 760px; margin-bottom: 24px; }
-.cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 28px; }
-.cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 30px; text-decoration: none; font-size: .92rem; font-weight: 600; transition: background .2s, transform .2s; }
+h1 { font-size: clamp(1.55rem, 3.6vw, 2.15rem); line-height: 1.24; color: #1a1a2e; margin: 6px 0 16px; letter-spacing: -.015em; }
+.lede { color: #555; font-size: 1.02rem; line-height: 1.78; max-width: 74ch; margin-bottom: 26px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 14px; }
+.cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 30px; text-decoration: none; font-size: .93rem; font-weight: 600; transition: background .2s, transform .2s; }
 .cta.primary { background: #1a1a2e; color: #fff; }
 .cta.primary:hover { background: #2b2b4a; transform: translateY(-1px); }
 .cta.whatsapp { background: #25d366; color: #fff; }
 .cta.whatsapp:hover { filter: brightness(.95); transform: translateY(-1px); }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 10px 0 30px; }
-.thumbs figure { border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #faf9f7; }
+.stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 30px; }
+.stat { background: #faf9f7; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.stat .k { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #a0a0a0; margin-bottom: 6px; }
+.stat .v { display: block; font-size: 1.05rem; font-weight: 700; color: #1a1a2e; line-height: 1.45; }
+.stat .v.sm { font-size: .9rem; font-weight: 600; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin: 6px 0 32px; }
+.thumbs figure { border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #faf9f7; margin: 0; }
+.thumbs a { display: block; position: relative; }
 .thumbs img { width: 100%; height: auto; display: block; }
-.thumbs figcaption { padding: 8px 12px; font-size: .76rem; color: #999; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-section.block { margin-bottom: 30px; }
-section.block h2 { font-size: 1.15rem; color: #1a1a2e; margin-bottom: 10px; border-bottom: 2px solid #e8a840; display: inline-block; padding-bottom: 4px; }
+.thumbs figcaption { padding: 10px 14px; font-size: .78rem; color: #999; border-top: 1px solid #f2f2f2; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+section.block { margin-bottom: 20px; background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 22px 24px; }
+section.block.plain { border: 0; padding: 0; background: none; }
+section.block h2 { font-size: 1.12rem; line-height: 1.35; color: #1a1a2e; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid #e8a840; }
+.block-sub { font-size: .87rem; color: #999; line-height: 1.7; margin: -6px 0 16px; }
 ul.ticks { list-style: none; }
-ul.ticks li { padding: 5px 0 5px 26px; position: relative; color: #444; font-size: .9rem; }
-ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; width: 9px; height: 9px; border-radius: 50%; background: #e8a840; }
+ul.ticks li { padding: 8px 0 8px 26px; position: relative; color: #444; font-size: .92rem; line-height: 1.65; }
+ul.ticks li + li { border-top: 1px solid #f6f6f6; }
+ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; width: 9px; height: 9px; border-radius: 50%; background: #e8a840; }
+.range-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 4px; }
+.range-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; border: 1px solid #e6e6e6; border-radius: 10px; text-decoration: none; color: #1a1a2e; font-size: .9rem; background: #fff; transition: border-color .15s, background .15s; }
+.range-link:hover { border-color: #1a1a2e; background: #faf9f7; }
+.range-link .pg { color: #b9a266; font-size: .78rem; font-weight: 700; white-space: nowrap; }
+.dir-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
+.dir-table th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; }
+.dir-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; line-height: 1.55; vertical-align: top; }
+.dir-table td.code { white-space: nowrap; color: #8a6d2f; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dir-table tr:last-child td { border-bottom: 0; }
+.dir-note { font-size: .8rem; color: #aaa; margin-top: 12px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .chip { border: 1px solid #ddd; border-radius: 20px; padding: 5px 14px; font-size: .78rem; color: #444; }
 .siblings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
@@ -114,10 +133,17 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
 @media (max-width: 768px) {
   .topbar { padding: 10px 14px; gap: 10px; }
   .topbar nav a { padding: 6px 10px; font-size: .82rem; }
-  .wrap { padding: 18px 14px 44px; }
-  h1 { font-size: 1.5rem; }
-  .grid2 { grid-template-columns: 1fr; gap: 20px; }
+  .wrap { padding: 22px 16px 56px; }
+  .lede { font-size: .97rem; line-height: 1.72; }
+  .cta-row { gap: 9px; }
+  .cta { width: 100%; justify-content: center; padding: 12px 18px; }
+  .stat-strip { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 { grid-template-columns: 1fr; gap: 14px; }
   .thumbs { grid-template-columns: 1fr; }
+  .range-grid { grid-template-columns: 1fr; }
+  section.block { padding: 18px 16px; }
+  .dir-table { font-size: .84rem; }
+  .dir-table td.code { white-space: normal; }
 }
 """
 
@@ -218,19 +244,70 @@ def page_html(cat, cat_dir, lf, cat_cover, cat_last, num_pages, doc, all_links):
     if len(path) > 1:
         crumbs.append(f"<a href='/catalog/{cid}/'>{esc(cname)}</a>")
     crumbs.append(f"<span>{esc(title)}</span>")
+    def pdf_at(p):
+        """Deep link that opens the flip-book on one page (?catalog=&page=)."""
+        return f"/?catalog={cid}&amp;page={int(p)}"
+
     thumbs = ""
     if cat_cover:
-        cap = f"{esc(title)} — cover (PDF page {pg})"
-        thumbs += f"<figure><img src='cover.jpg' alt='{esc(title)} — {esc(cname)}' loading='lazy'><figcaption>{cap}</figcaption></figure>"
+        thumbs += (f"<figure><a href='{pdf_at(pg)}' title='Open page {pg} in the flip-book'>"
+                   f"<img src='cover.jpg' alt='{esc(title)} — {esc(cname)}' loading='lazy' decoding='async'></a>"
+                   f"<figcaption>{esc(title)} — first page (PDF p.{pg}) · "
+                   f"<a href='{pdf_at(pg)}'>open in flip-book &rarr;</a></figcaption></figure>")
     if cat_last and pg != end and end > pg:
-        thumbs += (f"<figure><img src='last.jpg' alt='{esc(title)} range sample (page {end})' "
-                   f"loading='lazy'><figcaption>Range sample — PDF page {end}</figcaption></figure>")
-    siblings = ""
+        thumbs += (f"<figure><a href='{pdf_at(end)}' title='Open page {end} in the flip-book'>"
+                   f"<img src='last.jpg' alt='{esc(title)} range sample (page {end})' loading='lazy' decoding='async'></a>"
+                   f"<figcaption>Last page of the range (PDF p.{end}) · "
+                   f"<a href='{pdf_at(end)}'>open in flip-book &rarr;</a></figcaption></figure>")
+
+    # Product rows for this range, straight from the invisible OCR text layer.
+    # Capped: a section can span 100+ pages, and the point is to show what is in
+    # the range, not to republish the whole deck.
+    SCAN_PAGES, LIST_ROWS = 20, 80
+    found, seen = [], set()
+    for pno in range(pg, min(end, pg + SCAN_PAGES - 1) + 1):
+        try:
+            for nm, code in page_items(doc, pno - 1):
+                key = ((nm or "").lower(), code or "")
+                if nm and key not in seen:
+                    seen.add(key)
+                    found.append((nm, code, pno))
+        except Exception:
+            pass
+    shown = found[:LIST_ROWS]
+    products = ""
+    if shown:
+        rows = "".join(
+            f"<tr><td class='code'>{esc(code) or '&mdash;'}</td><td>{esc(nm)}</td>"
+            f"<td class='code'><a href='{pdf_at(p)}'>p.{p} &rarr;</a></td></tr>"
+            for nm, code, p in shown)
+        note = ""
+        if len(found) > len(shown) or end > pg + SCAN_PAGES - 1:
+            note = (f"<p class='dir-note'>Showing {len(shown)} of {len(found)} rows read from "
+                    f"pages {pg}&ndash;{min(end, pg + SCAN_PAGES - 1)}. Open the flip-book for "
+                    f"the complete range (p.{pg}&ndash;{end}).</p>")
+        products = ("<section class='block'><h2>Products in this range</h2>"
+                    "<p class='block-sub'>Product names and codes exactly as printed in the "
+                    "catalogue. Click a page number to jump straight to that page.</p>"
+                    "<table class='dir-table'><thead><tr><th>Code</th><th>Product</th>"
+                    f"<th>Page</th></tr></thead><tbody>{rows}</tbody></table>{note}</section>")
+
+    stats = ("<div class='stat-strip'>"
+             f"<div class='stat'><span class='k'>Catalogue pages</span><span class='v'>{pg}&ndash;{end}</span></div>"
+             f"<div class='stat'><span class='k'>Pages in range</span><span class='v'>{n_pages}</span></div>"
+             f"<div class='stat'><span class='k'>Materials</span><span class='v sm'>{esc(cat['materials'])}</span></div>"
+             "</div>")
+
+    related = ""
     if all_links:
-        sib = [f"<a class='sibling' href='{SITE}/catalog/{cid}/{slugify(o['title'])}/'>{esc(o['title'])}</a>"
-               for o in all_links if o["page"] != pg]
-        if sib:
-            siblings = f"<div class='siblings'>{''.join(sib)}</div>"
+        grid = "".join(
+            f"<a class='range-link' href='/catalog/{cid}/{slugify(o['title'])}/'>"
+            f"<span>{esc(o['title'])}</span><span class='pg'>p.{int(o['page'])}</span></a>"
+            for o in all_links if o["page"] != pg)
+        if grid:
+            related = (f"<section class='block'><h2>Every range in {esc(cname)}</h2>"
+                       "<p class='block-sub'>Sections in printed order - each page lists the "
+                       f"products and codes for that range.</p><div class='range-grid'>{grid}</div></section>")
     cust = ""
     seg = Path(cat_dir) / slug / "index.html"
     if seg.exists():
@@ -284,6 +361,7 @@ def page_html(cat, cat_dir, lf, cat_cover, cat_last, num_pages, doc, all_links):
     <a class="cta whatsapp" href="https://wa.me/8613824296558?text={esc('Hi, I am interested in ' + title + '. Please send me details.')}" target="_blank" rel="noopener">WhatsApp Us</a>
     <a class="cta primary" href="mailto:info@yonglicc.com?subject={esc('Wholesale inquiry - ' + title)}">Email a Quote Request</a>
   </div>
+  {stats}
   <div class="thumbs">{thumbs}</div>
   <div class="grid2">
     <section class="block">
@@ -302,11 +380,9 @@ def page_html(cat, cat_dir, lf, cat_cover, cat_last, num_pages, doc, all_links):
       <p style="font-size:.88rem;color:#666;margin-top:12px">{BRAND_LINE}</p>
     </section>
   </div>
+  {products}
   {cust}
-  <section class="block">
-    <h2>Related Categories</h2>
-    {siblings}
-  </section>
+  {related}
 </main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a></footer>
 </body>
@@ -372,8 +448,10 @@ def cat_hub_html(cat, cat_pages):
     cover = f"{SITE}/assets/covers/{cid}.jpg"
     starts = min((int(p["page"]) for p in cat_pages), default=1)
     items = "".join(
-        f"<a class='sibling' href='/catalog/{cid}/{slugify(p['title'])}/'>"
-        f"{esc(p['title'])} <span style='color:#bbb;font-size:.75rem'>p.{int(p['page'])}</span></a>"
+        f"<div class='range-link'><a href='/catalog/{cid}/{slugify(p['title'])}/' "
+        f"style='flex:1;text-decoration:none;color:#1a1a2e'>{esc(p['title'])}</a>"
+        f"<a class='pg' href='/?catalog={cid}&amp;page={int(p['page'])}' "
+        f"title='Open page {int(p['page'])} in the flip-book'>p.{int(p['page'])} &rarr;</a></div>"
         for p in cat_pages)
     wa_text = esc(f"Hi, I am interested in the {cname} catalogue. Please send me details.")
     ld = {
@@ -425,7 +503,8 @@ def cat_hub_html(cat, cat_pages):
   <div class="thumbs"><figure><img src="{cover}" alt="{esc(cname)} catalogue cover"><figcaption>{esc(sub)} — catalogue cover</figcaption></figure></div>
   <section class="block">
     <h2>Sections in this catalogue</h2>
-    <div class="siblings">{items}</div>
+    <p class="block-sub">Open a section for its products and codes, or click the page number to jump straight into the flip-book at that page.</p>
+    <div class="range-grid">{items}</div>
   </section>
   <div class="grid2">
     <section class="block">
@@ -622,8 +701,11 @@ def write_home_index(cats_built):
     cols = []
     for cat, cat_pages in cats_built:
         links = "".join(
-            '<li><a href="/catalog/%s/%s/">%s</a><span>p.%d</span></li>'
-            % (cat["id"], slugify(p["title"]), esc(p["title"]), int(p["page"]))
+            '<li><a href="/catalog/%s/%s/">%s</a>'
+            '<a class="hi-pg" href="/?catalog=%s&amp;page=%d" '
+            'title="Open page %d in the flip-book">p.%d</a></li>'
+            % (cat["id"], slugify(p["title"]), esc(p["title"]),
+               cat["id"], int(p["page"]), int(p["page"]), int(p["page"]))
             for p in cat_pages)
         cols.append('<div class="hi-col"><h3>%s</h3><p class="hi-sub">%s</p><ul>%s</ul>'
                     '<a class="hi-all" href="/catalog/%s/">Browse all %s &rarr;</a></div>'

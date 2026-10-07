@@ -26,28 +26,47 @@ a { color: #1a1a2e; }
 .topbar nav a { text-decoration: none; color: #444; font-size: .88rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; }
 .topbar nav a:hover { color: #1a1a2e; background: #f5f5f5; }
 .topbar nav a.wa { color: #1a1a2e; border: 1px solid #25d366; }
-.wrap { max-width: 980px; margin: 0 auto; padding: 26px 20px 60px; }
-.crumbs { font-size: .8rem; color: #999; margin-bottom: 14px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 34px 22px 76px; }
+.crumbs { font-size: .82rem; color: #999; margin-bottom: 18px; letter-spacing: .01em; }
 .crumbs a { color: #1a1a2e; text-decoration: none; }
 .crumbs a:hover { text-decoration: underline; }
-h1 { font-size: 1.9rem; color: #1a1a2e; margin: 4px 0 10px; }
-.lede { color: #555; max-width: 760px; margin-bottom: 24px; }
-.cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 28px; }
-.cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 30px; text-decoration: none; font-size: .92rem; font-weight: 600; transition: background .2s, transform .2s; }
+h1 { font-size: clamp(1.55rem, 3.6vw, 2.15rem); line-height: 1.24; color: #1a1a2e; margin: 6px 0 16px; letter-spacing: -.015em; }
+.lede { color: #555; font-size: 1.02rem; line-height: 1.78; max-width: 74ch; margin-bottom: 26px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 14px; }
+.cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 30px; text-decoration: none; font-size: .93rem; font-weight: 600; transition: background .2s, transform .2s; }
 .cta.primary { background: #1a1a2e; color: #fff; }
 .cta.primary:hover { background: #2b2b4a; transform: translateY(-1px); }
 .cta.whatsapp { background: #25d366; color: #fff; }
 .cta.whatsapp:hover { filter: brightness(.95); transform: translateY(-1px); }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 10px 0 30px; }
-.thumbs figure { border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #faf9f7; }
+.stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 30px; }
+.stat { background: #faf9f7; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.stat .k { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #a0a0a0; margin-bottom: 6px; }
+.stat .v { display: block; font-size: 1.05rem; font-weight: 700; color: #1a1a2e; line-height: 1.45; }
+.stat .v.sm { font-size: .9rem; font-weight: 600; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin: 6px 0 32px; }
+.thumbs figure { border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #faf9f7; margin: 0; }
+.thumbs a { display: block; position: relative; }
 .thumbs img { width: 100%; height: auto; display: block; }
-.thumbs figcaption { padding: 8px 12px; font-size: .76rem; color: #999; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-section.block { margin-bottom: 30px; }
-section.block h2 { font-size: 1.15rem; color: #1a1a2e; margin-bottom: 10px; border-bottom: 2px solid #e8a840; display: inline-block; padding-bottom: 4px; }
+.thumbs figcaption { padding: 10px 14px; font-size: .78rem; color: #999; border-top: 1px solid #f2f2f2; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+section.block { margin-bottom: 20px; background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 22px 24px; }
+section.block.plain { border: 0; padding: 0; background: none; }
+section.block h2 { font-size: 1.12rem; line-height: 1.35; color: #1a1a2e; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid #e8a840; }
+.block-sub { font-size: .87rem; color: #999; line-height: 1.7; margin: -6px 0 16px; }
 ul.ticks { list-style: none; }
-ul.ticks li { padding: 5px 0 5px 26px; position: relative; color: #444; font-size: .9rem; }
-ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; width: 9px; height: 9px; border-radius: 50%; background: #e8a840; }
+ul.ticks li { padding: 8px 0 8px 26px; position: relative; color: #444; font-size: .92rem; line-height: 1.65; }
+ul.ticks li + li { border-top: 1px solid #f6f6f6; }
+ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; width: 9px; height: 9px; border-radius: 50%; background: #e8a840; }
+.range-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 4px; }
+.range-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; border: 1px solid #e6e6e6; border-radius: 10px; text-decoration: none; color: #1a1a2e; font-size: .9rem; background: #fff; transition: border-color .15s, background .15s; }
+.range-link:hover { border-color: #1a1a2e; background: #faf9f7; }
+.range-link .pg { color: #b9a266; font-size: .78rem; font-weight: 700; white-space: nowrap; }
+.dir-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
+.dir-table th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; }
+.dir-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; line-height: 1.55; vertical-align: top; }
+.dir-table td.code { white-space: nowrap; color: #8a6d2f; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dir-table tr:last-child td { border-bottom: 0; }
+.dir-note { font-size: .8rem; color: #aaa; margin-top: 12px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .chip { border: 1px solid #ddd; border-radius: 20px; padding: 5px 14px; font-size: .78rem; color: #444; }
 .siblings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
@@ -57,10 +76,17 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
 @media (max-width: 768px) {
   .topbar { padding: 10px 14px; gap: 10px; }
   .topbar nav a { padding: 6px 10px; font-size: .82rem; }
-  .wrap { padding: 18px 14px 44px; }
-  h1 { font-size: 1.5rem; }
-  .grid2 { grid-template-columns: 1fr; gap: 20px; }
+  .wrap { padding: 22px 16px 56px; }
+  .lede { font-size: .97rem; line-height: 1.72; }
+  .cta-row { gap: 9px; }
+  .cta { width: 100%; justify-content: center; padding: 12px 18px; }
+  .stat-strip { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 { grid-template-columns: 1fr; gap: 14px; }
   .thumbs { grid-template-columns: 1fr; }
+  .range-grid { grid-template-columns: 1fr; }
+  section.block { padding: 18px 16px; }
+  .dir-table { font-size: .84rem; }
+  .dir-table td.code { white-space: normal; }
 }
 </style>
 </head>
@@ -83,7 +109,8 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
     <a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I am interested in Feeding Set. Please send me details." target="_blank" rel="noopener">WhatsApp Us</a>
     <a class="cta primary" href="mailto:info@yonglicc.com?subject=Wholesale inquiry - Feeding Set">Email a Quote Request</a>
   </div>
-  <div class="thumbs"><figure><img src='cover.jpg' alt='Feeding Set — Baby Care' loading='lazy'><figcaption>Feeding Set — cover (PDF page 1)</figcaption></figure><figure><img src='last.jpg' alt='Feeding Set range sample (page 17)' loading='lazy'><figcaption>Range sample — PDF page 17</figcaption></figure></div>
+  <div class='stat-strip'><div class='stat'><span class='k'>Catalogue pages</span><span class='v'>1&ndash;17</span></div><div class='stat'><span class='k'>Pages in range</span><span class='v'>17</span></div><div class='stat'><span class='k'>Materials</span><span class='v sm'>Food-grade silicone, BPA-free materials, EN71 &amp; FDA compliant</span></div></div>
+  <div class="thumbs"><figure><a href='/?catalog=baby&amp;page=1' title='Open page 1 in the flip-book'><img src='cover.jpg' alt='Feeding Set — Baby Care' loading='lazy' decoding='async'></a><figcaption>Feeding Set — first page (PDF p.1) · <a href='/?catalog=baby&amp;page=1'>open in flip-book &rarr;</a></figcaption></figure><figure><a href='/?catalog=baby&amp;page=17' title='Open page 17 in the flip-book'><img src='last.jpg' alt='Feeding Set range sample (page 17)' loading='lazy' decoding='async'></a><figcaption>Last page of the range (PDF p.17) · <a href='/?catalog=baby&amp;page=17'>open in flip-book &rarr;</a></figcaption></figure></div>
   <div class="grid2">
     <section class="block">
       <h2>About This Range</h2>
@@ -101,6 +128,7 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
       <p style="font-size:.88rem;color:#666;margin-top:12px">BSCI & ISO 9001 certified OEM/ODM manufacturer since 2010. Serving customers in 34 countries with one-stop OEM, packaging, design and logistics. Vision: Make Globe Trade Easy.</p>
     </section>
   </div>
+  <section class='block'><h2>Products in this range</h2><p class='block-sub'>Product names and codes exactly as printed in the catalogue. Click a page number to jump straight to that page.</p><table class='dir-table'><thead><tr><th>Code</th><th>Product</th><th>Page</th></tr></thead><tbody><tr><td class='code'>V-02</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=1'>p.1 &rarr;</a></td></tr><tr><td class='code'>V-01</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=1'>p.1 &rarr;</a></td></tr><tr><td class='code'>V-03</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=1'>p.1 &rarr;</a></td></tr><tr><td class='code'>V-06</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=2'>p.2 &rarr;</a></td></tr><tr><td class='code'>V-04</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=2'>p.2 &rarr;</a></td></tr><tr><td class='code'>V-05</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=2'>p.2 &rarr;</a></td></tr><tr><td class='code'>V-09</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=2'>p.2 &rarr;</a></td></tr><tr><td class='code'>V-07</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=2'>p.2 &rarr;</a></td></tr><tr><td class='code'>V-08</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=2'>p.2 &rarr;</a></td></tr><tr><td class='code'>V-12</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=3'>p.3 &rarr;</a></td></tr><tr><td class='code'>V-10</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=3'>p.3 &rarr;</a></td></tr><tr><td class='code'>V-11</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=3'>p.3 &rarr;</a></td></tr><tr><td class='code'>V-15</td><td>Collapsible Tr﻿avel Cup</td><td class='code'><a href='/?catalog=baby&amp;page=3'>p.3 &rarr;</a></td></tr><tr><td class='code'>V-13</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=3'>p.3 &rarr;</a></td></tr><tr><td class='code'>V-14</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=3'>p.3 &rarr;</a></td></tr><tr><td class='code'>V-18</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>V-16</td><td>Kids Kitchen Play Set</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>V-17</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>CL25043</td><td>Baby Feeding Set Bib: 290×240mm Dinner plate: 200×200mm</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>CL25071</td><td>Baby Feeding Set Crab plate: 230×145×34mm Snail bowl: 120×85×90mm</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>CY25049</td><td>Baby Feeding Set Crab plate: 161×241mm Snail bowl: 88×120mm</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Stove Mat · Cutting Board · Pot with Lid · Pan · Bowl · Plate · Fork · Knife</td><td class='code'><a href='/?catalog=baby&amp;page=4'>p.4 &rarr;</a></td></tr><tr><td class='code'>AL26064</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>CL25043</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>SA38</td><td>Baby Feeding Set Bee plate: 240×180mm Wooden fork &amp; spoon: 140×35mm</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Baby Bib · Silicone Divided Plate · Baby Spoon &amp; Fork</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Silicone Square Bowl · Silicone Square Plate · Baby Cup</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Sippy Cup · Silicone Spoon &amp; Fork · Baby Bib</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Divided Plate · Suction Bowl · Sippy Cup</td><td class='code'><a href='/?catalog=baby&amp;page=5'>p.5 &rarr;</a></td></tr><tr><td class='code'>SA511</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>CY26061</td><td>Baby Feeding Set</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Baby Spoon &amp; Fork · Baby Bib · Silicone Divided Plate</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Silicone Divided Plate · Baby Bib · Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Silicone Divided Plate · Baby Sippy Cup · Fork &amp; Spoon</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Baby Bib · Silicone Divided Plate · Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Silicone Divided Plate With Suction Base · Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>&mdash;</td><td>· Silicone Cup · Silicone Divided Plate · Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=6'>p.6 &rarr;</a></td></tr><tr><td class='code'>CY25137</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=7'>p.7 &rarr;</a></td></tr><tr><td class='code'>CY25105</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=7'>p.7 &rarr;</a></td></tr><tr><td class='code'>SA52</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=7'>p.7 &rarr;</a></td></tr><tr><td class='code'>CL25043</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=7'>p.7 &rarr;</a></td></tr><tr><td class='code'>CL25071</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=7'>p.7 &rarr;</a></td></tr><tr><td class='code'>CY25049</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=7'>p.7 &rarr;</a></td></tr><tr><td class='code'>CL25063</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=8'>p.8 &rarr;</a></td></tr><tr><td class='code'>CL25080</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=8'>p.8 &rarr;</a></td></tr><tr><td class='code'>CL25047</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=8'>p.8 &rarr;</a></td></tr><tr><td class='code'>CL25089</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=8'>p.8 &rarr;</a></td></tr><tr><td class='code'>SA06</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=8'>p.8 &rarr;</a></td></tr><tr><td class='code'>CY25151</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=8'>p.8 &rarr;</a></td></tr><tr><td class='code'>CL25063</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=9'>p.9 &rarr;</a></td></tr><tr><td class='code'>SA09</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=9'>p.9 &rarr;</a></td></tr><tr><td class='code'>SA10</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=9'>p.9 &rarr;</a></td></tr><tr><td class='code'>CL25085</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=9'>p.9 &rarr;</a></td></tr><tr><td class='code'>CL25082</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=9'>p.9 &rarr;</a></td></tr><tr><td class='code'>CL25084</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=9'>p.9 &rarr;</a></td></tr><tr><td class='code'>CL25065</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=10'>p.10 &rarr;</a></td></tr><tr><td class='code'>SA511</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=10'>p.10 &rarr;</a></td></tr><tr><td class='code'>SA18</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=10'>p.10 &rarr;</a></td></tr><tr><td class='code'>CL25079</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=10'>p.10 &rarr;</a></td></tr><tr><td class='code'>SA20</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=10'>p.10 &rarr;</a></td></tr><tr><td class='code'>CL25078</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=10'>p.10 &rarr;</a></td></tr><tr><td class='code'>CL25090</td><td>Baby Feeding Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=11'>p.11 &rarr;</a></td></tr><tr><td class='code'>CL25081</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=11'>p.11 &rarr;</a></td></tr><tr><td class='code'>SA11</td><td>Baby Feeding Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=11'>p.11 &rarr;</a></td></tr><tr><td class='code'>CL25136</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=11'>p.11 &rarr;</a></td></tr><tr><td class='code'>CY25127</td><td>Baby Feeding Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=11'>p.11 &rarr;</a></td></tr><tr><td class='code'>CL25072</td><td>Baby Feeding Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=11'>p.11 &rarr;</a></td></tr><tr><td class='code'>SA25</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=12'>p.12 &rarr;</a></td></tr><tr><td class='code'>CL25061</td><td>Baby Bowl</td><td class='code'><a href='/?catalog=baby&amp;page=12'>p.12 &rarr;</a></td></tr><tr><td class='code'>SA24</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=12'>p.12 &rarr;</a></td></tr><tr><td class='code'>CY25137</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=12'>p.12 &rarr;</a></td></tr><tr><td class='code'>SA26</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=12'>p.12 &rarr;</a></td></tr><tr><td class='code'>CY25116</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=12'>p.12 &rarr;</a></td></tr><tr><td class='code'>SA40</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=13'>p.13 &rarr;</a></td></tr><tr><td class='code'>SA49</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=13'>p.13 &rarr;</a></td></tr><tr><td class='code'>CY25114</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=13'>p.13 &rarr;</a></td></tr><tr><td class='code'>SA56</td><td>Baby Feeding Plate</td><td class='code'><a href='/?catalog=baby&amp;page=13'>p.13 &rarr;</a></td></tr><tr><td class='code'>V-19</td><td>Melamine Bamboo Kids Utensil Set</td><td class='code'><a href='/?catalog=baby&amp;page=14'>p.14 &rarr;</a></td></tr><tr><td class='code'>V-21</td><td>Suction Silicone Plate</td><td class='code'><a href='/?catalog=baby&amp;page=14'>p.14 &rarr;</a></td></tr><tr><td class='code'>V-20</td><td>Suction Silicone Plate</td><td class='code'><a href='/?catalog=baby&amp;page=14'>p.14 &rarr;</a></td></tr></tbody></table><p class='dir-note'>Showing 80 of 99 rows read from pages 1&ndash;17. Open the flip-book for the complete range (p.1&ndash;17).</p></section>
   <section id="custom">
       <h2>Range Highlights</h2>
       <p>Food-grade silicone feeding essentials for babies and toddlers — weaning sets, bibs, cups and utensils designed with soft edges, gentle textures and simple shapes that parents can trust.</p>
@@ -114,10 +142,7 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 11px; wid
       <h3>Sourcing Note</h3>
       <p>Baby ranges require care with compliance documents and packaging. We provide test reports and artwork guidance for retail and online listings — send your target set list to start.</p>
     </section>
-  <section class="block">
-    <h2>Related Categories</h2>
-    <div class='siblings'><a class='sibling' href='https://oemkitchenware.com/catalog/baby/spoon-fork/'>Spoon/Fork</a><a class='sibling' href='https://oemkitchenware.com/catalog/baby/baby-bib/'>Baby Bib</a><a class='sibling' href='https://oemkitchenware.com/catalog/baby/silicone-placemat/'>Silicone Placemat</a></div>
-  </section>
+  <section class='block'><h2>Every range in Baby Care</h2><p class='block-sub'>Sections in printed order - each page lists the products and codes for that range.</p><div class='range-grid'><a class='range-link' href='/catalog/baby/spoon-fork/'><span>Spoon/Fork</span><span class='pg'>p.18</span></a><a class='range-link' href='/catalog/baby/baby-bib/'><span>Baby Bib</span><span class='pg'>p.20</span></a><a class='range-link' href='/catalog/baby/silicone-placemat/'><span>Silicone Placemat</span><span class='pg'>p.21</span></a></div></section>
 </main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a></footer>
 </body>

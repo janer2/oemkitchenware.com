@@ -163,7 +163,8 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 .hi-col li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 5px 0; border-bottom: 1px solid #f6f4f0; }
 .hi-col li a { color: #1a1a2e; text-decoration: none; font-size: .86rem; }
 .hi-col li a:hover { color: #8a6d2f; text-decoration: underline; text-underline-offset: 3px; }
-.hi-col li span { color: #c4bcae; font-size: .74rem; white-space: nowrap; }
+.hi-col li span, .hi-col li .hi-pg { color: #c4bcae; font-size: .74rem; white-space: nowrap; text-decoration: none; }
+.hi-col li .hi-pg:hover { color: #8a6d2f; text-decoration: underline; text-underline-offset: 3px; }
 .hi-all { display: inline-block; margin-top: 12px; font-size: .82rem; color: #8a6d2f; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 768px) {
   .home-index { padding: 8px 14px 40px; }
@@ -437,7 +438,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 <!-- ===== Header ===== -->
 <header class="site-header">
-  <a class="logo" data-view-link="catalog"><img src="assets/logo-mark.png" alt="Yongli" width="382" height="150"></a>
+  <a class="logo" data-view-link="catalog"><img src="assets/logo-mark.png" alt="Yongli" width="239" height="94"></a>
   <nav class="main-nav">
     <a data-view-link="catalog" class="active">Catalog</a>
     <a data-view-link="customize">Customize</a>
@@ -465,7 +466,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <div class="home-index">
 <h2>Full catalogue index</h2>
 <p class="hi-lede">Every section of every catalogue, listed as printed in the PDFs. Open the flip-book reader or jump straight to a section page - each one lists the products, codes and materials for that range.</p>
-<div class="hi-grid"><div class="hi-col"><h3>2026 New</h3><p class="hi-sub">2026 Product Catalog</p><ul><li><a href="/catalog/new2026/2026-new/">2026 New</a><span>p.1</span></li></ul><a class="hi-all" href="/catalog/new2026/">Browse all 2026 New &rarr;</a></div><div class="hi-col"><h3>Kitchen Gadgets</h3><p class="hi-sub">Kitchen Items</p><ul><li><a href="/catalog/kitchen/kitchen-gadgets/">Kitchen Gadgets</a><span>p.1</span></li><li><a href="/catalog/kitchen/kitchen-utensil/">Kitchen Utensil</a><span>p.38</span></li><li><a href="/catalog/kitchen/silicone-mat/">Silicone Mat</a><span>p.41</span></li><li><a href="/catalog/kitchen/silicone-coaster/">Silicone Coaster</a><span>p.51</span></li><li><a href="/catalog/kitchen/collapsible-strainer/">Collapsible Strainer</a><span>p.61</span></li><li><a href="/catalog/kitchen/collapsible-food-storage/">Collapsible Food Storage</a><span>p.66</span></li><li><a href="/catalog/kitchen/food-storage-container/">Food Storage Container</a><span>p.69</span></li><li><a href="/catalog/kitchen/snack-box/">Snack Box</a><span>p.71</span></li><li><a href="/catalog/kitchen/silicone-food-storage-bag/">Silicone Food Storage Bag</a><span>p.80</span></li><li><a href="/catalog/kitchen/collapsible-travel-cup/">Collapsible Travel Cup</a><span>p.83</span></li><li><a href="/catalog/kitchen/stainless-steel-tumbler/">Stainless Steel Tumbler</a><span>p.86</span></li><li><a href="/catalog/kitchen/bbq-grill-accessories/">BBQ Grill Accessories</a><span>p.99</span></li><li><a href="/catalog/kitchen/milk-frother/">Milk Frother</a><span>p.108</span></li><li><a href="/catalog/kitchen/tea-infuser/">Tea Infuser</a><span>p.112</span></li><li><a href="/catalog/kitchen/silicone-ice-tray/">Silicone Ice Tray</a><span>p.118</span></li><li><a href="/catalog/kitchen/ice-cream-tool/">Ice Cream Tool</a><span>p.130</span></li><li><a href="/catalog/kitchen/sourdough-starter-kit/">Sourdough Starter Kit</a><span>p.144</span></li><li><a href="/catalog/kitchen/silicone-gummy-mold/">Silicone Gummy Mold</a><span>p.156</span></li><li><a href="/catalog/kitchen/cookie-cutter/">Cookie Cutter</a><span>p.164</span></li></ul><a class="hi-all" href="/catalog/kitchen/">Browse all Kitchen Gadgets &rarr;</a></div><div class="hi-col"><h3>Baby Care</h3><p class="hi-sub">Infant &amp; Nursery Products</p><ul><li><a href="/catalog/baby/feeding-set/">Feeding Set</a><span>p.1</span></li><li><a href="/catalog/baby/spoon-fork/">Spoon/Fork</a><span>p.18</span></li><li><a href="/catalog/baby/baby-bib/">Baby Bib</a><span>p.20</span></li><li><a href="/catalog/baby/silicone-placemat/">Silicone Placemat</a><span>p.21</span></li></ul><a class="hi-all" href="/catalog/baby/">Browse all Baby Care &rarr;</a></div><div class="hi-col"><h3>Ladies' Appliances</h3><p class="hi-sub">Personal Care &amp; Beauty Devices</p><ul><li><a href="/catalog/ladies/ice-facial-roller/">Ice Facial Roller</a><span>p.1</span></li><li><a href="/catalog/ladies/silicone-cupping-therapy/">Silicone Cupping Therapy</a><span>p.3</span></li><li><a href="/catalog/ladies/menstrual-cup/">Menstrual Cup</a><span>p.5</span></li><li><a href="/catalog/ladies/applicator/">Applicator</a><span>p.12</span></li><li><a href="/catalog/ladies/menstrual-pants/">Menstrual Pants</a><span>p.19</span></li><li><a href="/catalog/ladies/silicone-urinal/">Silicone Urinal</a><span>p.21</span></li></ul><a class="hi-all" href="/catalog/ladies/">Browse all Ladies' Appliances &rarr;</a></div><div class="hi-col"><h3>Christmas Balls</h3><p class="hi-sub">Festival Decorations</p><ul><li><a href="/catalog/balls/christmas-balls/">Christmas Balls</a><span>p.1</span></li></ul><a class="hi-all" href="/catalog/balls/">Browse all Christmas Balls &rarr;</a></div></div>
+<div class="hi-grid"><div class="hi-col"><h3>2026 New</h3><p class="hi-sub">2026 Product Catalog</p><ul><li><a href="/catalog/new2026/2026-new/">2026 New</a><a class="hi-pg" href="/?catalog=new2026&amp;page=1" title="Open page 1 in the flip-book">p.1</a></li></ul><a class="hi-all" href="/catalog/new2026/">Browse all 2026 New &rarr;</a></div><div class="hi-col"><h3>Kitchen Gadgets</h3><p class="hi-sub">Kitchen Items</p><ul><li><a href="/catalog/kitchen/kitchen-gadgets/">Kitchen Gadgets</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=1" title="Open page 1 in the flip-book">p.1</a></li><li><a href="/catalog/kitchen/kitchen-utensil/">Kitchen Utensil</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=38" title="Open page 38 in the flip-book">p.38</a></li><li><a href="/catalog/kitchen/silicone-mat/">Silicone Mat</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=41" title="Open page 41 in the flip-book">p.41</a></li><li><a href="/catalog/kitchen/silicone-coaster/">Silicone Coaster</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=51" title="Open page 51 in the flip-book">p.51</a></li><li><a href="/catalog/kitchen/collapsible-strainer/">Collapsible Strainer</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=61" title="Open page 61 in the flip-book">p.61</a></li><li><a href="/catalog/kitchen/collapsible-food-storage/">Collapsible Food Storage</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=66" title="Open page 66 in the flip-book">p.66</a></li><li><a href="/catalog/kitchen/food-storage-container/">Food Storage Container</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=69" title="Open page 69 in the flip-book">p.69</a></li><li><a href="/catalog/kitchen/snack-box/">Snack Box</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=71" title="Open page 71 in the flip-book">p.71</a></li><li><a href="/catalog/kitchen/silicone-food-storage-bag/">Silicone Food Storage Bag</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=80" title="Open page 80 in the flip-book">p.80</a></li><li><a href="/catalog/kitchen/collapsible-travel-cup/">Collapsible Travel Cup</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=83" title="Open page 83 in the flip-book">p.83</a></li><li><a href="/catalog/kitchen/stainless-steel-tumbler/">Stainless Steel Tumbler</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=86" title="Open page 86 in the flip-book">p.86</a></li><li><a href="/catalog/kitchen/bbq-grill-accessories/">BBQ Grill Accessories</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=99" title="Open page 99 in the flip-book">p.99</a></li><li><a href="/catalog/kitchen/milk-frother/">Milk Frother</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=108" title="Open page 108 in the flip-book">p.108</a></li><li><a href="/catalog/kitchen/tea-infuser/">Tea Infuser</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=112" title="Open page 112 in the flip-book">p.112</a></li><li><a href="/catalog/kitchen/silicone-ice-tray/">Silicone Ice Tray</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=118" title="Open page 118 in the flip-book">p.118</a></li><li><a href="/catalog/kitchen/ice-cream-tool/">Ice Cream Tool</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=130" title="Open page 130 in the flip-book">p.130</a></li><li><a href="/catalog/kitchen/sourdough-starter-kit/">Sourdough Starter Kit</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=144" title="Open page 144 in the flip-book">p.144</a></li><li><a href="/catalog/kitchen/silicone-gummy-mold/">Silicone Gummy Mold</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=156" title="Open page 156 in the flip-book">p.156</a></li><li><a href="/catalog/kitchen/cookie-cutter/">Cookie Cutter</a><a class="hi-pg" href="/?catalog=kitchen&amp;page=164" title="Open page 164 in the flip-book">p.164</a></li></ul><a class="hi-all" href="/catalog/kitchen/">Browse all Kitchen Gadgets &rarr;</a></div><div class="hi-col"><h3>Baby Care</h3><p class="hi-sub">Infant &amp; Nursery Products</p><ul><li><a href="/catalog/baby/feeding-set/">Feeding Set</a><a class="hi-pg" href="/?catalog=baby&amp;page=1" title="Open page 1 in the flip-book">p.1</a></li><li><a href="/catalog/baby/spoon-fork/">Spoon/Fork</a><a class="hi-pg" href="/?catalog=baby&amp;page=18" title="Open page 18 in the flip-book">p.18</a></li><li><a href="/catalog/baby/baby-bib/">Baby Bib</a><a class="hi-pg" href="/?catalog=baby&amp;page=20" title="Open page 20 in the flip-book">p.20</a></li><li><a href="/catalog/baby/silicone-placemat/">Silicone Placemat</a><a class="hi-pg" href="/?catalog=baby&amp;page=21" title="Open page 21 in the flip-book">p.21</a></li></ul><a class="hi-all" href="/catalog/baby/">Browse all Baby Care &rarr;</a></div><div class="hi-col"><h3>Ladies' Appliances</h3><p class="hi-sub">Personal Care &amp; Beauty Devices</p><ul><li><a href="/catalog/ladies/ice-facial-roller/">Ice Facial Roller</a><a class="hi-pg" href="/?catalog=ladies&amp;page=1" title="Open page 1 in the flip-book">p.1</a></li><li><a href="/catalog/ladies/silicone-cupping-therapy/">Silicone Cupping Therapy</a><a class="hi-pg" href="/?catalog=ladies&amp;page=3" title="Open page 3 in the flip-book">p.3</a></li><li><a href="/catalog/ladies/menstrual-cup/">Menstrual Cup</a><a class="hi-pg" href="/?catalog=ladies&amp;page=5" title="Open page 5 in the flip-book">p.5</a></li><li><a href="/catalog/ladies/applicator/">Applicator</a><a class="hi-pg" href="/?catalog=ladies&amp;page=12" title="Open page 12 in the flip-book">p.12</a></li><li><a href="/catalog/ladies/menstrual-pants/">Menstrual Pants</a><a class="hi-pg" href="/?catalog=ladies&amp;page=19" title="Open page 19 in the flip-book">p.19</a></li><li><a href="/catalog/ladies/silicone-urinal/">Silicone Urinal</a><a class="hi-pg" href="/?catalog=ladies&amp;page=21" title="Open page 21 in the flip-book">p.21</a></li></ul><a class="hi-all" href="/catalog/ladies/">Browse all Ladies' Appliances &rarr;</a></div><div class="hi-col"><h3>Christmas Balls</h3><p class="hi-sub">Festival Decorations</p><ul><li><a href="/catalog/balls/christmas-balls/">Christmas Balls</a><a class="hi-pg" href="/?catalog=balls&amp;page=1" title="Open page 1 in the flip-book">p.1</a></li></ul><a class="hi-all" href="/catalog/balls/">Browse all Christmas Balls &rarr;</a></div></div>
 </div>
 <!-- INDEX:END -->
 
@@ -773,7 +774,7 @@ function renderNavDropdown(){
   if(!box||!catalogs.length)return;
   box.innerHTML='<div class="nd-hint">Open a catalogue</div><div class="nd-row">'+catalogs.map((c,i)=>
     '<div class="nd-item" data-ci="'+i+'" role="button" tabindex="0">'+
-      '<img src="assets/covers/'+esc(c.id)+'.jpg" alt="'+esc(c.name)+'" loading="lazy" decoding="async">'+
+       '<img src="assets/covers/'+esc(c.id)+'.jpg" srcset="assets/covers/'+esc(c.id)+'-400.jpg 400w, assets/covers/'+esc(c.id)+'.jpg 640w" sizes="(max-width: 768px) 140px, 176px" alt="'+esc(c.name)+'" loading="lazy" decoding="async">'+
       '<div class="nd-name">'+esc(c.name)+'</div><div class="nd-sub">'+esc(c.sub)+'</div>'+
     '</div>').join('')+'</div>';
   box.querySelectorAll('.nd-item').forEach(el=>el.addEventListener('click',()=>{
@@ -793,7 +794,7 @@ function showView(name){
 //===== Homepage =====
 function renderCatalogCards(){
   if(!catalogs.length){$catalogGrid.innerHTML='<p style="text-align:center;color:#999;padding:60px;">No catalogs found.</p>';return}
-  $catalogGrid.innerHTML=catalogs.map((c,i)=>`<div class="catalog-card" data-index="${i}" role="button" tabindex="0"><div class="card-cover"><img class="cover-img" src="assets/covers/${esc(c.id)}.jpg" alt="${esc(c.name)} catalog cover" width="640" height="910" loading="${i===0?'eager':'lazy'}" fetchpriority="${i===0?'high':'auto'}" decoding="async" onerror="window.coverFallback(this,${i})"></div><div class="card-info"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div></div></div>`).join('');
+  $catalogGrid.innerHTML=catalogs.map((c,i)=>`<div class="catalog-card" data-index="${i}" role="button" tabindex="0"><div class="card-cover"><img class="cover-img" src="assets/covers/${esc(c.id)}.jpg" srcset="assets/covers/${esc(c.id)}-400.jpg 400w, assets/covers/${esc(c.id)}.jpg 640w" sizes="(max-width: 480px) 145px, (max-width: 768px) 160px, (max-width: 1024px) 230px, 290px" alt="${esc(c.name)} catalog cover" width="640" height="910" loading="${i===0?'eager':'lazy'}" fetchpriority="${i===0?'high':'auto'}" decoding="async" onerror="window.coverFallback(this,${i})"></div><div class="card-info"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div></div></div>`).join('');
 }
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 // Fallback if a static cover is ever missing: render page 1 from the PDF
@@ -814,7 +815,7 @@ window.coverFallback=(el,i)=>{
 // called from the browser on purpose: the key is bound to the recipient address,
 // and their API refuses server-side calls outright. It replaced FormSubmit, whose
 // submission API started returning its own 500 error page for every address.
-const W3F_KEY='1c258426-1605-412d-ae14-b92628d5a9ef';
+const W3F_KEY='8e1553e9-9652-49c3-aa1c-d1f8b792e687';
 const W3F_URL='https://api.web3forms.com/submit';
 const WA_NUMBER='8613824296558';
 
@@ -1254,6 +1255,40 @@ function onFlipState(){
   schedulePrefill();
 }
 
+// Load a PDF over byte ranges we control.
+//
+// pdf.js's own disableAutoFetch still pulled the whole deck down in a single
+// 200 response (measured: 17.2 MB per reader open on the 2026 catalog), which
+// is what made opening a catalog feel slow on a phone. Handing it a
+// PDFDataRangeTransport keeps the initial cost to one 64 KB chunk plus the few
+// pages actually on screen. Any problem at all falls back to the plain URL
+// load, so the reader can never end up worse off than before.
+const PDF_CHUNK=65536;
+function rangedTransportClass(url){
+  return class extends pdfjsLib.PDFDataRangeTransport{
+    constructor(length,head){super(length,head);this._url=url}
+    requestDataRange(begin,end){
+      fetch(this._url,{headers:{Range:'bytes='+begin+'-'+(end-1)}})
+        .then(r=>r.arrayBuffer())
+        .then(b=>this.onDataRange(begin,new Uint8Array(b)))
+        .catch(()=>{});
+    }
+    abort(){}
+  };
+}
+async function openPdfRanged(url){
+  const plain=()=>pdfjsLib.getDocument({url:url,disableAutoFetch:true}).promise;
+  try{
+    const probe=await fetch(url,{headers:{Range:'bytes=0-'+(PDF_CHUNK-1)}});
+    if(probe.status!==206)return plain();
+    const total=parseInt(((probe.headers.get('Content-Range')||'').split('/')[1]||'').trim(),10);
+    const head=new Uint8Array(await probe.arrayBuffer());
+    if(!total||head.length<8)return plain();
+    const T=rangedTransportClass(url);
+    return await pdfjsLib.getDocument({range:new T(total,head),disableAutoFetch:true}).promise;
+  }catch(e){return plain()}
+}
+
 async function openReader(ci,targetPage){
   const cat=catalogs[ci];if(!cat)return;
   // Trap the browser Back gesture: while the reader is open it closes the
@@ -1272,8 +1307,11 @@ async function openReader(ci,targetPage){
     await ensureLibs();
     // disableAutoFetch: fetch PDF page objects on demand over Range
     // requests instead of downloading the whole file in the background
-    currentPdf=await pdfjsLib.getDocument({url:cat.pdf,disableAutoFetch:true}).promise;totalPages=currentPdf.numPages;
+    currentPdf=await openPdfRanged(cat.pdf);totalPages=currentPdf.numPages;
     const bodyW=$overlay.clientWidth,isMobile=window.matchMedia('(max-width: 768px)').matches;
+    // Mobile starts with the contents drawer closed - it covers most of the page.
+    $tocSidebar.classList.toggle('hidden',isMobile);
+    $btnTocToggle.classList.toggle('active',!isMobile);
 
     // Lazy reader: instant placeholder shells, pages rendered on demand
     pageDivs=[];pageRendered={};pgBusy={};pgPadIdx=-1;
@@ -1624,7 +1662,15 @@ function closeReader(){
 init();
 // Warm up pdf.js after the homepage is idle so the first reader open
 // does not pay the library download + parse cost.
-window.addEventListener('load',()=>setTimeout(()=>{ensureLibs().catch(()=>{})},1500));
+// Warm the reader libraries once the page is idle - they are only needed when a
+// catalog is opened, and having them ready is what makes that first open quick.
+// Skipped entirely on save-data / 2G connections, where the bytes are wasted.
+window.addEventListener('load',()=>{
+  const c=navigator.connection||{};
+  if(c.saveData||/(^|-)2g$/.test(c.effectiveType||''))return;
+  const go=()=>ensureLibs().catch(()=>{});
+  if('requestIdleCallback' in window)requestIdleCallback(go,{timeout:4000});else setTimeout(go,1500);
+});
 </script>
 </body>
 </html>
