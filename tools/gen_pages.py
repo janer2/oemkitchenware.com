@@ -356,6 +356,112 @@ def hub_html(cats_built):
     return html
 
 
+def cat_hub_html(cat, cat_pages):
+    """catalog/<id>/index.html — landing page for one catalogue.
+
+    Three things already pointed here: the "Browse all ..." links in the homepage
+    index, the breadcrumb on every section page, and the sitemap. Nothing ever
+    wrote the file, so all three led to a 404.
+    """
+    cid, cname = cat["id"], cat["name"]
+    sub = cat.get("sub") or ""
+    url = f"{SITE}/catalog/{cid}/"
+    desc = (f"All {len(cat_pages)} {cname} sections from Yongli - BSCI & ISO 9001 "
+            f"certified OEM/ODM manufacturer of {cat['theme']} since 2010. "
+            f"Open the flip-book catalogue or jump straight to a section page.")
+    cover = f"{SITE}/assets/covers/{cid}.jpg"
+    starts = min((int(p["page"]) for p in cat_pages), default=1)
+    items = "".join(
+        f"<a class='sibling' href='/catalog/{cid}/{slugify(p['title'])}/'>"
+        f"{esc(p['title'])} <span style='color:#bbb;font-size:.75rem'>p.{int(p['page'])}</span></a>"
+        for p in cat_pages)
+    wa_text = esc(f"Hi, I am interested in the {cname} catalogue. Please send me details.")
+    ld = {
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": nm,
+                             "item": SITE + (u if u.startswith("/") else "/" + u)}
+                            for i, (nm, u) in enumerate(
+            [("Home", "/"), ("Categories", "/catalog/"), (cname, f"/catalog/{cid}/")])],
+    }
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{esc(cname)} — Wholesale Catalogue &amp; OEM/ODM Manufacturer | Yongli</title>
+<meta name="description" content="{esc(desc)}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yongli Kitchenware">
+<meta property="og:title" content="{esc(cname)} — Yongli">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{cover}">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{json.dumps(ld, ensure_ascii=False)}
+</script>
+<style>{TEMPLATE_CSS}</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="/"><img src="/assets/logo.png" alt="Yongli — silicone kitchenware manufacturer"></a>
+  <nav>
+    <a href="/">3D Catalog</a>
+    <a href="/#viewCustomize">Customize</a>
+    <a href="/#viewAbout">About Us</a>
+    <a class="wa" href="https://wa.me/8613824296558" target="_blank" rel="noopener">WhatsApp</a>
+  </nav>
+</header>
+<main class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href='/'>Home</a> <a href='/catalog/'>Categories</a> <span>&rarr; {esc(cname)}</span></nav>
+  <h1>{esc(cname)} — {esc(sub)}</h1>
+  <p class="lede">{esc(desc)}</p>
+  <div class="cta-row">
+    <a class="cta primary" href="/?catalog={cid}">Open in 3D Flip Catalog &rarr;</a>
+    <a class="cta whatsapp" href="https://wa.me/8613824296558?text={wa_text}" target="_blank" rel="noopener">WhatsApp Us</a>
+    <a class="cta primary" href="mailto:info@yonglicc.com?subject={esc('Wholesale inquiry - ' + cname)}">Email a Quote Request</a>
+  </div>
+  <div class="thumbs"><figure><img src="{cover}" alt="{esc(cname)} catalogue cover"><figcaption>{esc(sub)} — catalogue cover</figcaption></figure></div>
+  <section class="block">
+    <h2>Sections in this catalogue</h2>
+    <div class="siblings">{items}</div>
+  </section>
+  <div class="grid2">
+    <section class="block">
+      <h2>About This Range</h2>
+      <ul class="ticks">
+        <li>{len(cat_pages)} sections, starting at PDF page {starts}</li>
+        <li>Materials: {esc(cat['materials'])}</li>
+        <li>OEM &amp; ODM: custom mold design, Pantone color matching, custom packaging and logo printing</li>
+        <li>Exported to 34 countries across Europe, America, Middle East and beyond</li>
+        <li>In-house R&amp;D, tooling and mass production since 2010</li>
+      </ul>
+    </section>
+    <section class="block">
+      <h2>Quality &amp; Compliance</h2>
+      <div class="chips"><span class="chip">BSCI</span><span class="chip">ISO 9001</span><span class="chip">FDA</span><span class="chip">LFGB</span><span class="chip">EN71</span><span class="chip">REACH</span><span class="chip">RoHS</span></div>
+      <p style="font-size:.88rem;color:#666;margin-top:12px">{BRAND_LINE}</p>
+    </section>
+  </div>
+  <section class="block">
+    <h2>Other Catalogues</h2>
+    <div class="siblings">{other_hub_links(cid)}</div>
+  </section>
+</main>
+<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a></footer>
+</body>
+</html>
+"""
+
+
+def other_hub_links(except_id):
+    """Links to the sibling catalogue landing pages (internal linking)."""
+    return "".join(
+        f"<a class='sibling' href='/catalog/{c['id']}/'>{esc(c['name'])}</a>"
+        for c in CATS if c["id"] != except_id)
+
+
 CODE_RE = re.compile(r"^[A-Z]{1,5}-?\d{2,7}$")
 # A name is only believable if it reads like a product, not like a spec line or
 # a stray OCR fragment from the neighbouring column.
@@ -643,6 +749,15 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "index.html").write_text(hub_html(cats_built), encoding="utf-8")
     print("hub written: catalog/index.html")
+
+    # Per-catalogue landing pages. Written for every catalogue in cats_built (not
+    # inside the per-catalog loop) so they still appear when a deck is skipped as
+    # unchanged - which is the normal case for a run that only changes this code.
+    for cat, cat_pages in cats_built:
+        d = OUT / cat["id"]
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(cat_hub_html(cat, cat_pages), encoding="utf-8")
+        print("hub written: catalog/%s/index.html (%d sections)" % (cat["id"], len(cat_pages)))
 
     write_home_index(cats_built)
 
