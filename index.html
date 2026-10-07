@@ -885,7 +885,9 @@ function bindEvents(){
   $catalogGrid.addEventListener('click',e=>{const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))});
   $catalogGrid.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest('.catalog-card');if(c)openReader(parseInt(c.dataset.index))}});
   $btnClose.addEventListener('click',closeReader);
-  $btnTocToggle.addEventListener('click',()=>{$tocSidebar.classList.toggle('hidden');$btnTocToggle.classList.toggle('active',!$tocSidebar.classList.contains('hidden'))});
+  $btnTocToggle.addEventListener('click',()=>{$tocSidebar.classList.toggle('hidden');$btnTocToggle.classList.toggle('active',!$tocSidebar.classList.contains('hidden'));
+    // Opening the panel is the moment the auto-extracted contents are wanted.
+    if(!$tocSidebar.classList.contains('hidden'))runDeferredToc();});
   $btnPrev.addEventListener('click',()=>flipTo(-1));
   $btnNext.addEventListener('click',()=>flipTo(1));
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($contactDrawer.classList.contains('active')){closeDrawer();return}if(pageFlip){closeReader();return}}if(!pageFlip)return;if(e.key==='ArrowRight'){e.preventDefault();flipTo(1)}else if(e.key==='ArrowLeft'){e.preventDefault();flipTo(-1)}});
@@ -1341,7 +1343,7 @@ async function openReader(ci,targetPage){
     await ensureNear(t,totalItems,1);
     if(!pageFlip)return;
     pageFlip.turnToPage(t);
-    if(!(await tocJsonP))extractTocAuto(currentPdf);
+    if(!(await tocJsonP))deferTocAuto();
     updateUI();$readerLoading.style.display='none';
     prefillAnchor=t;updateTocStates();schedulePrefill();
   }catch(e){console.error(e);$loadingText.textContent='Failed to load this catalog. Please close and try again.'}
@@ -1353,6 +1355,25 @@ async function loadTocJson(cid){
     const data=await r.json();
     currentToc=flattenToc(data);renderToc();return true;
   }catch(e){return false}
+}
+
+// Auto-extracting a contents list means reading the text of every page, which
+// forces pdf.js to pull the whole deck (measured: 9.5 MB and ~17 s before the
+// first page was usable on the 2026 catalog). Nothing on screen needs it until
+// the contents panel is actually opened, so it waits for idle - or for the tap
+// that opens the panel, whichever comes first.
+let tocAutoPending=false;
+function deferTocAuto(){
+  if(!currentPdf)return;
+  tocAutoPending=true;
+  $tocList.innerHTML='<div class="toc-empty">Contents load when this panel is opened.</div>';
+  const go=()=>runDeferredToc();
+  if('requestIdleCallback' in window)requestIdleCallback(go,{timeout:9000});else setTimeout(go,4000);
+}
+function runDeferredToc(){
+  if(!tocAutoPending||!currentPdf)return;
+  tocAutoPending=false;
+  extractTocAuto(currentPdf);
 }
 
 async function extractTocAuto(pdf){
