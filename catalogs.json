@@ -11,6 +11,17 @@
     "materials": "Food-grade silicone, stainless steel, BPA-free plastics and CE/RoHS compliant electronics"
   },
   {
+    "id": "2023",
+    "name": "2023",
+    "sub": "2023 Product Catalog",
+    "pdf": "assets/catalog-2023.pdf",
+    "toc": null,
+    "gridFromToc": false,
+    "coverLocked": true,
+    "theme": "the full 2023 product range across kitchen, dining, household and outdoor lines",
+    "materials": "Food-grade silicone, stainless steel, stoneware and BPA-free plastics"
+  },
+  {
     "id": "kitchen",
     "name": "Kitchen Gadgets",
     "sub": "Kitchen Items",
