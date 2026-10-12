@@ -1334,21 +1334,29 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
                      border-top: 1px solid #f0ede7; }
 .g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
                        font-variant-numeric: tabular-nums; margin-bottom: 2px; }
-.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
-        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
-        transition: border-color .15s, box-shadow .15s, transform .15s; }
-.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
-.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
-/* contain, not cover: the crops keep the catalogue's own proportions, and a
-   cover crop was cutting products in half and slicing the printed labels */
-.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.shot .sc { padding: 10px 12px 12px; }
-.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+/* The range listing: photo over text, six across. It replaced both the old
+   five-column table and a separate preview strip of 8 cards - the strip was a
+   near-identical photo wall sitting a few hundred pixels above this one, and
+   this listing already carries the page link the strip existed for. */
+.item-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px 14px; }
+.item { display: flex; flex-direction: column; border: 1px solid #f0ede7; border-radius: 12px;
+        background: #fff; overflow: hidden; transition: border-color .15s, box-shadow .15s,
+        transform .15s; }
+.item:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.item .ii { display: block; aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+.item .ii img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.item .it { padding: 9px 11px 11px; }
+.item .it b { display: block; font-size: .72rem; letter-spacing: .04em; color: #8a6d2f;
               font-variant-numeric: tabular-nums; }
-.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
-                   line-height: 1.4; margin-top: 4px; }
-.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.item .it .nm { display: block; margin-top: 4px; font-size: .83rem; line-height: 1.35;
+                color: #1a1a2e; text-decoration: none; }
+.item .it .nm:hover { color: #8a6d2f; text-decoration: underline; text-underline-offset: 2px; }
+.item .it i { display: block; margin-top: 7px; font-style: normal; font-size: .71rem; color: #b0a893; }
+.item .it i a { color: #8a6d2f; text-decoration: none; }
+.item .it i a:hover { text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 1100px) { .item-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 860px) { .item-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .item-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px; } }
 .prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
 .prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
                            background: #faf9f7; display: block; }
@@ -1388,7 +1396,7 @@ a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06)
 }
 @media (max-width: 700px) {
   .facts th, .prod-table td.code { white-space: normal; }
-  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+
   /* the item table becomes one card per item: a five-column table on a phone
      is unreadable, and the columns are exactly the facts a buyer wants stacked */
   .prod-table thead, .prod-table tr:first-child th { display: none; }

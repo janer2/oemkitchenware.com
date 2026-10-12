@@ -699,21 +699,29 @@ EXTRA_CSS = """
                      border-top: 1px solid #f0ede7; }
 .g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
                        font-variant-numeric: tabular-nums; margin-bottom: 2px; }
-.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
-        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
-        transition: border-color .15s, box-shadow .15s, transform .15s; }
-.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
-.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
-/* contain, not cover: the crops keep the catalogue's own proportions, and a
-   cover crop was cutting products in half and slicing the printed labels */
-.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.shot .sc { padding: 10px 12px 12px; }
-.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+/* The range listing: photo over text, six across. It replaced both the old
+   five-column table and a separate preview strip of 8 cards - the strip was a
+   near-identical photo wall sitting a few hundred pixels above this one, and
+   this listing already carries the page link the strip existed for. */
+.item-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px 14px; }
+.item { display: flex; flex-direction: column; border: 1px solid #f0ede7; border-radius: 12px;
+        background: #fff; overflow: hidden; transition: border-color .15s, box-shadow .15s,
+        transform .15s; }
+.item:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.item .ii { display: block; aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+.item .ii img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.item .it { padding: 9px 11px 11px; }
+.item .it b { display: block; font-size: .72rem; letter-spacing: .04em; color: #8a6d2f;
               font-variant-numeric: tabular-nums; }
-.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
-                   line-height: 1.4; margin-top: 4px; }
-.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.item .it .nm { display: block; margin-top: 4px; font-size: .83rem; line-height: 1.35;
+                color: #1a1a2e; text-decoration: none; }
+.item .it .nm:hover { color: #8a6d2f; text-decoration: underline; text-underline-offset: 2px; }
+.item .it i { display: block; margin-top: 7px; font-style: normal; font-size: .71rem; color: #b0a893; }
+.item .it i a { color: #8a6d2f; text-decoration: none; }
+.item .it i a:hover { text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 1100px) { .item-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 860px) { .item-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .item-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px; } }
 .prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
 .prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
                            background: #faf9f7; display: block; }
@@ -753,7 +761,7 @@ a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06)
 }
 @media (max-width: 700px) {
   .facts th, .prod-table td.code { white-space: normal; }
-  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+
   /* the item table becomes one card per item: a five-column table on a phone
      is unreadable, and the columns are exactly the facts a buyer wants stacked */
   .prod-table thead, .prod-table tr:first-child th { display: none; }
@@ -872,15 +880,6 @@ def card_html(g, shots, code=None):
                esc(guide_label(g)), esc(re.sub("&amp;", "&", g["meta_desc"]))))
 
 
-def spread(rows, n):
-    """Up to n rows, taken evenly across the list so a gallery shows the range
-    rather than the first n items of one catalogue."""
-    if len(rows) <= n:
-        return rows
-    step = len(rows) / float(n)
-    return [rows[int(i * step)] for i in range(n)]
-
-
 def crumbs(items):
     """items: list of (label, href or None)."""
     out = []
@@ -946,61 +945,33 @@ def guide_html(guide, products, all_guides, have_product, shots=None, hero_of=No
             },
         ],
     }
-    rows = []
+    # One card per item, photo over text. A five-column table made the buyer
+    # read the range as data; the same content as pictures is scanned.
+    cards = []
     for p in products:
         link = "/product/%s/" % p["code"] if have_product(p["code"]) else section_dir_url(p["cid"], p["section"])
         cat_name = CAT_BY_ID[p["cid"]]["name"] if p["cid"] in CAT_BY_ID else p["cid"]
-        rows.append(
-            '<tr><td class="thumb">%s</td><td><a href="%s">%s</a></td><td class="code">%s</td>'
-            '<td>%s</td><td class="pg"><a href="/?catalog=%s&amp;page=%d">p.%d</a></td></tr>'
-            % (shot_img(p["code"], shots, size="thumb", alt=p["name"], loading="lazy"),
-               link, esc(p["name"]), esc(p["code"]), esc(cat_name),
+        cards.append(
+            '<div class="item"><a class="ii" href="%s">%s</a>'
+            '<div class="it"><b>%s</b><a class="nm" href="%s">%s</a>'
+            '<i>%s &middot; <a href="/?catalog=%s&amp;page=%d">p.%d</a></i></div></div>'
+            % (link, shot_img(p["code"], shots, alt=p["name"], loading="lazy"),
+               esc(p["code"]), link, esc(p["name"]), esc(cat_name),
                p["cid"], p["pn"], p["pn"]))
     prod_block = ""
-    if rows:
+    if cards:
         prod_block = """
   <section class="block">
     <h2>%s items in our catalogues</h2>
-    <p class="block-sub">Every row is a printed item in a Yongli catalogue, with the photo we shoot
-    of it and the page it is printed on. Open the item page for the code and the range, or jump
-    straight into the flip-book at that page.</p>
-    <table class="prod-table">
-      <tr><th></th><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
+    <p class="block-sub">Every item below is printed in a Yongli catalogue, with the photo we shoot
+    of it. Open an item for the code and the range, or use the page number to jump straight into
+    the flip-book.</p>
+    <div class="item-grid">
       %s
-    </table>
+    </div>
     <p class="kw-note">%s</p>
   </section>""" % (esc(re.sub("&amp;", "&", guide["h1"]).split(" Manufacturer")[0]),
-                   "".join(rows), esc(guide.get("words", "")))
-
-    # Range gallery: a handful of the range as photo cards. Spread across the
-    # list so it previews the breadth rather than one catalogue's first page.
-    gallery = ""
-    # Distinct names first: a range page can hold six codes that are all
-    # printed "Sourdough Starter Kit", and six identical cards say nothing.
-    seen, distinct, rest = set(), [], []
-    for p in products:
-        if p["code"] not in shots:
-            continue
-        k = p["name"].strip().lower()
-        (rest if k in seen else distinct).append(p)
-        seen.add(k)
-    picked = spread(distinct, 8)
-    if len(picked) < 6:
-        picked += spread(rest, 6 - len(picked))
-    if picked:
-        cards = "\n".join(
-            '<a class="shot" href="/?catalog=%s&amp;page=%d">'
-            '<div class="si">%s</div>'
-            '<div class="sc"><b>%s</b><strong>%s</strong><i>%s &middot; p.%d</i></div></a>'
-            % (p["cid"], p["pn"],
-               shot_img(p["code"], shots, alt=p["name"], loading="lazy"),
-               esc(p["code"]), esc(p["name"]),
-               esc(CAT_BY_ID[p["cid"]]["name"] if p["cid"] in CAT_BY_ID else p["cid"]), p["pn"])
-            for p in picked)
-        gallery = ('  <section class="block"><h2>Range at a glance</h2>'
-                   '<p class="block-sub">A few items from this range, exactly as they are printed '
-                   'in our catalogues. Click a card to open that page in the flip-book.</p>'
-                   '<div class="shot-grid">%s</div></section>\n' % cards)
+                   "".join(cards), esc(guide.get("words", "")))
 
     hero = hero_code(guide, products, shots)
     hero_fig = shot_figure(hero, shots) if hero else ""
@@ -1030,7 +1001,6 @@ def guide_html(guide, products, all_guides, have_product, shots=None, hero_of=No
                    hero_fig))
     body += hero_open + hero_txt + ("</article>\n" if hero_fig else "\n")
     body += '<div class="g-copy">\n%s\n</div>\n' % intro
-    body += gallery
     body += '<div class="grid2">\n'
     body += ('  <section class="block"><h2>Customisation &amp; quality</h2><ul class="ticks">%s</ul></section>\n'
              '  <section class="block"><h2>Compliance</h2>%s'
