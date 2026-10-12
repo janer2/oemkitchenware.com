@@ -55,11 +55,25 @@ Each page it writes carries `<!-- gen_seo_pages.py -->`, and a run deletes stale
 
     python tools/gen_page_images.py                # incremental
     python tools/gen_page_images.py --force        # re-render everything
-    python tools/gen_page_images.py --only kitchen --width 900
+    python tools/gen_page_images.py --only kitchen --quality 84
 
-Writes `assets/pages/<id>/<n>.jpg` (1100 px wide, q72 — 458 pages / ~45 MB for
-the current six catalogues), `assets/pages/<id>/meta.json` and the single
+Writes `assets/pages/<id>/<n>.webp` — **2600 px wide (q76) for a landscape deck,
+ 1600 px (q80) for a portrait page** — 458 pages / ~47 MB for the current six
+catalogues, plus `assets/pages/<id>/meta.json` and the single
 `assets/pages/manifest.json` the reader fetches.
+
+The two widths follow what the page is displayed at. A landscape deck is shown
+one page at a time at ~1000 CSS px, so a Retina screen wants ~2000 px of source
+before anything is zoomed, and the reader zooms to 4x; a portrait page sits in a
+two-page spread at ~350-500 CSS px. WebP at these sizes costs about what the old
+1100 px JPEG cost, which is what makes the extra pixels affordable — the first
+version rendered 1100 px JPEG and read as soft on a wide screen.
+
+One source per page is a deliberate trade: a set that stays sharp at 4x would be
+roughly ten times the bytes. Landscape pages are 1:1 up to about 2.6x zoom,
+portrait up to about 4x on a 1x display. Decoded memory is the other limit (a
+2600 px page is ~15 MB in RAM), which is why the reader keeps only a small ring
+of pages warm.
 
 `index.html` opens a catalogue from those images: two or three small requests
 per spread instead of one 17-21 MB PDF, and pdf.js is not loaded in that mode.

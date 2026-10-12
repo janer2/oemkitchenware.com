@@ -1383,7 +1383,7 @@ async function openReader(ci,targetPage){
     for(let i=1;i<=totalPages;i++){
       const div=document.createElement('div');div.className='pg-shell';
       if(imageMode){const im=document.createElement('img');im.alt='';im.decoding='async';
-        im.loading='eager';im.dataset.src='assets/pages/'+cat.id+'/'+i+'.jpg';div.appendChild(im)}
+        im.loading='eager';im.dataset.src='assets/pages/'+cat.id+'/'+i+'.webp';div.appendChild(im)}
       pageDivs.push(div)}
 
     // Paint page 1 with the still image the build already rendered, so a catalog
@@ -1400,9 +1400,10 @@ async function openReader(ci,targetPage){
     if(imageMode){
       // geometry comes from the PDF page box recorded in the manifest
       aspect=pageMeta.aspect;wide=!!pageMeta.wide;
-      // an image is a fraction of the cost of a raster, so a longer ring of
-      // ready pages still fits in a phone's memory
-      PRELOAD_RADIUS=4;
+      // an image costs no network beyond itself, but a 2600 px page decodes to
+      // ~15 MB in memory, so the warm ring stays short - the page you are
+      // looking at and its neighbours, no more
+      PRELOAD_RADIUS=pageMeta.wide?2:3;
     }else{
       const vp1=(await currentPdf.getPage(1)).getViewport({scale:1});
       aspect=vp1.width/Math.max(vp1.height,1);

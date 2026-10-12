@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Render every catalogue page to a JPEG so the flip reader shows pictures
+Render every catalogue page to a WebP image so the flip reader shows pictures
 instead of parsing the PDF.
 
 Why: opening a catalogue used to mean one 17-21 MB PDF request before anything
@@ -13,7 +13,8 @@ one image per page the reader pulls 2-3 files of roughly 50-180 KB per spread,
 and the first page is on screen as soon as one small file arrives.
 
 Output
-    assets/pages/<id>/<n>.jpg    one page, 1100 px wide by default
+    assets/pages/<id>/<n>.webp   one page: 2600 px wide (landscape decks),
+                                 1600 px (portrait decks)
     assets/pages/<id>/meta.json  pages, source page box, aspect, wide, toc
     assets/pages/manifest.json   {id: {...}} - the one file the reader fetches
 
@@ -25,7 +26,7 @@ scored, and consecutive repeats merged into one entry.
 Usage
     python tools/gen_page_images.py              # incremental (skips fresh pages)
     python tools/gen_page_images.py --force      # re-render everything
-    python tools/gen_page_images.py --only kitchen --width 900
+    python tools/gen_page_images.py --only kitchen --quality 84
 """
 import argparse
 import json
@@ -33,12 +34,20 @@ import re
 from pathlib import Path
 
 import pymupdf
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOGS = json.loads((ROOT / "catalogs.json").read_text(encoding="utf-8"))
 OUT = ROOT / "assets" / "pages"
-DEFAULT_WIDTH = 1100
-DEFAULT_QUALITY = 72
+# One render per page is enough if it is sized for the screen it lands on: a
+# landscape deck fills ~1000 CSS px, so a Retina screen wants ~2000 px of source
+# before anything is zoomed, and the reader zooms to 4x. A portrait page sits in
+# a two-page spread at ~350-500 CSS px. Measured 2026-10-12: WebP costs about
+# what the old 1100 px JPEG cost at these sizes, so this is 2.4x the pixels for
+# roughly the same bytes. Decoded memory is the other limit: 2600 px wide is
+# ~15 MB per page in RAM, which is why the reader only keeps a small ring warm.
+LAND_W, LAND_Q = 2600, 76
+PORT_W, PORT_Q = 1600, 80
 
 CODE_RE = re.compile(r"^[A-Z]\d*-\d{1,3}$|^[A-Z]{0,2}\d{2,}$|^\d+[A-Z]?$|^No\.\s*\d|^[IVX]+\.?$", re.I)
 SIZE_RE = re.compile(r"^\d+[*xX-]\d|^\d+mm|^\d+ml|^\d+g\b|^[()\d\s,.*xX]+$")
@@ -134,8 +143,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--force", action="store_true", help="re-render pages that are already there")
     ap.add_argument("--only", help="one catalogue id")
-    ap.add_argument("--width", type=int, default=DEFAULT_WIDTH)
-    ap.add_argument("--quality", type=int, default=DEFAULT_QUALITY)
+    ap.add_argument("--width", type=int, help="override the computed page width")
+    ap.add_argument("--quality", type=int, help="override the WebP quality")
     args = ap.parse_args()
 
     manifest, total, skipped = {}, 0, 0
@@ -153,28 +162,34 @@ def main():
         rect = doc[0].rect
         d = OUT / cat["id"]
         d.mkdir(parents=True, exist_ok=True)
+        # landscape decks are displayed one page at a time and much larger on
+        # screen than a portrait page inside a two-page spread
+        land = rect.width >= rect.height * 1.05
+        width = args.width or (LAND_W if land else PORT_W)
+        quality = args.quality or (LAND_Q if land else PORT_Q)
         src_mtime = pdf.stat().st_mtime
         for pno in range(doc.page_count):
-            out = d / ("%d.jpg" % (pno + 1))
+            out = d / ("%d.webp" % (pno + 1))
             if not args.force and out.exists() and out.stat().st_mtime > src_mtime:
                 skipped += 1
                 continue
             page = doc[pno]
-            zoom = args.width / page.rect.width
+            zoom = width / page.rect.width
             pix = page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False)
-            out.write_bytes(pix.tobytes("jpeg", jpg_quality=args.quality))
+            im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+            im.save(out, "WEBP", quality=quality, method=5)
             total += 1
         toc = toc_from_file(cat) or auto_toc(doc)
         meta = {"pages": doc.page_count, "w": round(rect.width, 2), "h": round(rect.height, 2),
                 "aspect": round(rect.width / max(rect.height, 1), 4),
-                "wide": rect.width >= rect.height * 1.05,
-                "width": args.width, "toc": toc}
+                "wide": land, "width": width, "quality": quality,
+                "format": "webp", "toc": toc}
         (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
         manifest[cat["id"]] = meta
-        size = sum(f.stat().st_size for f in d.glob("*.jpg")) // 1024
-        print("%-9s %3d pages%s  %d KB on disk  toc=%d entries"
-              % (cat["id"], doc.page_count, " (skipped)" if not args.force else "",
-                 size, len(toc)))
+        size = sum(f.stat().st_size for f in d.glob("*.webp")) // 1024
+        print("%-9s %3d pages %s %4dpx q%d %s  %5d KB on disk  toc=%d entries"
+              % (cat["id"], doc.page_count, "landscape" if land else "portrait ",
+                 width, quality, "skipped " if not args.force else "rendered", size, len(toc)))
         doc.close()
 
     OUT.mkdir(parents=True, exist_ok=True)

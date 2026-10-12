@@ -5,7 +5,9 @@
   "h": 518.4,
   "aspect": 1.7778,
   "wide": true,
-  "width": 1100,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
   "toc": [
    {
     "title": "FC u K CE",
@@ -445,7 +447,9 @@
   "h": 810.0,
   "aspect": 1.7778,
   "wide": true,
-  "width": 1100,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
   "toc": [
    {
     "title": "Kitchen Tools",
@@ -525,7 +529,9 @@
   "h": 595.5,
   "aspect": 0.704,
   "wide": false,
-  "width": 1100,
+  "width": 1600,
+  "quality": 80,
+  "format": "webp",
   "toc": [
    {
     "title": "Kitchen Gadgets",
@@ -635,7 +641,9 @@
   "h": 595.5,
   "aspect": 0.704,
   "wide": false,
-  "width": 1100,
+  "width": 1600,
+  "quality": 80,
+  "format": "webp",
   "toc": [
    {
     "title": "Feeding Set",
@@ -665,7 +673,9 @@
   "h": 595.5,
   "aspect": 0.704,
   "wide": false,
-  "width": 1100,
+  "width": 1600,
+  "quality": 80,
+  "format": "webp",
   "toc": [
    {
     "title": "Ice Facial Roller",
@@ -705,7 +715,9 @@
   "h": 595.5,
   "aspect": 0.704,
   "wide": false,
-  "width": 1100,
+  "width": 1600,
+  "quality": 80,
+  "format": "webp",
   "toc": [
    {
     "title": "Plastic Box",
