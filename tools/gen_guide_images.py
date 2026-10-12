@@ -191,17 +191,37 @@ def ink_box(rendered, left, right, code_y, page_h):
     groups = row_groups(a, page_h)
     if not groups:
         return None
+
+    def box_of(g0, g1):
+        sub = a[g0:g1]
+        e = max(3, int(sub.shape[1] * 0.02))
+        bg = (sub[:e].mean(axis=0) + sub[-e:].mean(axis=0)) / 2.0
+        cols = np.abs(sub - bg[None, :, :]).max(axis=2) > INK_TOL
+        xs = np.where(cols.mean(axis=0) > 0.005)[0]
+        if not len(xs):
+            return None
+        return (band[0] + int(xs[0]), band[1] + g0, band[0] + int(xs[-1]) + 1, band[1] + g1)
+
+    def photo_like(box):
+        if not box:
+            return False
+        w, h = box[2] - box[0], box[3] - box[1]
+        return h >= 0.05 * page_h and max(w, h) / float(max(min(w, h), 1)) <= 3.5
+
     tall = [g for g in groups if g[1] - g[0] >= 0.12 * page_h]
-    y0, y1 = max(tall or groups, key=lambda g: g[1])
-    sub = a[y0:y1]
-    e = max(3, int(sub.shape[1] * 0.02))
-    bg = (sub[:e].mean(axis=0) + sub[-e:].mean(axis=0)) / 2.0
-    cols = np.abs(sub - bg[None, :, :]).max(axis=2) > INK_TOL
-    xs = np.where(cols.mean(axis=0) > 0.005)[0]
-    if not len(xs):
-        return None
-    x0, x1 = band[0] + int(xs[0]), band[0] + int(xs[-1]) + 1
-    return (x0, band[1] + y0, x1, band[1] + y1)
+    box = box_of(*max(tall or groups, key=lambda g: g[1]))
+    if photo_like(box):
+        return box
+    # A pale product (a clear glass jar on white, say) never forms a tall block,
+    # and the nearest group above the code is then just its printed name - a
+    # 5:1 strip of type with no product in it. Take the run of groups instead,
+    # and refuse the crop entirely if that is still not photo shaped.
+    near = [g for g in groups if g[1] <= band[3] and g[0] >= band[3] - 0.45 * page_h]
+    if near:
+        box = box_of(min(g[0] for g in near), max(g[1] for g in near))
+        if photo_like(box):
+            return box
+    return None
 
 
 def white_mask(a, lo_min=PANEL_MIN, spread=PANEL_NEUTRAL):

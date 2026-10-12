@@ -955,7 +955,9 @@ def guide_html(guide, products, all_guides, have_product, shots=None, hero_of=No
             '<div class="item"><a class="ii" href="%s">%s</a>'
             '<div class="it"><b>%s</b><a class="nm" href="%s">%s</a>'
             '<i>%s &middot; <a href="/?catalog=%s&amp;page=%d">p.%d</a></i></div></div>'
-            % (link, shot_img(p["code"], shots, size="thumb", alt=p["name"], loading="lazy"),
+            # the grid card is 144 px wide, but 156 px at 3x on a phone, so it
+            # needs the 640 px cut - a 320 px one is 1.5x short there
+            % (link, shot_img(p["code"], shots, alt=p["name"], loading="lazy"),
                esc(p["code"]), link, esc(p["name"]), esc(cat_name),
                p["cid"], p["pn"], p["pn"]))
     prod_block = ""
