@@ -191,8 +191,11 @@ a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06)
      is unreadable, and the columns are exactly the facts a buyer wants stacked */
   .prod-table thead, .prod-table tr:first-child th { display: none; }
   .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
-  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
-                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  /* :has() keeps this to tables that really carry a thumbnail column, so a
+     plain list is never squeezed into the 46 px first column */
+  .prod-table tr:has(td.thumb) { display: grid; grid-template-columns: 46px minmax(0, 1fr);
+                                 column-gap: 12px; padding: 12px 0;
+                                 border-bottom: 1px solid #f0ede7; }
   .prod-table tbody tr:nth-child(even) { background: none; }
   .prod-table td { border: 0; padding: 0; }
   .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }

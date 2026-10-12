@@ -758,8 +758,11 @@ a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06)
      is unreadable, and the columns are exactly the facts a buyer wants stacked */
   .prod-table thead, .prod-table tr:first-child th { display: none; }
   .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
-  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
-                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  /* :has() keeps this to tables that really carry a thumbnail column, so a
+     plain list is never squeezed into the 46 px first column */
+  .prod-table tr:has(td.thumb) { display: grid; grid-template-columns: 46px minmax(0, 1fr);
+                                 column-gap: 12px; padding: 12px 0;
+                                 border-bottom: 1px solid #f0ede7; }
   .prod-table tbody tr:nth-child(even) { background: none; }
   .prod-table td { border: 0; padding: 0; }
   .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }
@@ -1192,7 +1195,8 @@ def product_html(p, have_product, siblings, shots=None):
     return body
 
 
-def product_index_html(rows, all_guides):
+def product_index_html(rows, all_guides, shots=None):
+    shots = shots if shots is not None else {}
     url = SITE + "/product/"
     desc = ("Every product Yongli prints a code for, across the 2026, 2023, kitchen, baby, "
             "personal care and festive catalogues - with the catalogue page for each item.")
@@ -1203,9 +1207,11 @@ def product_index_html(rows, all_guides):
                "url": "%s/product/%s/" % (SITE, r["code"])}
               for i, r in enumerate(rows[:200])]}
     tb = "".join(
-        '<tr><td><a href="/product/%s/">%s</a></td><td class="code">%s</td><td>%s</td>'
-        '<td><a href="/?catalog=%s&amp;page=%d">p.%d</a></td></tr>'
-        % (r["code"], esc(r["name"]), esc(r["code"]),
+        '<tr><td class="thumb">%s</td><td><a href="/product/%s/">%s</a></td>'
+        '<td class="code">%s</td><td>%s</td>'
+        '<td class="pg"><a href="/?catalog=%s&amp;page=%d">p.%d</a></td></tr>'
+        % (shot_img(r["code"], shots, size="thumb", alt=r["name"], loading="lazy"),
+           r["code"], esc(r["name"]), esc(r["code"]),
            esc(CAT_BY_ID[r["cid"]]["name"] if r["cid"] in CAT_BY_ID else r["cid"]),
            r["cid"], r["pn"], r["pn"]) for r in rows)
     guides = "".join('<a class="sibling" href="/guides/%s/">%s</a>'
@@ -1221,8 +1227,8 @@ def product_index_html(rows, all_guides):
              '<p class="block-sub">Each code links to its own page with the range, materials and '
              'catalogue page. Search inside a catalogue? Open the flip-book from the '
              '<a href="/">home page search box</a>.</p>'
-             '<table class="prod-table"><tr><th>Product</th><th>Code</th><th>Catalogue</th>'
-             '<th>Page</th></tr>%s</table></section>\n' % (len(rows), tb))
+             '<table class="prod-table"><tr><th></th><th>Product</th><th>Code</th>'
+             '<th>Catalogue</th><th>Page</th></tr>%s</table></section>\n' % (len(rows), tb))
     body += '<section class="block"><h2>Buyer guides</h2><div class="siblings">%s</div></section>\n' % guides
     body += FOOT
     return body
@@ -1372,7 +1378,7 @@ def main():
         print("removed %d stale product pages from an earlier run" % stale)
 
     (PRODUCT_DIR / "index.html").write_text(
-        product_index_html(chosen, GUIDES_DATA), encoding="utf-8")
+        product_index_html(chosen, GUIDES_DATA, shots), encoding="utf-8")
     print("wrote product/index.html")
 
     GUIDE_DIR.mkdir(parents=True, exist_ok=True)
