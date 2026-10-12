@@ -6,13 +6,14 @@ Yongli buyer-intent page generator.
 Two page families, both built from data the site already has:
 
   guides/<slug>/      buyer-intent content pages. The topic list is taken from
-                      the store's own Alibaba.com backend on 2026-10-12 - the
+                      the store's own keyword report on 2026-10-12 - the
                       "top inquiry words" (sourdough starter kit, titanium
                       cutting board, garlic press, bread proofing box) and the
                       "top traffic words" (kitchen accessories, kitchen gadgets,
                       lunch box, baby, yogurt) - plus the five main product lines
-                      the store profile advertises. No invented demand figures:
-                      nothing here claims a search volume.
+                      the store advertises. No invented demand figures:
+                      nothing here claims a search volume, and no page links out
+                      to a marketplace.
   product/<code>/     one page per catalogue item that has a printed code, so
                       the site stops being only catalogue/category layers.
                       Codes/names/pages come from search-index.json.
@@ -44,23 +45,7 @@ GUIDE_DIR = ROOT / "guides"
 PRODUCT_DIR = ROOT / "product"
 SITEMAP = ROOT / "sitemap.xml"
 INDEX_HTML = ROOT / "index.html"
-STORE = "https://ngeva.en.alibaba.com/"
-STORE_PROFILE = "https://ngeva.en.alibaba.com/company_profile.html"
 CERT_CHIPS = ["BSCI", "ISO 9001", "FDA", "LFGB", "EN71", "REACH", "RoHS"]
-
-# Real product-group / product URLs on the store, read from the live storefront.
-STORE_GROUPS = {
-    "foldable": "https://ngeva.en.alibaba.com/productgrouplist-807588424/Food_Foldable_Storage.html",
-    "mold": "https://ngeva.en.alibaba.com/productgrouplist-807536063/Silicone_Mold.html",
-    "tabletop": "https://ngeva.en.alibaba.com/productgrouplist-806057006/Kitchen_Tabletop.html",
-}
-STORE_ITEMS = {
-    "sourdough": "https://ngeva.en.alibaba.com/product/1601021516713-971582713/Sourdough_Starter_Kit_24_oz_Jar_and_9_Bread_Proofing_Basket_Set_Sourdough_Bread_Baking_Supplies_with_Labels_Bread_Making_Tools.html",
-    "titanium": "https://ngeva.en.alibaba.com/product/1601511136490-944390815/100_Pure_Titanium_Cutting_Board_Antibacterial_Cutting_Boards_Double_Sided_Pure_Titanium_Cutting_Board_for_Kitchen_and_Cooking.html",
-    "kidsplate": "https://ngeva.en.alibaba.com/product/1601445172708-944390815/6_Piece_Stainless_Steel_Silicone_Toddler_Plates_Bowls_Set_Durable_Baby_Feeding_Essentials_Divided_Suction_Plate_Bowls_Cups.html",
-    "lunchbox": "https://ngeva.en.alibaba.com/product/1600929354198-807588424/Yongli_GJ012_Silicone_Lunch_Box_Telescopic_Foldable_Eco_Friendly_Collapsible_Food_Storage_Containers_Large_Lids_Kitchen_Tools.html",
-    "milkfrother": "https://ngeva.en.alibaba.com/product/1601161246332-220353667/4_in_1_240ml_8_1oz_Electric_Milk_Frother_Automatic_Hot_Cold_Foam_Maker_Latte_Matcha_Hot_Chocolate_8_1oz_Steamer_Coffee_Tea_Tool.html",
-}
 
 CAPABILITIES = [
     "Custom mould and tooling design, with samples before mass production",
@@ -118,8 +103,6 @@ GUIDES_DATA = [
              "It depends on the configuration - glass, tooling and packaging all move the number. "
              "Send us your target quantity and the exact kit contents and we will quote against it."),
         ],
-        "store": [("See our sourdough starter kit on Alibaba.com", STORE_ITEMS["sourdough"]),
-                  ("Kitchen &amp; tabletop range", STORE_GROUPS["tabletop"])],
     },
     {
         "slug": "bread-proofing-basket-manufacturer",
@@ -162,8 +145,6 @@ GUIDES_DATA = [
              "Yes. Mixed configurations are normal for our export customers; the quote is built per "
              "shape, then combined into one production and shipping plan."),
         ],
-        "store": [("Baking tools on our store", STORE_GROUPS["tabletop"]),
-                  ("Sourdough starter kit listing", STORE_ITEMS["sourdough"])],
     },
     {
         "slug": "cutting-board-manufacturer",
@@ -208,8 +189,6 @@ GUIDES_DATA = [
              "Yes. The collapsible cutting board with colander is one of our long-running lines and "
              "is tooled at several sizes."),
         ],
-        "store": [("Titanium cutting board on Alibaba.com", STORE_ITEMS["titanium"]),
-                  ("Foldable storage &amp; board range", STORE_GROUPS["foldable"])],
     },
     {
         "slug": "garlic-press-manufacturer",
@@ -251,7 +230,6 @@ GUIDES_DATA = [
              "Printed card, blister, colour box or polybag with label, decided with you at quoting "
              "stage so the carton dimensions are agreed early."),
         ],
-        "store": [("Kitchen tools range", STORE_GROUPS["tabletop"])],
     },
     {
         "slug": "kitchen-gadgets-manufacturer",
@@ -294,8 +272,6 @@ GUIDES_DATA = [
              "The factory is BSCI and ISO 9001 audited; food-contact materials are produced to FDA "
              "and LFGB requirements, with EN71 for children's items and REACH/RoHS where relevant."),
         ],
-        "store": [("Kitchen &amp; tabletop range on Alibaba.com", STORE_GROUPS["tabletop"]),
-                  ("Silicone mould range", STORE_GROUPS["mold"])],
     },
     {
         "slug": "lunch-box-food-storage-manufacturer",
@@ -339,8 +315,6 @@ GUIDES_DATA = [
              "Food-grade silicone and BPA-free plastic, produced to FDA and LFGB requirements, with "
              "test reports available for the order."),
         ],
-        "store": [("Silicone lunch box on Alibaba.com", STORE_ITEMS["lunchbox"]),
-                  ("Foldable storage range", STORE_GROUPS["foldable"])],
     },
     {
         "slug": "baby-kids-dining-manufacturer",
@@ -383,8 +357,6 @@ GUIDES_DATA = [
              "Yes. Plate, bowl, cutlery, bib and placemat can be quoted as a set and packed in one "
              "retail carton."),
         ],
-        "store": [("Kids plate set on Alibaba.com", STORE_ITEMS["kidsplate"]),
-                  ("Kitchen &amp; tabletop range", STORE_GROUPS["tabletop"])],
     },
     {
         "slug": "silicone-bakeware-manufacturer",
@@ -427,8 +399,6 @@ GUIDES_DATA = [
              "Food-grade silicone produced to FDA and LFGB requirements, with REACH and RoHS "
              "documentation where relevant to the order."),
         ],
-        "store": [("Silicone mould range on Alibaba.com", STORE_GROUPS["mold"]),
-                  ("Kitchen &amp; tabletop range", STORE_GROUPS["tabletop"])],
     },
     {
         "slug": "coffee-tea-accessories-manufacturer",
@@ -471,8 +441,6 @@ GUIDES_DATA = [
              "Yes, that is the point of quoting the range together: one colour and finish system "
              "across the hero product and its accessories."),
         ],
-        "store": [("Milk frother on Alibaba.com", STORE_ITEMS["milkfrother"]),
-                  ("Kitchen &amp; tabletop range", STORE_GROUPS["tabletop"])],
     },
     {
         "slug": "collapsible-foldable-storage-manufacturer",
@@ -515,8 +483,6 @@ GUIDES_DATA = [
              "Food-contact parts are food-grade silicone and BPA-free plastic, produced to FDA and "
              "LFGB requirements."),
         ],
-        "store": [("Foldable storage range on Alibaba.com", STORE_GROUPS["foldable"]),
-                  ("Silicone lunch box listing", STORE_ITEMS["lunchbox"])],
     },
     {
         "slug": "mats-pads-and-placemats-manufacturer",
@@ -558,7 +524,6 @@ GUIDES_DATA = [
             ("Do you supply them with retail packaging?",
              "Yes - printed sleeve, hang tag, roll or flat pack, agreed during quoting."),
         ],
-        "store": [("Kitchen &amp; tabletop range on Alibaba.com", STORE_GROUPS["tabletop"])],
     },
     {
         "slug": "bbq-grill-accessories-manufacturer",
@@ -601,7 +566,6 @@ GUIDES_DATA = [
              "Yes - printed carry case, colour box or insert card, which is the usual format for "
              "boxed grill sets."),
         ],
-        "store": [("Kitchen &amp; tabletop range on Alibaba.com", STORE_GROUPS["tabletop"])],
     },
 ]
 
@@ -683,7 +647,6 @@ HEAD = MARK + """
     <a href="/catalog/">Categories</a>
     <a href="/guides/">Buyer Guides</a>
     <a href="/product/">All Products</a>
-    <a href="{store}" target="_blank" rel="noopener">Alibaba.com Store</a>
     <a class="wa" href="https://wa.me/8613824296558" target="_blank" rel="noopener">WhatsApp</a>
   </nav>
 </header>
@@ -694,10 +657,10 @@ FOOT = """</main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.
 <a href="/">3D catalog</a> &middot; <a href="/catalog/">categories</a> &middot;
 <a href="/guides/">buyer guides</a> &middot; <a href="/product/">all products</a> &middot;
-<a href="{store}" target="_blank" rel="noopener">Alibaba.com store</a></footer>
+Sourcing and OEM enquiries: info@yonglicc.com</footer>
 </body>
 </html>
-""".format(store=STORE)
+"""
 
 EXTRA_CSS = """
 .facts { width: 100%; border-collapse: collapse; font-size: .9rem; }
@@ -759,17 +722,13 @@ def crumbs(items):
     return '<nav class="crumbs" aria-label="Breadcrumb">%s</nav>' % " &rarr; ".join(out)
 
 
-def cta_row(subject, wa_text, store_label=None, store_url=None):
-    out = ['<div class="cta-row">',
-           '<a class="cta primary" href="mailto:info@yonglicc.com?subject=%s">Email a Quote Request</a>'
-           % esc(subject),
-           '<a class="cta whatsapp" href="https://wa.me/8613824296558?text=%s" target="_blank" rel="noopener">WhatsApp Us</a>'
-           % esc(wa_text)]
-    if store_url:
-        out.append('<a class="cta primary" href="%s" target="_blank" rel="noopener">%s</a>'
-                   % (esc_amp(store_url), store_label))
-    out.append("</div>")
-    return "\n".join(out)
+def cta_row(subject, wa_text):
+    return ("<div class=\"cta-row\">"
+            '<a class="cta primary" href="mailto:info@yonglicc.com?subject=%s">'
+            'Email a Quote Request</a>'
+            '<a class="cta whatsapp" href="https://wa.me/8613824296558?text=%s" '
+            'target="_blank" rel="noopener">WhatsApp Us</a>'
+            "</div>") % (esc(subject), esc(wa_text))
 
 
 def chip_row():
@@ -842,9 +801,6 @@ def guide_html(guide, products, all_guides, have_product):
                    "".join(rows), esc(guide.get("words", "")))
 
     faq = "\n".join('<dt>%s</dt><dd>%s</dd>' % (esc(q), esc(a)) for q, a in guide["faqs"])
-    store_links = "\n".join(
-        '<a class="sibling" href="%s" target="_blank" rel="noopener">%s</a>' % (esc_amp(u), l)
-        for l, u in guide["store"])
     related = "\n".join(
         '<a class="sibling" href="/guides/%s/">%s</a>'
         % (g["slug"], esc(re.sub("&amp;", "&", g["h1"]).split(" — ")[0].split(" (")[0]))
@@ -857,12 +813,11 @@ def guide_html(guide, products, all_guides, have_product):
 
     body = HEAD.format(title=guide["meta_title"], desc=guide["meta_desc"], url=url,
                        image=SITE + "/assets/covers/new2026.jpg",
-                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css(), store=STORE)
+                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Buyer Guides", "/guides/"),
                     (re.sub("&amp;", "&", guide["h1"]), None)])
     body += '<h1>%s</h1>\n<p class="lede">%s</p>\n' % (guide["h1"], esc(guide["lede"]))
-    body += cta_row("Quote request - " + re.sub("&amp;", "&", guide["h1"]), wa,
-                    "See it on Alibaba.com", guide["store"][0][1])
+    body += cta_row("Quote request - " + re.sub("&amp;", "&", guide["h1"]), wa)
     body += '%s\n<div class="grid2">\n' % intro
     body += ('  <section class="block"><h2>Customisation &amp; quality</h2><ul class="ticks">%s</ul></section>\n'
              '  <section class="block"><h2>Compliance</h2>%s'
@@ -870,9 +825,15 @@ def guide_html(guide, products, all_guides, have_product):
              % (caps, chip_row(), esc(BRAND_LINE)))
     body += prod_block
     body += '\n  <section class="block"><h2>Questions buyers ask</h2><dl class="faq">%s</dl></section>\n' % faq
-    body += ('  <section class="block"><h2>%s</h2><p class="block-sub">The same range, listed on our '
-             'Alibaba.com storefront.</p><div class="siblings">%s</div></section>\n'
-             % ("On our Alibaba.com store", store_links))
+    body += ('  <section class="block"><h2>More ways to browse</h2>'
+             '<p class="block-sub">Every item listed above is printed in one of our catalogues, '
+             'with its code and page number on its own page.</p><div class="siblings">'
+             '<a class="sibling" href="/product/">All products</a>'
+             '<a class="sibling" href="/guides/">All buyer guides</a>'
+             '<a class="sibling" href="/catalog/">Catalogue categories</a>'
+             '<a class="sibling" href="/#viewCustomize">Customisation process</a>'
+             '<a class="sibling" href="/#viewAbout">About the factory</a>'
+             '</div></section>\n')
     body += ('  <section class="block"><h2>Other buyer guides</h2><div class="siblings">%s</div>'
              '<p class="block-sub" style="margin-top:14px">Or browse '
              '<a href="/product/">every product we print a code for</a> and the '
@@ -893,7 +854,7 @@ def guides_hub_html(all_guides):
         % (g["h1"], g["meta_desc"], g["slug"]) for g in all_guides)
     body = HEAD.format(title="Buyer Guides — OEM Kitchenware Sourcing | Yongli",
                        desc=desc, url=url, image=SITE + "/assets/covers/new2026.jpg",
-                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css(), store=STORE)
+                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Buyer Guides", None)])
     body += '<h1>Buyer guides</h1>\n'
     body += ('<p class="lede">Short, practical pages for the ranges we are asked about most - what '
@@ -948,7 +909,7 @@ def product_html(p, have_product, siblings):
                 "category": p["section"] or cat_name,
                 "brand": {"@type": "Brand", "name": "Yongli"},
                 "manufacturer": {"@type": "Organization", "name": "Huizhou Yongli Industrial Co., Ltd.",
-                                 "url": SITE + "/", "sameAs": [STORE, STORE_PROFILE]},
+                                 "url": SITE + "/"},
                 "additionalProperty": [
                     {"@type": "PropertyValue", "name": "Catalogue", "value": cat_name},
                     {"@type": "PropertyValue", "name": "Range", "value": p["section"] or cat_name},
@@ -960,7 +921,7 @@ def product_html(p, have_product, siblings):
     wa = "Hi, I would like a quote for %s (%s)." % (p["name"], p["code"])
     body = HEAD.format(title=esc(title), desc=esc(desc), url=url,
                        image=SITE + "/assets/covers/%s.jpg" % p["cid"],
-                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css(), store=STORE)
+                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Categories", "/catalog/"), (cat_name, "/catalog/%s/" % p["cid"]),
                     (p["name"], None)])
     body += '<h1>%s</h1>\n' % esc(p["name"])
@@ -969,8 +930,7 @@ def product_html(p, have_product, siblings):
              'manufacturer in Huizhou, China, producing for private-label and wholesale programmes '
              'since 2010.</p>\n' % (esc(p["name"]), esc(p["code"]), esc(p["section"] or cat_name),
                                      p["pn"], esc(cat_name)))
-    body += cta_row("Quote request - %s %s" % (p["code"], p["name"])[:120], wa,
-                    "Alibaba.com store", STORE)
+    body += cta_row("Quote request - %s %s" % (p["code"], p["name"])[:120], wa)
     body += """
   <div class="stat-strip">
     <div class="stat"><span class="k">Product code</span><span class="v">%s</span></div>
@@ -1013,9 +973,8 @@ def product_html(p, have_product, siblings):
              '<a class="sibling" href="/catalog/">Categories</a>'
              '<a class="sibling" href="/catalog/%s/">%s catalogue</a>'
              '<a class="sibling" href="%s">%s range</a>'
-             '<a class="sibling" href="%s" target="_blank" rel="noopener">Alibaba.com store</a>'
              '</div></section>\n'
-             % (p["cid"], esc(cat_name), sec_url, esc(p["section"] or cat_name), STORE))
+             % (p["cid"], esc(cat_name), sec_url, esc(p["section"] or cat_name)))
     body += FOOT
     return body
 
@@ -1041,7 +1000,7 @@ def product_index_html(rows, all_guides):
                      for g in all_guides)
     body = HEAD.format(title="All Products — OEM Kitchenware Item Codes | Yongli", desc=desc,
                        url=url, image=SITE + "/assets/covers/new2026.jpg",
-                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css(), store=STORE)
+                       ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("All Products", None)])
     body += '<h1>All products</h1>\n<p class="lede">%s</p>\n' % esc(desc)
     body += cta_row("Wholesale quote request", "Hi, I would like a quote for the item codes below.")
@@ -1071,20 +1030,12 @@ def home_block(all_guides, n_products):
     cols += ('<div class="hi-col"><h3>All products</h3>'
              '<p class="hi-sub">%d printed item codes with their own pages</p>'
              '<a class="hi-all" href="/product/">Open the product list &rarr;</a></div>' % n_products)
-    cols += ('<div class="hi-col"><h3>Alibaba.com store</h3>'
-             '<p class="hi-sub">Huizhou Yongli Industrial Co., Ltd - 17 years Gold Supplier, '
-             'SGS-assessed, 4.6/5 store rating</p>'
-             '<a class="hi-all" href="%s" target="_blank" rel="noopener" '
-             'style="display:block">ngeva.en.alibaba.com &rarr;</a>'
-             '<a class="hi-all" href="%s" target="_blank" rel="noopener">Company profile &rarr;</a></div>'
-             % (STORE, STORE_PROFILE))
     return (HOME_START + "\n"
             '<div class="home-index">\n'
             "<h2>Sourcing guides &amp; full product list</h2>\n"
             '<p class="hi-lede">Buyer-intent pages for the ranges we are asked about most - what we '
             "make, what can be customised, materials and compliance - plus a page for every item code "
-            "we print. Our Alibaba.com storefront is listed alongside, so you can verify the company "
-            "and the range independently.</p>\n"
+            "we print.</p>\n"
             '<div class="hi-grid">%s</div>\n'
             "</div>\n" % cols + HOME_END)
 

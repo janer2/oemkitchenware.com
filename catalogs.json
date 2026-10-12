@@ -15,8 +15,8 @@
     "name": "2023",
     "sub": "2023 Product Catalog",
     "pdf": "assets/catalog-2023.pdf",
-    "toc": null,
-    "gridFromToc": false,
+    "toc": "toc-2023.json",
+    "gridFromToc": true,
     "coverLocked": true,
     "theme": "the full 2023 product range across kitchen, dining, household and outdoor lines",
     "materials": "Food-grade silicone, stainless steel, stoneware and BPA-free plastics"

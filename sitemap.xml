@@ -46,7 +46,72 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/2023/2023/</loc>
+    <loc>https://oemkitchenware.com/catalog/2023/kitchen-tools/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/knives-and-cutting-boards/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/baking-tools/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/ice-cream-and-ice-tools/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/coffee-and-tea/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/drinkware-and-bottles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/kitchen-storage-and-organization/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/tableware/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/cleaning-supplies/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/beauty-and-personal-care/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/kids-tableware/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/pet-supplies/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/outdoor-and-bbq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/2023/household-essentials/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -62,6 +127,11 @@
   </url>
   <url>
     <loc>https://oemkitchenware.com/catalog/kitchen/silicone-mat/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen/pet-silicone-mat/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

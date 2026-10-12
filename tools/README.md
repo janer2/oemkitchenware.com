@@ -39,10 +39,10 @@ cover. It reads `search-index.json` only — no PDF is re-scanned.
 - `product/<CODE>/index.html` — one page per printed item code (name, range,
   materials, catalog page, related items, Product + BreadcrumbList JSON-LD).
 - `guides/<slug>/index.html` — buyer-intent content pages. The topics come from
-  the store's own Alibaba.com backend (top inquiry words, top traffic words,
+  the store's own keyword report (top inquiry words, top traffic words,
   advertised main product lines), recorded in `GUIDES_DATA`. They carry FAQPage
-  and ItemList JSON-LD and link out to the matching products and to the
-  Alibaba.com storefront (own-asset interlinking).
+  and ItemList JSON-LD, link to the matching product pages, and stay inside this
+  site: the independent site deliberately does not link out to any marketplace.
 - `guides/index.html`, `product/index.html` — crawlable hubs.
 - the "Sourcing guides & full product list" block on the homepage, between the
   `<!-- GUIDES:BEGIN -->` / `<!-- GUIDES:END -->` markers.
@@ -55,9 +55,11 @@ Each page it writes carries `<!-- gen_seo_pages.py -->`, and a run deletes stale
 
     python tools/check_seo_pages.py
 
-Walks `product/**` + `guides/**` and reports titles over 65 chars, descriptions
-over 160, missing/duplicate `<h1>`, missing canonical, invalid JSON-LD and any
-internal link whose target file does not exist. Run it before every push.
+Walks the homepage, every `catalog/**`, `product/**` and `guides/**` page and
+reports titles over 65 chars, descriptions over 160, missing/duplicate `<h1>`,
+missing canonical, invalid JSON-LD, any internal link whose target file does not
+exist, plus sitemap URLs with no page behind them and generated pages missing
+from the sitemap. Run it before every push.
 
 ## After you update a PDF
 

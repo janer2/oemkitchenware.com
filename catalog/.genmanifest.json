@@ -1,7 +1,7 @@
 {
  "kitchen": {
   "pdf": "7dc03f1d2a2b9df41df597667a752300c203b870",
-  "toc": "454e215a9a0b8299a1f309b8de6f7e53b514ba2f",
+  "toc": "495851870ef0a3d7d9ac807c2f4e3fbcdfec1131",
   "cats": [
    {
     "title": "Kitchen Gadgets",
@@ -16,8 +16,12 @@
     "page": 41
    },
    {
+    "title": "Pet Silicone Mat",
+    "page": 50
+   },
+   {
     "title": "Silicone Coaster",
-    "page": 51
+    "page": 52
    },
    {
     "title": "Collapsible Strainer",
@@ -93,6 +97,11 @@
    ],
    [
     "https://oemkitchenware.com/catalog/kitchen/silicone-mat/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen/pet-silicone-mat/",
     "monthly",
     "0.7"
    ],
@@ -323,16 +332,133 @@
  },
  "2023": {
   "pdf": "8ecb582d6cd618584940fb6cec5d8f722f3499de",
-  "toc": "none",
+  "toc": "191b876a3ce6c9ca7f1cf5e684b8dec2eddbf759",
   "cats": [
    {
-    "title": "2023",
-    "page": 1
+    "title": "Kitchen Tools",
+    "page": 2
+   },
+   {
+    "title": "Knives & Cutting Boards",
+    "page": 14
+   },
+   {
+    "title": "Baking Tools",
+    "page": 18
+   },
+   {
+    "title": "Ice Cream & Ice Tools",
+    "page": 33
+   },
+   {
+    "title": "Coffee & Tea",
+    "page": 40
+   },
+   {
+    "title": "Drinkware & Bottles",
+    "page": 44
+   },
+   {
+    "title": "Kitchen Storage & Organization",
+    "page": 52
+   },
+   {
+    "title": "Tableware",
+    "page": 67
+   },
+   {
+    "title": "Cleaning Supplies",
+    "page": 73
+   },
+   {
+    "title": "Beauty & Personal Care",
+    "page": 78
+   },
+   {
+    "title": "Kids Tableware",
+    "page": 84
+   },
+   {
+    "title": "Pet Supplies",
+    "page": 93
+   },
+   {
+    "title": "Outdoor & BBQ",
+    "page": 96
+   },
+   {
+    "title": "Household Essentials",
+    "page": 102
    }
   ],
   "pages": [
    [
-    "https://oemkitchenware.com/catalog/2023/2023/",
+    "https://oemkitchenware.com/catalog/2023/kitchen-tools/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/knives-and-cutting-boards/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/baking-tools/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/ice-cream-and-ice-tools/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/coffee-and-tea/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/drinkware-and-bottles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/kitchen-storage-and-organization/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/tableware/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/cleaning-supplies/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/beauty-and-personal-care/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/kids-tableware/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/pet-supplies/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/outdoor-and-bbq/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/2023/household-essentials/",
     "monthly",
     "0.7"
    ]

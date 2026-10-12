@@ -64,3 +64,31 @@ for name, rows in (("title > 65 chars", long_title), ("description > 160 chars",
     print("\n== %s: %d" % (name, len(rows)))
     for r in rows[:8]:
         print("   ", r)
+
+# sitemap <-> disk. A URL in the sitemap with no file is a 404 Google will
+# report; a generated page missing from the sitemap is an orphan nobody finds.
+SITE = "https://oemkitchenware.com"
+sm = ROOT / "sitemap.xml"
+if sm.exists():
+    locs = re.findall(r"<loc>(.*?)</loc>", sm.read_text(encoding="utf-8"))
+    missing, listed = [], set()
+    for loc in locs:
+        rel = loc.replace(SITE, "").strip("/")
+        listed.add(rel)
+        target = (ROOT / rel / "index.html") if rel else (ROOT / "index.html")
+        if not target.exists():
+            missing.append(loc)
+    on_disk = set()
+    for pat, suffix in (("*/index.html", ""), ("*/*/index.html", ""), ("*/*/*/index.html", "")):
+        for f in ROOT.glob(pat):
+            rel = str(f.parent.relative_to(ROOT)).replace("\\", "/")
+            if rel.split("/")[0] in ("product", "guides", "catalog"):
+                on_disk.add(rel)
+    on_disk.discard("")
+    orphans = sorted(on_disk - listed)
+    print("\n== sitemap: %d urls, %d missing on disk, %d orphan page(s)"
+          % (len(locs), len(missing), len(orphans)))
+    for m in missing[:8]:
+        print("    missing:", m)
+    for o in orphans[:8]:
+        print("    orphan:", o)
