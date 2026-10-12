@@ -9,6 +9,9 @@ manual TOC files, plus a full-text search index used by the site's search box.
   with cover thumbnails rendered from the PDF, deep links into the 3D flip
   reader, WhatsApp/Email CTAs, and related-category links.
 - `catalog/index.html` — hub page listing every category.
+- `catalog/<catalog-id>/index.html` — one landing page per catalog (written by
+  `cat_hub_html()`); the homepage "Browse all …" links, every section
+  breadcrumb and the sitemap point here.
 - `search-index.json` — page text of all catalogs (used by site search; the
   site falls back to on-the-fly extraction if this file is missing).
 - `sitemap.xml` — rewritten with all generated URLs.
@@ -24,12 +27,51 @@ Change detection is based on SHA-1 of each catalog PDF and TOC JSON, recorded
 in `catalog/.genmanifest.json`. A catalog is skipped when neither its PDF nor
 its TOC changed.
 
+## Buyer guides and product pages (`gen_seo_pages.py`)
+
+A second generator adds the two layers the catalog/category structure cannot
+cover. It reads `search-index.json` only — no PDF is re-scanned.
+
+    python tools/gen_seo_pages.py             # 200 product pages + 12 guides
+    python tools/gen_seo_pages.py --limit 60  # smaller product batch
+    python tools/gen_seo_pages.py --no-sitemap
+
+- `product/<CODE>/index.html` — one page per printed item code (name, range,
+  materials, catalog page, related items, Product + BreadcrumbList JSON-LD).
+- `guides/<slug>/index.html` — buyer-intent content pages. The topics come from
+  the store's own Alibaba.com backend (top inquiry words, top traffic words,
+  advertised main product lines), recorded in `GUIDES_DATA`. They carry FAQPage
+  and ItemList JSON-LD and link out to the matching products and to the
+  Alibaba.com storefront (own-asset interlinking).
+- `guides/index.html`, `product/index.html` — crawlable hubs.
+- the "Sourcing guides & full product list" block on the homepage, between the
+  `<!-- GUIDES:BEGIN -->` / `<!-- GUIDES:END -->` markers.
+- its URLs merged into `sitemap.xml`.
+
+Each page it writes carries `<!-- gen_seo_pages.py -->`, and a run deletes stale
+`product/<CODE>/` folders it previously wrote — never a page from `gen_pages.py`.
+
+## Verifying the generated pages
+
+    python tools/check_seo_pages.py
+
+Walks `product/**` + `guides/**` and reports titles over 65 chars, descriptions
+over 160, missing/duplicate `<h1>`, missing canonical, invalid JSON-LD and any
+internal link whose target file does not exist. Run it before every push.
+
 ## After you update a PDF
 
 1. Replace the PDF file(s) under `assets/` (keep the same filename) and/or
    edit `toc-*.json` (page numbers / category titles).
-2. Run `python tools/gen_pages.py`.
-3. Review `git status`, commit and push — GitHub Pages serves the update.
+2. Run `python tools/gen_pages.py` — regenerates category pages, hubs, the
+   homepage index block, the search index and `sitemap.xml`.
+3. Run `python tools/gen_covers.py` — card covers, 400 px thumbs, reader stills.
+4. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.
+5. Run `python tools/check_seo_pages.py`, then review `git status`, commit and
+   push — GitHub Pages serves the update.
+
+`gen_pages.py` rewrites `sitemap.xml` from scratch, so always run
+`gen_seo_pages.py` after it, never before.
 
 ## Keeping handwritten copy
 
