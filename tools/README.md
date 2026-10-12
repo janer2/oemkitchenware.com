@@ -51,6 +51,28 @@ cover. It reads `search-index.json` only — no PDF is re-scanned.
 Each page it writes carries `<!-- gen_seo_pages.py -->`, and a run deletes stale
 `product/<CODE>/` folders it previously wrote — never a page from `gen_pages.py`.
 
+## The reader's page images (`gen_page_images.py`)
+
+    python tools/gen_page_images.py                # incremental
+    python tools/gen_page_images.py --force        # re-render everything
+    python tools/gen_page_images.py --only kitchen --width 900
+
+Writes `assets/pages/<id>/<n>.jpg` (1100 px wide, q72 — 458 pages / ~45 MB for
+the current six catalogues), `assets/pages/<id>/meta.json` and the single
+`assets/pages/manifest.json` the reader fetches.
+
+`index.html` opens a catalogue from those images: two or three small requests
+per spread instead of one 17-21 MB PDF, and pdf.js is not loaded in that mode.
+The manifest carries the page count, the PDF page box (so the flip geometry and
+the landscape/portrait decision stay identical) and a contents list, which is
+why the sidebar still works for the 2026 deck that has no `toc-<id>.json`.
+A catalogue with no image set still falls back to the PDF path, so the reader
+cannot be broken by a missing render. Re-runs skip pages newer than the PDF.
+
+Do not "fix" the reader by putting a `PDFDataRangeTransport` back: pdf.js
+3.11.174 only forwards `disableRange`/`disableStream` to a custom transport, so
+one open becomes 120-150 serialised requests and the reader never finishes.
+
 ## Verifying the generated pages
 
     python tools/check_seo_pages.py
@@ -68,9 +90,10 @@ from the sitemap. Run it before every push.
 2. Run `python tools/gen_pages.py` — regenerates category pages, hubs, the
    homepage index block, the search index and `sitemap.xml`.
 3. Run `python tools/gen_covers.py` — card covers, 400 px thumbs, reader stills.
-4. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.
-5. Run `python tools/check_seo_pages.py`, then review `git status`, commit and
-   push — GitHub Pages serves the update.
+4. Run `python tools/gen_page_images.py` — the flip reader's page images.
+5. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.
+6. Run `python tools/check_seo_pages.py` and `python tools/check_reader_js.py`,
+   then review `git status`, commit and push — GitHub Pages serves the update.
 
 `gen_pages.py` rewrites `sitemap.xml` from scratch, so always run
 `gen_seo_pages.py` after it, never before.
