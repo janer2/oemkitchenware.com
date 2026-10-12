@@ -9,7 +9,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 pages = sorted(list((ROOT / "product").glob("*/index.html")) +
                list((ROOT / "guides").glob("*/index.html")) +
-               [ROOT / "product" / "index.html", ROOT / "guides" / "index.html"])
+               list((ROOT / "catalog").glob("*/index.html")) +
+               list((ROOT / "catalog").glob("*/*/index.html")) +
+               [ROOT / "product" / "index.html", ROOT / "guides" / "index.html",
+                ROOT / "index.html"])
 print("pages to check:", len(pages))
 
 TAG = re.compile(r"<(title|meta|h1|link)\b[^>]*>", re.I)
@@ -42,6 +45,9 @@ for p in pages:
             bad_ld.append((str(p.relative_to(ROOT)), str(exc)[:80]))
     for href in HREF.findall(h):
         if href.startswith(("http", "mailto:", "#", "/?", "?")):
+            continue
+        # the homepage builds some hrefs in JS ("'+ mail +'") - not a real path
+        if "'+" in href or href.startswith("javascript:"):
             continue
         clean = href.split("#")[0].split("?")[0]
         if not clean:
