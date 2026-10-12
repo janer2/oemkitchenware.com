@@ -105,11 +105,16 @@ def trim(im, tol=INK_TOL, min_keep=0.30):
     return im.crop((x0, y0, x1, y1))
 
 
-def pad_frac(im, frac=0.05):
-    """Put a small margin back, in the crop's own background colour."""
+def pad_frac(im, frac=0.04):
+    """Put a small white margin back.
+
+    White, not the crop's own corner pixel: on a portrait page that corner is
+    the page's peach, and padding with it draws a uniform peach border round all
+    four sides of the card - which is what a review screenshot showed.
+    """
     w, h = im.size
     dx, dy = max(2, int(w * frac)), max(2, int(h * frac))
-    out = Image.new("RGB", (w + 2 * dx, h + 2 * dy), im.getpixel((1, 1)))
+    out = Image.new("RGB", (w + 2 * dx, h + 2 * dy), (255, 255, 255))
     out.paste(im, (dx, dy))
     return out
 
@@ -284,27 +289,35 @@ def portrait_box(rendered, spans, left, right, code_y, sc):
     if band[2] - band[0] < 60 or band[3] - band[1] < 80:
         return None
     a = np.asarray(rendered.crop(band).convert("RGB"), dtype=np.int16)
-    card = white_mask(a).mean(axis=1) >= 0.35
-    content = ~white_mask(a)
+    mask = white_mask(a)
+    content = ~mask
     rows = runs_of(content.mean(axis=1) >= 0.01, gap=0.06 * rendered.height)
     if not rows:
         return None
     # Union, not the tallest run: a kit photo is one product in several rows.
     ry0 = min(r[0] for r in rows)
     ry1 = max(r[1] for r in rows)
-    if card.any():
-        # keep to the card's own rows, so the page's colour artwork above the
-        # first row of cards cannot end up in the frame
-        ry0 = max(ry0, int(np.argmax(card)))
-        ry1 = min(ry1, len(card) - int(np.argmax(card[::-1])))
+    # Everything is finally clamped to the card's own rectangle. The page's
+    # colour artwork counts as "content", so without this the frame grows a
+    # peach border down both sides and across the top - which is exactly how a
+    # reviewed card came back with the row above it showing.
+    card_rows = np.where(mask.mean(axis=1) >= 0.35)[0]
+    cr0, cr1 = (int(card_rows[0]), int(card_rows[-1]) + 1) if len(card_rows) else (0, a.shape[0])
+    ry0, ry1 = max(ry0, cr0), min(ry1, cr1)
+    sliced = mask[ry0:ry1]
+    card_cols = np.where(sliced.mean(axis=0) >= 0.35)[0]
     cx = extent(content[ry0:ry1].mean(axis=0), 0.01)
     if not cx:
         return None
-    if (ry1 - ry0) * (cx[1] - cx[0]) < 0.06 * a.shape[0] * a.shape[1]:
+    cc0, cc1 = (int(card_cols[0]), int(card_cols[-1]) + 1) if len(card_cols) else (0, a.shape[1])
+    cx = (max(cx[0], cc0), min(cx[1], cc1))
+    if cx[1] - cx[0] < 40 or (ry1 - ry0) * (cx[1] - cx[0]) < 0.06 * a.shape[0] * a.shape[1]:
         return None                                  # too little found to trust
-    pad = int(max(cx[1] - cx[0], ry1 - ry0) * 0.06)
-    return (max(band[0], band[0] + cx[0] - pad), max(band[1], band[1] + ry0 - pad),
-            min(band[2], band[0] + cx[1] + pad), min(band[3], band[1] + ry1 + pad))
+    # Sit a little inside the card: its corners are rounded, so a frame exactly
+    # on the card's edge collects four small triangles of the page's colour.
+    inset = int(max(cx[1] - cx[0], ry1 - ry0) * 0.02)
+    return (max(band[0] + cc0, band[0] + cx[0] + inset), max(band[1] + cr0, band[1] + ry0 + inset),
+            min(band[0] + cc1, band[0] + cx[1] - inset), min(band[1] + cr1, band[1] + ry1 - inset))
 
 
 def crop_box(rendered, spans, code, cols, pw):
