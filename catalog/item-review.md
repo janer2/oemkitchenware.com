@@ -18,6 +18,12 @@ without a code (or miss entirely).
 | 85 | row without code | 1 row(s) on this page |
 | 113 | row without code | 2 row(s) on this page |
 
+## 2023 (2023)
+
+- pages with products: **92**
+- codes found: **690**, paired with a name: **690** (100.0%)
+- rows without a code: **0**
+
 ## Kitchen Gadgets (kitchen)
 
 - pages with products: **168**

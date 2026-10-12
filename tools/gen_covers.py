@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import pymupdf  # PyMuPDF
+from PIL import Image
 
 BASE = Path(r"C:\oemkitchenware")
 CATALOGS = json.loads((BASE / "catalogs.json").read_text(encoding="utf-8"))
@@ -65,3 +66,22 @@ for cat in CATALOGS:
     print(f"{cat['id']:8s} page1 -> {out.name} {out.stat().st_size//1024} KB "
           f"({pix.width}x{pix.height})")
     doc.close()
+
+# assets/covers/{id}-400.jpg - the smaller candidate the homepage card and the
+# nav dropdown pick on phones (srcset). Derived from whatever cover is actually
+# in place, so a designed (locked) cover and a rendered page 1 both stay in sync.
+# These used to be made by hand: the 2023 catalog shipped with a srcset entry
+# pointing at a 404, and a failed candidate makes the card run coverFallback()
+# and download the entire PDF just to draw its thumbnail.
+THUMB_W, THUMB_Q = 400, 82
+for cat in CATALOGS:
+    src = OUT / (cat["id"] + ".jpg")
+    if not src.exists():
+        print(f"{cat['id']:8s} no cover to shrink")
+        continue
+    im = Image.open(src).convert("RGB")
+    th = max(1, int(round(im.height * THUMB_W / max(im.width, 1))))
+    im = im.resize((THUMB_W, th), Image.LANCZOS)
+    out = OUT / (cat["id"] + "-400.jpg")
+    im.save(out, "JPEG", quality=THUMB_Q, optimize=True, progressive=True)
+    print(f"{cat['id']:8s} thumb -> {out.name} {out.stat().st_size//1024} KB ({THUMB_W}x{th})")

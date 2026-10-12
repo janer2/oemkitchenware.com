@@ -173,7 +173,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 /* ===== Customize View ===== */
 .customize-hero { text-align: center; padding: 60px 24px 48px; background: linear-gradient(180deg, #faf9f7 0%, #fff 100%); }
-.customize-hero h1 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+.customize-hero h1, .customize-hero h2 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
 .customize-hero p { max-width: 700px; margin: 0 auto; color: #777; line-height: 1.7; font-size: 1rem; }
 .customize-section { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
 .customize-section h2 { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 28px; text-align: center; }
@@ -199,7 +199,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 
 /* ===== About View ===== */
 .about-hero { text-align: center; padding: 60px 24px 48px; background: linear-gradient(180deg, #faf9f7 0%, #fff 100%); }
-.about-hero h1 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+.about-hero h1, .about-hero h2 { font-size: 2.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
 .about-hero p { max-width: 720px; margin: 0 auto; color: #777; line-height: 1.7; }
 .about-section { max-width: 1000px; margin: 0 auto; padding: 48px 24px; }
 .about-section h2 { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin-bottom: 22px; }
@@ -479,7 +479,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <!-- ===== Customize View ===== -->
 <section id="viewCustomize" class="view">
   <div class="customize-hero">
-    <h1>Customization Service</h1>
+    <h2>Customization Service</h2>
     <p>Full OEM &amp; ODM solutions since 2010. From drawing-based customization to full customization — we turn your idea into shelf-ready products with certified quality.</p>
   </div>
   <!-- Services overview (first) -->
@@ -543,7 +543,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 <!-- ===== About View ===== -->
 <section id="viewAbout" class="view">
   <div class="about-hero">
-    <h1>About Yongli</h1>
+    <h2>About Yongli</h2>
     <p>Yongli is a BSCI &amp; ISO 9001 certified manufacturer specializing in OEM &amp; ODM for kitchen wares, promotional gifts and packaging boxes since 2010. Our vision: <strong>Make Globe Trade Easy</strong>.</p>
   </div>
 
@@ -1324,8 +1324,7 @@ async function openReader(ci,targetPage){
     // Lazy reader: instant placeholder shells, pages rendered on demand
     pageDivs=[];pageRendered={};pgBusy={};pgPadIdx=-1;
     for(let i=1;i<=totalPages;i++){const div=document.createElement('div');div.className='pg-shell';pageDivs.push(div)}
-    if(totalPages%2!==0){const bd=document.createElement('div');bd.className='pg-shell pg-pad';bd.dataset.rdy='1';pageDivs.push(bd);pgPadIdx=pageDivs.length-1}
-    const totalItems=pageDivs.length;
+
     // Paint page 1 with the still image the build already rendered, so a catalog
     // shows something the moment it opens instead of a blank sheet while the PDF
     // streams in. The ghost is dropped as soon as the real page is drawn.
@@ -1339,6 +1338,12 @@ async function openReader(ci,targetPage){
     const vp1=(await currentPdf.getPage(1)).getViewport({scale:1});
     const aspect=vp1.width/Math.max(vp1.height,1);
     const wide=aspect>=1.05;
+    // The blank padding sheet only exists to complete a two-page spread. One
+    // page per view (a landscape deck, or any phone) has nothing to complete,
+    // so adding it showed up as an extra blank page at the end of an odd-length
+    // catalog - reported 2026-10-12 against the 107-page 2023 deck.
+    if(!wide&&!isMobile&&totalPages%2!==0){const bd=document.createElement('div');bd.className='pg-shell pg-pad';bd.dataset.rdy='1';pageDivs.push(bd);pgPadIdx=pageDivs.length-1}
+    const totalItems=pageDivs.length;
     bookGeom={wide:wide,aspect:aspect,pageW:0};
     const bookW=wide?(isMobile?Math.max(280,bodyW-24):Math.min(Math.round(bodyW*0.74),1000)):maxPW;
     const bookH=wide?Math.round(bookW/aspect):Math.floor(maxPW/.72);

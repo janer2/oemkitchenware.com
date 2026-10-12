@@ -198,6 +198,22 @@ def esc(s):
             .replace('"', "&quot;"))
 
 
+def clip(s, n):
+    """Trim to n characters on a word boundary.
+
+    Search engines render roughly 60 characters of a title and 160 of a
+    description; everything past that was being generated and then thrown away
+    (a 2026-10-12 audit found all 40 pages over the description limit and ten
+    over the title limit).
+    """
+    s = re.sub(r"\s+", " ", s).strip()
+    if len(s) <= n:
+        return s
+    cut = s[:n]
+    sp = cut.rfind(" ")
+    return (cut[:sp] if sp > n * 0.6 else cut).rstrip(" ,;:-")
+
+
 
 def page_text(doc, start, end, limit=420):
     """Best-effort plain text of the category's first pages."""
@@ -236,9 +252,9 @@ def page_html(cat, cat_dir, lf, cat_cover, cat_last, num_pages, doc, all_links):
     pg = lf["page"]
     end = lf.get("end") or num_pages
     n_pages = end - pg + 1
-    desc = (f"{title} wholesale from Yongli — BSCI & ISO 9001 certified OEM/ODM "
-            f"manufacturer of {cat['theme']} since 2010. "
-            f"Full range of {n_pages} catalog pages, custom OEM/ODM welcome.")
+    desc = clip(f"Wholesale {title} from Yongli — BSCI & ISO 9001 certified "
+                f"OEM/ODM manufacturer since 2010. {n_pages} catalogue pages of "
+                f"products, codes and materials. Custom orders welcome.", 158)
     text = page_text(doc, pg, end)
     crumbs = ["<a href='/'>Home</a>", "<a href='/catalog/'>Categories</a>"]
     if len(path) > 1:
@@ -327,7 +343,7 @@ def page_html(cat, cat_dir, lf, cat_cover, cat_last, num_pages, doc, all_links):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{esc(title)} — Wholesale {esc(cname)} Manufacturer | Yongli</title>
+<title>{esc(clip(title + " — " + cname + " | Yongli", 65))}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website">
@@ -408,9 +424,15 @@ def hub_html(cats_built):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Categories — Yongli OEM Kitchenware, Baby, Personal Care &amp; Gifts</title>
-<meta name="description" content="All Yongli product categories in one index — kitchen gadgets, baby care, personal care appliances and Christmas decorations. Click any category for details and wholesale inquiry.">
+<title>Product Categories | Yongli OEM Kitchenware &amp; Gifts</title>
+<meta name="description" content="Every Yongli product category in one index - kitchen gadgets, dinnerware, baking tools, baby care, personal care and Christmas decorations.">
 <link rel="canonical" href="{SITE}/catalog/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yongli Kitchenware">
+<meta property="og:title" content="Product Categories | Yongli">
+<meta property="og:description" content="Every Yongli product category in one index.">
+<meta property="og:url" content="{SITE}/catalog/">
+<meta property="og:image" content="{SITE}/assets/logo.png">
 <style>{TEMPLATE_CSS}</style>
 </head>
 <body>
@@ -442,9 +464,9 @@ def cat_hub_html(cat, cat_pages):
     cid, cname = cat["id"], cat["name"]
     sub = cat.get("sub") or ""
     url = f"{SITE}/catalog/{cid}/"
-    desc = (f"All {len(cat_pages)} {cname} sections from Yongli - BSCI & ISO 9001 "
-            f"certified OEM/ODM manufacturer of {cat['theme']} since 2010. "
-            f"Open the flip-book catalogue or jump straight to a section page.")
+    desc = clip(f"All {len(cat_pages)} {cname} sections from Yongli - BSCI & ISO 9001 "
+                f"certified OEM/ODM manufacturer of {cat['theme']} since 2010. "
+                f"Open the flip-book catalogue or jump straight to a section page.", 158)
     cover = f"{SITE}/assets/covers/{cid}.jpg"
     starts = min((int(p["page"]) for p in cat_pages), default=1)
     items = "".join(
@@ -466,7 +488,7 @@ def cat_hub_html(cat, cat_pages):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{esc(cname)} — Wholesale Catalogue &amp; OEM/ODM Manufacturer | Yongli</title>
+<title>{esc(clip(cname + " — Wholesale Catalogue | Yongli", 65))}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website">
