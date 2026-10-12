@@ -1,0 +1,1440 @@
+{
+ "codes": {
+  "AA-43": {
+   "c": "kitchen",
+   "p": 14,
+   "n": "Silicone Hand Garlic Peeler"
+  },
+  "AA-70": {
+   "c": "kitchen",
+   "p": 18,
+   "n": "Wax Gourd Peeler"
+  },
+  "AL23319": {
+   "c": "2023",
+   "p": 19,
+   "n": "Silicone Oval Proofing Basket"
+  },
+  "AL26002": {
+   "c": "new2026",
+   "p": 21,
+   "n": "Silicone Steamer Pot"
+  },
+  "AL26011": {
+   "c": "new2026",
+   "p": 62,
+   "n": "Collapsible Silicone Cup"
+  },
+  "AL26014": {
+   "c": "new2026",
+   "p": 100,
+   "n": "12-Compartment Baby Food Container"
+  },
+  "AL26024": {
+   "c": "new2026",
+   "p": 88,
+   "n": "Silicone Placemat"
+  },
+  "AL26032": {
+   "c": "new2026",
+   "p": 22,
+   "n": "Silicone Microwave Steamer"
+  },
+  "AL26034": {
+   "c": "new2026",
+   "p": 18,
+   "n": "3-Piece Silicone Draining Mat Set"
+  },
+  "AL26035": {
+   "c": "new2026",
+   "p": 88,
+   "n": "Silicone Placematwith Large Suction"
+  },
+  "AL26068": {
+   "c": "new2026",
+   "p": 100,
+   "n": "Silicone Baby Food Pouch"
+  },
+  "AL26074": {
+   "c": "new2026",
+   "p": 43,
+   "n": "Silicone Swiss Roll Mat"
+  },
+  "AL26076": {
+   "c": "new2026",
+   "p": 39,
+   "n": "Square Silicone Air Fryer Liner"
+  },
+  "AL26085": {
+   "c": "new2026",
+   "p": 24,
+   "n": "Sink Mat"
+  },
+  "AL26093": {
+   "c": "new2026",
+   "p": 70,
+   "n": "Silicone Lunch Box"
+  },
+  "AL26095": {
+   "c": "new2026",
+   "p": 18,
+   "n": "Silicone Water Barrier Mat"
+  },
+  "AL26109": {
+   "c": "new2026",
+   "p": 23,
+   "n": "Silicone Steamer Basket"
+  },
+  "AL26111": {
+   "c": "new2026",
+   "p": 37,
+   "n": "Silicone Baking Pan"
+  },
+  "AL26112": {
+   "c": "new2026",
+   "p": 38,
+   "n": "Rectangular Baking Pan"
+  },
+  "AL26118": {
+   "c": "new2026",
+   "p": 24,
+   "n": "Blender Silicone Anti-Slip Mat"
+  },
+  "AL26123": {
+   "c": "new2026",
+   "p": 43,
+   "n": "Washing Machine Silicone Mat"
+  },
+  "AL26125": {
+   "c": "new2026",
+   "p": 41,
+   "n": "15-Cup Star Silicone Mold"
+  },
+  "AL26146": {
+   "c": "new2026",
+   "p": 88,
+   "n": "Silicone Divided Placematwith Cord"
+  },
+  "AL26154": {
+   "c": "new2026",
+   "p": 88,
+   "n": "Silicone Placemat"
+  },
+  "AL26156": {
+   "c": "new2026",
+   "p": 101,
+   "n": "Kids Silicone Water Cup"
+  },
+  "AL26159": {
+   "c": "new2026",
+   "p": 9,
+   "n": "Silicone 4-Cup Egg Cooker"
+  },
+  "AL26182": {
+   "c": "new2026",
+   "p": 19,
+   "n": "Rectangular Draining Mat"
+  },
+  "AL26183": {
+   "c": "new2026",
+   "p": 40,
+   "n": "8-Cup Fruit Cake Mold"
+  },
+  "AL26185": {
+   "c": "new2026",
+   "p": 63,
+   "n": "Pull-Out Collapsible Soft Bottle"
+  },
+  "AL26190": {
+   "c": "new2026",
+   "p": 38,
+   "n": "Collapsible Square Silicone Pan"
+  },
+  "AL26198": {
+   "c": "new2026",
+   "p": 43,
+   "n": "Silicone Mat"
+  },
+  "AL26203": {
+   "c": "new2026",
+   "p": 36,
+   "n": "8-Cup Square Silicone Cake Mold"
+  },
+  "AY26010": {
+   "c": "new2026",
+   "p": 43,
+   "n": "Washing Machine Silicone Mat"
+  },
+  "AY26013": {
+   "c": "new2026",
+   "p": 18,
+   "n": "Collapsible Flour Funnel"
+  },
+  "AY26016": {
+   "c": "new2026",
+   "p": 22,
+   "n": "Collapsible Silicone Spill-Proof Lid"
+  },
+  "AY26025": {
+   "c": "new2026",
+   "p": 19,
+   "n": "Silicone Draining Mat"
+  },
+  "AY26038": {
+   "c": "new2026",
+   "p": 62,
+   "n": "Collapsible Silicone Cup"
+  },
+  "AY26047": {
+   "c": "new2026",
+   "p": 22,
+   "n": "Collapsible Pot Lid"
+  },
+  "AY26051": {
+   "c": "new2026",
+   "p": 39,
+   "n": "Silicone Air Fryer Mat"
+  },
+  "AY26073": {
+   "c": "new2026",
+   "p": 24,
+   "n": "Silicone Anti-Slip Mat"
+  },
+  "AY26081": {
+   "c": "new2026",
+   "p": 53,
+   "n": "Collapsible Ice Ball Cup"
+  },
+  "AY26086": {
+   "c": "new2026",
+   "p": 44,
+   "n": "Square Folding Proofing Basket"
+  },
+  "AY26088": {
+   "c": "new2026",
+   "p": 19,
+   "n": "Silicone Draining Mat"
+  },
+  "AY26108": {
+   "c": "new2026",
+   "p": 41,
+   "n": "35-Cup Mini Ball Silicone Mold"
+  },
+  "AY26110": {
+   "c": "new2026",
+   "p": 100,
+   "n": "Adult Silicone Bib"
+  },
+  "AY26113": {
+   "c": "new2026",
+   "p": 39,
+   "n": "Silicone Baking Pan"
+  },
+  "AY26114": {
+   "c": "new2026",
+   "p": 38,
+   "n": "Air Fryer Baking Pan"
+  },
+  "AY26117": {
+   "c": "new2026",
+   "p": 101,
+   "n": "Kids Water Cup"
+  },
+  "AY26121": {
+   "c": "new2026",
+   "p": 39,
+   "n": "Silicone Mesh Steamer Tray"
+  },
+  "AY26130": {
+   "c": "new2026",
+   "p": 41,
+   "n": "54-Cup Fruit & Animal Gummy Mold"
+  },
+  "AY26135": {
+   "c": "new2026",
+   "p": 22,
+   "n": "Silicone Steamer"
+  },
+  "AY26136": {
+   "c": "new2026",
+   "p": 18,
+   "n": "Wavy Draining Mat"
+  },
+  "AY26139": {
+   "c": "new2026",
+   "p": 22,
+   "n": "Silicone Steamerwith Lid"
+  },
+  "AY26140": {
+   "c": "new2026",
+   "p": 43,
+   "n": "Teardrop Sink Silicone Mat"
+  },
+  "AY26141": {
+   "c": "new2026",
+   "p": 24,
+   "n": "Silicone Steamer Basketwith Handle"
+  },
+  "AY26144": {
+   "c": "new2026",
+   "p": 63,
+   "n": "Collapsible Silicone Cupwith Straw"
+  },
+  "AY26145": {
+   "c": "new2026",
+   "p": 62,
+   "n": "Collapsible Silicone Cup"
+  },
+  "AY26149": {
+   "c": "new2026",
+   "p": 88,
+   "n": "Silicone Placematwith Suction"
+  },
+  "AY26150": {
+   "c": "new2026",
+   "p": 88,
+   "n": "Silicone Placematwith Strap"
+  },
+  "AY26162": {
+   "c": "new2026",
+   "p": 102,
+   "n": "Baby Teething Stick"
+  },
+  "AY26165": {
+   "c": "new2026",
+   "p": 19,
+   "n": "Silicone Draining Mat"
+  },
+  "AY26166": {
+   "c": "new2026",
+   "p": 19,
+   "n": "Large Silicone Draining Mat"
+  },
+  "AY26169": {
+   "c": "new2026",
+   "p": 69,
+   "n": "Bear3-Compartment Silicone Snack Box"
+  },
+  "AY26188": {
+   "c": "new2026",
+   "p": 40,
+   "n": "6-Cup Silicone Cake Mold"
+  },
+  "AY26205": {
+   "c": "new2026",
+   "p": 103,
+   "n": "Baby Tableware Set"
+  },
+  "B-11": {
+   "c": "kitchen",
+   "p": 63,
+   "n": "Draining Cutting Board"
+  },
+  "B-21": {
+   "c": "kitchen",
+   "p": 64,
+   "n": "Foldable Cutting Board"
+  },
+  "BL26009": {
+   "c": "new2026",
+   "p": 25,
+   "n": "Clear Measuring Cup"
+  },
+  "BL26023": {
+   "c": "new2026",
+   "p": 42,
+   "n": "Chocolate Melting Pot"
+  },
+  "BL26027": {
+   "c": "new2026",
+   "p": 113,
+   "n": "Electric BBQBrush"
+  },
+  "BL26084": {
+   "c": "new2026",
+   "p": 10,
+   "n": "Adjustable Grater"
+  },
+  "BL26094": {
+   "c": "new2026",
+   "p": 63,
+   "n": "Wheat Straw Collapsible Cup"
+  },
+  "BL26098": {
+   "c": "new2026",
+   "p": 19,
+   "n": "2-Tier Collapsible Colander"
+  },
+  "BL26099": {
+   "c": "new2026",
+   "p": 19,
+   "n": "Collapsible Colander"
+  },
+  "BL26104": {
+   "c": "new2026",
+   "p": 14,
+   "n": "Grape Peeler"
+  },
+  "BL26120": {
+   "c": "new2026",
+   "p": 16,
+   "n": "Rabbit Can Opener"
+  },
+  "BL26147": {
+   "c": "new2026",
+   "p": 44,
+   "n": "Plastic Proofing Container"
+  },
+  "BL26155": {
+   "c": "new2026",
+   "p": 70,
+   "n": "Salad Lunch Box"
+  },
+  "BY23003": {
+   "c": "2023",
+   "p": 15,
+   "n": "Chopping Board"
+  },
+  "BY23032": {
+   "c": "2023",
+   "p": 64,
+   "n": "Plastic Proofing Box"
+  },
+  "BY23036": {
+   "c": "2023",
+   "p": 16,
+   "n": "3-in-1 Peeler"
+  },
+  "BY26004": {
+   "c": "new2026",
+   "p": 27,
+   "n": "Electric Chocolate Melting Pot"
+  },
+  "BY26011": {
+   "c": "new2026",
+   "p": 18,
+   "n": "Draining Fruit Cup"
+  },
+  "BY26012": {
+   "c": "new2026",
+   "p": 8,
+   "n": "Automatic Stirrer"
+  },
+  "BY26035": {
+   "c": "new2026",
+   "p": 36,
+   "n": "Chocolate Mold"
+  },
+  "BY26037": {
+   "c": "new2026",
+   "p": 20,
+   "n": "Collapsible Washing Bowl"
+  },
+  "BY26056": {
+   "c": "new2026",
+   "p": 15,
+   "n": "Hand-Crank Rotary Cheese Grater"
+  },
+  "BY26065": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Expandable Folding Cutting Board"
+  },
+  "BY26069": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Multi-Function Folding Cutting Board"
+  },
+  "BY26135": {
+   "c": "new2026",
+   "p": 12,
+   "n": "Rotary Peeler"
+  },
+  "CL23042": {
+   "c": "2023",
+   "p": 17,
+   "n": "Stainless Steel Pineapple Peeler"
+  },
+  "CL23105": {
+   "c": "2023",
+   "p": 16,
+   "n": "Stainless Steel Grater"
+  },
+  "CL26001": {
+   "c": "new2026",
+   "p": 6,
+   "n": "Burger Press Kit"
+  },
+  "CL26002": {
+   "c": "new2026",
+   "p": 71,
+   "n": "Portable Stainless Steel Lunch Box"
+  },
+  "CL26014": {
+   "c": "new2026",
+   "p": 38,
+   "n": "Sandwich Grill Pan"
+  },
+  "CL26026": {
+   "c": "new2026",
+   "p": 15,
+   "n": "Burger Press"
+  },
+  "CL26048": {
+   "c": "new2026",
+   "p": 15,
+   "n": "Cheese Grater"
+  },
+  "CL26057": {
+   "c": "new2026",
+   "p": 12,
+   "n": "Wooden Handle Peeler"
+  },
+  "CL26073": {
+   "c": "new2026",
+   "p": 69,
+   "n": "Stainless Steel2-Compartment Bento Box"
+  },
+  "CL26088": {
+   "c": "new2026",
+   "p": 13,
+   "n": "Burger Press"
+  },
+  "CL26089": {
+   "c": "new2026",
+   "p": 8,
+   "n": "Wooden Handle Corn Spatula"
+  },
+  "CL26094": {
+   "c": "new2026",
+   "p": 103,
+   "n": "Silicone Kids Set"
+  },
+  "CL26123": {
+   "c": "new2026",
+   "p": 16,
+   "n": "Stainless Steel Garlic Press"
+  },
+  "CL26136": {
+   "c": "new2026",
+   "p": 37,
+   "n": "Aluminium Baking Pan"
+  },
+  "CL26155": {
+   "c": "new2026",
+   "p": 40,
+   "n": "6-Cup Wire Frame Cake Mold"
+  },
+  "CY23002": {
+   "c": "2023",
+   "p": 10,
+   "n": "Stainless Steel Potato Masher"
+  },
+  "CY23011": {
+   "c": "2023",
+   "p": 10,
+   "n": "Stainless Steel Potato Masher"
+  },
+  "CY26012": {
+   "c": "new2026",
+   "p": 114,
+   "n": "Hexagon BBQCage"
+  },
+  "CY26017": {
+   "c": "new2026",
+   "p": 104,
+   "n": "Stainless Steel Kids Plate"
+  },
+  "CY26024": {
+   "c": "new2026",
+   "p": 10,
+   "n": "Lemon Zester"
+  },
+  "CY26045": {
+   "c": "new2026",
+   "p": 17,
+   "n": "Stainless Steel Can Opener"
+  },
+  "CY26062": {
+   "c": "new2026",
+   "p": 100,
+   "n": "Stainless Steel Baby Tableware"
+  },
+  "CY26065": {
+   "c": "new2026",
+   "p": 102,
+   "n": "Kids Silicone Spork"
+  },
+  "CY26071": {
+   "c": "new2026",
+   "p": 71,
+   "n": "2-Compartment Stainless Steel Lunch Box"
+  },
+  "CY26082": {
+   "c": "new2026",
+   "p": 59,
+   "n": "Stainless Steel Tea Tongs Strainer"
+  },
+  "CY26129": {
+   "c": "new2026",
+   "p": 11,
+   "n": "Scallion Shredder & Peeler"
+  },
+  "CY26130": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Cutting Board Rack"
+  },
+  "CY26145": {
+   "c": "new2026",
+   "p": 32,
+   "n": "Folding Knife Sharpener"
+  },
+  "CY26147": {
+   "c": "new2026",
+   "p": 69,
+   "n": "Round Stainless Steel Bento Box"
+  },
+  "DL23019": {
+   "c": "2023",
+   "p": 57,
+   "n": "Fermentation Jar"
+  },
+  "DL23073": {
+   "c": "2023",
+   "p": 57,
+   "n": "Clip Sealed Fermentation Jar"
+  },
+  "DL23090": {
+   "c": "2023",
+   "p": 57,
+   "n": "Fermentation Jar"
+  },
+  "DL26011": {
+   "c": "new2026",
+   "p": 38,
+   "n": "Melamine BBQPlate"
+  },
+  "DL26012": {
+   "c": "new2026",
+   "p": 70,
+   "n": "Glass Lunch Box"
+  },
+  "DL26021": {
+   "c": "new2026",
+   "p": 27,
+   "n": "Silicone Food Warming Mat"
+  },
+  "DL26066": {
+   "c": "new2026",
+   "p": 29,
+   "n": "5-Piece Bamboo Cutting Board Set"
+  },
+  "DL26111": {
+   "c": "new2026",
+   "p": 40,
+   "n": "Air Fryer Baking Pan"
+  },
+  "DY23006": {
+   "c": "2023",
+   "p": 15,
+   "n": "Small Fish Chopping Board"
+  },
+  "DY26051": {
+   "c": "new2026",
+   "p": 11,
+   "n": "Snail Ceramic Peeler"
+  },
+  "DY26058": {
+   "c": "new2026",
+   "p": 100,
+   "n": "Kids Bib"
+  },
+  "DY26068": {
+   "c": "new2026",
+   "p": 40,
+   "n": "Glass Baking Dish"
+  },
+  "DY26069": {
+   "c": "new2026",
+   "p": 40,
+   "n": "Glass Baking Dish"
+  },
+  "DY26093": {
+   "c": "new2026",
+   "p": 8,
+   "n": "Tea Spoon"
+  },
+  "DY26119": {
+   "c": "new2026",
+   "p": 39,
+   "n": "Air Fryer Glass Baking Dish"
+  },
+  "DY26133": {
+   "c": "new2026",
+   "p": 101,
+   "n": "Stainless Steel Kids Cup"
+  },
+  "DY26157": {
+   "c": "new2026",
+   "p": 38,
+   "n": "Foil Baking Tray"
+  },
+  "DY26166": {
+   "c": "new2026",
+   "p": 40,
+   "n": "Air Fryer Glass Baking Dish"
+  },
+  "DY26169": {
+   "c": "new2026",
+   "p": 37,
+   "n": "Baking Pan"
+  },
+  "EL26010": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Checkered Cutting Board"
+  },
+  "EL26012": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Double-Sided Steak Cutting Board"
+  },
+  "EL26013": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Bamboo Cutting Board"
+  },
+  "EY26001": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Silicone Foldable Cutting Board"
+  },
+  "EY26002": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Resin Plastic Cutting Board"
+  },
+  "EY26003": {
+   "c": "new2026",
+   "p": 30,
+   "n": "Honeycomb Stainless Steel Cutting Board"
+  },
+  "EY26004": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Grooved Stainless Steel Cutting Board"
+  },
+  "EY26005": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Bamboo Cutting Boardwith Round Hole"
+  },
+  "EY26006": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Double-Sided Grooved Cutting Board"
+  },
+  "EY26007": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Double-Sided Stainless Steel Cutting Board"
+  },
+  "EY26008": {
+   "c": "new2026",
+   "p": 30,
+   "n": "3-in-1Stainless Steel Folding Board"
+  },
+  "EY26009": {
+   "c": "new2026",
+   "p": 29,
+   "n": "Double-Sided Bamboo Cutting Board"
+  },
+  "FL26002": {
+   "c": "new2026",
+   "p": 70,
+   "n": "Double-Layer Plastic Lunch Box"
+  },
+  "FL26008": {
+   "c": "new2026",
+   "p": 69,
+   "n": "4-Compartment Stainless Steel Bento Box"
+  },
+  "FL26009": {
+   "c": "new2026",
+   "p": 70,
+   "n": "Double-Layer Divided Lunch Box"
+  },
+  "FL26016": {
+   "c": "new2026",
+   "p": 69,
+   "n": "4-Compartment Lunch Box"
+  },
+  "FL26017": {
+   "c": "new2026",
+   "p": 70,
+   "n": "4-Compartment PP Lunch Box"
+  },
+  "FL26019": {
+   "c": "new2026",
+   "p": 70,
+   "n": "3-Compartment Silicone Lunch Box"
+  },
+  "FY26001": {
+   "c": "new2026",
+   "p": 69,
+   "n": "Stainless Steel Divided Lunch Box"
+  },
+  "FY26004": {
+   "c": "new2026",
+   "p": 71,
+   "n": "4-Compartment Stainless Steel Lunch Box"
+  },
+  "FY26005": {
+   "c": "new2026",
+   "p": 70,
+   "n": "Stainless Steel Insulated Lunch Box"
+  },
+  "FY26007": {
+   "c": "new2026",
+   "p": 71,
+   "n": "304Stainless Steel Lunch Box"
+  },
+  "FY26011": {
+   "c": "new2026",
+   "p": 69,
+   "n": "5-Compartment Lunch Box"
+  },
+  "FY26020": {
+   "c": "new2026",
+   "p": 71,
+   "n": "Stainless Steel Insulated Lunch Box Stainless Steel Insulated Lunch Box"
+  },
+  "HL26011": {
+   "c": "new2026",
+   "p": 6,
+   "n": "8-Piece Kitchen Utensil Set"
+  },
+  "HL26015": {
+   "c": "new2026",
+   "p": 6,
+   "n": "4-Piece Kitchen Utensil Set"
+  },
+  "HL26032": {
+   "c": "new2026",
+   "p": 7,
+   "n": "25-Piece Spoon & Spatula Set"
+  },
+  "HL26040": {
+   "c": "new2026",
+   "p": 9,
+   "n": "6in Silicone Whisk"
+  },
+  "HL26042": {
+   "c": "new2026",
+   "p": 6,
+   "n": "6-Piece Kitchen Utensil Set"
+  },
+  "HL26043": {
+   "c": "new2026",
+   "p": 37,
+   "n": "Cake Pan Set"
+  },
+  "HL26044": {
+   "c": "new2026",
+   "p": 37,
+   "n": "Solid Bottom Cake Pan"
+  },
+  "HL26049": {
+   "c": "new2026",
+   "p": 6,
+   "n": "9-Piece Nylon Kitchen Utensil Set"
+  },
+  "HY23017": {
+   "c": "2023",
+   "p": 15,
+   "n": "Wooden Cutter Chopping Board"
+  },
+  "HY26001": {
+   "c": "new2026",
+   "p": 13,
+   "n": "Steak Tenderizer"
+  },
+  "HY26005": {
+   "c": "new2026",
+   "p": 8,
+   "n": "Stainless Steel Whisk"
+  },
+  "HY26007": {
+   "c": "new2026",
+   "p": 6,
+   "n": "Smiley Wooden Handle Kitchen Utensil"
+  },
+  "HY26012": {
+   "c": "new2026",
+   "p": 9,
+   "n": "Stainless Steel Egg Whisk"
+  },
+  "HY26018": {
+   "c": "new2026",
+   "p": 7,
+   "n": "Stainless Steel Handle Tamagoyaki Spatula"
+  },
+  "HY26019": {
+   "c": "new2026",
+   "p": 7,
+   "n": "Pancake Spatula"
+  },
+  "HY26022": {
+   "c": "new2026",
+   "p": 11,
+   "n": "Stainless Steel Peeler"
+  },
+  "HY26023": {
+   "c": "new2026",
+   "p": 6,
+   "n": "15-Piece Kitchen Utensil Set"
+  },
+  "HY26025": {
+   "c": "new2026",
+   "p": 6,
+   "n": "19-Piece Kitchen Utensil Set"
+  },
+  "HY26035": {
+   "c": "new2026",
+   "p": 11,
+   "n": "Stainless Steel Double-Sided Grater"
+  },
+  "HY26048": {
+   "c": "new2026",
+   "p": 8,
+   "n": "Stainless Steel Food Tongs"
+  },
+  "HZ26008": {
+   "c": "new2026",
+   "p": 9,
+   "n": "Stainless Steel Whisk"
+  },
+  "J-01": {
+   "c": "kitchen",
+   "p": 144,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-02": {
+   "c": "kitchen",
+   "p": 144,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-03": {
+   "c": "kitchen",
+   "p": 144,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-04": {
+   "c": "kitchen",
+   "p": 145,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-05": {
+   "c": "kitchen",
+   "p": 145,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-06": {
+   "c": "kitchen",
+   "p": 145,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-07": {
+   "c": "kitchen",
+   "p": 145,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-08": {
+   "c": "kitchen",
+   "p": 145,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-09": {
+   "c": "kitchen",
+   "p": 145,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-10": {
+   "c": "kitchen",
+   "p": 146,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-11": {
+   "c": "kitchen",
+   "p": 146,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-12": {
+   "c": "kitchen",
+   "p": 146,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-13": {
+   "c": "kitchen",
+   "p": 146,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-14": {
+   "c": "kitchen",
+   "p": 146,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-15": {
+   "c": "kitchen",
+   "p": 146,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-16": {
+   "c": "kitchen",
+   "p": 147,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-18": {
+   "c": "kitchen",
+   "p": 147,
+   "n": "Sourdough Starter Kit"
+  },
+  "J-22": {
+   "c": "kitchen",
+   "p": 148,
+   "n": "Sourdough Starter Kit · Banneton Proofing Basket · Linen Liner"
+  },
+  "J-23": {
+   "c": "kitchen",
+   "p": 148,
+   "n": "Sourdough Starter Kit · Banneton Proofing Basket · Linen Liner"
+  },
+  "J-24": {
+   "c": "kitchen",
+   "p": 148,
+   "n": "Sourdough Starter Kit · Round & Oval Proofing Basket · Linen Liner"
+  },
+  "J-25": {
+   "c": "kitchen",
+   "p": 148,
+   "n": "Sourdough Starter Kit · Round & Oval Proofing Basket · Linen Liner · Silicone Spatula"
+  },
+  "J-26": {
+   "c": "kitchen",
+   "p": 148,
+   "n": "Sourdough Starter Kit · Round & Oval Proofing Basket · Bread Lame Blades · Flour Duster"
+  },
+  "J-27": {
+   "c": "kitchen",
+   "p": 148,
+   "n": "Sourdough Starter Kit · Proofing Basket · Danish Dough Whisk"
+  },
+  "J-28": {
+   "c": "kitchen",
+   "p": 149,
+   "n": "Sourdough Starter Kit · Cotton Rope Proofing Basket · Dough Scraper · Plastic Scraper"
+  },
+  "J-29": {
+   "c": "kitchen",
+   "p": 149,
+   "n": "Sourdough Starter Kit · Oval Proofing Basket · Round Proofing Basket"
+  },
+  "J-30": {
+   "c": "kitchen",
+   "p": 149,
+   "n": "Sourdough Starter Kit · Round & Oval Proofing Basket · Linen Liner · Sourdough Bread"
+  },
+  "J-31": {
+   "c": "kitchen",
+   "p": 149,
+   "n": "Sourdough Starter Kit · Round & Oval Proofing Basket · Linen Liner · Pastry Brush"
+  },
+  "J-32": {
+   "c": "kitchen",
+   "p": 149,
+   "n": "Sourdough Starter Box · Round & Oval Proofing Basket · Linen Liner"
+  },
+  "J-33": {
+   "c": "kitchen",
+   "p": 149,
+   "n": "Sourdough Starter Box · Foldable Dough Proofer Box · Round Proofing Basket"
+  },
+  "J-34": {
+   "c": "kitchen",
+   "p": 150,
+   "n": "Silicone Sourdough Basket · Silicone Proofing Basket · Silicone Baking Sling"
+  },
+  "J-35": {
+   "c": "kitchen",
+   "p": 150,
+   "n": "Silicone Sourdough Basket · Collapsible Proofing Basket · Silicone Bread Sling"
+  },
+  "J-36": {
+   "c": "kitchen",
+   "p": 150,
+   "n": "Silicone Sourdough Basket · Dough Whisk · Silicone Pastry Brush"
+  },
+  "J-37": {
+   "c": "kitchen",
+   "p": 150,
+   "n": "Silicone Sourdough Basket · Round & Oval Proofing Basket · Bench Scraper"
+  },
+  "LL26005": {
+   "c": "new2026",
+   "p": 25,
+   "n": "Measuring Cup"
+  },
+  "LY26001": {
+   "c": "new2026",
+   "p": 17,
+   "n": "Stainless Steel Measuring Spoon"
+  },
+  "LY26002": {
+   "c": "new2026",
+   "p": 25,
+   "n": "Adjustable Measuring Cup"
+  },
+  "LY26003": {
+   "c": "new2026",
+   "p": 17,
+   "n": "Colorful Plastic Measuring Spoon"
+  },
+  "LY26007": {
+   "c": "new2026",
+   "p": 17,
+   "n": "Heart-Shaped Measuring Cup & Spoon"
+  },
+  "PY26004": {
+   "c": "new2026",
+   "p": 101,
+   "n": "Kids Cup"
+  },
+  "SL26004": {
+   "c": "new2026",
+   "p": 114,
+   "n": "Stainless Steel BBQFork"
+  },
+  "SL26005": {
+   "c": "new2026",
+   "p": 114,
+   "n": "Hexagon BBQBasket"
+  },
+  "SL26006": {
+   "c": "new2026",
+   "p": 114,
+   "n": "Round BBQ Cage"
+  },
+  "SL26012": {
+   "c": "new2026",
+   "p": 113,
+   "n": "Electric BBQCleaning Brush"
+  },
+  "SL26013": {
+   "c": "new2026",
+   "p": 113,
+   "n": "Stainless Steel Round BBQCage Set"
+  },
+  "SY26001": {
+   "c": "new2026",
+   "p": 113,
+   "n": "Multi-Function BBQTool Set"
+  },
+  "SY26002": {
+   "c": "new2026",
+   "p": 113,
+   "n": "Stainless Steel BBQSpatula"
+  },
+  "SY26003": {
+   "c": "new2026",
+   "p": 113,
+   "n": "3-Piece BBQTool Set"
+  },
+  "SY26007": {
+   "c": "new2026",
+   "p": 114,
+   "n": "Wooden Handle BBQFork"
+  },
+  "SY26010": {
+   "c": "new2026",
+   "p": 113,
+   "n": "27-Piece BBQTool Set"
+  },
+  "SZ26008": {
+   "c": "new2026",
+   "p": 113,
+   "n": "BBQCleaning Brush"
+  },
+  "YL26002": {
+   "c": "new2026",
+   "p": 15,
+   "n": "Cheese Grater"
+  }
+ },
+ "guides": {
+  "sourdough-starter-kit-manufacturer": [
+   "DL23019",
+   "DL23090",
+   "DL23073",
+   "J-02",
+   "J-01",
+   "J-03",
+   "J-06",
+   "J-04",
+   "J-05",
+   "J-09",
+   "J-07",
+   "J-08",
+   "J-12",
+   "J-10",
+   "J-11",
+   "J-15",
+   "J-13",
+   "J-14",
+   "J-18",
+   "J-16"
+  ],
+  "bread-proofing-basket-manufacturer": [
+   "AY26086",
+   "BL26147",
+   "AL23319",
+   "BY23032",
+   "J-24",
+   "J-22",
+   "J-23",
+   "J-25",
+   "J-26",
+   "J-27",
+   "J-30",
+   "J-28",
+   "J-29",
+   "J-31",
+   "J-32",
+   "J-33",
+   "J-36",
+   "J-34",
+   "J-35",
+   "J-37"
+  ],
+  "cutting-board-manufacturer": [
+   "EL26010",
+   "EL26013",
+   "EY26009",
+   "EY26005",
+   "DL26066",
+   "EY26007",
+   "EY26006",
+   "EY26004",
+   "EY26003",
+   "EL26012",
+   "EY26002",
+   "EY26001",
+   "BY26065",
+   "BY26069",
+   "CY26130",
+   "BY23003",
+   "HY23017",
+   "DY23006",
+   "B-11",
+   "B-21"
+  ],
+  "garlic-press-manufacturer": [
+   "CY26024",
+   "BL26084",
+   "CY26129",
+   "HY26022",
+   "DY26051",
+   "HY26035",
+   "BY26135",
+   "CL26057",
+   "BL26104",
+   "YL26002",
+   "CL26048",
+   "BY26056",
+   "CL26123",
+   "CY23002",
+   "CY23011",
+   "CL23105",
+   "BY23036",
+   "CL23042",
+   "AA-43",
+   "AA-70"
+  ],
+  "kitchen-gadgets-manufacturer": [
+   "HL26011",
+   "HY26007",
+   "HL26042",
+   "HL26015",
+   "HY26025",
+   "HL26049",
+   "HY26023",
+   "HY26018",
+   "HL26032",
+   "HY26019",
+   "CL26089",
+   "HY26005",
+   "HZ26008",
+   "HY26012",
+   "HL26040",
+   "BL26120",
+   "CY26045",
+   "LY26001",
+   "LY26003",
+   "LY26007"
+  ],
+  "lunch-box-food-storage-manufacturer": [
+   "FY26001",
+   "CL26073",
+   "CY26147",
+   "FL26008",
+   "FY26011",
+   "FL26016",
+   "AY26169",
+   "DL26012",
+   "AL26093",
+   "BL26155",
+   "FL26009",
+   "FL26002",
+   "FL26017",
+   "FL26019",
+   "FY26005",
+   "CL26002",
+   "FY26020",
+   "FY26007",
+   "CY26071",
+   "FY26004"
+  ],
+  "baby-kids-dining-manufacturer": [
+   "AL26024",
+   "AL26154",
+   "AY26149",
+   "AY26150",
+   "AL26035",
+   "AL26146",
+   "AL26014",
+   "DY26058",
+   "AY26110",
+   "CY26062",
+   "AL26068",
+   "AY26117",
+   "AL26156",
+   "PY26004",
+   "DY26133",
+   "AY26162",
+   "CY26065",
+   "AY26205",
+   "CL26094",
+   "CY26017"
+  ],
+  "silicone-bakeware-manufacturer": [
+   "BY26004",
+   "BY26035",
+   "HL26044",
+   "HL26043",
+   "DY26169",
+   "CL26136",
+   "AL26111",
+   "AL26112",
+   "DY26157",
+   "AY26114",
+   "AY26113",
+   "DY26119",
+   "DY26166",
+   "DY26068",
+   "DY26069",
+   "DL26111",
+   "AY26108",
+   "AL26125",
+   "AY26130",
+   "BL26023"
+  ],
+  "coffee-tea-accessories-manufacturer": [
+   "DY26093",
+   "AL26159",
+   "HY26001",
+   "LY26007",
+   "BY26011",
+   "AL26002",
+   "AY26135",
+   "AY26139",
+   "AL26032",
+   "AL26109",
+   "AY26141",
+   "LL26005",
+   "LY26002",
+   "BL26009",
+   "EL26012",
+   "AL26203",
+   "AY26121",
+   "CL26155",
+   "AY26188",
+   "AL26183"
+  ],
+  "collapsible-foldable-storage-manufacturer": [
+   "AY26013",
+   "BL26099",
+   "BL26098",
+   "BY26037",
+   "AY26047",
+   "AY26016",
+   "EY26001",
+   "BY26065",
+   "BY26069",
+   "EY26008",
+   "CY26145",
+   "AL26190",
+   "AY26086",
+   "AY26081",
+   "AY26038",
+   "AL26011",
+   "AY26145",
+   "BL26094",
+   "AY26144",
+   "AL26185"
+  ],
+  "mats-pads-and-placemats-manufacturer": [
+   "BY26012",
+   "AL26034",
+   "AL26095",
+   "AY26136",
+   "AY26025",
+   "AY26088",
+   "AY26165",
+   "AL26182",
+   "AY26166",
+   "AL26085",
+   "AY26073",
+   "AL26118",
+   "DL26021",
+   "AY26051",
+   "AL26076",
+   "AL26198",
+   "AY26010",
+   "AL26123",
+   "AY26140",
+   "AL26074"
+  ],
+  "bbq-grill-accessories-manufacturer": [
+   "CL26001",
+   "HY26048",
+   "CL26088",
+   "CL26026",
+   "CL26014",
+   "DL26011",
+   "CY26082",
+   "SL26012",
+   "BL26027",
+   "SY26001",
+   "SZ26008",
+   "SL26013",
+   "SY26002",
+   "SY26003",
+   "SY26010",
+   "SY26007",
+   "SL26004",
+   "SL26005",
+   "SL26006",
+   "CY26012"
+  ]
+ }
+}

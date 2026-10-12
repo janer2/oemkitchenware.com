@@ -667,9 +667,71 @@ EXTRA_CSS = """
 .facts th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; width: 34%; }
 .facts td { padding: 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; }
 .facts tr:last-child th, .facts tr:last-child td { border-bottom: 0; }
-.faq { margin-top: 6px; }
-.faq dt { font-weight: 600; color: #1a1a2e; font-size: .95rem; margin-top: 16px; }
-.faq dd { color: #555; font-size: .92rem; line-height: 1.7; margin-top: 5px; }
+/* FAQ is collapsed by default: a buyer scanning seven answers should see seven
+   questions, not a wall of paragraphs. The text stays in the DOM for indexing. */
+.faq { margin-top: 2px; border-top: 1px solid #f0ede7; }
+.faq details { border-bottom: 1px solid #f0ede7; }
+.faq summary { cursor: pointer; list-style: none; position: relative; padding: 15px 30px 15px 0;
+               font-weight: 600; color: #1a1a2e; font-size: .96rem; line-height: 1.5; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: #8a6d2f; }
+.faq summary::after { content: '+'; position: absolute; right: 2px; top: 13px; color: #a08b5f;
+                      font-size: 1.2rem; font-weight: 400; line-height: 1; }
+.faq details[open] summary::after { content: '\\2013'; }
+.faq dd { color: #555; font-size: .95rem; line-height: 1.8; padding: 0 30px 16px 0; }
+/* Guide pages: a hero with the guide's own product shot, a measured column of
+   prose, then the range as photo cards. A catalogue page no longer reaches the
+   full 1040 px text width - long lines were the main readability complaint. */
+.g-eyebrow { font-size: .73rem; text-transform: uppercase; letter-spacing: .11em; color: #a08b5f;
+             font-weight: 700; margin-bottom: 8px; }
+/* these note lines were running ~120 characters across the full column, which
+   is the one place the prose was still hard to read */
+.block-sub, .kw-note { max-width: 74ch; }
+.g-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 34px;
+          align-items: start; margin: 2px 0 32px; }
+.g-hero .lede { margin-bottom: 18px; }
+.g-copy { max-width: 72ch; }
+.g-copy p { color: #4a4a4a; font-size: 1.01rem; line-height: 1.85; margin-bottom: 16px; }
+.g-copy p.lead { font-size: 1.1rem; line-height: 1.8; color: #333; }
+.g-shot { margin: 0; border: 1px solid #eee; border-radius: 14px; background: #faf9f7; overflow: hidden; }
+.g-shot img { width: 100%; height: auto; display: block; }
+.g-shot figcaption { padding: 12px 14px; font-size: .8rem; color: #8b8577; line-height: 1.55;
+                     border-top: 1px solid #f0ede7; }
+.g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
+                       font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
+        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
+        transition: border-color .15s, box-shadow .15s, transform .15s; }
+.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+/* contain, not cover: the crops keep the catalogue's own proportions, and a
+   cover crop was cutting products in half and slicing the printed labels */
+.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot .sc { padding: 10px 12px 12px; }
+.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+              font-variant-numeric: tabular-nums; }
+.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
+                   line-height: 1.4; margin-top: 4px; }
+.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
+.prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
+                           background: #faf9f7; display: block; }
+.prod-table tbody tr:nth-child(even) { background: #fcfbf8; }
+.prod-table td.pg a { display: inline-block; border: 1px solid #e8e2d4; border-radius: 20px;
+                      padding: 3px 11px; font-size: .75rem; color: #8a6d2f; text-decoration: none; }
+.prod-table td.pg a:hover { border-color: #8a6d2f; text-decoration: none; }
+/* display:block matters: as an inline span the aspect-ratio is ignored, the
+   img then resolves height:100% against the whole card, and every card gets a
+   half-empty letterbox. */
+.hub-card .thumb { display: block; aspect-ratio: 4 / 3; background: #faf9f7; overflow: hidden;
+                   border-radius: 9px; margin-bottom: 14px; }
+.hub-card .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+a.hub-card { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+             transition: border-color .15s, box-shadow .15s, transform .15s; }
+a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.hub-card .more { display: inline-block; margin-top: 10px; color: #8a6d2f; font-size: .83rem;
+                  font-weight: 600; }
 .pill { display: inline-block; border: 1px solid #e2d9c4; background: #fdfaf2; color: #8a6d2f;
         border-radius: 20px; padding: 4px 12px; font-size: .75rem; margin: 0 6px 6px 0; }
 .prod-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
@@ -679,17 +741,75 @@ EXTRA_CSS = """
 .prod-table a { text-decoration: none; }
 .prod-table a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .kw-note { font-size: .78rem; color: #b0a893; margin-top: 10px; }
-.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+            align-items: start; }
 .hub-card { border: 1px solid #eee; border-radius: 12px; padding: 18px 18px 16px; background: #fff; }
 .hub-card h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 6px; }
 .hub-card p { font-size: .85rem; color: #777; line-height: 1.6; }
 .hub-card a { text-decoration: none; color: #8a6d2f; font-size: .83rem; font-weight: 600; }
-@media (max-width: 700px) { .facts th, .prod-table td.code { white-space: normal; } }
+@media (max-width: 860px) {
+  .g-hero { grid-template-columns: 1fr; gap: 22px; }
+  .g-hero .g-shot { max-width: 420px; }
+}
+@media (max-width: 700px) {
+  .facts th, .prod-table td.code { white-space: normal; }
+  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+  /* the item table becomes one card per item: a five-column table on a phone
+     is unreadable, and the columns are exactly the facts a buyer wants stacked */
+  .prod-table thead, .prod-table tr:first-child th { display: none; }
+  .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
+  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
+                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  .prod-table tbody tr:nth-child(even) { background: none; }
+  .prod-table td { border: 0; padding: 0; }
+  .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }
+  .prod-table td.code { margin-top: 3px; }
+  .prod-table td.pg { margin-top: 7px; }
+}
 """
 
 
 def css():
     return TEMPLATE_CSS + EXTRA_CSS
+
+
+SHOTS_INDEX = ROOT / "assets" / "guide-images" / "index.json"
+
+
+def load_shots():
+    """Which item codes have a cut-out product photo (see gen_guide_images.py).
+
+    Returns {} when the images have not been generated, and then every page
+    simply renders without pictures instead of pointing at missing files.
+    """
+    if not SHOTS_INDEX.exists():
+        return {}
+    try:
+        return json.loads(SHOTS_INDEX.read_text(encoding="utf-8")).get("codes", {})
+    except Exception:
+        return {}
+
+
+def shot_img(code, shots, size="big", **attrs):
+    """<img> for an item code, or '' when that code has no photo."""
+    if code not in shots:
+        return ""
+    src = "/assets/guide-images/%s%s.webp" % ("t/" if size == "thumb" else "", code)
+    extra = "".join(' %s="%s"' % (k.rstrip("_"), esc(v)) for k, v in attrs.items())
+    return '<img src="%s"%s>' % (src, extra)
+
+
+def shot_figure(code, shots, caption=None):
+    """The hero/lead figure for one item: photo plus its printed code."""
+    if code not in shots:
+        return ""
+    m = shots[code]
+    cat = CAT_BY_ID.get(m["c"])
+    src_name = cat["name"] if cat else m["c"]
+    cap = caption or m["n"]
+    return ('<figure class="g-shot">%s<figcaption><b>%s</b>%s &middot; %s, p.%d</figcaption>'
+            '</figure>' % (shot_img(code, shots, alt=cap), esc(code), esc(cap),
+                           esc(src_name), m["p"]))
 
 
 def section_dir_url(cid, section):
@@ -711,6 +831,51 @@ def guide_matches(products, guide, limit=40):
         if any(t in low for t in terms):
             hits.append(p)
     return hits[:limit]
+
+
+def hero_code(guide, products, shots):
+    """The item whose photo leads this guide.
+
+    The first `match` term is the guide's own subject, so an item whose name
+    carries it is more representative than whatever happens to come first in
+    the catalogue; the shortest such name is the plainest example of it.
+    """
+    with_shot = [p for p in products if p["code"] in shots]
+    if not with_shot:
+        return None
+    key = guide["match"][0].lower()
+    named = [p for p in with_shot if key in p["name"].lower()]
+    pool = named or with_shot
+    # A name that ends in the term is the thing itself; a name that continues
+    # past it is an accessory ("Cutting Board Rack" is not a cutting board).
+    return sorted(pool, key=lambda p: (0 if p["name"].lower().rstrip().endswith(key) else 1,
+                                       len(p["name"]), p["code"]))[0]["code"]
+
+
+def guide_label(g):
+    """The short label for a guide: h1 up to its first qualifier."""
+    return re.sub("&amp;", "&", g["h1"]).split(" — ")[0].split(" (")[0]
+
+
+def card_html(g, shots, code=None):
+    """One guide as a card, with its lead photo when it has one."""
+    thumb = shot_img(code, shots, alt="", loading="lazy")
+    # div, not span: an inline box ignores aspect-ratio, and then height:100% on
+    # the img resolves against the whole card and letterboxes every photo
+    return ('<a class="hub-card" href="/guides/%s/">'
+            '%s<h3>%s</h3><p>%s</p><span class="more">Read the guide &rarr;</span></a>'
+            % (g["slug"],
+               '<div class="thumb">%s</div>' % thumb if thumb else "",
+               esc(guide_label(g)), esc(re.sub("&amp;", "&", g["meta_desc"]))))
+
+
+def spread(rows, n):
+    """Up to n rows, taken evenly across the list so a gallery shows the range
+    rather than the first n items of one catalogue."""
+    if len(rows) <= n:
+        return rows
+    step = len(rows) / float(n)
+    return [rows[int(i * step)] for i in range(n)]
 
 
 def crumbs(items):
@@ -739,7 +904,9 @@ def chip_row():
 # --------------------------------------------------------------------------- #
 # Guide pages
 # --------------------------------------------------------------------------- #
-def guide_html(guide, products, all_guides, have_product):
+def guide_html(guide, products, all_guides, have_product, shots=None, hero_of=None):
+    shots = shots if shots is not None else {}
+    hero_of = hero_of or {}
     url = "%s/guides/%s/" % (SITE, guide["slug"])
     ld = {
         "@context": "https://schema.org",
@@ -779,33 +946,67 @@ def guide_html(guide, products, all_guides, have_product):
     rows = []
     for p in products:
         link = "/product/%s/" % p["code"] if have_product(p["code"]) else section_dir_url(p["cid"], p["section"])
+        cat_name = CAT_BY_ID[p["cid"]]["name"] if p["cid"] in CAT_BY_ID else p["cid"]
         rows.append(
-            '<tr><td><a href="%s">%s</a></td><td class="code">%s</td>'
-            '<td>%s</td><td><a href="/?catalog=%s&amp;page=%d">p.%d</a></td></tr>'
-            % (link, esc(p["name"]), esc(p["code"]),
-               esc(CAT_BY_ID[p["cid"]]["name"] if p["cid"] in CAT_BY_ID else p["cid"]),
+            '<tr><td class="thumb">%s</td><td><a href="%s">%s</a></td><td class="code">%s</td>'
+            '<td>%s</td><td class="pg"><a href="/?catalog=%s&amp;page=%d">p.%d</a></td></tr>'
+            % (shot_img(p["code"], shots, size="thumb", alt=p["name"], loading="lazy"),
+               link, esc(p["name"]), esc(p["code"]), esc(cat_name),
                p["cid"], p["pn"], p["pn"]))
     prod_block = ""
     if rows:
         prod_block = """
   <section class="block">
     <h2>%s items in our catalogues</h2>
-    <p class="block-sub">Every row is a printed item in a Yongli catalogue. Open the item page for the
-    code and the range, or jump straight into the flip-book at that page.</p>
+    <p class="block-sub">Every row is a printed item in a Yongli catalogue, with the photo we shoot
+    of it and the page it is printed on. Open the item page for the code and the range, or jump
+    straight into the flip-book at that page.</p>
     <table class="prod-table">
-      <tr><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
+      <tr><th></th><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
       %s
     </table>
     <p class="kw-note">%s</p>
   </section>""" % (esc(re.sub("&amp;", "&", guide["h1"]).split(" Manufacturer")[0]),
                    "".join(rows), esc(guide.get("words", "")))
 
-    faq = "\n".join('<dt>%s</dt><dd>%s</dd>' % (esc(q), esc(a)) for q, a in guide["faqs"])
-    related = "\n".join(
-        '<a class="sibling" href="/guides/%s/">%s</a>'
-        % (g["slug"], esc(re.sub("&amp;", "&", g["h1"]).split(" — ")[0].split(" (")[0]))
-        for g in all_guides if g["slug"] != guide["slug"])
-    intro = "\n".join("<p>%s</p>" % esc(t) for t in guide["intro"])
+    # Range gallery: a handful of the range as photo cards. Spread across the
+    # list so it previews the breadth rather than one catalogue's first page.
+    gallery = ""
+    # Distinct names first: a range page can hold six codes that are all
+    # printed "Sourdough Starter Kit", and six identical cards say nothing.
+    seen, distinct, rest = set(), [], []
+    for p in products:
+        if p["code"] not in shots:
+            continue
+        k = p["name"].strip().lower()
+        (rest if k in seen else distinct).append(p)
+        seen.add(k)
+    picked = spread(distinct, 8)
+    if len(picked) < 6:
+        picked += spread(rest, 6 - len(picked))
+    if picked:
+        cards = "\n".join(
+            '<a class="shot" href="/?catalog=%s&amp;page=%d">'
+            '<div class="si">%s</div>'
+            '<div class="sc"><b>%s</b><strong>%s</strong><i>%s &middot; p.%d</i></div></a>'
+            % (p["cid"], p["pn"],
+               shot_img(p["code"], shots, alt=p["name"], loading="lazy"),
+               esc(p["code"]), esc(p["name"]),
+               esc(CAT_BY_ID[p["cid"]]["name"] if p["cid"] in CAT_BY_ID else p["cid"]), p["pn"])
+            for p in picked)
+        gallery = ('  <section class="block"><h2>Range at a glance</h2>'
+                   '<p class="block-sub">A few items from this range, exactly as they are printed '
+                   'in our catalogues. Click a card to open that page in the flip-book.</p>'
+                   '<div class="shot-grid">%s</div></section>\n' % cards)
+
+    hero = hero_code(guide, products, shots)
+    hero_fig = shot_figure(hero, shots) if hero else ""
+    faq = "\n".join('<details><summary>%s</summary><dd>%s</dd></details>' % (esc(q), esc(a))
+                    for q, a in guide["faqs"])
+    related = "\n".join(card_html(g, shots, hero_of.get(g["slug"]))
+                        for g in all_guides if g["slug"] != guide["slug"])
+    intro = "\n".join('<p%s>%s</p>' % (' class="lead"' if i == 0 else "", esc(t))
+                      for i, t in enumerate(guide["intro"]))
     bullets = "".join("<li>%s</li>" % esc(b) for b in guide["bullets"])
     caps = "".join("<li>%s</li>" % esc(c) for c in CAPABILITIES)
     wa = "Hi, I would like a quote for %s (%s)." % (
@@ -816,15 +1017,24 @@ def guide_html(guide, products, all_guides, have_product):
                        ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Buyer Guides", "/guides/"),
                     (re.sub("&amp;", "&", guide["h1"]), None)])
-    body += '<h1>%s</h1>\n<p class="lede">%s</p>\n' % (guide["h1"], esc(guide["lede"]))
-    body += cta_row("Quote request - " + re.sub("&amp;", "&", guide["h1"]), wa)
-    body += '%s\n<div class="grid2">\n' % intro
+    # The hero pairs the promise with one of the range's own photos, so the
+    # first thing on the page is a product rather than a paragraph.
+    hero_open = '<article class="g-hero">' if hero_fig else ""
+    hero_txt = ('<div class="g-hero-copy"><p class="g-eyebrow">Buyer guide</p>'
+                '<h1>%s</h1>\n<p class="lede">%s</p>\n%s</div>%s'
+                % (guide["h1"], esc(guide["lede"]),
+                   cta_row("Quote request - " + re.sub("&amp;", "&", guide["h1"]), wa),
+                   hero_fig))
+    body += hero_open + hero_txt + ("</article>\n" if hero_fig else "\n")
+    body += '<div class="g-copy">\n%s\n</div>\n' % intro
+    body += gallery
+    body += '<div class="grid2">\n'
     body += ('  <section class="block"><h2>Customisation &amp; quality</h2><ul class="ticks">%s</ul></section>\n'
              '  <section class="block"><h2>Compliance</h2>%s'
              '<p style="font-size:.88rem;color:#666;margin-top:12px">%s</p></section>\n</div>\n'
              % (caps, chip_row(), esc(BRAND_LINE)))
     body += prod_block
-    body += '\n  <section class="block"><h2>Questions buyers ask</h2><dl class="faq">%s</dl></section>\n' % faq
+    body += '\n  <section class="block"><h2>Questions buyers ask</h2><div class="faq">%s</div></section>\n' % faq
     body += ('  <section class="block"><h2>More ways to browse</h2>'
              '<p class="block-sub">Every item listed above is printed in one of our catalogues, '
              'with its code and page number on its own page.</p><div class="siblings">'
@@ -834,24 +1044,23 @@ def guide_html(guide, products, all_guides, have_product):
              '<a class="sibling" href="/#viewCustomize">Customisation process</a>'
              '<a class="sibling" href="/#viewAbout">About the factory</a>'
              '</div></section>\n')
-    body += ('  <section class="block"><h2>Other buyer guides</h2><div class="siblings">%s</div>'
-             '<p class="block-sub" style="margin-top:14px">Or browse '
+    body += ('  <section class="block"><h2>Other buyer guides</h2><div class="hub-grid">%s</div>'
+             '<p class="block-sub" style="margin-top:16px">Or browse '
              '<a href="/product/">every product we print a code for</a> and the '
              '<a href="/catalog/">catalogue category pages</a>.</p></section>\n' % related)
     body += FOOT
     return body
 
 
-def guides_hub_html(all_guides):
+def guides_hub_html(all_guides, shots=None, hero_of=None):
+    shots = shots if shots is not None else {}
+    hero_of = hero_of or {}
     url = SITE + "/guides/"
     desc = ("Buyer guides for sourcing kitchenware, bakeware, tableware and kids dining from a "
             "BSCI &amp; ISO 9001 certified OEM/ODM manufacturer in Huizhou, China.")
     ld = {"@context": "https://schema.org", "@type": "CollectionPage",
           "name": "Yongli buyer guides", "url": url, "description": re.sub("&amp;", "&", desc)}
-    cards = "\n".join(
-        '<div class="hub-card"><h3>%s</h3><p>%s</p>'
-        '<a href="/guides/%s/">Read the guide &rarr;</a></div>'
-        % (g["h1"], g["meta_desc"], g["slug"]) for g in all_guides)
+    cards = "\n".join(card_html(g, shots, hero_of.get(g["slug"])) for g in all_guides)
     body = HEAD.format(title="Buyer Guides — OEM Kitchenware Sourcing | Yongli",
                        desc=desc, url=url, image=SITE + "/assets/covers/new2026.jpg",
                        ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
@@ -876,7 +1085,8 @@ def guides_hub_html(all_guides):
 # --------------------------------------------------------------------------- #
 # Product pages
 # --------------------------------------------------------------------------- #
-def product_html(p, have_product, siblings):
+def product_html(p, have_product, siblings, shots=None):
+    shots = shots if shots is not None else {}
     cat = CAT_BY_ID.get(p["cid"])
     cat_name = cat["name"] if cat else p["cid"]
     url = "%s/product/%s/" % (SITE, p["code"])
@@ -924,13 +1134,16 @@ def product_html(p, have_product, siblings):
                        ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Categories", "/catalog/"), (cat_name, "/catalog/%s/" % p["cid"]),
                     (p["name"], None)])
-    body += '<h1>%s</h1>\n' % esc(p["name"])
-    body += ('<p class="lede">%s is catalogue item <strong>%s</strong> in the %s range, printed on '
-             'page %d of the %s catalogue. Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM '
-             'manufacturer in Huizhou, China, producing for private-label and wholesale programmes '
-             'since 2010.</p>\n' % (esc(p["name"]), esc(p["code"]), esc(p["section"] or cat_name),
-                                     p["pn"], esc(cat_name)))
-    body += cta_row("Quote request - %s %s" % (p["code"], p["name"])[:120], wa)
+    top = '<p class="g-eyebrow">Catalogue item %s</p><h1>%s</h1>\n' % (esc(p["code"]), esc(p["name"]))
+    top += ('<p class="lede">%s is catalogue item <strong>%s</strong> in the %s range, printed on '
+            'page %d of the %s catalogue. Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM '
+            'manufacturer in Huizhou, China, producing for private-label and wholesale programmes '
+            'since 2010.</p>\n' % (esc(p["name"]), esc(p["code"]), esc(p["section"] or cat_name),
+                                    p["pn"], esc(cat_name)))
+    top += cta_row("Quote request - %s %s" % (p["code"], p["name"])[:120], wa)
+    fig = shot_figure(p["code"], shots, caption=p["name"])
+    body += ('<article class="g-hero"><div class="g-hero-copy">%s</div>%s</article>\n' % (top, fig)
+             if fig else top)
     body += """
   <div class="stat-strip">
     <div class="stat"><span class="k">Product code</span><span class="v">%s</span></div>
@@ -1119,6 +1332,11 @@ def main():
           sum(1 for s, r in by_guide.items() for _ in r))
 
     have = {p["code"] for p in chosen}
+    shots = load_shots()
+    # Each guide's lead photo, so the hub and the sibling cards can show it.
+    hero_of = {g["slug"]: hero_code(g, by_guide[g["slug"]], shots) for g in GUIDES_DATA}
+    print("item photos available:", len(shots), "| guides with a lead photo:",
+          sum(1 for v in hero_of.values() if v))
     by_section = {}
     for p in chosen:
         by_section.setdefault((p["cid"], p["section"]), []).append(p)
@@ -1128,7 +1346,8 @@ def main():
         sibs = [s for s in by_section[(p["cid"], p["section"])] if s["code"] != p["code"]][:8]
         d = PRODUCT_DIR / p["code"]
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(product_html(p, lambda c: c in have, sibs), encoding="utf-8")
+        (d / "index.html").write_text(product_html(p, lambda c: c in have, sibs, shots),
+                                      encoding="utf-8")
     print("wrote %d product pages" % len(chosen))
 
     # Drop product folders a previous run wrote (they are shrinking sets when the
@@ -1161,10 +1380,12 @@ def main():
         rows = by_guide[g["slug"]]
         d = GUIDE_DIR / g["slug"]
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(guide_html(g, rows, GUIDES_DATA, lambda c: c in have),
-                                      encoding="utf-8")
+        (d / "index.html").write_text(
+            guide_html(g, rows, GUIDES_DATA, lambda c: c in have, shots, hero_of),
+            encoding="utf-8")
         print("guide:", g["slug"], "(%d products)" % len(rows))
-    (GUIDE_DIR / "index.html").write_text(guides_hub_html(GUIDES_DATA), encoding="utf-8")
+    (GUIDE_DIR / "index.html").write_text(guides_hub_html(GUIDES_DATA, shots, hero_of),
+                                          encoding="utf-8")
     print("wrote guides/index.html")
 
     update_home(GUIDES_DATA, len(chosen))

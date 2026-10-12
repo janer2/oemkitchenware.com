@@ -100,9 +100,71 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .facts th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; width: 34%; }
 .facts td { padding: 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; }
 .facts tr:last-child th, .facts tr:last-child td { border-bottom: 0; }
-.faq { margin-top: 6px; }
-.faq dt { font-weight: 600; color: #1a1a2e; font-size: .95rem; margin-top: 16px; }
-.faq dd { color: #555; font-size: .92rem; line-height: 1.7; margin-top: 5px; }
+/* FAQ is collapsed by default: a buyer scanning seven answers should see seven
+   questions, not a wall of paragraphs. The text stays in the DOM for indexing. */
+.faq { margin-top: 2px; border-top: 1px solid #f0ede7; }
+.faq details { border-bottom: 1px solid #f0ede7; }
+.faq summary { cursor: pointer; list-style: none; position: relative; padding: 15px 30px 15px 0;
+               font-weight: 600; color: #1a1a2e; font-size: .96rem; line-height: 1.5; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: #8a6d2f; }
+.faq summary::after { content: '+'; position: absolute; right: 2px; top: 13px; color: #a08b5f;
+                      font-size: 1.2rem; font-weight: 400; line-height: 1; }
+.faq details[open] summary::after { content: '\2013'; }
+.faq dd { color: #555; font-size: .95rem; line-height: 1.8; padding: 0 30px 16px 0; }
+/* Guide pages: a hero with the guide's own product shot, a measured column of
+   prose, then the range as photo cards. A catalogue page no longer reaches the
+   full 1040 px text width - long lines were the main readability complaint. */
+.g-eyebrow { font-size: .73rem; text-transform: uppercase; letter-spacing: .11em; color: #a08b5f;
+             font-weight: 700; margin-bottom: 8px; }
+/* these note lines were running ~120 characters across the full column, which
+   is the one place the prose was still hard to read */
+.block-sub, .kw-note { max-width: 74ch; }
+.g-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 34px;
+          align-items: start; margin: 2px 0 32px; }
+.g-hero .lede { margin-bottom: 18px; }
+.g-copy { max-width: 72ch; }
+.g-copy p { color: #4a4a4a; font-size: 1.01rem; line-height: 1.85; margin-bottom: 16px; }
+.g-copy p.lead { font-size: 1.1rem; line-height: 1.8; color: #333; }
+.g-shot { margin: 0; border: 1px solid #eee; border-radius: 14px; background: #faf9f7; overflow: hidden; }
+.g-shot img { width: 100%; height: auto; display: block; }
+.g-shot figcaption { padding: 12px 14px; font-size: .8rem; color: #8b8577; line-height: 1.55;
+                     border-top: 1px solid #f0ede7; }
+.g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
+                       font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
+        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
+        transition: border-color .15s, box-shadow .15s, transform .15s; }
+.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+/* contain, not cover: the crops keep the catalogue's own proportions, and a
+   cover crop was cutting products in half and slicing the printed labels */
+.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot .sc { padding: 10px 12px 12px; }
+.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+              font-variant-numeric: tabular-nums; }
+.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
+                   line-height: 1.4; margin-top: 4px; }
+.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
+.prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
+                           background: #faf9f7; display: block; }
+.prod-table tbody tr:nth-child(even) { background: #fcfbf8; }
+.prod-table td.pg a { display: inline-block; border: 1px solid #e8e2d4; border-radius: 20px;
+                      padding: 3px 11px; font-size: .75rem; color: #8a6d2f; text-decoration: none; }
+.prod-table td.pg a:hover { border-color: #8a6d2f; text-decoration: none; }
+/* display:block matters: as an inline span the aspect-ratio is ignored, the
+   img then resolves height:100% against the whole card, and every card gets a
+   half-empty letterbox. */
+.hub-card .thumb { display: block; aspect-ratio: 4 / 3; background: #faf9f7; overflow: hidden;
+                   border-radius: 9px; margin-bottom: 14px; }
+.hub-card .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+a.hub-card { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+             transition: border-color .15s, box-shadow .15s, transform .15s; }
+a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.hub-card .more { display: inline-block; margin-top: 10px; color: #8a6d2f; font-size: .83rem;
+                  font-weight: 600; }
 .pill { display: inline-block; border: 1px solid #e2d9c4; background: #fdfaf2; color: #8a6d2f;
         border-radius: 20px; padding: 4px 12px; font-size: .75rem; margin: 0 6px 6px 0; }
 .prod-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
@@ -112,12 +174,31 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .prod-table a { text-decoration: none; }
 .prod-table a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .kw-note { font-size: .78rem; color: #b0a893; margin-top: 10px; }
-.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+            align-items: start; }
 .hub-card { border: 1px solid #eee; border-radius: 12px; padding: 18px 18px 16px; background: #fff; }
 .hub-card h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 6px; }
 .hub-card p { font-size: .85rem; color: #777; line-height: 1.6; }
 .hub-card a { text-decoration: none; color: #8a6d2f; font-size: .83rem; font-weight: 600; }
-@media (max-width: 700px) { .facts th, .prod-table td.code { white-space: normal; } }
+@media (max-width: 860px) {
+  .g-hero { grid-template-columns: 1fr; gap: 22px; }
+  .g-hero .g-shot { max-width: 420px; }
+}
+@media (max-width: 700px) {
+  .facts th, .prod-table td.code { white-space: normal; }
+  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+  /* the item table becomes one card per item: a five-column table on a phone
+     is unreadable, and the columns are exactly the facts a buyer wants stacked */
+  .prod-table thead, .prod-table tr:first-child th { display: none; }
+  .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
+  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
+                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  .prod-table tbody tr:nth-child(even) { background: none; }
+  .prod-table td { border: 0; padding: 0; }
+  .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }
+  .prod-table td.code { margin-top: 3px; }
+  .prod-table td.pg { margin-top: 7px; }
+}
 </style>
 </head>
 <body>
@@ -134,18 +215,18 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 <main class="wrap">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <span>Buyer Guides</span></nav><h1>Buyer guides</h1>
 <p class="lede">Short, practical pages for the ranges we are asked about most - what we make, what can be customised, which materials and standards apply, and how the quote works. Written for the buyer, not for search engines.</p>
-<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Wholesale quote request">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for one of your ranges." target="_blank" rel="noopener">WhatsApp Us</a></div><section class="block"><h2>All guides</h2><div class="hub-grid"><div class="hub-card"><h3>Sourdough Starter Kit Manufacturer &amp; OEM Supplier</h3><p>BSCI &amp; ISO 9001 certified OEM/ODM maker of sourdough starter kits, jars, thermometers and cloth covers. Custom logo, packaging and colours.</p><a href="/guides/sourdough-starter-kit-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Bread Proofing Basket Manufacturer (Banneton &amp; Dough Boxes)</h3><p>OEM manufacturer of bread proofing baskets, banneton sets, linen liners and dough proofing boxes. BSCI &amp; ISO 9001 certified, custom sizes and branding.</p><a href="/guides/bread-proofing-basket-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Cutting Board Manufacturer — Titanium, Stainless Steel &amp; Foldable</h3><p>OEM/ODM manufacturer of titanium, stainless steel and foldable cutting boards for kitchen and outdoor use. Custom sizes, corners, logos and packaging.</p><a href="/guides/cutting-board-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</h3><p>OEM supplier of garlic presses, mincers and graters in stainless steel and die-cast zinc. BSCI &amp; ISO 9001 certified factory, custom packaging.</p><a href="/guides/garlic-press-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</h3><p>OEM/ODM manufacturer of kitchen gadgets and accessories - utensils, scissors, openers, measuring tools - in silicone, stainless steel and BPA-free plastic.</p><a href="/guides/kitchen-gadgets-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Lunch Box &amp; Food Storage Manufacturer</h3><p>OEM manufacturer of silicone lunch boxes, collapsible food containers, snack boxes and bento sets. BSCI &amp; ISO 9001 certified, custom colours and printing.</p><a href="/guides/lunch-box-food-storage-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Baby &amp; Kids Dining Manufacturer</h3><p>OEM manufacturer of silicone baby plates, suction bowls, spoons, bibs and placemats for kids dining ranges. EN71 and FDA compliant, custom printing.</p><a href="/guides/baby-kids-dining-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Silicone Bakeware &amp; Mould Manufacturer</h3><p>OEM/ODM manufacturer of silicone bakeware, cake pans, moulds, mats and ice trays. In-house tooling, Pantone colour matching, FDA and LFGB materials.</p><a href="/guides/silicone-bakeware-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Coffee &amp; Tea Accessories Manufacturer</h3><p>OEM manufacturer of milk frothers, tea infusers, pour-over and matcha sets and coffee accessories. CE and RoHS compliant electronics where needed.</p><a href="/guides/coffee-tea-accessories-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Collapsible &amp; Foldable Storage Manufacturer</h3><p>OEM manufacturer of collapsible silicone food storage, foldable bowls, collapsible cups and space-saving kitchen storage. Custom colours and branding.</p><a href="/guides/collapsible-foldable-storage-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>Silicone Mats, Pads &amp; Placemats Manufacturer</h3><p>OEM manufacturer of silicone placemats, table mats, drying mats, baking mats and high-chair mats. Custom sizes, printed surfaces and Pantone colour matching.</p><a href="/guides/mats-pads-and-placemats-manufacturer/">Read the guide &rarr;</a></div>
-<div class="hub-card"><h3>BBQ &amp; Grill Accessories Manufacturer</h3><p>OEM manufacturer of BBQ grill tool sets, basting brushes, spatulas, gloves and prep tubs. Stainless steel and heat-resistant silicone, custom branded sets.</p><a href="/guides/bbq-grill-accessories-manufacturer/">Read the guide &rarr;</a></div></div></section>
+<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Wholesale quote request">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for one of your ranges." target="_blank" rel="noopener">WhatsApp Us</a></div><section class="block"><h2>All guides</h2><div class="hub-grid"><a class="hub-card" href="/guides/sourdough-starter-kit-manufacturer/"><div class="thumb"><img src="/assets/guide-images/J-01.webp" alt="" loading="lazy"></div><h3>Sourdough Starter Kit Manufacturer &amp; OEM Supplier</h3><p>BSCI &amp; ISO 9001 certified OEM/ODM maker of sourdough starter kits, jars, thermometers and cloth covers. Custom logo, packaging and colours.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/bread-proofing-basket-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL23319.webp" alt="" loading="lazy"></div><h3>Bread Proofing Basket Manufacturer</h3><p>OEM manufacturer of bread proofing baskets, banneton sets, linen liners and dough proofing boxes. BSCI &amp; ISO 9001 certified, custom sizes and branding.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/cutting-board-manufacturer/"><div class="thumb"><img src="/assets/guide-images/EL26013.webp" alt="" loading="lazy"></div><h3>Cutting Board Manufacturer</h3><p>OEM/ODM manufacturer of titanium, stainless steel and foldable cutting boards for kitchen and outdoor use. Custom sizes, corners, logos and packaging.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/garlic-press-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AA-43.webp" alt="" loading="lazy"></div><h3>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</h3><p>OEM supplier of garlic presses, mincers and graters in stainless steel and die-cast zinc. BSCI &amp; ISO 9001 certified factory, custom packaging.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/kitchen-gadgets-manufacturer/"><div class="thumb"><img src="/assets/guide-images/HY26007.webp" alt="" loading="lazy"></div><h3>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</h3><p>OEM/ODM manufacturer of kitchen gadgets and accessories - utensils, scissors, openers, measuring tools - in silicone, stainless steel and BPA-free plastic.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/lunch-box-food-storage-manufacturer/"><div class="thumb"><img src="/assets/guide-images/BL26155.webp" alt="" loading="lazy"></div><h3>Lunch Box &amp; Food Storage Manufacturer</h3><p>OEM manufacturer of silicone lunch boxes, collapsible food containers, snack boxes and bento sets. BSCI &amp; ISO 9001 certified, custom colours and printing.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/baby-kids-dining-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AY26205.webp" alt="" loading="lazy"></div><h3>Baby &amp; Kids Dining Manufacturer</h3><p>OEM manufacturer of silicone baby plates, suction bowls, spoons, bibs and placemats for kids dining ranges. EN71 and FDA compliant, custom printing.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/silicone-bakeware-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL26125.webp" alt="" loading="lazy"></div><h3>Silicone Bakeware &amp; Mould Manufacturer</h3><p>OEM/ODM manufacturer of silicone bakeware, cake pans, moulds, mats and ice trays. In-house tooling, Pantone colour matching, FDA and LFGB materials.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/coffee-tea-accessories-manufacturer/"><div class="thumb"><img src="/assets/guide-images/DY26093.webp" alt="" loading="lazy"></div><h3>Coffee &amp; Tea Accessories Manufacturer</h3><p>OEM manufacturer of milk frothers, tea infusers, pour-over and matcha sets and coffee accessories. CE and RoHS compliant electronics where needed.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/collapsible-foldable-storage-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AY26047.webp" alt="" loading="lazy"></div><h3>Collapsible &amp; Foldable Storage Manufacturer</h3><p>OEM manufacturer of collapsible silicone food storage, foldable bowls, collapsible cups and space-saving kitchen storage. Custom colours and branding.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/mats-pads-and-placemats-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL26085.webp" alt="" loading="lazy"></div><h3>Silicone Mats, Pads &amp; Placemats Manufacturer</h3><p>OEM manufacturer of silicone placemats, table mats, drying mats, baking mats and high-chair mats. Custom sizes, printed surfaces and Pantone colour matching.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/bbq-grill-accessories-manufacturer/"><div class="thumb"><img src="/assets/guide-images/SL26006.webp" alt="" loading="lazy"></div><h3>BBQ &amp; Grill Accessories Manufacturer</h3><p>OEM manufacturer of BBQ grill tool sets, basting brushes, spatulas, gloves and prep tubs. Stainless steel and heat-resistant silicone, custom branded sets.</p><span class="more">Read the guide &rarr;</span></a></div></section>
 <section class="block"><h2>Prefer to browse the catalogues?</h2><p class="block-sub">Our flip-book catalogues hold the printed range with every product code: <a href="/catalog/new2026/">2026 New</a>, <a href="/catalog/2023/">2023</a>, <a href="/catalog/kitchen/">Kitchen Gadgets</a>, <a href="/catalog/baby/">Baby Care</a>, <a href="/catalog/ladies/">Ladies&rsquo; Appliances</a>, <a href="/catalog/balls/">Christmas Balls</a>. You can also open the <a href="/product/">full product list</a>.</p></section>
 </main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.

@@ -162,9 +162,71 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .facts th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; width: 34%; }
 .facts td { padding: 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; }
 .facts tr:last-child th, .facts tr:last-child td { border-bottom: 0; }
-.faq { margin-top: 6px; }
-.faq dt { font-weight: 600; color: #1a1a2e; font-size: .95rem; margin-top: 16px; }
-.faq dd { color: #555; font-size: .92rem; line-height: 1.7; margin-top: 5px; }
+/* FAQ is collapsed by default: a buyer scanning seven answers should see seven
+   questions, not a wall of paragraphs. The text stays in the DOM for indexing. */
+.faq { margin-top: 2px; border-top: 1px solid #f0ede7; }
+.faq details { border-bottom: 1px solid #f0ede7; }
+.faq summary { cursor: pointer; list-style: none; position: relative; padding: 15px 30px 15px 0;
+               font-weight: 600; color: #1a1a2e; font-size: .96rem; line-height: 1.5; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: #8a6d2f; }
+.faq summary::after { content: '+'; position: absolute; right: 2px; top: 13px; color: #a08b5f;
+                      font-size: 1.2rem; font-weight: 400; line-height: 1; }
+.faq details[open] summary::after { content: '\2013'; }
+.faq dd { color: #555; font-size: .95rem; line-height: 1.8; padding: 0 30px 16px 0; }
+/* Guide pages: a hero with the guide's own product shot, a measured column of
+   prose, then the range as photo cards. A catalogue page no longer reaches the
+   full 1040 px text width - long lines were the main readability complaint. */
+.g-eyebrow { font-size: .73rem; text-transform: uppercase; letter-spacing: .11em; color: #a08b5f;
+             font-weight: 700; margin-bottom: 8px; }
+/* these note lines were running ~120 characters across the full column, which
+   is the one place the prose was still hard to read */
+.block-sub, .kw-note { max-width: 74ch; }
+.g-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 34px;
+          align-items: start; margin: 2px 0 32px; }
+.g-hero .lede { margin-bottom: 18px; }
+.g-copy { max-width: 72ch; }
+.g-copy p { color: #4a4a4a; font-size: 1.01rem; line-height: 1.85; margin-bottom: 16px; }
+.g-copy p.lead { font-size: 1.1rem; line-height: 1.8; color: #333; }
+.g-shot { margin: 0; border: 1px solid #eee; border-radius: 14px; background: #faf9f7; overflow: hidden; }
+.g-shot img { width: 100%; height: auto; display: block; }
+.g-shot figcaption { padding: 12px 14px; font-size: .8rem; color: #8b8577; line-height: 1.55;
+                     border-top: 1px solid #f0ede7; }
+.g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
+                       font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
+        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
+        transition: border-color .15s, box-shadow .15s, transform .15s; }
+.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+/* contain, not cover: the crops keep the catalogue's own proportions, and a
+   cover crop was cutting products in half and slicing the printed labels */
+.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot .sc { padding: 10px 12px 12px; }
+.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+              font-variant-numeric: tabular-nums; }
+.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
+                   line-height: 1.4; margin-top: 4px; }
+.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
+.prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
+                           background: #faf9f7; display: block; }
+.prod-table tbody tr:nth-child(even) { background: #fcfbf8; }
+.prod-table td.pg a { display: inline-block; border: 1px solid #e8e2d4; border-radius: 20px;
+                      padding: 3px 11px; font-size: .75rem; color: #8a6d2f; text-decoration: none; }
+.prod-table td.pg a:hover { border-color: #8a6d2f; text-decoration: none; }
+/* display:block matters: as an inline span the aspect-ratio is ignored, the
+   img then resolves height:100% against the whole card, and every card gets a
+   half-empty letterbox. */
+.hub-card .thumb { display: block; aspect-ratio: 4 / 3; background: #faf9f7; overflow: hidden;
+                   border-radius: 9px; margin-bottom: 14px; }
+.hub-card .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+a.hub-card { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+             transition: border-color .15s, box-shadow .15s, transform .15s; }
+a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.hub-card .more { display: inline-block; margin-top: 10px; color: #8a6d2f; font-size: .83rem;
+                  font-weight: 600; }
 .pill { display: inline-block; border: 1px solid #e2d9c4; background: #fdfaf2; color: #8a6d2f;
         border-radius: 20px; padding: 4px 12px; font-size: .75rem; margin: 0 6px 6px 0; }
 .prod-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
@@ -174,12 +236,31 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .prod-table a { text-decoration: none; }
 .prod-table a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .kw-note { font-size: .78rem; color: #b0a893; margin-top: 10px; }
-.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+            align-items: start; }
 .hub-card { border: 1px solid #eee; border-radius: 12px; padding: 18px 18px 16px; background: #fff; }
 .hub-card h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 6px; }
 .hub-card p { font-size: .85rem; color: #777; line-height: 1.6; }
 .hub-card a { text-decoration: none; color: #8a6d2f; font-size: .83rem; font-weight: 600; }
-@media (max-width: 700px) { .facts th, .prod-table td.code { white-space: normal; } }
+@media (max-width: 860px) {
+  .g-hero { grid-template-columns: 1fr; gap: 22px; }
+  .g-hero .g-shot { max-width: 420px; }
+}
+@media (max-width: 700px) {
+  .facts th, .prod-table td.code { white-space: normal; }
+  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+  /* the item table becomes one card per item: a five-column table on a phone
+     is unreadable, and the columns are exactly the facts a buyer wants stacked */
+  .prod-table thead, .prod-table tr:first-child th { display: none; }
+  .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
+  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
+                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  .prod-table tbody tr:nth-child(even) { background: none; }
+  .prod-table td { border: 0; padding: 0; }
+  .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }
+  .prod-table td.code { margin-top: 3px; }
+  .prod-table td.pg { margin-top: 7px; }
+}
 </style>
 </head>
 <body>
@@ -194,9 +275,10 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
   </nav>
 </header>
 <main class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <a href="/catalog/">Categories</a> &rarr; <a href="/catalog/new2026/">2026 New</a> &rarr; <span>8-Cup Fruit Cake Mold</span></nav><h1>8-Cup Fruit Cake Mold</h1>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <a href="/catalog/">Categories</a> &rarr; <a href="/catalog/new2026/">2026 New</a> &rarr; <span>8-Cup Fruit Cake Mold</span></nav><article class="g-hero"><div class="g-hero-copy"><p class="g-eyebrow">Catalogue item AL26183</p><h1>8-Cup Fruit Cake Mold</h1>
 <p class="lede">8-Cup Fruit Cake Mold is catalogue item <strong>AL26183</strong> in the Baking Tools range, printed on page 40 of the 2026 New catalogue. Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM manufacturer in Huizhou, China, producing for private-label and wholesale programmes since 2010.</p>
-<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Quote request - AL26183 8-Cup Fruit Cake Mold">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for 8-Cup Fruit Cake Mold (AL26183)." target="_blank" rel="noopener">WhatsApp Us</a></div>
+<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Quote request - AL26183 8-Cup Fruit Cake Mold">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for 8-Cup Fruit Cake Mold (AL26183)." target="_blank" rel="noopener">WhatsApp Us</a></div></div><figure class="g-shot"><img src="/assets/guide-images/AL26183.webp" alt="8-Cup Fruit Cake Mold"><figcaption><b>AL26183</b>8-Cup Fruit Cake Mold &middot; 2026 New, p.40</figcaption></figure></article>
+
   <div class="stat-strip">
     <div class="stat"><span class="k">Product code</span><span class="v">AL26183</span></div>
     <div class="stat"><span class="k">Catalogue</span><span class="v sm">2026 New</span></div>

@@ -285,9 +285,71 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .facts th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; width: 34%; }
 .facts td { padding: 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; }
 .facts tr:last-child th, .facts tr:last-child td { border-bottom: 0; }
-.faq { margin-top: 6px; }
-.faq dt { font-weight: 600; color: #1a1a2e; font-size: .95rem; margin-top: 16px; }
-.faq dd { color: #555; font-size: .92rem; line-height: 1.7; margin-top: 5px; }
+/* FAQ is collapsed by default: a buyer scanning seven answers should see seven
+   questions, not a wall of paragraphs. The text stays in the DOM for indexing. */
+.faq { margin-top: 2px; border-top: 1px solid #f0ede7; }
+.faq details { border-bottom: 1px solid #f0ede7; }
+.faq summary { cursor: pointer; list-style: none; position: relative; padding: 15px 30px 15px 0;
+               font-weight: 600; color: #1a1a2e; font-size: .96rem; line-height: 1.5; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: #8a6d2f; }
+.faq summary::after { content: '+'; position: absolute; right: 2px; top: 13px; color: #a08b5f;
+                      font-size: 1.2rem; font-weight: 400; line-height: 1; }
+.faq details[open] summary::after { content: '\2013'; }
+.faq dd { color: #555; font-size: .95rem; line-height: 1.8; padding: 0 30px 16px 0; }
+/* Guide pages: a hero with the guide's own product shot, a measured column of
+   prose, then the range as photo cards. A catalogue page no longer reaches the
+   full 1040 px text width - long lines were the main readability complaint. */
+.g-eyebrow { font-size: .73rem; text-transform: uppercase; letter-spacing: .11em; color: #a08b5f;
+             font-weight: 700; margin-bottom: 8px; }
+/* these note lines were running ~120 characters across the full column, which
+   is the one place the prose was still hard to read */
+.block-sub, .kw-note { max-width: 74ch; }
+.g-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 34px;
+          align-items: start; margin: 2px 0 32px; }
+.g-hero .lede { margin-bottom: 18px; }
+.g-copy { max-width: 72ch; }
+.g-copy p { color: #4a4a4a; font-size: 1.01rem; line-height: 1.85; margin-bottom: 16px; }
+.g-copy p.lead { font-size: 1.1rem; line-height: 1.8; color: #333; }
+.g-shot { margin: 0; border: 1px solid #eee; border-radius: 14px; background: #faf9f7; overflow: hidden; }
+.g-shot img { width: 100%; height: auto; display: block; }
+.g-shot figcaption { padding: 12px 14px; font-size: .8rem; color: #8b8577; line-height: 1.55;
+                     border-top: 1px solid #f0ede7; }
+.g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
+                       font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
+        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
+        transition: border-color .15s, box-shadow .15s, transform .15s; }
+.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+/* contain, not cover: the crops keep the catalogue's own proportions, and a
+   cover crop was cutting products in half and slicing the printed labels */
+.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot .sc { padding: 10px 12px 12px; }
+.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+              font-variant-numeric: tabular-nums; }
+.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
+                   line-height: 1.4; margin-top: 4px; }
+.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
+.prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
+                           background: #faf9f7; display: block; }
+.prod-table tbody tr:nth-child(even) { background: #fcfbf8; }
+.prod-table td.pg a { display: inline-block; border: 1px solid #e8e2d4; border-radius: 20px;
+                      padding: 3px 11px; font-size: .75rem; color: #8a6d2f; text-decoration: none; }
+.prod-table td.pg a:hover { border-color: #8a6d2f; text-decoration: none; }
+/* display:block matters: as an inline span the aspect-ratio is ignored, the
+   img then resolves height:100% against the whole card, and every card gets a
+   half-empty letterbox. */
+.hub-card .thumb { display: block; aspect-ratio: 4 / 3; background: #faf9f7; overflow: hidden;
+                   border-radius: 9px; margin-bottom: 14px; }
+.hub-card .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+a.hub-card { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+             transition: border-color .15s, box-shadow .15s, transform .15s; }
+a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.hub-card .more { display: inline-block; margin-top: 10px; color: #8a6d2f; font-size: .83rem;
+                  font-weight: 600; }
 .pill { display: inline-block; border: 1px solid #e2d9c4; background: #fdfaf2; color: #8a6d2f;
         border-radius: 20px; padding: 4px 12px; font-size: .75rem; margin: 0 6px 6px 0; }
 .prod-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
@@ -297,12 +359,31 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .prod-table a { text-decoration: none; }
 .prod-table a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .kw-note { font-size: .78rem; color: #b0a893; margin-top: 10px; }
-.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+            align-items: start; }
 .hub-card { border: 1px solid #eee; border-radius: 12px; padding: 18px 18px 16px; background: #fff; }
 .hub-card h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 6px; }
 .hub-card p { font-size: .85rem; color: #777; line-height: 1.6; }
 .hub-card a { text-decoration: none; color: #8a6d2f; font-size: .83rem; font-weight: 600; }
-@media (max-width: 700px) { .facts th, .prod-table td.code { white-space: normal; } }
+@media (max-width: 860px) {
+  .g-hero { grid-template-columns: 1fr; gap: 22px; }
+  .g-hero .g-shot { max-width: 420px; }
+}
+@media (max-width: 700px) {
+  .facts th, .prod-table td.code { white-space: normal; }
+  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+  /* the item table becomes one card per item: a five-column table on a phone
+     is unreadable, and the columns are exactly the facts a buyer wants stacked */
+  .prod-table thead, .prod-table tr:first-child th { display: none; }
+  .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
+  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
+                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  .prod-table tbody tr:nth-child(even) { background: none; }
+  .prod-table td { border: 0; padding: 0; }
+  .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }
+  .prod-table td.code { margin-top: 3px; }
+  .prod-table td.pg { margin-top: 7px; }
+}
 </style>
 </head>
 <body>
@@ -317,10 +398,21 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
   </nav>
 </header>
 <main class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <a href="/guides/">Buyer Guides</a> &rarr; <span>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</span></nav><h1>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</h1>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <a href="/guides/">Buyer Guides</a> &rarr; <span>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</span></nav><article class="g-hero"><div class="g-hero-copy"><p class="g-eyebrow">Buyer guide</p><h1>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</h1>
 <p class="lede">Garlic presses, mincers, graters, zesters and peelers - the small, high-rotation kitchen tools we make in die-cast zinc and stainless steel, finished to your retail spec.</p>
-<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Quote request - Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier (garlic-press-manufacturer)." target="_blank" rel="noopener">WhatsApp Us</a></div><p>Small tools are ordered in volume and judged on feel, so the metal, the hinge and the coating decide whether a press survives a year of kitchens. We build presses in die-cast zinc and stainless steel, with the handle, hole pattern and finish matched to the price point you are aiming at.</p>
+<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Quote request - Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier (garlic-press-manufacturer)." target="_blank" rel="noopener">WhatsApp Us</a></div></div><figure class="g-shot"><img src="/assets/guide-images/AA-43.webp" alt="Silicone Hand Garlic Peeler"><figcaption><b>AA-43</b>Silicone Hand Garlic Peeler &middot; Kitchen Gadgets, p.14</figcaption></figure></article>
+<div class="g-copy">
+<p class="lead">Small tools are ordered in volume and judged on feel, so the metal, the hinge and the coating decide whether a press survives a year of kitchens. We build presses in die-cast zinc and stainless steel, with the handle, hole pattern and finish matched to the price point you are aiming at.</p>
 <p>The same tooling family covers the neighbouring items a buyer usually wants in the same carton: garlic graters, rotary and hand graters, zesters, peelers and ginger tools. That keeps one order, one inspection, one carton spec.</p>
+</div>
+  <section class="block"><h2>Range at a glance</h2><p class="block-sub">A few items from this range, exactly as they are printed in our catalogues. Click a card to open that page in the flip-book.</p><div class="shot-grid"><a class="shot" href="/?catalog=new2026&amp;page=10"><div class="si"><img src="/assets/guide-images/CY26024.webp" alt="Lemon Zester" loading="lazy"></div><div class="sc"><b>CY26024</b><strong>Lemon Zester</strong><i>2026 New &middot; p.10</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=11"><div class="si"><img src="/assets/guide-images/CY26129.webp" alt="Scallion Shredder &amp; Peeler" loading="lazy"></div><div class="sc"><b>CY26129</b><strong>Scallion Shredder &amp; Peeler</strong><i>2026 New &middot; p.11</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=11"><div class="si"><img src="/assets/guide-images/DY26051.webp" alt="Snail Ceramic Peeler" loading="lazy"></div><div class="sc"><b>DY26051</b><strong>Snail Ceramic Peeler</strong><i>2026 New &middot; p.11</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=12"><div class="si"><img src="/assets/guide-images/BY26135.webp" alt="Rotary Peeler" loading="lazy"></div><div class="sc"><b>BY26135</b><strong>Rotary Peeler</strong><i>2026 New &middot; p.12</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=15"><div class="si"><img src="/assets/guide-images/YL26002.webp" alt="Cheese Grater" loading="lazy"></div><div class="sc"><b>YL26002</b><strong>Cheese Grater</strong><i>2026 New &middot; p.15</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=16"><div class="si"><img src="/assets/guide-images/CL26123.webp" alt="Stainless Steel Garlic Press" loading="lazy"></div><div class="sc"><b>CL26123</b><strong>Stainless Steel Garlic Press</strong><i>2026 New &middot; p.16</i></div></a>
+<a class="shot" href="/?catalog=2023&amp;page=16"><div class="si"><img src="/assets/guide-images/CL23105.webp" alt="Stainless Steel Grater" loading="lazy"></div><div class="sc"><b>CL23105</b><strong>Stainless Steel Grater</strong><i>2023 &middot; p.16</i></div></a>
+<a class="shot" href="/?catalog=2023&amp;page=17"><div class="si"><img src="/assets/guide-images/CL23042.webp" alt="Stainless Steel Pineapple Peeler" loading="lazy"></div><div class="sc"><b>CL23042</b><strong>Stainless Steel Pineapple Peeler</strong><i>2023 &middot; p.17</i></div></a></div></section>
 <div class="grid2">
   <section class="block"><h2>Customisation &amp; quality</h2><ul class="ticks"><li>Custom mould and tooling design, with samples before mass production</li><li>Pantone colour matching and food-grade silicone hardness tuning</li><li>Logo printing, debossing and fully custom retail packaging</li><li>Material options tested to FDA, LFGB, EN71 and REACH</li><li>BSCI and ISO 9001 audited factory with in-process and pre-shipment inspection</li><li>One-stop OEM/ODM, packaging, design and logistics support</li></ul></section>
   <section class="block"><h2>Compliance</h2><div class="chips"><span class="chip">BSCI</span><span class="chip">ISO 9001</span><span class="chip">FDA</span><span class="chip">LFGB</span><span class="chip">EN71</span><span class="chip">REACH</span><span class="chip">RoHS</span></div><p style="font-size:.88rem;color:#666;margin-top:12px">BSCI &amp; ISO 9001 certified OEM/ODM manufacturer since 2010. Serving customers in 34 countries with one-stop OEM, packaging, design and logistics. Vision: Make Globe Trade Easy.</p></section>
@@ -328,30 +420,31 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 
   <section class="block">
     <h2>Garlic Press items in our catalogues</h2>
-    <p class="block-sub">Every row is a printed item in a Yongli catalogue. Open the item page for the
-    code and the range, or jump straight into the flip-book at that page.</p>
+    <p class="block-sub">Every row is a printed item in a Yongli catalogue, with the photo we shoot
+    of it and the page it is printed on. Open the item page for the code and the range, or jump
+    straight into the flip-book at that page.</p>
     <table class="prod-table">
-      <tr><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
-      <tr><td><a href="/product/CY26024/">Lemon Zester</a></td><td class="code">CY26024</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=10">p.10</a></td></tr><tr><td><a href="/product/BL26084/">Adjustable Grater</a></td><td class="code">BL26084</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=10">p.10</a></td></tr><tr><td><a href="/product/CY26129/">Scallion Shredder &amp; Peeler</a></td><td class="code">CY26129</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td><a href="/product/HY26022/">Stainless Steel Peeler</a></td><td class="code">HY26022</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td><a href="/product/DY26051/">Snail Ceramic Peeler</a></td><td class="code">DY26051</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td><a href="/product/HY26035/">Stainless Steel Double-Sided Grater</a></td><td class="code">HY26035</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td><a href="/product/BY26135/">Rotary Peeler</a></td><td class="code">BY26135</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=12">p.12</a></td></tr><tr><td><a href="/product/CL26057/">Wooden Handle Peeler</a></td><td class="code">CL26057</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=12">p.12</a></td></tr><tr><td><a href="/product/BL26104/">Grape Peeler</a></td><td class="code">BL26104</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=14">p.14</a></td></tr><tr><td><a href="/product/YL26002/">Cheese Grater</a></td><td class="code">YL26002</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=15">p.15</a></td></tr><tr><td><a href="/product/CL26048/">Cheese Grater</a></td><td class="code">CL26048</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=15">p.15</a></td></tr><tr><td><a href="/product/BY26056/">Hand-Crank Rotary Cheese Grater</a></td><td class="code">BY26056</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=15">p.15</a></td></tr><tr><td><a href="/product/CL26123/">Stainless Steel Garlic Press</a></td><td class="code">CL26123</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=16">p.16</a></td></tr><tr><td><a href="/product/CY23002/">Stainless Steel Potato Masher</a></td><td class="code">CY23002</td><td>2023</td><td><a href="/?catalog=2023&amp;page=10">p.10</a></td></tr><tr><td><a href="/product/CY23011/">Stainless Steel Potato Masher</a></td><td class="code">CY23011</td><td>2023</td><td><a href="/?catalog=2023&amp;page=10">p.10</a></td></tr><tr><td><a href="/product/CL23105/">Stainless Steel Grater</a></td><td class="code">CL23105</td><td>2023</td><td><a href="/?catalog=2023&amp;page=16">p.16</a></td></tr><tr><td><a href="/product/BY23036/">3-in-1 Peeler</a></td><td class="code">BY23036</td><td>2023</td><td><a href="/?catalog=2023&amp;page=16">p.16</a></td></tr><tr><td><a href="/product/CL23042/">Stainless Steel Pineapple Peeler</a></td><td class="code">CL23042</td><td>2023</td><td><a href="/?catalog=2023&amp;page=17">p.17</a></td></tr><tr><td><a href="/product/AA-43/">Silicone Hand Garlic Peeler</a></td><td class="code">AA-43</td><td>Kitchen Gadgets</td><td><a href="/?catalog=kitchen&amp;page=14">p.14</a></td></tr><tr><td><a href="/product/AA-70/">Wax Gourd Peeler</a></td><td class="code">AA-70</td><td>Kitchen Gadgets</td><td><a href="/?catalog=kitchen&amp;page=18">p.18</a></td></tr>
+      <tr><th></th><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
+      <tr><td class="thumb"><img src="/assets/guide-images/t/CY26024.webp" alt="Lemon Zester" loading="lazy"></td><td><a href="/product/CY26024/">Lemon Zester</a></td><td class="code">CY26024</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=10">p.10</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/BL26084.webp" alt="Adjustable Grater" loading="lazy"></td><td><a href="/product/BL26084/">Adjustable Grater</a></td><td class="code">BL26084</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=10">p.10</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CY26129.webp" alt="Scallion Shredder &amp; Peeler" loading="lazy"></td><td><a href="/product/CY26129/">Scallion Shredder &amp; Peeler</a></td><td class="code">CY26129</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26022.webp" alt="Stainless Steel Peeler" loading="lazy"></td><td><a href="/product/HY26022/">Stainless Steel Peeler</a></td><td class="code">HY26022</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/DY26051.webp" alt="Snail Ceramic Peeler" loading="lazy"></td><td><a href="/product/DY26051/">Snail Ceramic Peeler</a></td><td class="code">DY26051</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26035.webp" alt="Stainless Steel Double-Sided Grater" loading="lazy"></td><td><a href="/product/HY26035/">Stainless Steel Double-Sided Grater</a></td><td class="code">HY26035</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=11">p.11</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/BY26135.webp" alt="Rotary Peeler" loading="lazy"></td><td><a href="/product/BY26135/">Rotary Peeler</a></td><td class="code">BY26135</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=12">p.12</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CL26057.webp" alt="Wooden Handle Peeler" loading="lazy"></td><td><a href="/product/CL26057/">Wooden Handle Peeler</a></td><td class="code">CL26057</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=12">p.12</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/BL26104.webp" alt="Grape Peeler" loading="lazy"></td><td><a href="/product/BL26104/">Grape Peeler</a></td><td class="code">BL26104</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=14">p.14</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/YL26002.webp" alt="Cheese Grater" loading="lazy"></td><td><a href="/product/YL26002/">Cheese Grater</a></td><td class="code">YL26002</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=15">p.15</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CL26048.webp" alt="Cheese Grater" loading="lazy"></td><td><a href="/product/CL26048/">Cheese Grater</a></td><td class="code">CL26048</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=15">p.15</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/BY26056.webp" alt="Hand-Crank Rotary Cheese Grater" loading="lazy"></td><td><a href="/product/BY26056/">Hand-Crank Rotary Cheese Grater</a></td><td class="code">BY26056</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=15">p.15</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CL26123.webp" alt="Stainless Steel Garlic Press" loading="lazy"></td><td><a href="/product/CL26123/">Stainless Steel Garlic Press</a></td><td class="code">CL26123</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=16">p.16</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CY23002.webp" alt="Stainless Steel Potato Masher" loading="lazy"></td><td><a href="/product/CY23002/">Stainless Steel Potato Masher</a></td><td class="code">CY23002</td><td>2023</td><td class="pg"><a href="/?catalog=2023&amp;page=10">p.10</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CY23011.webp" alt="Stainless Steel Potato Masher" loading="lazy"></td><td><a href="/product/CY23011/">Stainless Steel Potato Masher</a></td><td class="code">CY23011</td><td>2023</td><td class="pg"><a href="/?catalog=2023&amp;page=10">p.10</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CL23105.webp" alt="Stainless Steel Grater" loading="lazy"></td><td><a href="/product/CL23105/">Stainless Steel Grater</a></td><td class="code">CL23105</td><td>2023</td><td class="pg"><a href="/?catalog=2023&amp;page=16">p.16</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/BY23036.webp" alt="3-in-1 Peeler" loading="lazy"></td><td><a href="/product/BY23036/">3-in-1 Peeler</a></td><td class="code">BY23036</td><td>2023</td><td class="pg"><a href="/?catalog=2023&amp;page=16">p.16</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CL23042.webp" alt="Stainless Steel Pineapple Peeler" loading="lazy"></td><td><a href="/product/CL23042/">Stainless Steel Pineapple Peeler</a></td><td class="code">CL23042</td><td>2023</td><td class="pg"><a href="/?catalog=2023&amp;page=17">p.17</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/AA-43.webp" alt="Silicone Hand Garlic Peeler" loading="lazy"></td><td><a href="/product/AA-43/">Silicone Hand Garlic Peeler</a></td><td class="code">AA-43</td><td>Kitchen Gadgets</td><td class="pg"><a href="/?catalog=kitchen&amp;page=14">p.14</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/AA-70.webp" alt="Wax Gourd Peeler" loading="lazy"></td><td><a href="/product/AA-70/">Wax Gourd Peeler</a></td><td class="code">AA-70</td><td>Kitchen Gadgets</td><td class="pg"><a href="/?catalog=kitchen&amp;page=18">p.18</a></td></tr>
     </table>
     <p class="kw-note">top inquiry words: garlic press</p>
   </section>
-  <section class="block"><h2>Questions buyers ask</h2><dl class="faq"><dt>Which material should we choose for a garlic press?</dt><dd>Die-cast zinc gives the solid feel buyers associate with a premium press; stainless steel suits a dishwasher-led, rust-resistance message. We quote both and you compare.</dd>
-<dt>Can the press be dishwasher safe?</dt><dd>Yes, the stainless steel and zinc versions are produced to dishwasher-safe finishing. We confirm the exact specification on the approved sample.</dd>
-<dt>Do you offer custom colour or coating?</dt><dd>Yes - colour coating matching a Pantone reference, with the sample approved before the production run.</dd>
-<dt>What is the pack-out like?</dt><dd>Printed card, blister, colour box or polybag with label, decided with you at quoting stage so the carton dimensions are agreed early.</dd></dl></section>
+  <section class="block"><h2>Questions buyers ask</h2><div class="faq"><details><summary>Which material should we choose for a garlic press?</summary><dd>Die-cast zinc gives the solid feel buyers associate with a premium press; stainless steel suits a dishwasher-led, rust-resistance message. We quote both and you compare.</dd></details>
+<details><summary>Can the press be dishwasher safe?</summary><dd>Yes, the stainless steel and zinc versions are produced to dishwasher-safe finishing. We confirm the exact specification on the approved sample.</dd></details>
+<details><summary>Do you offer custom colour or coating?</summary><dd>Yes - colour coating matching a Pantone reference, with the sample approved before the production run.</dd></details>
+<details><summary>What is the pack-out like?</summary><dd>Printed card, blister, colour box or polybag with label, decided with you at quoting stage so the carton dimensions are agreed early.</dd></details></div></section>
   <section class="block"><h2>More ways to browse</h2><p class="block-sub">Every item listed above is printed in one of our catalogues, with its code and page number on its own page.</p><div class="siblings"><a class="sibling" href="/product/">All products</a><a class="sibling" href="/guides/">All buyer guides</a><a class="sibling" href="/catalog/">Catalogue categories</a><a class="sibling" href="/#viewCustomize">Customisation process</a><a class="sibling" href="/#viewAbout">About the factory</a></div></section>
-  <section class="block"><h2>Other buyer guides</h2><div class="siblings"><a class="sibling" href="/guides/sourdough-starter-kit-manufacturer/">Sourdough Starter Kit Manufacturer &amp; OEM Supplier</a>
-<a class="sibling" href="/guides/bread-proofing-basket-manufacturer/">Bread Proofing Basket Manufacturer</a>
-<a class="sibling" href="/guides/cutting-board-manufacturer/">Cutting Board Manufacturer</a>
-<a class="sibling" href="/guides/kitchen-gadgets-manufacturer/">Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</a>
-<a class="sibling" href="/guides/lunch-box-food-storage-manufacturer/">Lunch Box &amp; Food Storage Manufacturer</a>
-<a class="sibling" href="/guides/baby-kids-dining-manufacturer/">Baby &amp; Kids Dining Manufacturer</a>
-<a class="sibling" href="/guides/silicone-bakeware-manufacturer/">Silicone Bakeware &amp; Mould Manufacturer</a>
-<a class="sibling" href="/guides/coffee-tea-accessories-manufacturer/">Coffee &amp; Tea Accessories Manufacturer</a>
-<a class="sibling" href="/guides/collapsible-foldable-storage-manufacturer/">Collapsible &amp; Foldable Storage Manufacturer</a>
-<a class="sibling" href="/guides/mats-pads-and-placemats-manufacturer/">Silicone Mats, Pads &amp; Placemats Manufacturer</a>
-<a class="sibling" href="/guides/bbq-grill-accessories-manufacturer/">BBQ &amp; Grill Accessories Manufacturer</a></div><p class="block-sub" style="margin-top:14px">Or browse <a href="/product/">every product we print a code for</a> and the <a href="/catalog/">catalogue category pages</a>.</p></section>
+  <section class="block"><h2>Other buyer guides</h2><div class="hub-grid"><a class="hub-card" href="/guides/sourdough-starter-kit-manufacturer/"><div class="thumb"><img src="/assets/guide-images/J-01.webp" alt="" loading="lazy"></div><h3>Sourdough Starter Kit Manufacturer &amp; OEM Supplier</h3><p>BSCI &amp; ISO 9001 certified OEM/ODM maker of sourdough starter kits, jars, thermometers and cloth covers. Custom logo, packaging and colours.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/bread-proofing-basket-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL23319.webp" alt="" loading="lazy"></div><h3>Bread Proofing Basket Manufacturer</h3><p>OEM manufacturer of bread proofing baskets, banneton sets, linen liners and dough proofing boxes. BSCI &amp; ISO 9001 certified, custom sizes and branding.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/cutting-board-manufacturer/"><div class="thumb"><img src="/assets/guide-images/EL26013.webp" alt="" loading="lazy"></div><h3>Cutting Board Manufacturer</h3><p>OEM/ODM manufacturer of titanium, stainless steel and foldable cutting boards for kitchen and outdoor use. Custom sizes, corners, logos and packaging.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/kitchen-gadgets-manufacturer/"><div class="thumb"><img src="/assets/guide-images/HY26007.webp" alt="" loading="lazy"></div><h3>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</h3><p>OEM/ODM manufacturer of kitchen gadgets and accessories - utensils, scissors, openers, measuring tools - in silicone, stainless steel and BPA-free plastic.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/lunch-box-food-storage-manufacturer/"><div class="thumb"><img src="/assets/guide-images/BL26155.webp" alt="" loading="lazy"></div><h3>Lunch Box &amp; Food Storage Manufacturer</h3><p>OEM manufacturer of silicone lunch boxes, collapsible food containers, snack boxes and bento sets. BSCI &amp; ISO 9001 certified, custom colours and printing.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/baby-kids-dining-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AY26205.webp" alt="" loading="lazy"></div><h3>Baby &amp; Kids Dining Manufacturer</h3><p>OEM manufacturer of silicone baby plates, suction bowls, spoons, bibs and placemats for kids dining ranges. EN71 and FDA compliant, custom printing.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/silicone-bakeware-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL26125.webp" alt="" loading="lazy"></div><h3>Silicone Bakeware &amp; Mould Manufacturer</h3><p>OEM/ODM manufacturer of silicone bakeware, cake pans, moulds, mats and ice trays. In-house tooling, Pantone colour matching, FDA and LFGB materials.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/coffee-tea-accessories-manufacturer/"><div class="thumb"><img src="/assets/guide-images/DY26093.webp" alt="" loading="lazy"></div><h3>Coffee &amp; Tea Accessories Manufacturer</h3><p>OEM manufacturer of milk frothers, tea infusers, pour-over and matcha sets and coffee accessories. CE and RoHS compliant electronics where needed.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/collapsible-foldable-storage-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AY26047.webp" alt="" loading="lazy"></div><h3>Collapsible &amp; Foldable Storage Manufacturer</h3><p>OEM manufacturer of collapsible silicone food storage, foldable bowls, collapsible cups and space-saving kitchen storage. Custom colours and branding.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/mats-pads-and-placemats-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL26085.webp" alt="" loading="lazy"></div><h3>Silicone Mats, Pads &amp; Placemats Manufacturer</h3><p>OEM manufacturer of silicone placemats, table mats, drying mats, baking mats and high-chair mats. Custom sizes, printed surfaces and Pantone colour matching.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/bbq-grill-accessories-manufacturer/"><div class="thumb"><img src="/assets/guide-images/SL26006.webp" alt="" loading="lazy"></div><h3>BBQ &amp; Grill Accessories Manufacturer</h3><p>OEM manufacturer of BBQ grill tool sets, basting brushes, spatulas, gloves and prep tubs. Stainless steel and heat-resistant silicone, custom branded sets.</p><span class="more">Read the guide &rarr;</span></a></div><p class="block-sub" style="margin-top:16px">Or browse <a href="/product/">every product we print a code for</a> and the <a href="/catalog/">catalogue category pages</a>.</p></section>
 </main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.
 <a href="/">3D catalog</a> &middot; <a href="/catalog/">categories</a> &middot;

@@ -285,9 +285,71 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .facts th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #a0a0a0; font-weight: 600; padding: 0 12px 8px 0; border-bottom: 1px solid #eee; width: 34%; }
 .facts td { padding: 9px 0; border-bottom: 1px solid #f4f4f4; color: #333; }
 .facts tr:last-child th, .facts tr:last-child td { border-bottom: 0; }
-.faq { margin-top: 6px; }
-.faq dt { font-weight: 600; color: #1a1a2e; font-size: .95rem; margin-top: 16px; }
-.faq dd { color: #555; font-size: .92rem; line-height: 1.7; margin-top: 5px; }
+/* FAQ is collapsed by default: a buyer scanning seven answers should see seven
+   questions, not a wall of paragraphs. The text stays in the DOM for indexing. */
+.faq { margin-top: 2px; border-top: 1px solid #f0ede7; }
+.faq details { border-bottom: 1px solid #f0ede7; }
+.faq summary { cursor: pointer; list-style: none; position: relative; padding: 15px 30px 15px 0;
+               font-weight: 600; color: #1a1a2e; font-size: .96rem; line-height: 1.5; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: #8a6d2f; }
+.faq summary::after { content: '+'; position: absolute; right: 2px; top: 13px; color: #a08b5f;
+                      font-size: 1.2rem; font-weight: 400; line-height: 1; }
+.faq details[open] summary::after { content: '\2013'; }
+.faq dd { color: #555; font-size: .95rem; line-height: 1.8; padding: 0 30px 16px 0; }
+/* Guide pages: a hero with the guide's own product shot, a measured column of
+   prose, then the range as photo cards. A catalogue page no longer reaches the
+   full 1040 px text width - long lines were the main readability complaint. */
+.g-eyebrow { font-size: .73rem; text-transform: uppercase; letter-spacing: .11em; color: #a08b5f;
+             font-weight: 700; margin-bottom: 8px; }
+/* these note lines were running ~120 characters across the full column, which
+   is the one place the prose was still hard to read */
+.block-sub, .kw-note { max-width: 74ch; }
+.g-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 34px;
+          align-items: start; margin: 2px 0 32px; }
+.g-hero .lede { margin-bottom: 18px; }
+.g-copy { max-width: 72ch; }
+.g-copy p { color: #4a4a4a; font-size: 1.01rem; line-height: 1.85; margin-bottom: 16px; }
+.g-copy p.lead { font-size: 1.1rem; line-height: 1.8; color: #333; }
+.g-shot { margin: 0; border: 1px solid #eee; border-radius: 14px; background: #faf9f7; overflow: hidden; }
+.g-shot img { width: 100%; height: auto; display: block; }
+.g-shot figcaption { padding: 12px 14px; font-size: .8rem; color: #8b8577; line-height: 1.55;
+                     border-top: 1px solid #f0ede7; }
+.g-shot figcaption b { display: block; color: #1a1a2e; font-size: .85rem;
+                       font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+.shot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.shot { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 12px;
+        overflow: hidden; background: #fff; text-decoration: none; color: inherit;
+        transition: border-color .15s, box-shadow .15s, transform .15s; }
+.shot:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.shot .si { aspect-ratio: 1 / 1; background: #faf9f7; overflow: hidden; }
+/* contain, not cover: the crops keep the catalogue's own proportions, and a
+   cover crop was cutting products in half and slicing the printed labels */
+.shot .si img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot .sc { padding: 10px 12px 12px; }
+.shot .sc b { display: block; font-size: .73rem; letter-spacing: .05em; color: #8a6d2f;
+              font-variant-numeric: tabular-nums; }
+.shot .sc strong { display: block; font-size: .84rem; font-weight: 600; color: #1a1a2e;
+                   line-height: 1.4; margin-top: 4px; }
+.shot .sc i { display: block; font-style: normal; font-size: .72rem; color: #b0a893; margin-top: 6px; }
+.prod-table td.thumb { width: 52px; padding: 8px 10px 8px 0; }
+.prod-table td.thumb img { width: 46px; height: 46px; object-fit: contain; border-radius: 8px;
+                           background: #faf9f7; display: block; }
+.prod-table tbody tr:nth-child(even) { background: #fcfbf8; }
+.prod-table td.pg a { display: inline-block; border: 1px solid #e8e2d4; border-radius: 20px;
+                      padding: 3px 11px; font-size: .75rem; color: #8a6d2f; text-decoration: none; }
+.prod-table td.pg a:hover { border-color: #8a6d2f; text-decoration: none; }
+/* display:block matters: as an inline span the aspect-ratio is ignored, the
+   img then resolves height:100% against the whole card, and every card gets a
+   half-empty letterbox. */
+.hub-card .thumb { display: block; aspect-ratio: 4 / 3; background: #faf9f7; overflow: hidden;
+                   border-radius: 9px; margin-bottom: 14px; }
+.hub-card .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+a.hub-card { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+             transition: border-color .15s, box-shadow .15s, transform .15s; }
+a.hub-card:hover { border-color: #d9cfb9; box-shadow: 0 9px 22px rgba(0,0,0,.06); transform: translateY(-2px); }
+.hub-card .more { display: inline-block; margin-top: 10px; color: #8a6d2f; font-size: .83rem;
+                  font-weight: 600; }
 .pill { display: inline-block; border: 1px solid #e2d9c4; background: #fdfaf2; color: #8a6d2f;
         border-radius: 20px; padding: 4px 12px; font-size: .75rem; margin: 0 6px 6px 0; }
 .prod-table { width: 100%; border-collapse: collapse; font-size: .89rem; }
@@ -297,12 +359,31 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 .prod-table a { text-decoration: none; }
 .prod-table a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .kw-note { font-size: .78rem; color: #b0a893; margin-top: 10px; }
-.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+            align-items: start; }
 .hub-card { border: 1px solid #eee; border-radius: 12px; padding: 18px 18px 16px; background: #fff; }
 .hub-card h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 6px; }
 .hub-card p { font-size: .85rem; color: #777; line-height: 1.6; }
 .hub-card a { text-decoration: none; color: #8a6d2f; font-size: .83rem; font-weight: 600; }
-@media (max-width: 700px) { .facts th, .prod-table td.code { white-space: normal; } }
+@media (max-width: 860px) {
+  .g-hero { grid-template-columns: 1fr; gap: 22px; }
+  .g-hero .g-shot { max-width: 420px; }
+}
+@media (max-width: 700px) {
+  .facts th, .prod-table td.code { white-space: normal; }
+  .shot-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+  /* the item table becomes one card per item: a five-column table on a phone
+     is unreadable, and the columns are exactly the facts a buyer wants stacked */
+  .prod-table thead, .prod-table tr:first-child th { display: none; }
+  .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
+  .prod-table tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 12px;
+                   padding: 12px 0; border-bottom: 1px solid #f0ede7; }
+  .prod-table tbody tr:nth-child(even) { background: none; }
+  .prod-table td { border: 0; padding: 0; }
+  .prod-table td.thumb { grid-row: 1 / span 4; width: auto; padding: 0; }
+  .prod-table td.code { margin-top: 3px; }
+  .prod-table td.pg { margin-top: 7px; }
+}
 </style>
 </head>
 <body>
@@ -317,10 +398,21 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
   </nav>
 </header>
 <main class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <a href="/guides/">Buyer Guides</a> &rarr; <span>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</span></nav><h1>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</h1>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> &rarr; <a href="/guides/">Buyer Guides</a> &rarr; <span>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</span></nav><article class="g-hero"><div class="g-hero-copy"><p class="g-eyebrow">Buyer guide</p><h1>Kitchen Gadgets &amp; Kitchen Accessories Manufacturer</h1>
 <p class="lede">Yongli is the factory behind many kitchen gadget programmes: utensil sets, scissors, can openers, strainers, measuring tools, mixing and prep gadgets.</p>
-<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Quote request - Kitchen Gadgets &amp; Kitchen Accessories Manufacturer">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for Kitchen Gadgets &amp; Kitchen Accessories Manufacturer (kitchen-gadgets-manufacturer)." target="_blank" rel="noopener">WhatsApp Us</a></div><p>Kitchen gadgets are rarely bought one at a time, so the practical question is how many items one factory can tool and pack together. Ours covers silicone and wooden-handled utensil sets, stainless steel scissors and shears, can openers, spiral and rotary graters, measuring cups and spoons, mixing bowls and prep accessories.</p>
+<div class="cta-row"><a class="cta primary" href="mailto:info@yonglicc.com?subject=Quote request - Kitchen Gadgets &amp; Kitchen Accessories Manufacturer">Email a Quote Request</a><a class="cta whatsapp" href="https://wa.me/8613824296558?text=Hi, I would like a quote for Kitchen Gadgets &amp; Kitchen Accessories Manufacturer (kitchen-gadgets-manufacturer)." target="_blank" rel="noopener">WhatsApp Us</a></div></div><figure class="g-shot"><img src="/assets/guide-images/HY26007.webp" alt="Smiley Wooden Handle Kitchen Utensil"><figcaption><b>HY26007</b>Smiley Wooden Handle Kitchen Utensil &middot; 2026 New, p.6</figcaption></figure></article>
+<div class="g-copy">
+<p class="lead">Kitchen gadgets are rarely bought one at a time, so the practical question is how many items one factory can tool and pack together. Ours covers silicone and wooden-handled utensil sets, stainless steel scissors and shears, can openers, spiral and rotary graters, measuring cups and spoons, mixing bowls and prep accessories.</p>
 <p>That breadth is also the cheapest way to build a private-label range: one colour system, one logo treatment, one carton language, applied across a dozen SKUs. We keep the colour and material spec on file so repeat orders match the first shipment.</p>
+</div>
+  <section class="block"><h2>Range at a glance</h2><p class="block-sub">A few items from this range, exactly as they are printed in our catalogues. Click a card to open that page in the flip-book.</p><div class="shot-grid"><a class="shot" href="/?catalog=new2026&amp;page=6"><div class="si"><img src="/assets/guide-images/HL26011.webp" alt="8-Piece Kitchen Utensil Set" loading="lazy"></div><div class="sc"><b>HL26011</b><strong>8-Piece Kitchen Utensil Set</strong><i>2026 New &middot; p.6</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=6"><div class="si"><img src="/assets/guide-images/HL26042.webp" alt="6-Piece Kitchen Utensil Set" loading="lazy"></div><div class="sc"><b>HL26042</b><strong>6-Piece Kitchen Utensil Set</strong><i>2026 New &middot; p.6</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=6"><div class="si"><img src="/assets/guide-images/HY26025.webp" alt="19-Piece Kitchen Utensil Set" loading="lazy"></div><div class="sc"><b>HY26025</b><strong>19-Piece Kitchen Utensil Set</strong><i>2026 New &middot; p.6</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=7"><div class="si"><img src="/assets/guide-images/HY26018.webp" alt="Stainless Steel Handle Tamagoyaki Spatula" loading="lazy"></div><div class="sc"><b>HY26018</b><strong>Stainless Steel Handle Tamagoyaki Spatula</strong><i>2026 New &middot; p.7</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=7"><div class="si"><img src="/assets/guide-images/HY26019.webp" alt="Pancake Spatula" loading="lazy"></div><div class="sc"><b>HY26019</b><strong>Pancake Spatula</strong><i>2026 New &middot; p.7</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=8"><div class="si"><img src="/assets/guide-images/HY26005.webp" alt="Stainless Steel Whisk" loading="lazy"></div><div class="sc"><b>HY26005</b><strong>Stainless Steel Whisk</strong><i>2026 New &middot; p.8</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=16"><div class="si"><img src="/assets/guide-images/BL26120.webp" alt="Rabbit Can Opener" loading="lazy"></div><div class="sc"><b>BL26120</b><strong>Rabbit Can Opener</strong><i>2026 New &middot; p.16</i></div></a>
+<a class="shot" href="/?catalog=new2026&amp;page=17"><div class="si"><img src="/assets/guide-images/LY26001.webp" alt="Stainless Steel Measuring Spoon" loading="lazy"></div><div class="sc"><b>LY26001</b><strong>Stainless Steel Measuring Spoon</strong><i>2026 New &middot; p.17</i></div></a></div></section>
 <div class="grid2">
   <section class="block"><h2>Customisation &amp; quality</h2><ul class="ticks"><li>Custom mould and tooling design, with samples before mass production</li><li>Pantone colour matching and food-grade silicone hardness tuning</li><li>Logo printing, debossing and fully custom retail packaging</li><li>Material options tested to FDA, LFGB, EN71 and REACH</li><li>BSCI and ISO 9001 audited factory with in-process and pre-shipment inspection</li><li>One-stop OEM/ODM, packaging, design and logistics support</li></ul></section>
   <section class="block"><h2>Compliance</h2><div class="chips"><span class="chip">BSCI</span><span class="chip">ISO 9001</span><span class="chip">FDA</span><span class="chip">LFGB</span><span class="chip">EN71</span><span class="chip">REACH</span><span class="chip">RoHS</span></div><p style="font-size:.88rem;color:#666;margin-top:12px">BSCI &amp; ISO 9001 certified OEM/ODM manufacturer since 2010. Serving customers in 34 countries with one-stop OEM, packaging, design and logistics. Vision: Make Globe Trade Easy.</p></section>
@@ -328,30 +420,31 @@ ul.ticks li::before { content: ''; position: absolute; left: 2px; top: 16px; wid
 
   <section class="block">
     <h2>Kitchen Gadgets &amp; Kitchen Accessories items in our catalogues</h2>
-    <p class="block-sub">Every row is a printed item in a Yongli catalogue. Open the item page for the
-    code and the range, or jump straight into the flip-book at that page.</p>
+    <p class="block-sub">Every row is a printed item in a Yongli catalogue, with the photo we shoot
+    of it and the page it is printed on. Open the item page for the code and the range, or jump
+    straight into the flip-book at that page.</p>
     <table class="prod-table">
-      <tr><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
-      <tr><td><a href="/product/HL26011/">8-Piece Kitchen Utensil Set</a></td><td class="code">HL26011</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HY26007/">Smiley Wooden Handle Kitchen Utensil</a></td><td class="code">HY26007</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HL26042/">6-Piece Kitchen Utensil Set</a></td><td class="code">HL26042</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HL26015/">4-Piece Kitchen Utensil Set</a></td><td class="code">HL26015</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HY26025/">19-Piece Kitchen Utensil Set</a></td><td class="code">HY26025</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HL26049/">9-Piece Nylon Kitchen Utensil Set</a></td><td class="code">HL26049</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HY26023/">15-Piece Kitchen Utensil Set</a></td><td class="code">HY26023</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td><a href="/product/HY26018/">Stainless Steel Handle Tamagoyaki Spatula</a></td><td class="code">HY26018</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=7">p.7</a></td></tr><tr><td><a href="/product/HL26032/">25-Piece Spoon &amp; Spatula Set</a></td><td class="code">HL26032</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=7">p.7</a></td></tr><tr><td><a href="/product/HY26019/">Pancake Spatula</a></td><td class="code">HY26019</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=7">p.7</a></td></tr><tr><td><a href="/product/CL26089/">Wooden Handle Corn Spatula</a></td><td class="code">CL26089</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=8">p.8</a></td></tr><tr><td><a href="/product/HY26005/">Stainless Steel Whisk</a></td><td class="code">HY26005</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=8">p.8</a></td></tr><tr><td><a href="/product/HZ26008/">Stainless Steel Whisk</a></td><td class="code">HZ26008</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=9">p.9</a></td></tr><tr><td><a href="/product/HY26012/">Stainless Steel Egg Whisk</a></td><td class="code">HY26012</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=9">p.9</a></td></tr><tr><td><a href="/product/HL26040/">6in Silicone Whisk</a></td><td class="code">HL26040</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=9">p.9</a></td></tr><tr><td><a href="/product/BL26120/">Rabbit Can Opener</a></td><td class="code">BL26120</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=16">p.16</a></td></tr><tr><td><a href="/product/CY26045/">Stainless Steel Can Opener</a></td><td class="code">CY26045</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr><tr><td><a href="/product/LY26001/">Stainless Steel Measuring Spoon</a></td><td class="code">LY26001</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr><tr><td><a href="/product/LY26003/">Colorful Plastic Measuring Spoon</a></td><td class="code">LY26003</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr><tr><td><a href="/product/LY26007/">Heart-Shaped Measuring Cup &amp; Spoon</a></td><td class="code">LY26007</td><td>2026 New</td><td><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr>
+      <tr><th></th><th>Product</th><th>Code</th><th>Catalogue</th><th>Page</th></tr>
+      <tr><td class="thumb"><img src="/assets/guide-images/t/HL26011.webp" alt="8-Piece Kitchen Utensil Set" loading="lazy"></td><td><a href="/product/HL26011/">8-Piece Kitchen Utensil Set</a></td><td class="code">HL26011</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26007.webp" alt="Smiley Wooden Handle Kitchen Utensil" loading="lazy"></td><td><a href="/product/HY26007/">Smiley Wooden Handle Kitchen Utensil</a></td><td class="code">HY26007</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HL26042.webp" alt="6-Piece Kitchen Utensil Set" loading="lazy"></td><td><a href="/product/HL26042/">6-Piece Kitchen Utensil Set</a></td><td class="code">HL26042</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HL26015.webp" alt="4-Piece Kitchen Utensil Set" loading="lazy"></td><td><a href="/product/HL26015/">4-Piece Kitchen Utensil Set</a></td><td class="code">HL26015</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26025.webp" alt="19-Piece Kitchen Utensil Set" loading="lazy"></td><td><a href="/product/HY26025/">19-Piece Kitchen Utensil Set</a></td><td class="code">HY26025</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HL26049.webp" alt="9-Piece Nylon Kitchen Utensil Set" loading="lazy"></td><td><a href="/product/HL26049/">9-Piece Nylon Kitchen Utensil Set</a></td><td class="code">HL26049</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26023.webp" alt="15-Piece Kitchen Utensil Set" loading="lazy"></td><td><a href="/product/HY26023/">15-Piece Kitchen Utensil Set</a></td><td class="code">HY26023</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=6">p.6</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26018.webp" alt="Stainless Steel Handle Tamagoyaki Spatula" loading="lazy"></td><td><a href="/product/HY26018/">Stainless Steel Handle Tamagoyaki Spatula</a></td><td class="code">HY26018</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=7">p.7</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HL26032.webp" alt="25-Piece Spoon &amp; Spatula Set" loading="lazy"></td><td><a href="/product/HL26032/">25-Piece Spoon &amp; Spatula Set</a></td><td class="code">HL26032</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=7">p.7</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26019.webp" alt="Pancake Spatula" loading="lazy"></td><td><a href="/product/HY26019/">Pancake Spatula</a></td><td class="code">HY26019</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=7">p.7</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CL26089.webp" alt="Wooden Handle Corn Spatula" loading="lazy"></td><td><a href="/product/CL26089/">Wooden Handle Corn Spatula</a></td><td class="code">CL26089</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=8">p.8</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26005.webp" alt="Stainless Steel Whisk" loading="lazy"></td><td><a href="/product/HY26005/">Stainless Steel Whisk</a></td><td class="code">HY26005</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=8">p.8</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HZ26008.webp" alt="Stainless Steel Whisk" loading="lazy"></td><td><a href="/product/HZ26008/">Stainless Steel Whisk</a></td><td class="code">HZ26008</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=9">p.9</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HY26012.webp" alt="Stainless Steel Egg Whisk" loading="lazy"></td><td><a href="/product/HY26012/">Stainless Steel Egg Whisk</a></td><td class="code">HY26012</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=9">p.9</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/HL26040.webp" alt="6in Silicone Whisk" loading="lazy"></td><td><a href="/product/HL26040/">6in Silicone Whisk</a></td><td class="code">HL26040</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=9">p.9</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/BL26120.webp" alt="Rabbit Can Opener" loading="lazy"></td><td><a href="/product/BL26120/">Rabbit Can Opener</a></td><td class="code">BL26120</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=16">p.16</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/CY26045.webp" alt="Stainless Steel Can Opener" loading="lazy"></td><td><a href="/product/CY26045/">Stainless Steel Can Opener</a></td><td class="code">CY26045</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/LY26001.webp" alt="Stainless Steel Measuring Spoon" loading="lazy"></td><td><a href="/product/LY26001/">Stainless Steel Measuring Spoon</a></td><td class="code">LY26001</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/LY26003.webp" alt="Colorful Plastic Measuring Spoon" loading="lazy"></td><td><a href="/product/LY26003/">Colorful Plastic Measuring Spoon</a></td><td class="code">LY26003</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr><tr><td class="thumb"><img src="/assets/guide-images/t/LY26007.webp" alt="Heart-Shaped Measuring Cup &amp; Spoon" loading="lazy"></td><td><a href="/product/LY26007/">Heart-Shaped Measuring Cup &amp; Spoon</a></td><td class="code">LY26007</td><td>2026 New</td><td class="pg"><a href="/?catalog=new2026&amp;page=17">p.17</a></td></tr>
     </table>
     <p class="kw-note">top traffic words: kitchen gadgets, kitchen accessories</p>
   </section>
-  <section class="block"><h2>Questions buyers ask</h2><dl class="faq"><dt>Can we build a whole range with one colour system?</dt><dd>Yes - that is the usual shape of a private-label programme. We hold the approved colour and material spec so every SKU in the range matches.</dd>
-<dt>How many items can we mix in one order?</dt><dd>As many as you need, within one carton spec. Each item is quoted separately and then combined into a single production and inspection plan.</dd>
-<dt>Do you make both silicone and stainless versions of the same gadget?</dt><dd>Often yes. A turner, for example, exists in all-silicone, silicone with a wooden handle, and stainless with a silicone head - three price points from one product idea.</dd>
-<dt>Which certifications apply?</dt><dd>The factory is BSCI and ISO 9001 audited; food-contact materials are produced to FDA and LFGB requirements, with EN71 for children's items and REACH/RoHS where relevant.</dd></dl></section>
+  <section class="block"><h2>Questions buyers ask</h2><div class="faq"><details><summary>Can we build a whole range with one colour system?</summary><dd>Yes - that is the usual shape of a private-label programme. We hold the approved colour and material spec so every SKU in the range matches.</dd></details>
+<details><summary>How many items can we mix in one order?</summary><dd>As many as you need, within one carton spec. Each item is quoted separately and then combined into a single production and inspection plan.</dd></details>
+<details><summary>Do you make both silicone and stainless versions of the same gadget?</summary><dd>Often yes. A turner, for example, exists in all-silicone, silicone with a wooden handle, and stainless with a silicone head - three price points from one product idea.</dd></details>
+<details><summary>Which certifications apply?</summary><dd>The factory is BSCI and ISO 9001 audited; food-contact materials are produced to FDA and LFGB requirements, with EN71 for children's items and REACH/RoHS where relevant.</dd></details></div></section>
   <section class="block"><h2>More ways to browse</h2><p class="block-sub">Every item listed above is printed in one of our catalogues, with its code and page number on its own page.</p><div class="siblings"><a class="sibling" href="/product/">All products</a><a class="sibling" href="/guides/">All buyer guides</a><a class="sibling" href="/catalog/">Catalogue categories</a><a class="sibling" href="/#viewCustomize">Customisation process</a><a class="sibling" href="/#viewAbout">About the factory</a></div></section>
-  <section class="block"><h2>Other buyer guides</h2><div class="siblings"><a class="sibling" href="/guides/sourdough-starter-kit-manufacturer/">Sourdough Starter Kit Manufacturer &amp; OEM Supplier</a>
-<a class="sibling" href="/guides/bread-proofing-basket-manufacturer/">Bread Proofing Basket Manufacturer</a>
-<a class="sibling" href="/guides/cutting-board-manufacturer/">Cutting Board Manufacturer</a>
-<a class="sibling" href="/guides/garlic-press-manufacturer/">Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</a>
-<a class="sibling" href="/guides/lunch-box-food-storage-manufacturer/">Lunch Box &amp; Food Storage Manufacturer</a>
-<a class="sibling" href="/guides/baby-kids-dining-manufacturer/">Baby &amp; Kids Dining Manufacturer</a>
-<a class="sibling" href="/guides/silicone-bakeware-manufacturer/">Silicone Bakeware &amp; Mould Manufacturer</a>
-<a class="sibling" href="/guides/coffee-tea-accessories-manufacturer/">Coffee &amp; Tea Accessories Manufacturer</a>
-<a class="sibling" href="/guides/collapsible-foldable-storage-manufacturer/">Collapsible &amp; Foldable Storage Manufacturer</a>
-<a class="sibling" href="/guides/mats-pads-and-placemats-manufacturer/">Silicone Mats, Pads &amp; Placemats Manufacturer</a>
-<a class="sibling" href="/guides/bbq-grill-accessories-manufacturer/">BBQ &amp; Grill Accessories Manufacturer</a></div><p class="block-sub" style="margin-top:14px">Or browse <a href="/product/">every product we print a code for</a> and the <a href="/catalog/">catalogue category pages</a>.</p></section>
+  <section class="block"><h2>Other buyer guides</h2><div class="hub-grid"><a class="hub-card" href="/guides/sourdough-starter-kit-manufacturer/"><div class="thumb"><img src="/assets/guide-images/J-01.webp" alt="" loading="lazy"></div><h3>Sourdough Starter Kit Manufacturer &amp; OEM Supplier</h3><p>BSCI &amp; ISO 9001 certified OEM/ODM maker of sourdough starter kits, jars, thermometers and cloth covers. Custom logo, packaging and colours.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/bread-proofing-basket-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL23319.webp" alt="" loading="lazy"></div><h3>Bread Proofing Basket Manufacturer</h3><p>OEM manufacturer of bread proofing baskets, banneton sets, linen liners and dough proofing boxes. BSCI &amp; ISO 9001 certified, custom sizes and branding.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/cutting-board-manufacturer/"><div class="thumb"><img src="/assets/guide-images/EL26013.webp" alt="" loading="lazy"></div><h3>Cutting Board Manufacturer</h3><p>OEM/ODM manufacturer of titanium, stainless steel and foldable cutting boards for kitchen and outdoor use. Custom sizes, corners, logos and packaging.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/garlic-press-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AA-43.webp" alt="" loading="lazy"></div><h3>Garlic Press Manufacturer &amp; Kitchen Gadget OEM Supplier</h3><p>OEM supplier of garlic presses, mincers and graters in stainless steel and die-cast zinc. BSCI &amp; ISO 9001 certified factory, custom packaging.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/lunch-box-food-storage-manufacturer/"><div class="thumb"><img src="/assets/guide-images/BL26155.webp" alt="" loading="lazy"></div><h3>Lunch Box &amp; Food Storage Manufacturer</h3><p>OEM manufacturer of silicone lunch boxes, collapsible food containers, snack boxes and bento sets. BSCI &amp; ISO 9001 certified, custom colours and printing.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/baby-kids-dining-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AY26205.webp" alt="" loading="lazy"></div><h3>Baby &amp; Kids Dining Manufacturer</h3><p>OEM manufacturer of silicone baby plates, suction bowls, spoons, bibs and placemats for kids dining ranges. EN71 and FDA compliant, custom printing.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/silicone-bakeware-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL26125.webp" alt="" loading="lazy"></div><h3>Silicone Bakeware &amp; Mould Manufacturer</h3><p>OEM/ODM manufacturer of silicone bakeware, cake pans, moulds, mats and ice trays. In-house tooling, Pantone colour matching, FDA and LFGB materials.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/coffee-tea-accessories-manufacturer/"><div class="thumb"><img src="/assets/guide-images/DY26093.webp" alt="" loading="lazy"></div><h3>Coffee &amp; Tea Accessories Manufacturer</h3><p>OEM manufacturer of milk frothers, tea infusers, pour-over and matcha sets and coffee accessories. CE and RoHS compliant electronics where needed.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/collapsible-foldable-storage-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AY26047.webp" alt="" loading="lazy"></div><h3>Collapsible &amp; Foldable Storage Manufacturer</h3><p>OEM manufacturer of collapsible silicone food storage, foldable bowls, collapsible cups and space-saving kitchen storage. Custom colours and branding.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/mats-pads-and-placemats-manufacturer/"><div class="thumb"><img src="/assets/guide-images/AL26085.webp" alt="" loading="lazy"></div><h3>Silicone Mats, Pads &amp; Placemats Manufacturer</h3><p>OEM manufacturer of silicone placemats, table mats, drying mats, baking mats and high-chair mats. Custom sizes, printed surfaces and Pantone colour matching.</p><span class="more">Read the guide &rarr;</span></a>
+<a class="hub-card" href="/guides/bbq-grill-accessories-manufacturer/"><div class="thumb"><img src="/assets/guide-images/SL26006.webp" alt="" loading="lazy"></div><h3>BBQ &amp; Grill Accessories Manufacturer</h3><p>OEM manufacturer of BBQ grill tool sets, basting brushes, spatulas, gloves and prep tubs. Stainless steel and heat-resistant silicone, custom branded sets.</p><span class="more">Read the guide &rarr;</span></a></div><p class="block-sub" style="margin-top:16px">Or browse <a href="/product/">every product we print a code for</a> and the <a href="/catalog/">catalogue category pages</a>.</p></section>
 </main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.
 <a href="/">3D catalog</a> &middot; <a href="/catalog/">categories</a> &middot;

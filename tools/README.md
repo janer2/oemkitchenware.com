@@ -87,6 +87,36 @@ Do not "fix" the reader by putting a `PDFDataRangeTransport` back: pdf.js
 3.11.174 only forwards `disableRange`/`disableStream` to a custom transport, so
 one open becomes 120-150 serialised requests and the reader never finishes.
 
+## Item photos for the guide pages (`gen_guide_images.py`)
+
+    python tools/gen_guide_images.py            # incremental
+    python tools/gen_guide_images.py --force    # re-cut everything
+
+Cuts one product shot per catalogue item for the guide and product pages — 234
+codes, ~2.6 MB. A catalogue prints each item's code right under its own photo,
+so the code's position in the page's text layer marks where that product sits:
+the script finds the code, takes the cell-wide band above it, and trims the
+page background off. Nothing is guessed per page — a page can hold one row or
+two, a full grid or a single group card, and the crop follows the code either
+way. Only the column width comes from the layout (4 columns on a landscape
+deck, 3 on a portrait one).
+
+On a landscape deck the photo is told apart from the type by height: measured
+2026-10-12 on `new2026` and `2023`, a product shot is a 327-416 px dense block
+and a line of text is 24-79 px, so the photo is the last tall block above the
+code. Verified by cropping a sample across all three catalogues and looking at
+them: every crop framed exactly one product.
+
+Writes `assets/guide-images/<CODE>.webp` (480 px on the long side, for the hero
+and gallery cards), `assets/guide-images/t/<CODE>.webp` (128 px, for the item
+table) and `assets/guide-images/index.json` (which codes have a photo, plus the
+per-guide shortlist the pages render). Aspect ratio is preserved everywhere and
+the pages use `object-fit: contain`, so no card distorts or slices a product —
+the first version squashed the crops into squares and cover-cropped them, which
+cut products in half and sliced the printed labels. A code with no photo, and
+every page when this script has not been run, renders without pictures rather
+than pointing at missing files.
+
 ## Verifying the generated pages
 
     python tools/check_seo_pages.py
@@ -105,8 +135,10 @@ from the sitemap. Run it before every push.
    homepage index block, the search index and `sitemap.xml`.
 3. Run `python tools/gen_covers.py` — card covers, 400 px thumbs, reader stills.
 4. Run `python tools/gen_page_images.py` — the flip reader's page images.
-5. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.
-6. Run `python tools/check_seo_pages.py` and `python tools/check_reader_js.py`,
+5. Run `python tools/gen_guide_images.py` — the item photos the guide and
+   product pages show (needs step 4: it crops from the rendered pages).
+6. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.
+7. Run `python tools/check_seo_pages.py` and `python tools/check_reader_js.py`,
    then review `git status`, commit and push — GitHub Pages serves the update.
 
 `gen_pages.py` rewrites `sitemap.xml` from scratch, so always run
