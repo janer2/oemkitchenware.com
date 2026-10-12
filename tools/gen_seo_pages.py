@@ -955,7 +955,7 @@ def guide_html(guide, products, all_guides, have_product, shots=None, hero_of=No
             '<div class="item"><a class="ii" href="%s">%s</a>'
             '<div class="it"><b>%s</b><a class="nm" href="%s">%s</a>'
             '<i>%s &middot; <a href="/?catalog=%s&amp;page=%d">p.%d</a></i></div></div>'
-            % (link, shot_img(p["code"], shots, alt=p["name"], loading="lazy"),
+            % (link, shot_img(p["code"], shots, size="thumb", alt=p["name"], loading="lazy"),
                esc(p["code"]), link, esc(p["name"]), esc(cat_name),
                p["cid"], p["pn"], p["pn"]))
     prod_block = ""

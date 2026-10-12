@@ -93,29 +93,46 @@ one open becomes 120-150 serialised requests and the reader never finishes.
     python tools/gen_guide_images.py --force    # re-cut everything
 
 Cuts one product shot per catalogue item for the guide and product pages — 234
-codes, ~2.6 MB. A catalogue prints each item's code right under its own photo,
-so the code's position in the page's text layer marks where that product sits:
-the script finds the code, takes the cell-wide band above it, and trims the
-page background off. Nothing is guessed per page — a page can hold one row or
-two, a full grid or a single group card, and the crop follows the code either
-way. Only the column width comes from the layout (4 columns on a landscape
-deck, 3 on a portrait one).
+codes, ~5.5 MB. A catalogue prints each item's code beside its own photo, so the
+code's position in the page's text layer marks where that product sits, and the
+code is what every crop is anchored to. Nothing is guessed per page: a page can
+hold one row or two, a full grid or a single group card, and the crop follows the
+code either way.
 
-On a landscape deck the photo is told apart from the type by height: measured
-2026-10-12 on `new2026` and `2023`, a product shot is a 327-416 px dense block
-and a line of text is 24-79 px, so the photo is the last tall block above the
-code. Verified by cropping a sample across all three catalogues and looking at
-them: every crop framed exactly one product.
+Where the picture is, and why it is done differently per page type:
 
-Writes `assets/guide-images/<CODE>.webp` (480 px on the long side, for the hero
-and gallery cards), `assets/guide-images/t/<CODE>.webp` (128 px, for the item
-table) and `assets/guide-images/index.json` (which codes have a photo, plus the
-per-guide shortlist the pages render). Aspect ratio is preserved everywhere and
-the pages use `object-fit: contain`, so no card distorts or slices a product —
-the first version squashed the crops into squares and cover-cropped them, which
-cut products in half and sliced the printed labels. A code with no photo, and
-every page when this script has not been run, renders without pictures rather
-than pointing at missing files.
+- **Portrait pages** (kitchen, baby, ladies, Christmas) run a white card as
+  `[photo][code][name][bullets]`, so an item's photo is the card *above its own
+  code*. The ceiling comes from the text layer — just below the previous item's
+  last bullet — which is what keeps the row above, and the page heading, out of
+  the frame. The white-card mask then says which pixels are the card at all:
+  measured 2026-10-12, a card is (255,254,255) while the page's artwork is
+  (255,231,201), and because that artwork varies *across* a row a plain
+  background test calls the whole column content, which is how earlier crops
+  swallowed the row above and the page title.
+- **Landscape decks** (2026, 2023) print on white with no card, so the photo is
+  told from the type by height: a shot is a 327-416 px dense block against 24-79
+  px for a line of text. The crop is the last tall block above the code.
+
+Sharpness: the crop is **rendered from the PDF** at 1400 px on its long side and
+then resampled down, instead of being cut out of the already-compressed page WebP
+and scaled back up — one whole lossy generation less, and real pixels for the
+resampler. The embedded artwork sets the ceiling, measured 2026-10-12: a 2023
+cell carries 454-722 px, a 2026 cell about 480 px (its page is a single
+1920x1080 raster), and a kitchen cell only 240-300 px. So a portrait crop cannot
+be pushed past roughly what it now is, while the landscape ones gained about
+twice the detail they used to have at 1100 px.
+
+Writes `assets/guide-images/<CODE>.webp` (640 px long side: hero and hub cards)
+and `assets/guide-images/t/<CODE>.webp` (320 px: the item grid), plus
+`index.json` (which codes have a photo, and the per-guide shortlist the pages
+render). Aspect ratio is preserved everywhere and the pages use
+`object-fit: contain`, so no card distorts or slices a product — the first
+version squashed the crops into squares and cover-cropped them, which cut
+products in half and sliced their printed labels. A code with no photo, and every
+page when this script has not been run, renders without pictures rather than
+pointing at missing files. `--debug` writes a sheet of the detected boxes to
+`_crop_boxes.png` for eyeballing before committing.
 
 ## Verifying the generated pages
 
