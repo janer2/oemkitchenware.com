@@ -82,11 +82,20 @@ a 2x screen asks for 4000 px and the 2600 px base is 1.5x short — the browser 
 only smear what it has. The zoom tier is rendered at what that click needs.
 
 It costs nothing on the normal load: `index.html` records only the URL
-(`img.dataset.hi`), and fetches a page's hi file when `viewScale` passes 1.3,
-putting the base file back below 1.1. Only the visible spread is ever swapped, so
-at most two ~34 MB bitmaps exist — a 4000 px page decodes to roughly four times
-the base page's RAM. Base images stay the light 2600/1600 files, so a reader who
-never zooms never pays for this.
+(`img.dataset.hi`), and fetches a page's hi file only when the screen is actually
+asking for more pixels than the base holds — `clientWidth x devicePixelRatio x
+zoom > base x 1.4` — putting the base back below `base x 0.95`. A zoom-level
+trigger is wrong: the same 2x click is short of pixels on a 2x desktop and still
+fine on a 3x phone. Measured: a phone at 390 CSS px / DPR 3 stays on the base at
+1x and 2x (need 1098 / 2196 against a 3640 threshold) and only pulls the tier at
+3.8x, while a 1440 px desktop at DPR 2 pulls it at 2x (need 4881). That is why
+the tier does not need banning on phones — the rule already keeps its 36 MB
+bitmap away from them until deep zoom.
+
+Only the visible page is ever swapped (a wide deck shows one page, so the next
+page is not loaded ahead of time) — a 4000 px page decodes to roughly four times
+the base page's RAM, so holding two would be wasteful. Base images stay the light
+2600/1600 files, so a reader who never zooms never pays for this.
 
 Where the ceiling is: the tier is capped by what the PDF actually contains — the
 2026 deck is a 1920x1080 raster per page (150 dpi) and the kitchen product shots
