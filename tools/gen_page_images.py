@@ -48,6 +48,13 @@ OUT = ROOT / "assets" / "pages"
 # ~15 MB per page in RAM, which is why the reader only keeps a small ring warm.
 LAND_W, LAND_Q = 2600, 76
 PORT_W, PORT_Q = 1600, 80
+# Zoom tier. One tier cannot serve both views: the spread is ~1000 CSS px per
+# landscape page, so a 2x double-click on a 2x screen asks for 4000 px and the
+# 2600 px base is 1.5x short - which is the soft page the review reported. These
+# sizes match that ask, are only fetched when someone actually zooms, and stay
+# off the normal page load.
+HI_LAND_W, HI_LAND_Q = 4000, 66
+HI_PORT_W, HI_PORT_Q = 2000, 66
 
 CODE_RE = re.compile(r"^[A-Z]\d*-\d{1,3}$|^[A-Z]{0,2}\d{2,}$|^\d+[A-Z]?$|^No\.\s*\d|^[IVX]+\.?$", re.I)
 SIZE_RE = re.compile(r"^\d+[*xX-]\d|^\d+mm|^\d+ml|^\d+g\b|^[()\d\s,.*xX]+$")
@@ -145,6 +152,8 @@ def main():
     ap.add_argument("--only", help="one catalogue id")
     ap.add_argument("--width", type=int, help="override the computed page width")
     ap.add_argument("--quality", type=int, help="override the WebP quality")
+    ap.add_argument("--hi", action="store_true",
+                    help="render the zoom tier (hi-<n>.webp) instead of the base pages")
     args = ap.parse_args()
 
     manifest, total, skipped = {}, 0, 0
@@ -165,11 +174,17 @@ def main():
         # landscape decks are displayed one page at a time and much larger on
         # screen than a portrait page inside a two-page spread
         land = rect.width >= rect.height * 1.05
-        width = args.width or (LAND_W if land else PORT_W)
-        quality = args.quality or (LAND_Q if land else PORT_Q)
+        if args.hi:
+            width = args.width or (HI_LAND_W if land else HI_PORT_W)
+            quality = args.quality or (HI_LAND_Q if land else HI_PORT_Q)
+            prefix = "hi-"
+        else:
+            width = args.width or (LAND_W if land else PORT_W)
+            quality = args.quality or (LAND_Q if land else PORT_Q)
+            prefix = ""
         src_mtime = pdf.stat().st_mtime
         for pno in range(doc.page_count):
-            out = d / ("%d.webp" % (pno + 1))
+            out = d / (prefix + "%d.webp" % (pno + 1))
             if not args.force and out.exists() and out.stat().st_mtime > src_mtime:
                 skipped += 1
                 continue
@@ -179,17 +194,36 @@ def main():
             im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
             im.save(out, "WEBP", quality=quality, method=5)
             total += 1
-        toc = toc_from_file(cat) or auto_toc(doc)
-        meta = {"pages": doc.page_count, "w": round(rect.width, 2), "h": round(rect.height, 2),
+        mpath = d / "meta.json"
+        try:
+            prev = json.loads(mpath.read_text(encoding="utf-8")) if mpath.exists() else {}
+        except Exception:
+            prev = {}
+        if args.hi:
+            # leave the base page box alone; only record that a zoom tier exists
+            meta = dict(prev) if prev else {
+                "pages": doc.page_count, "w": round(rect.width, 2),
+                "h": round(rect.height, 2),
                 "aspect": round(rect.width / max(rect.height, 1), 4),
-                "wide": land, "width": width, "quality": quality,
-                "format": "webp", "toc": toc}
-        (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
+                "wide": land, "format": "webp"}
+            meta["hi"] = True
+            meta["hiWidth"] = width
+        else:
+            toc = toc_from_file(cat) or auto_toc(doc)
+            meta = {"pages": doc.page_count, "w": round(rect.width, 2), "h": round(rect.height, 2),
+                    "aspect": round(rect.width / max(rect.height, 1), 4),
+                    "wide": land, "width": width, "quality": quality,
+                    "format": "webp", "toc": toc}
+            if prev.get("hi"):
+                meta["hi"] = True
+                meta["hiWidth"] = prev.get("hiWidth")
+        mpath.write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
         manifest[cat["id"]] = meta
-        size = sum(f.stat().st_size for f in d.glob("*.webp")) // 1024
-        print("%-9s %3d pages %s %4dpx q%d %s  %5d KB on disk  toc=%d entries"
+        size = sum(f.stat().st_size for f in d.glob(prefix + "*.webp")) // 1024
+        print("%-9s %3d pages %s %4dpx q%d %s  %5d KB on disk%s"
               % (cat["id"], doc.page_count, "landscape" if land else "portrait ",
-                 width, quality, "skipped " if not args.force else "rendered", size, len(toc)))
+                 width, quality, "skipped " if not args.force else "rendered", size,
+                 "  (zoom tier)" if args.hi else "  toc=%d entries" % len(meta.get("toc") or [])))
         doc.close()
 
     OUT.mkdir(parents=True, exist_ok=True)

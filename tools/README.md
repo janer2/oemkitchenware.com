@@ -69,11 +69,34 @@ two-page spread at ~350-500 CSS px. WebP at these sizes costs about what the old
 1100 px JPEG cost, which is what makes the extra pixels affordable — the first
 version rendered 1100 px JPEG and read as soft on a wide screen.
 
-One source per page is a deliberate trade: a set that stays sharp at 4x would be
-roughly ten times the bytes. Landscape pages are 1:1 up to about 2.6x zoom,
-portrait up to about 4x on a 1x display. Decoded memory is the other limit (a
-2600 px page is ~15 MB in RAM), which is why the reader keeps only a small ring
-of pages warm.
+### The zoom tier (`--hi`)
+
+    python tools/gen_page_images.py --hi            # incremental
+    python tools/gen_page_images.py --hi --force    # re-render the tier
+
+    assets/pages/<id>/hi-<n>.webp — 4000 px (q66) landscape, 2000 px (q66) portrait
+
+One tier cannot serve both views, which is the softness a review caught when
+clicking to zoom. The spread is ~1000 CSS px per landscape page, so a 2x click on
+a 2x screen asks for 4000 px and the 2600 px base is 1.5x short — the browser can
+only smear what it has. The zoom tier is rendered at what that click needs.
+
+It costs nothing on the normal load: `index.html` records only the URL
+(`img.dataset.hi`), and fetches a page's hi file when `viewScale` passes 1.3,
+putting the base file back below 1.1. Only the visible spread is ever swapped, so
+at most two ~34 MB bitmaps exist — a 4000 px page decodes to roughly four times
+the base page's RAM. Base images stay the light 2600/1600 files, so a reader who
+never zooms never pays for this.
+
+Where the ceiling is: the tier is capped by what the PDF actually contains — the
+2026 deck is a 1920x1080 raster per page (150 dpi) and the kitchen product shots
+are 240-300 px, so beyond about 2x those photos cannot get sharper, only the
+vector text can.
+
+Landscape pages are 1:1 to about 2.6x on a 1x display at the base size, and to
+about 4x with the tier; portrait to about 4x on a 1x display. Decoded memory is
+the other limit (a 2600 px page is ~15 MB in RAM), which is why the reader keeps
+only a small ring of pages warm.
 
 `index.html` opens a catalogue from those images: two or three small requests
 per spread instead of one 17-21 MB PDF, and pdf.js is not loaded in that mode.
@@ -151,7 +174,8 @@ from the sitemap. Run it before every push.
 2. Run `python tools/gen_pages.py` — regenerates category pages, hubs, the
    homepage index block, the search index and `sitemap.xml`.
 3. Run `python tools/gen_covers.py` — card covers, 400 px thumbs, reader stills.
-4. Run `python tools/gen_page_images.py` — the flip reader's page images.
+4. Run `python tools/gen_page_images.py` — the flip reader's page images — then
+   `python tools/gen_page_images.py --hi` once per PDF change, for the zoom tier.
 5. Run `python tools/gen_guide_images.py` — the item photos the guide and
    product pages show (needs step 4: it crops from the rendered pages).
 6. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.

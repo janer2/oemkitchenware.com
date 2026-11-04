@@ -1191,7 +1191,8 @@ function loadPageImage(pn){
     let img=holder.querySelector('img');
     if(!img){img=document.createElement('img');img.alt='';img.decoding='async';
       img.loading='eager';holder.appendChild(img)}
-    if(img.dataset.src&&img.getAttribute('src')!==img.dataset.src)img.src=img.dataset.src;
+    // a page that is already showing its zoom-tier file keeps it
+    if(img.dataset.hiOn!=='1'&&img.dataset.src&&img.getAttribute('src')!==img.dataset.src)img.src=img.dataset.src;
     if(!(img.complete&&img.naturalWidth>0)){
       await new Promise((res,rej)=>{
         img.addEventListener('load',res,{once:true});
@@ -1383,7 +1384,11 @@ async function openReader(ci,targetPage){
     for(let i=1;i<=totalPages;i++){
       const div=document.createElement('div');div.className='pg-shell';
       if(imageMode){const im=document.createElement('img');im.alt='';im.decoding='async';
-        im.loading='eager';im.dataset.src='assets/pages/'+cat.id+'/'+i+'.webp';div.appendChild(im)}
+        im.loading='eager';im.dataset.src='assets/pages/'+cat.id+'/'+i+'.webp';
+        // The zoom tier is a bigger render of the same page. Only its URL is
+        // recorded here - nothing is fetched until the reader actually zooms.
+        if(pageMeta&&pageMeta.hi)im.dataset.hi='assets/pages/'+cat.id+'/hi-'+i+'.webp';
+        div.appendChild(im)}
       pageDivs.push(div)}
 
     // Paint page 1 with the still image the build already rendered, so a catalog
@@ -1422,7 +1427,7 @@ async function openReader(ci,targetPage){
     const bookMinW=wide?(isMobile?350:Math.ceil(bodyW*0.55)+10):350;
     bookGeom.pageW=bookW;
     if(pageFlip){const s=pageFlip.getSettings();s.width=bookW;s.height=bookH;s.maxWidth=bookMaxW;s.minWidth=bookMinW;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:bookW,height:bookH,size:'stretch',maxWidth:bookMaxW,minWidth:bookMinW,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true)});}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:bookW,height:bookH,size:'stretch',maxWidth:bookMaxW,minWidth:bookMinW,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true);if(viewScale>1.02)applyPageHiRes()});}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
     $loadingText.textContent='Loading pages…';
@@ -1544,7 +1549,7 @@ function viewZoomAt(px,py,factor){
   viewY=oy-(ns/viewScale)*(oy-viewY);
   viewScale=ns;applyView();
 }
-function viewReset(){viewScale=1;viewX=0;viewY=0;applyView()}
+function viewReset(){viewScale=1;viewX=0;viewY=0;applyView();scheduleHiRes()}
 
 // A tap that lands while a page-turn animation is still running must never
 // zoom: the spread is moving, so a zoom applied mid-flip reads as "it zooms
@@ -1634,7 +1639,34 @@ function paperBox(){
 // After the zoom settles, re-render the visible spread at the resolution
 // the current zoom actually needs (up to 4x page size).
 let viewHiResTimer=null,viewHiResBusy=false;
-function scheduleHiRes(){if(viewHiResTimer)clearTimeout(viewHiResTimer);viewHiResTimer=setTimeout(renderHiResVisible,260)}
+function scheduleHiRes(){if(viewHiResTimer)clearTimeout(viewHiResTimer);
+  viewHiResTimer=setTimeout(()=>{if(imageMode)applyPageHiRes();else renderHiResVisible()},260)}
+
+// Zoom tier for the image reader. Swapping the <img> src is what actually adds
+// detail: CSS-scaling the 2600 px page asks for 4000 px at a 2x click on a 2x
+// screen, and the browser can only smear the pixels it has. The big file is
+// fetched per page, only while zoomed, and put back when the reader zooms out so
+// at most the visible spread holds a 4000 px bitmap (~34 MB each).
+const HI_ON=1.3,HI_OFF=1.1;
+function applyPageHiRes(){
+  if(!imageMode||!pageMeta||!pageMeta.hi||!pageFlip)return;
+  let single=window.matchMedia('(max-width: 768px)').matches;
+  try{const rd=pageFlip.getRender&&pageFlip.getRender();if(rd&&rd.getOrientation)single=rd.getOrientation()==='portrait'}catch(e){}
+  const c=pageFlip.getCurrentPageIndex();
+  // A wide deck slides one page at a time, so loading the next one too would
+  // hold a second 36 MB bitmap for a page nobody can see.
+  const idxs=(single||pageMeta.wide)?[c]:[c,c+1];
+  for(const ix of idxs){
+    if(ix<0||ix>=pageDivs.length)continue;
+    const holder=pageDivs[ix];if(!holder)continue;
+    const img=holder.querySelector('img');if(!img||!img.dataset.hi)continue;
+    if(viewScale>=HI_ON){
+      if(img.dataset.hiOn!=='1'){img.dataset.hiOn='1';img.src=img.dataset.hi}
+    }else if(viewScale<=HI_OFF&&img.dataset.hiOn==='1'){
+      img.dataset.hiOn='';img.src=img.dataset.src;
+    }
+  }
+}
 async function renderHiResVisible(){
   if(viewHiResBusy||!pageFlip||!currentPdf||viewScale<=1.02)return;
   viewHiResBusy=true;
