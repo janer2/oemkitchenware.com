@@ -1427,7 +1427,7 @@ async function openReader(ci,targetPage){
     const bookMinW=wide?(isMobile?350:Math.ceil(bodyW*0.55)+10):350;
     bookGeom.pageW=bookW;
     if(pageFlip){const s=pageFlip.getSettings();s.width=bookW;s.height=bookH;s.maxWidth=bookMaxW;s.minWidth=bookMinW;pageFlip.updateFromHtml(pageDivs);pageFlip.update();}
-    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:bookW,height:bookH,size:'stretch',maxWidth:bookMaxW,minWidth:bookMinW,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true);clampZoomToPage();if(viewScale>1.02)applyPageHiRes()});}
+    else{const SPF=window.St&&window.St.PageFlip;if(!SPF)throw new Error('Flip library failed to load');pageFlip=new SPF($bookContainer,{width:bookW,height:bookH,size:'stretch',maxWidth:bookMaxW,minWidth:bookMinW,maxShadowOpacity:.3,showCover:!1,mobileScrollSupport:!1,usePortrait:!0,flippingTime:550,useMouseEvents:!1,swipeDistance:40,autoSize:!0});pageFlip.loadFromHTML(pageDivs);computeBaseFit();applyView();pageFlip.on('changeState',e=>{if(!e||e.data!=='read')markFlip();onFlipState();if(e&&e.data==='read')drainFlips(true)});pageFlip.on('flip',()=>{onFlipState();drainFlips(true);computeBaseFit();clampZoomToPage();applyView();if(viewScale>1.02)applyPageHiRes()});}
 
     const t=targetPage?Math.max(0,Math.min(targetPage-1,totalItems-1)):0;
     $loadingText.textContent='Loading pages…';
@@ -1538,7 +1538,36 @@ function renderToc(){
 // click near the left/right edge to flip. Page turns reset the view.
 let viewScale=1,viewX=0,viewY=0,viewDragging=false,readerHistory=false,backFromReader=false;
 
-function applyView(){$bookContainer.style.transform='translate('+viewX+'px,'+viewY+'px) scale('+viewScale+')'}
+// A page shown wider than its own pixels is soft no matter how well it is
+// rendered: the browser has to invent the difference. A PDF viewer at 100% draws
+// the same page smaller than its source, which is why it reads as crisp. So the
+// base view now maps one artwork pixel to one device pixel - the page gets a
+// little smaller on a low-resolution catalogue and is never upsampled at rest.
+// baseFit stays 1 unless the page is being drawn more than 10% above its pixels,
+// because shrinking for less than that is a size change nobody asked for.
+let baseFit=1;
+function computeBaseFit(){
+  baseFit=1;
+  if(!pageMeta||!pageDivs.length)return;
+  const nat=pageMeta.native;
+  if(!nat||!nat.length)return;
+  let i=0;try{const p=pageFlip?pageFlip.getCurrentPageIndex():0;i=(p==null?0:p)}catch(e){}
+  const n=nat[i];if(!n)return;
+  const holder=pageDivs[i];if(!holder)return;
+  const img=holder.querySelector('img');
+  const cw=(img&&img.clientWidth)||holder.clientWidth||0;
+  if(!cw)return;
+  const ratio=n/(cw*(window.devicePixelRatio||1));
+  if(ratio<0.9)baseFit=Math.max(0.5,ratio);
+}
+function applyView(){
+  const s=viewScale*baseFit;
+  // scaling around the top-left corner would leave the page hugging it, so
+  // re-centre by half of what the shrink takes away
+  const W=$bookContainer.clientWidth||0,H=$bookContainer.clientHeight||0;
+  const dx=(W-W*baseFit)/2,dy=(H-H*baseFit)/2;
+  $bookContainer.style.transform='translate('+(viewX+dx)+'px,'+(viewY+dy)+'px) scale('+s+')';
+}
 // A catalogue page is a raster. 2023's cover is one 1920x1080 bitmap for a
 // 20-inch page and its product photos are 577-794 px, so past roughly 1.3x there
 // is nothing left but interpolation - that is what "放大之后糊" means. tools/
@@ -1594,7 +1623,7 @@ function flashZoomCap(){
   el.dataset.busy='1';el.textContent='已到原图清晰度上限：这一页在 PDF 里只有这么多像素，再放大只会变糊';
   setTimeout(()=>{el.innerHTML=keep;el.dataset.busy=''},2600);
 }
-function viewReset(){viewScale=1;viewX=0;viewY=0;applyView();scheduleHiRes()}
+function viewReset(){viewScale=1;viewX=0;viewY=0;computeBaseFit();applyView();scheduleHiRes()}
 
 // A tap that lands while a page-turn animation is still running must never
 // zoom: the spread is moving, so a zoom applied mid-flip reads as "it zooms
