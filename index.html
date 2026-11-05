@@ -1173,7 +1173,7 @@ let pageRendered={},pgBusy={},pageDivs=[],pgPadIdx=-1;
 // downloaded. A catalogue with no image set falls back to the PDF path below.
 let imageMode=false,pageMeta=null,pageMetaPromise=null;
 function loadPageMeta(){
-  if(!pageMetaPromise)pageMetaPromise=fetch('assets/pages/manifest.json')
+  if(!pageMetaPromise)pageMetaPromise=fetch('assets/pages/manifest.json',{cache:'no-cache'})
     .then(r=>r.ok?r.json():{}).catch(()=>({}));
   return pageMetaPromise;
 }
