@@ -49,7 +49,12 @@ for cat in CATALOGS:
 # real first page of the PDF, even for a catalog whose card cover is a designed
 # piece of artwork.
 P1 = BASE / "assets" / "page1"
-P1_W, P1_Q = 760, 80
+# 760 px was fine as a quick placeholder, but this still is also what the reader
+# shows full-bleed behind the loading spinner and what page 1 paints until its
+# real image arrives - and on a 2200-2320 px page area that is a 3x upscale, i.e.
+# visibly blurred cover. At 1800 it is roughly the size the reader actually draws
+# and still lands near the page image it replaces (~200 KB vs ~116 KB).
+P1_W, P1_Q = 1800, 80
 for cat in CATALOGS:
     pdf_path = BASE / cat["pdf"]
     if not pdf_path.exists():
