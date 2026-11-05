@@ -71,6 +71,19 @@ version rendered 1100 px JPEG and read as soft on a wide screen.
 
 ### The zoom tier (`--hi`)
 
+A page blown up past its source is soft however well it was rendered, so the
+reader caps zoom at the page's own pixel width (`gen_native_px.py`, below). Two
+things bit us on the way there and are worth keeping in mind:
+
+- **`will-change: transform` on `#bookContainer` made zoom look blurry on some
+  Windows/GPU combinations.** It asks the browser to keep the whole book as a
+  prepared layer; when the reader zooms, that layer gets scaled as a bitmap
+  instead of being redrawn at the new size. Symptom: crisp at 1x, everything
+  inside the book soft the moment you zoom, while the HTML chrome around it stays
+  sharp. The hint is now switched on only while a pan is in flight and dropped on
+  pointerup. If a "zoom looks soft" report ever comes back, check this first — it
+  is invisible in headless captures, which rasterise differently.
+
     python tools/gen_page_images.py --hi            # incremental
     python tools/gen_page_images.py --hi --force    # re-render the tier
 
