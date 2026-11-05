@@ -1547,7 +1547,19 @@ function updateZoomHint(){
   if(el.dataset.busy==='1')return;
   if(viewScale<=1.01){el.innerHTML=HINT_BASE;return}
   const cap=currentZoomCap();
-  el.textContent='Zoom x'+viewScale.toFixed(2)+(viewScale>=cap-0.015?'  (full detail limit)':'');
+  // Two numbers settle every "it is still blurry" report: how many device
+  // pixels the page is being drawn at, and how big the file behind it is. If
+  // the first is not larger than the second, the page cannot be soft from
+  // scaling and the artwork is the limit.
+  let drawn=0,have=0;
+  try{
+    const i=pageFlip?pageFlip.getCurrentPageIndex():0;
+    const im=pageDivs[i]&&pageDivs[i].querySelector('img');
+    if(im){drawn=Math.round(im.clientWidth*(window.devicePixelRatio||1)*viewScale*baseFit);have=im.naturalWidth}
+  }catch(e){}
+  el.textContent='Zoom x'+viewScale.toFixed(2)
+    +(drawn?('  \u00b7  drawn '+drawn+'px / image '+have+'px'):'')
+    +(viewScale>=cap-0.015?'  (full detail limit)':'');
 }
 
 // A page shown wider than its own pixels is soft no matter how well it is
