@@ -1537,6 +1537,18 @@ function renderToc(){
 // to zoom in where you clicked, scroll or pinch to zoom, drag to pan, and
 // click near the left/right edge to flip. Page turns reset the view.
 let viewScale=1,viewX=0,viewY=0,viewDragging=false,readerHistory=false,backFromReader=false;
+// The footer doubles as a zoom read-out: "糊" is not something a reader can
+// report as a number, but the magnification it stopped at is.
+let HINT_BASE='';
+function hintEl(){return document.querySelector('.reader-hint')}
+function updateZoomHint(){
+  const el=hintEl();if(!el)return;
+  if(!HINT_BASE)HINT_BASE=el.innerHTML;
+  if(el.dataset.busy==='1')return;
+  if(viewScale<=1.01){el.innerHTML=HINT_BASE;return}
+  const cap=currentZoomCap();
+  el.textContent='Zoom x'+viewScale.toFixed(2)+(viewScale>=cap-0.015?'  (full detail limit)':'');
+}
 
 // A page shown wider than its own pixels is soft no matter how well it is
 // rendered: the browser has to invent the difference. A PDF viewer at 100% draws
@@ -1567,6 +1579,7 @@ function applyView(){
   const W=$bookContainer.clientWidth||0,H=$bookContainer.clientHeight||0;
   const dx=(W-W*baseFit)/2,dy=(H-H*baseFit)/2;
   $bookContainer.style.transform='translate('+(viewX+dx)+'px,'+(viewY+dy)+'px) scale('+s+')';
+  updateZoomHint();
 }
 // A catalogue page is a raster. 2023's cover is one 1920x1080 bitmap for a
 // 20-inch page and its product photos are 577-794 px, so past roughly 1.3x there
@@ -1620,8 +1633,8 @@ function flashZoomCap(){
   const el=document.querySelector('.reader-hint');
   if(!el||el.dataset.busy==='1')return;
   const keep=el.innerHTML;
-  el.dataset.busy='1';el.textContent='已到原图清晰度上限：这一页在 PDF 里只有这么多像素，再放大只会变糊';
-  setTimeout(()=>{el.innerHTML=keep;el.dataset.busy=''},2600);
+  el.dataset.busy='1';el.textContent='Full detail limit - this page has no more pixels in the catalogue';
+  setTimeout(()=>{el.dataset.busy='';updateZoomHint()},2600);
 }
 function viewReset(){viewScale=1;viewX=0;viewY=0;computeBaseFit();applyView();scheduleHiRes()}
 
