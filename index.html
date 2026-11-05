@@ -1653,7 +1653,13 @@ function scheduleHiRes(){if(viewHiResTimer)clearTimeout(viewHiResTimer);
 // asking for (layout width x DPR x zoom) against what the base file holds, and
 // only then pull the big one. That keeps the 36 MB bitmap off phones when their
 // base image is already enough - which was the reason to consider banning it.
-const HI_MARGIN=1.4,HI_RELEASE=0.95;
+// 1.0, not a safety margin: the moment the screen asks for more pixels than the
+// base holds, the base is being stretched, and a stretched base is exactly the
+// soft look the tier exists to remove. A margin here leaves a band (roughly
+// 1.2x-1.7x on a wide deck) where the base is blown up and the big file sits
+// idle - the reader zooms, nothing gets sharper. Release below 0.9 so a drag
+// across the boundary cannot flap between the two files.
+const HI_MARGIN=1.0,HI_RELEASE=0.9;
 function applyPageHiRes(){
   if(!imageMode||!pageMeta||!pageMeta.hi||!pageFlip)return;
   let single=window.matchMedia('(max-width: 768px)').matches;

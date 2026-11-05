@@ -82,20 +82,29 @@ a 2x screen asks for 4000 px and the 2600 px base is 1.5x short — the browser 
 only smear what it has. The zoom tier is rendered at what that click needs.
 
 It costs nothing on the normal load: `index.html` records only the URL
-(`img.dataset.hi`), and fetches a page's hi file only when the screen is actually
-asking for more pixels than the base holds — `clientWidth x devicePixelRatio x
-zoom > base x 1.4` — putting the base back below `base x 0.95`. A zoom-level
-trigger is wrong: the same 2x click is short of pixels on a 2x desktop and still
-fine on a 3x phone. Measured: a phone at 390 CSS px / DPR 3 stays on the base at
-1x and 2x (need 1098 / 2196 against a 3640 threshold) and only pulls the tier at
-3.8x, while a 1440 px desktop at DPR 2 pulls it at 2x (need 4881). That is why
-the tier does not need banning on phones — the rule already keeps its 36 MB
-bitmap away from them until deep zoom.
+(`img.dataset.hi`), and fetches a page's hi file as soon as the screen is asking
+for more pixels than the base holds — `clientWidth x devicePixelRatio x zoom >
+base` — putting the base back below `base x 0.9`. There is deliberately no safety
+margin on the up-switch: any margin leaves a band where the base is stretched and
+the big file sits idle, so the reader zooms and nothing gets sharper. Measured on
+the 2023 deck at 1700 CSS px / DPR 1.302 (base need 2214 px): zoom 1.0 keeps the
+base, a 2x click needs 4427 px and fetches `hi-53.webp` once (naturalWidth 2600 →
+4000), 2.78x reuses it without refetching, and zooming out to 1.0 swaps back to the
+base. A 2x zoom trigger alone would be wrong — the same click is short of pixels
+on a 2x desktop and still fine on a 3x phone, whose page is 366 CSS px wide, so the
+phone stays on the base until about 2.4x and never pays the 36 MB.
 
 Only the visible page is ever swapped (a wide deck shows one page, so the next
 page is not loaded ahead of time) — a 4000 px page decodes to roughly four times
-the base page's RAM, so holding two would be wasteful. Base images stay the light
-2600/1600 files, so a reader who never zooms never pays for this.
+the base page's RAM, so holding two would be wasteful.
+
+**The ceiling is the catalogue, not the renderer.** 2023 prints each product photo
+as its own JPEG of 577–794 px at ~200 ppi; rendering the page at 4000 px puts those
+crops at 0.76–1.29x of their source pixels, i.e. native. 2026 is a single
+1920x1080 bitmap per page (150 ppi), so its hi file is interpolation by definition.
+WebP at q66 costs about 2% edge energy versus the raw render, so encoding is not
+the limit either; past roughly 2.3x on the 2023 deck the artwork itself runs out.
+Replacing the softest photos means sourcing better originals, not re-rendering.
 
 Where the ceiling is: the tier is capped by what the PDF actually contains — the
 2026 deck is a 1920x1080 raster per page (150 dpi) and the kitchen product shots
