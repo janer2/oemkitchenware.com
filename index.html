@@ -300,7 +300,13 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
 /* ===== In-place zoom & pan (flip view) ===== */
 .book-area { cursor: zoom-in; touch-action: none; -webkit-user-select: none; user-select: none; }
 .book-area.panning { cursor: grabbing; }
-#bookContainer { transform-origin: 0 0; will-change: transform; }
+#bookContainer { transform-origin: 0 0; }
+/* will-change: transform used to sit here permanently. Keeping the book as a
+   pre-rasterised layer is what makes some Windows/GPU combinations scale a
+   blurry snapshot when the reader zooms instead of redrawing at the new
+   size. It is switched on only while a pan is actually in flight (see
+   setDragging), which keeps dragging smooth and forces a fresh raster at
+   rest. */
 .reader-loading .spinner { width: 36px; height: 36px; border: 3px solid #e0dcd5; border-top-color: #1a1a2e; border-radius: 50%; animation: spin .7s linear infinite; }
 .reader-loading .text { color: #999; font-size: .88rem; }
 .reader-hint { text-align: center; color: #bbb; font-size: .7rem; padding: 8px 20px; flex-shrink: 0; border-top: 1px solid #eee; }
@@ -1537,6 +1543,14 @@ function renderToc(){
 // to zoom in where you clicked, scroll or pinch to zoom, drag to pan, and
 // click near the left/right edge to flip. Page turns reset the view.
 let viewScale=1,viewX=0,viewY=0,viewDragging=false,readerHistory=false,backFromReader=false;
+// A pan updates translate on every pointermove, so the layer hint is worth
+// having while it lasts and worth dropping the moment it stops - otherwise the
+// browser may keep serving the snapshot it rasterised before the last zoom.
+function setDragging(on){
+  if(!$bookContainer)return;
+  $bookContainer.style.willChange=on?'transform':'auto';
+  if(!on)applyView();
+}
 // The footer doubles as a zoom read-out: "糊" is not something a reader can
 // report as a number, but the magnification it stopped at is.
 let HINT_BASE='';
@@ -1826,7 +1840,7 @@ function bindBookZoom(){
       if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)>6)moved=true;
       if(viewScale>1.02){
         viewX+=e.clientX-prev.x;viewY+=e.clientY-prev.y;applyView();
-        if(!viewDragging){viewDragging=true;area.classList.add('panning')}
+        if(!viewDragging){viewDragging=true;area.classList.add('panning');setDragging(true)}
       }
     }else if(pts.size===2){
       const v=[...pts.values()],dist=Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y);
@@ -1838,7 +1852,7 @@ function bindBookZoom(){
     const start=down;
     pts.delete(e.pointerId);
     if(pts.size<2)pinchLast=0;
-    if(pts.size===0){viewDragging=false;area.classList.remove('panning')}
+    if(pts.size===0){viewDragging=false;area.classList.remove('panning');setDragging(false)}
     if(pts.size===0&&viewScale>1.02)scheduleHiRes();
     if(!start||pts.size>0)return;
     down=null;
@@ -1869,7 +1883,7 @@ function bindBookZoom(){
     if(viewScale>1.05){viewReset()}else{viewZoomAt(start.x,start.y,2);scheduleHiRes()}
   };
   area.addEventListener('pointerup',endPtr);
-  area.addEventListener('pointercancel',e=>{pts.delete(e.pointerId);if(pts.size<2)pinchLast=0;if(pts.size===0){viewDragging=false;area.classList.remove('panning')}down=null});
+  area.addEventListener('pointercancel',e=>{pts.delete(e.pointerId);if(pts.size<2)pinchLast=0;if(pts.size===0){viewDragging=false;area.classList.remove('panning');setDragging(false)}down=null});
   window.addEventListener('resize',()=>{if(pageFlip&&viewScale>1.001)viewReset()});
 }
 
