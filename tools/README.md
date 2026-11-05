@@ -106,15 +106,38 @@ WebP at q66 costs about 2% edge energy versus the raw render, so encoding is not
 the limit either; past roughly 2.3x on the 2023 deck the artwork itself runs out.
 Replacing the softest photos means sourcing better originals, not re-rendering.
 
-Where the ceiling is: the tier is capped by what the PDF actually contains — the
-2026 deck is a 1920x1080 raster per page (150 dpi) and the kitchen product shots
-are 240-300 px, so beyond about 2x those photos cannot get sharper, only the
-vector text can.
-
 Landscape pages are 1:1 to about 2.6x on a 1x display at the base size, and to
 about 4x with the tier; portrait to about 4x on a 1x display. Decoded memory is
 the other limit (a 2600 px page is ~15 MB in RAM), which is why the reader keeps
 only a small ring of pages warm.
+
+### The zoom cap (`gen_native_px.py`)
+
+    python tools/gen_native_px.py
+
+    assets/pages/<id>/meta.json — "native": [source px per page]
+
+Zooming past the artwork is what "放大之后糊" means, and no renderer can undo it, so
+the reader now stops there. For each page the script records the pixel width the
+page would have if the image with the largest printed *area* filled it — largest
+area, not sharpest image, because a small crisp thumbnail must not license
+magnifying the big soft photo beside it (logos and swatches under 4% of the page
+are ignored). `index.html` then clamps zoom to
+`max(1.3, native / (img.clientWidth x devicePixelRatio))`, capped at 4.
+
+Measured on the 2023 deck at 1700 CSS px / DPR 1.302 (the page asks for 2214 px):
+page 1 — the cover, which the PDF stores as one 1920x1080 bitmap — stops at the
+1.3 floor, page 53 (native 3573) stops at 1.61, and the 2026 deck stops at 1.3 on
+every page because the whole catalogue is 1920 px wide per page. A refused zoom
+flashes `已到原图清晰度上限…` in the footer instead of silently doing nothing, and
+turning onto a page with a lower cap clamps the view down (`clampZoomToPage()`).
+
+The floor is deliberate: on a page already drawn wider than its source, capping at
+1:1 would make the zoom gesture do nothing at all. 1.3 is about as far as a 1:1
+image can be pushed before it reads as soft.
+
+Run this after `gen_page_images.py`; it rebuilds `assets/pages/manifest.json`, and
+a page with no qualifying artwork gets 4000 (no practical cap).
 
 `index.html` opens a catalogue from those images: two or three small requests
 per spread instead of one 17-21 MB PDF, and pdf.js is not loaded in that mode.
@@ -193,7 +216,8 @@ from the sitemap. Run it before every push.
    homepage index block, the search index and `sitemap.xml`.
 3. Run `python tools/gen_covers.py` — card covers, 400 px thumbs, reader stills.
 4. Run `python tools/gen_page_images.py` — the flip reader's page images — then
-   `python tools/gen_page_images.py --hi` once per PDF change, for the zoom tier.
+   `python tools/gen_page_images.py --hi` once per PDF change, for the zoom tier,
+   then `python tools/gen_native_px.py` so the zoom cap follows the new artwork.
 5. Run `python tools/gen_guide_images.py` — the item photos the guide and
    product pages show (needs step 4: it crops from the rendered pages).
 6. Run `python tools/gen_seo_pages.py` — product pages, guides, merged sitemap.
