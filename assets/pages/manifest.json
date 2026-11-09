@@ -440,8 +440,8 @@
     "pageEnd": 124
    }
   ],
-  "hi": true,
-  "hiWidth": 4000,
+  "hi": false,
+  "hiWidth": 0,
   "native": [
    1920,
    1920,
@@ -1077,8 +1077,8 @@
     "pageEnd": null
    }
   ],
-  "hi": true,
-  "hiWidth": 2000,
+  "hi": false,
+  "hiWidth": 0,
   "native": [
    837,
    730,

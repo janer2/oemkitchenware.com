@@ -174,10 +174,29 @@ def main():
         # landscape decks are displayed one page at a time and much larger on
         # screen than a portrait page inside a two-page spread
         land = rect.width >= rect.height * 1.05
+        base_w = LAND_W if land else PORT_W
         if args.hi:
             width = args.width or (HI_LAND_W if land else HI_PORT_W)
             quality = args.quality or (HI_LAND_Q if land else HI_PORT_Q)
             prefix = "hi-"
+            # A zoom tier can only add detail the artwork already has. Decks that
+            # are a single raster per page (2026: 1920x1080, the portrait books:
+            # ~730 px) gain nothing from a 4000/2000 px copy - it is interpolation
+            # that also costs ~23 MB. gen_native_px.py already measured this, so
+            # skip the whole tier instead of rendering it.
+            npath = d / "meta.json"
+            try:
+                nmeta = json.loads(npath.read_text(encoding="utf-8"))
+            except Exception:
+                nmeta = {}
+            natives = nmeta.get("native") or []
+            if natives and max(natives) <= base_w * 1.05:
+                nmeta["hi"] = False
+                nmeta["hiWidth"] = 0
+                npath.write_text(json.dumps(nmeta, indent=1), encoding="utf-8")
+                print(cat["id"], "hi tier not needed (native max %d <= base %d)"
+                      % (max(natives), base_w))
+                continue
         else:
             width = args.width or (LAND_W if land else PORT_W)
             quality = args.quality or (LAND_Q if land else PORT_Q)

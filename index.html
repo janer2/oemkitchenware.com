@@ -1602,7 +1602,11 @@ function applyView(){
 // there (with 30% slack, which is about as far as a 1:1 image can be pushed
 // before it reads as soft). A page already drawn wider than its source gets the
 // floor, so the gesture still does something.
-const ZOOM_FLOOR=1.3,ZOOM_CEIL=4;
+// 1.15, not 1.3: the floor exists only so a page already drawn wider than its
+// own pixels still responds to a zoom gesture. At 1.3 a reader can still push a
+// 1:1 page 30% past its pixels, and that 30% is exactly the softness people
+// report. 15% is about as far as a 1:1 raster can go before it reads as blur.
+const ZOOM_FLOOR=1.15,ZOOM_CEIL=4;
 function zoomCapFor(idx){
   const nat=pageMeta&&pageMeta.native;
   if(!nat||!nat.length||idx==null||nat[idx]==null)return ZOOM_CEIL;
