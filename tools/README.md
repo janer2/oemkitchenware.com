@@ -71,6 +71,13 @@ version rendered 1100 px JPEG and read as soft on a wide screen.
 
 ### The zoom tier (`--hi`)
 
+**A tier is only generated when the artwork has more pixels than the base file.**
+`gen_page_images.py --hi` reads `native` from `meta.json` and skips a whole deck when
+`max(native)` is already below the base width: a 4000 px copy of a 1920 px page is
+interpolation that costs ~21 MB and adds nothing. This removed `new2026` (20.9 MB) and
+`baby` (2.6 MB); `2023`, `kitchen`, `ladies` and `balls` keep their tiers because some
+of their pages really do carry 4000-8000 px of detail.
+
 A page blown up past its source is soft however well it was rendered, so the
 reader caps zoom at the page's own pixel width (`gen_native_px.py`, below). Two
 things bit us on the way there and are worth keeping in mind:
