@@ -32,3 +32,4 @@ desktop.ini
 
 # Per-catalog search-index rows from tools/gen_pages.py, keyed by PDF hash.
 .search-cache.json
+assets/2023-2026_*.pdf
