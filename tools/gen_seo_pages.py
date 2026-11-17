@@ -657,7 +657,8 @@ FOOT = """</main>
 <footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved.
 <a href="/">3D catalog</a> &middot; <a href="/catalog/">categories</a> &middot;
 <a href="/guides/">buyer guides</a> &middot; <a href="/product/">all products</a> &middot;
-Sourcing and OEM enquiries: info@yonglicc.com</footer>
+Sourcing and OEM enquiries: info@yonglicc.com &middot; <a href="/privacy/">Privacy</a></footer>
+<script src="/assets/js/wa-track.js" defer></script>
 </body>
 </html>
 """

@@ -71,6 +71,7 @@ CATS = load_catalogs()
 SITEMAP_STATIC = [
     ("https://oemkitchenware.com/", "weekly", "1.0"),
     ("https://oemkitchenware.com/catalog/", "weekly", "0.9"),
+    ("https://oemkitchenware.com/privacy/", "yearly", "0.3"),
 ]
 
 TEMPLATE_CSS = """
@@ -400,7 +401,8 @@ def page_html(cat, cat_dir, lf, cat_cover, cat_last, num_pages, doc, all_links):
   {cust}
   {related}
 </main>
-<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a></footer>
+<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a> &middot; <a href="/privacy/">Privacy</a></footer>
+<script src="/assets/js/wa-track.js" defer></script>
 </body>
 </html>
 """
@@ -447,7 +449,8 @@ def hub_html(cats_built):
   <p class="lede">{esc(BRAND_LINE)}</p>
   {''.join(parts)}
 </main>
-<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. <a href="/">Back to 3D catalog</a></footer>
+<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. <a href="/">Back to 3D catalog</a> &middot; <a href="/privacy/">Privacy</a></footer>
+<script src="/assets/js/wa-track.js" defer></script>
 </body>
 </html>
 """
@@ -550,7 +553,8 @@ def cat_hub_html(cat, cat_pages):
     <div class="siblings">{other_hub_links(cid)}</div>
   </section>
 </main>
-<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a></footer>
+<footer class="foot">&copy; 2026 Huizhou Yongli Industrial Co., Ltd. All rights reserved. <a href="/">Back to 3D catalog</a> &middot; <a href="/privacy/">Privacy</a></footer>
+<script src="/assets/js/wa-track.js" defer></script>
 </body>
 </html>
 """

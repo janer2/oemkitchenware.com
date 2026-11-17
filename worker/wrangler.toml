@@ -1,0 +1,22 @@
+# Deploy: see README.md in this folder.
+# Fill in account_id and database_id from `wrangler whoami` / `wrangler d1 list`.
+name = "yongli-wa"
+main = "src/index.js"
+compatibility_date = "2026-11-17"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "yongli_wa"
+database_id = "<paste the id printed by: wrangler d1 create yongli_wa>"
+
+# Nightly retention sweep (90 days). Runs 03:00 UTC.
+[triggers]
+crons = ["0 3 * * *"]
+
+# Secrets, set once with:
+#   wrangler secret put STATS_TOKEN     # any long random string you keep
+#   wrangler secret put IP_SALT         # any long random string, never reused
+#
+# After `wrangler deploy` the Worker answers on
+#   https://yongli-wa.<your-subdomain>.workers.dev
+# No DNS or route is needed; add a custom domain later if you want a cleaner URL.
