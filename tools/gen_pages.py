@@ -181,7 +181,10 @@ def build_categories(cat):
         raw = json.loads((ROOT / cat["toc"]).read_text(encoding="utf-8"))
         leaves = list(flatten_toc(raw))
     else:
-        leaves = [{"title": cat["name"], "page": 1, "path": (cat["name"],)}]
+        # A single-category deck has no sub-sections. Emitting the deck itself as
+        # a "section" generated a duplicate page at /catalog/<id>/<id>/ that only
+        # repeated the landing page, and put a self-link under a "Sections" heading.
+        leaves = []
     # de-duplicate leaves sharing the same start page (nested duplicates)
     seen = {}
     for lf in leaves:
@@ -472,12 +475,32 @@ def cat_hub_html(cat, cat_pages):
                 f"Open the flip-book catalogue or jump straight to a section page.", 158)
     cover = f"{SITE}/assets/covers/{cid}.jpg"
     starts = min((int(p["page"]) for p in cat_pages), default=1)
+    try:
+        _meta = json.loads((ROOT / "assets" / "pages" / cid / "meta.json").read_text(encoding="utf-8"))
+        _pg = _meta.get("pages", 0)
+        total_pages = _pg if isinstance(_pg, int) else len(_pg)
+    except Exception:
+        total_pages = 0
+    preview = range(1, min(8, total_pages) + 1)
+    strip = "".join(
+        f"<a href='/?catalog={cid}&amp;page={n}' style='flex:0 0 auto;width:132px;text-decoration:none'>"
+        f"<img src='/assets/pages/{cid}/{n}.webp' alt='{esc(cname)} catalogue page {n}' "
+        f"loading='lazy' width='132' height='74' "
+        f"style='width:132px;height:74px;object-fit:cover;border:1px solid #e6e3dc;border-radius:6px;display:block'>"
+        f"<span style='display:block;font-size:.74rem;color:#8a8a8a;text-align:center;margin-top:4px'>p.{n}</span></a>"
+        for n in preview)
+    _real_sections = [p for p in cat_pages
+                      if not (int(p["page"]) == 1 and str(p["title"]).strip().lower() == cname.strip().lower())]
     items = "".join(
         f"<div class='range-link'><a href='/catalog/{cid}/{slugify(p['title'])}/' "
         f"style='flex:1;text-decoration:none;color:#1a1a2e'>{esc(p['title'])}</a>"
         f"<a class='pg' href='/?catalog={cid}&amp;page={int(p['page'])}' "
         f"title='Open page {int(p['page'])} in the flip-book'>p.{int(p['page'])} &rarr;</a></div>"
         for p in cat_pages)
+    sections_html = ("<section class=\"block\"><h2>Sections in this catalogue</h2>"
+                     "<p class=\"block-sub\">Open a section for its products and codes, or click the page "
+                     "number to jump straight into the flip-book at that page.</p>"
+                     "<div class=\"range-grid\">" + items + "</div></section>") if _real_sections else ""
     wa_text = esc(f"Hi, I am interested in the {cname} catalogue. Please send me details.")
     ld = {
         "@context": "https://schema.org", "@type": "BreadcrumbList",
@@ -527,10 +550,11 @@ def cat_hub_html(cat, cat_pages):
   </div>
   <div class="thumbs"><figure><img src="{cover}" alt="{esc(cname)} catalogue cover"><figcaption>{esc(sub)} — catalogue cover</figcaption></figure></div>
   <section class="block">
-    <h2>Sections in this catalogue</h2>
-    <p class="block-sub">Open a section for its products and codes, or click the page number to jump straight into the flip-book at that page.</p>
-    <div class="range-grid">{items}</div>
+    <h2>Look inside — {total_pages} pages</h2>
+    <p class="block-sub">Click any page to open the flip-book at that spot. Use the arrows or scroll to keep going.</p>
+    <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:6px">{strip}</div>
   </section>
+  {sections_html}
   <div class="grid2">
     <section class="block">
       <h2>About This Range</h2>

@@ -16,11 +16,6 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://oemkitchenware.com/catalog/kitchen-tools/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -41,7 +36,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/tableware/</loc>
+    <loc>https://oemkitchenware.com/catalog/coffee-tea/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -51,17 +46,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/coffee-tea/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/household-essentials/</loc>
+    <loc>https://oemkitchenware.com/catalog/tableware/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -71,17 +61,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/balls/</loc>
+    <loc>https://oemkitchenware.com/catalog/beauty-personal-care/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://oemkitchenware.com/catalog/kids-tableware/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/baby/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -96,7 +81,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/beauty-personal-care/</loc>
+    <loc>https://oemkitchenware.com/catalog/household-essentials/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/baby/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -104,6 +99,181 @@
     <loc>https://oemkitchenware.com/catalog/ladies/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/balls/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/spoons-and-ladles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/tongs-and-turners/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/baking-and-pastry/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/knives-and-cutting/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/bowls-and-strainers/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/measuring/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/bowls-and-strainers-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/storage-and-organisation/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-tools/measuring-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/tableware-and-serveware/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles-3/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/drinkware-and-bottles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/spoons-and-ladles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/drinkware-and-bottles-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/coffee-and-tea/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/storage-and-organisation/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/bowls-and-strainers/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/drinkware-and-bottles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-3/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/tableware-and-serveware/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-4/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/tableware/tableware-and-serveware/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/tableware/tableware-and-serveware-2/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/tableware/spoons-and-ladles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/tableware/knives-and-cutting/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/tableware/tableware-and-serveware-3/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kids-tableware/tableware-and-serveware/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kids-tableware/spoons-and-ladles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kids-tableware/kids-and-baby/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/catalog/kids-tableware/drinkware-and-bottles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://oemkitchenware.com/catalog/kitchen/kitchen-gadgets/</loc>
@@ -206,206 +376,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/spoons-and-ladles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/tongs-and-turners/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/baking-and-pastry/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/knives-and-cutting/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/bowls-and-strainers/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/measuring/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/bowls-and-strainers-2/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/storage-and-organisation/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-tools/measuring-2/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/knives-cutting-boards/knives-and-cutting-boards/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/baking-tools/baking-tools/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles-2/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/tableware-and-serveware/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles-3/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/tableware/tableware-and-serveware/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/tableware/tableware-and-serveware-2/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/tableware/spoons-and-ladles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/tableware/knives-and-cutting/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/tableware/tableware-and-serveware-3/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/drinkware-and-bottles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/spoons-and-ladles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/drinkware-and-bottles-2/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/coffee-and-tea/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/drinkware-bottles/storage-and-organisation/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/coffee-tea/coffee-and-tea/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/bowls-and-strainers/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-2/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/drinkware-and-bottles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-3/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/tableware-and-serveware/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-4/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/household-essentials/household-essentials/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/cleaning-supplies/cleaning-supplies/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/balls/christmas-balls/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kids-tableware/tableware-and-serveware/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kids-tableware/spoons-and-ladles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kids-tableware/kids-and-baby/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/kids-tableware/drinkware-and-bottles/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://oemkitchenware.com/catalog/baby/feeding-set/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -422,21 +392,6 @@
   </url>
   <url>
     <loc>https://oemkitchenware.com/catalog/baby/silicone-placemat/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/pet-supplies/pet-supplies/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/outdoor-bbq/outdoor-and-bbq/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/catalog/beauty-personal-care/beauty-and-personal-care/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -541,6 +496,26 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://oemkitchenware.com/product/BL24155/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DY25196/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DY25160/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DL23073/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://oemkitchenware.com/product/J-02/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -621,116 +596,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/J-16/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-17/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-19/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-20/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-24/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-22/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-23/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-25/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-26/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-27/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-30/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-28/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-29/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-31/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-32/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-33/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-36/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-34/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-35/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-37/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-38/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/J-39/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://oemkitchenware.com/product/AL24110/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -741,42 +606,92 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-11/</loc>
+    <loc>https://oemkitchenware.com/product/AY24017/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-21/</loc>
+    <loc>https://oemkitchenware.com/product/AY24033/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-24/</loc>
+    <loc>https://oemkitchenware.com/product/AY24064/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-22/</loc>
+    <loc>https://oemkitchenware.com/product/AL25167/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-23/</loc>
+    <loc>https://oemkitchenware.com/product/AY24032/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-27/</loc>
+    <loc>https://oemkitchenware.com/product/AY25109/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-25/</loc>
+    <loc>https://oemkitchenware.com/product/AY24081/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-26/</loc>
+    <loc>https://oemkitchenware.com/product/AL23319/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/AL25022/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/AY26216/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DL25062/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DY25017/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DL25079/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DY25096/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/DL24153/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BL26147/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BY23032/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/J-24/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -841,97 +756,42 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-43/</loc>
+    <loc>https://oemkitchenware.com/product/CY24116/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-70/</loc>
+    <loc>https://oemkitchenware.com/product/CY25029/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-159/</loc>
+    <loc>https://oemkitchenware.com/product/CL24059/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-158/</loc>
+    <loc>https://oemkitchenware.com/product/EY25014/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-160/</loc>
+    <loc>https://oemkitchenware.com/product/EY25007/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-163/</loc>
+    <loc>https://oemkitchenware.com/product/CL24124/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-168/</loc>
+    <loc>https://oemkitchenware.com/product/CY25020/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-78/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-76/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-77/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-81/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-79/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-84/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-83/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-90/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-102/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/AA-120/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/U-03/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://oemkitchenware.com/product/E-30/</loc>
+    <loc>https://oemkitchenware.com/product/CY24058/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -941,227 +801,297 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-26/</loc>
+    <loc>https://oemkitchenware.com/product/CY23011/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-31/</loc>
+    <loc>https://oemkitchenware.com/product/CY25073/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-185/</loc>
+    <loc>https://oemkitchenware.com/product/CY25140/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-188/</loc>
+    <loc>https://oemkitchenware.com/product/CY24122/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-34/</loc>
+    <loc>https://oemkitchenware.com/product/CY23002/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-198/</loc>
+    <loc>https://oemkitchenware.com/product/CL25182/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-60/</loc>
+    <loc>https://oemkitchenware.com/product/CY24074/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-197/</loc>
+    <loc>https://oemkitchenware.com/product/CY24126/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-71/</loc>
+    <loc>https://oemkitchenware.com/product/HL24006/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-02/</loc>
+    <loc>https://oemkitchenware.com/product/CL24066/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-04/</loc>
+    <loc>https://oemkitchenware.com/product/CL23042/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-06/</loc>
+    <loc>https://oemkitchenware.com/product/CY24065/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-07/</loc>
+    <loc>https://oemkitchenware.com/product/CY26129/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-08/</loc>
+    <loc>https://oemkitchenware.com/product/CL24079/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-10/</loc>
+    <loc>https://oemkitchenware.com/product/CL26057/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-11/</loc>
+    <loc>https://oemkitchenware.com/product/HY26022/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-13/</loc>
+    <loc>https://oemkitchenware.com/product/HY25030/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-12/</loc>
+    <loc>https://oemkitchenware.com/product/BL26104/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-10/</loc>
+    <loc>https://oemkitchenware.com/product/BL24134/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/B-19/</loc>
+    <loc>https://oemkitchenware.com/product/AL24161/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-16/</loc>
+    <loc>https://oemkitchenware.com/product/HY26032/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-132/</loc>
+    <loc>https://oemkitchenware.com/product/LY24001/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-218/</loc>
+    <loc>https://oemkitchenware.com/product/LY26006/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-02/</loc>
+    <loc>https://oemkitchenware.com/product/LY26001/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-01/</loc>
+    <loc>https://oemkitchenware.com/product/BL25205/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-03/</loc>
+    <loc>https://oemkitchenware.com/product/BY23001/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-06/</loc>
+    <loc>https://oemkitchenware.com/product/BL24090/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-04/</loc>
+    <loc>https://oemkitchenware.com/product/LY26003/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-05/</loc>
+    <loc>https://oemkitchenware.com/product/BL24066/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-09/</loc>
+    <loc>https://oemkitchenware.com/product/AL25046/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-07/</loc>
+    <loc>https://oemkitchenware.com/product/AL25045/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-08/</loc>
+    <loc>https://oemkitchenware.com/product/AY26180/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-12/</loc>
+    <loc>https://oemkitchenware.com/product/HY26017/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-10/</loc>
+    <loc>https://oemkitchenware.com/product/BL26030/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-11/</loc>
+    <loc>https://oemkitchenware.com/product/AY23132/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/C-13/</loc>
+    <loc>https://oemkitchenware.com/product/HL23013/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/M-02/</loc>
+    <loc>https://oemkitchenware.com/product/AL25112/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/M-01/</loc>
+    <loc>https://oemkitchenware.com/product/AL25017/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/M-03/</loc>
+    <loc>https://oemkitchenware.com/product/AL24117/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/M-10/</loc>
+    <loc>https://oemkitchenware.com/product/AY25142/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-127/</loc>
+    <loc>https://oemkitchenware.com/product/AL26093/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/F-34/</loc>
+    <loc>https://oemkitchenware.com/product/AL24138/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/X-01/</loc>
+    <loc>https://oemkitchenware.com/product/AL26138/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/X-28/</loc>
+    <loc>https://oemkitchenware.com/product/CL25148/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/Q-61/</loc>
+    <loc>https://oemkitchenware.com/product/BL24146/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/CY25103/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/CY25179/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/CY25106/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/AL24139/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FY25011/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FL24014/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FL23017/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FY23001/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FL24017/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FY24006/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FY25022/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FL26019/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FL24007/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/FY24021/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1241,302 +1171,327 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-205/</loc>
+    <loc>https://oemkitchenware.com/product/AL23185/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-46/</loc>
+    <loc>https://oemkitchenware.com/product/DL23036/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-220/</loc>
+    <loc>https://oemkitchenware.com/product/AY24003/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-133/</loc>
+    <loc>https://oemkitchenware.com/product/BY25120/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-141/</loc>
+    <loc>https://oemkitchenware.com/product/DY26193/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-139/</loc>
+    <loc>https://oemkitchenware.com/product/BY26004/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-140/</loc>
+    <loc>https://oemkitchenware.com/product/AL25187/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-144/</loc>
+    <loc>https://oemkitchenware.com/product/AL25082/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-142/</loc>
+    <loc>https://oemkitchenware.com/product/AL26235/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-150/</loc>
+    <loc>https://oemkitchenware.com/product/AY26212/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-148/</loc>
+    <loc>https://oemkitchenware.com/product/AY26213/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/F-41/</loc>
+    <loc>https://oemkitchenware.com/product/AY24152/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-01/</loc>
+    <loc>https://oemkitchenware.com/product/AY24128/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-03/</loc>
+    <loc>https://oemkitchenware.com/product/AY24151/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-05/</loc>
+    <loc>https://oemkitchenware.com/product/AL23054/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-09/</loc>
+    <loc>https://oemkitchenware.com/product/AY26108/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-08/</loc>
+    <loc>https://oemkitchenware.com/product/AL24025/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-10/</loc>
+    <loc>https://oemkitchenware.com/product/AL24024/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-13/</loc>
+    <loc>https://oemkitchenware.com/product/AY25103/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/D-14/</loc>
+    <loc>https://oemkitchenware.com/product/AL24038/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-03/</loc>
+    <loc>https://oemkitchenware.com/product/AL25087/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-01/</loc>
+    <loc>https://oemkitchenware.com/product/AL23173/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-02/</loc>
+    <loc>https://oemkitchenware.com/product/AL23024/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-06/</loc>
+    <loc>https://oemkitchenware.com/product/AY25175/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-04/</loc>
+    <loc>https://oemkitchenware.com/product/AL23027/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-05/</loc>
+    <loc>https://oemkitchenware.com/product/DY26093/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-09/</loc>
+    <loc>https://oemkitchenware.com/product/AY26121/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-07/</loc>
+    <loc>https://oemkitchenware.com/product/HL25012/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-08/</loc>
+    <loc>https://oemkitchenware.com/product/HY23019/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-12/</loc>
+    <loc>https://oemkitchenware.com/product/HL25013/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-10/</loc>
+    <loc>https://oemkitchenware.com/product/CL23052/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-11/</loc>
+    <loc>https://oemkitchenware.com/product/CY25110/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-181/</loc>
+    <loc>https://oemkitchenware.com/product/BY26181/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-182/</loc>
+    <loc>https://oemkitchenware.com/product/AL23314/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-175/</loc>
+    <loc>https://oemkitchenware.com/product/CL25056/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-13/</loc>
+    <loc>https://oemkitchenware.com/product/CL26164/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-176/</loc>
+    <loc>https://oemkitchenware.com/product/CY24025/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-202/</loc>
+    <loc>https://oemkitchenware.com/product/AL24028/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-37/</loc>
+    <loc>https://oemkitchenware.com/product/AL26109/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-38/</loc>
+    <loc>https://oemkitchenware.com/product/HY26001/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-40/</loc>
+    <loc>https://oemkitchenware.com/product/AY24004/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-57/</loc>
+    <loc>https://oemkitchenware.com/product/AL23315/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-55/</loc>
+    <loc>https://oemkitchenware.com/product/BY26171/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-58/</loc>
+    <loc>https://oemkitchenware.com/product/AY26141/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-166/</loc>
+    <loc>https://oemkitchenware.com/product/DY23062/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-103/</loc>
+    <loc>https://oemkitchenware.com/product/HY26051/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-115/</loc>
+    <loc>https://oemkitchenware.com/product/CL23101/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-134/</loc>
+    <loc>https://oemkitchenware.com/product/BY24190/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-151/</loc>
+    <loc>https://oemkitchenware.com/product/BL26187/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-191/</loc>
+    <loc>https://oemkitchenware.com/product/BY26037/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-192/</loc>
+    <loc>https://oemkitchenware.com/product/AY23009/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/U-15/</loc>
+    <loc>https://oemkitchenware.com/product/AY26016/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/F-53/</loc>
+    <loc>https://oemkitchenware.com/product/AY26047/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/F-52/</loc>
+    <loc>https://oemkitchenware.com/product/BL24065/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/F-49/</loc>
+    <loc>https://oemkitchenware.com/product/AY23069/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-95/</loc>
+    <loc>https://oemkitchenware.com/product/AY26013/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-105/</loc>
+    <loc>https://oemkitchenware.com/product/BL24148/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-124/</loc>
+    <loc>https://oemkitchenware.com/product/LY23004/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-125/</loc>
+    <loc>https://oemkitchenware.com/product/EY26008/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://oemkitchenware.com/product/AA-131/</loc>
+    <loc>https://oemkitchenware.com/product/BY26065/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BY25058/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BY25061/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BY24175/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BY25158/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oemkitchenware.com/product/BY26012/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -1,15 +1,5 @@
 [
   {
-    "id": "kitchen",
-    "name": "Kitchen Gadgets",
-    "sub": "Kitchen Items",
-    "pdf": "assets/catalog-kitchen.pdf",
-    "toc": "toc-kitchen.json",
-    "theme": "silicone and stainless steel kitchenware",
-    "materials": "Food-grade silicone, stainless steel, BPA-free plastic",
-    "group": "Kitchen & Prep"
-  },
-  {
     "id": "kitchen-tools",
     "name": "Kitchen Tools",
     "sub": "Kitchen Tools",
@@ -58,14 +48,14 @@
     "group": "Bake & Freeze"
   },
   {
-    "id": "tableware",
-    "name": "Tableware",
-    "sub": "Tableware",
-    "pdf": "assets/catalog-tableware.pdf",
-    "toc": "toc-tableware.json",
+    "id": "coffee-tea",
+    "name": "Coffee & Tea",
+    "sub": "Coffee & Tea",
+    "pdf": "assets/catalog-coffee-tea.pdf",
+    "toc": null,
     "gridFromToc": false,
     "coverLocked": false,
-    "theme": "Plates, bowls, mats and table accessories",
+    "theme": "Pour-over, milk frothing and tea accessories",
     "materials": "",
     "group": "Table & Drink"
   },
@@ -82,18 +72,6 @@
     "group": "Table & Drink"
   },
   {
-    "id": "coffee-tea",
-    "name": "Coffee & Tea",
-    "sub": "Coffee & Tea",
-    "pdf": "assets/catalog-coffee-tea.pdf",
-    "toc": null,
-    "gridFromToc": false,
-    "coverLocked": false,
-    "theme": "Pour-over, milk frothing and tea accessories",
-    "materials": "",
-    "group": "Table & Drink"
-  },
-  {
     "id": "kitchen-storage-organization",
     "name": "Kitchen Storage & Organization",
     "sub": "Kitchen Storage & Organization",
@@ -106,16 +84,16 @@
     "group": "Home & Storage"
   },
   {
-    "id": "household-essentials",
-    "name": "Household Essentials",
-    "sub": "Household Essentials",
-    "pdf": "assets/catalog-household-essentials.pdf",
-    "toc": null,
+    "id": "tableware",
+    "name": "Tableware",
+    "sub": "Tableware",
+    "pdf": "assets/catalog-tableware.pdf",
+    "toc": "toc-tableware.json",
     "gridFromToc": false,
     "coverLocked": false,
-    "theme": "Everyday household items",
+    "theme": "Plates, bowls, mats and table accessories",
     "materials": "",
-    "group": "Home & Storage"
+    "group": "Table & Drink"
   },
   {
     "id": "cleaning-supplies",
@@ -130,14 +108,16 @@
     "group": "Home & Storage"
   },
   {
-    "id": "balls",
-    "name": "Christmas Balls",
-    "sub": "Festival Decorations",
-    "pdf": "assets/catalog-balls.pdf",
+    "id": "beauty-personal-care",
+    "name": "Beauty & Personal Care",
+    "sub": "Beauty & Personal Care",
+    "pdf": "assets/catalog-beauty-personal-care.pdf",
     "toc": null,
-    "theme": "festive Christmas and holiday decorations",
-    "materials": "High-quality festive finishes, drop-safe decoration materials",
-    "group": "Home & Storage"
+    "gridFromToc": false,
+    "coverLocked": false,
+    "theme": "Bath, body and personal care accessories",
+    "materials": "",
+    "group": "Beauty & Care"
   },
   {
     "id": "kids-tableware",
@@ -149,16 +129,6 @@
     "coverLocked": false,
     "theme": "Baby and kids feeding sets",
     "materials": "",
-    "group": "Kids, Pets & Outdoor"
-  },
-  {
-    "id": "baby",
-    "name": "Baby Care",
-    "sub": "Infant & Nursery Products",
-    "pdf": "assets/catalog-baby.pdf",
-    "toc": "toc-baby.json",
-    "theme": "food-grade silicone baby care products",
-    "materials": "Food-grade silicone, BPA-free materials, EN71 & FDA compliant",
     "group": "Kids, Pets & Outdoor"
   },
   {
@@ -186,16 +156,36 @@
     "group": "Kids, Pets & Outdoor"
   },
   {
-    "id": "beauty-personal-care",
-    "name": "Beauty & Personal Care",
-    "sub": "Beauty & Personal Care",
-    "pdf": "assets/catalog-beauty-personal-care.pdf",
+    "id": "household-essentials",
+    "name": "Household Essentials",
+    "sub": "Household Essentials",
+    "pdf": "assets/catalog-household-essentials.pdf",
     "toc": null,
     "gridFromToc": false,
     "coverLocked": false,
-    "theme": "Bath, body and personal care accessories",
+    "theme": "Everyday household items",
     "materials": "",
-    "group": "Beauty & Care"
+    "group": "Home & Storage"
+  },
+  {
+    "id": "kitchen",
+    "name": "Kitchen Gadgets",
+    "sub": "Kitchen Items",
+    "pdf": "assets/catalog-kitchen.pdf",
+    "toc": "toc-kitchen.json",
+    "theme": "silicone and stainless steel kitchenware",
+    "materials": "Food-grade silicone, stainless steel, BPA-free plastic",
+    "group": "Legacy Catalogues"
+  },
+  {
+    "id": "baby",
+    "name": "Baby Care",
+    "sub": "Infant & Nursery Products",
+    "pdf": "assets/catalog-baby.pdf",
+    "toc": "toc-baby.json",
+    "theme": "food-grade silicone baby care products",
+    "materials": "Food-grade silicone, BPA-free materials, EN71 & FDA compliant",
+    "group": "Legacy Catalogues"
   },
   {
     "id": "ladies",
@@ -205,6 +195,16 @@
     "toc": "toc-ladies.json",
     "theme": "personal care and beauty devices",
     "materials": "Safe, body-friendly materials with CE/RoHS compliant electronics",
-    "group": "Beauty & Care"
+    "group": "Legacy Catalogues"
+  },
+  {
+    "id": "balls",
+    "name": "Christmas Balls",
+    "sub": "Festival Decorations",
+    "pdf": "assets/catalog-balls.pdf",
+    "toc": null,
+    "theme": "festive Christmas and holiday decorations",
+    "materials": "High-quality festive finishes, drop-safe decoration materials",
+    "group": "Legacy Catalogues"
   }
 ]
