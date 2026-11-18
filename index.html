@@ -151,6 +151,73 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background
   text-decoration: none; white-space: nowrap; }
 .cat-pills a:hover { color: #1a1a2e; border-color: #cfc8ba; background: #efece5; }
 .cat-pills a b { font-weight: 700; color: #b0642a; margin-left: 5px; }
+
+/* ===== What are you making? — buyer-scenario rail =====
+   The catalogue grid answers "which PDF", not "what am I making". A buyer who
+   is sourcing for a bakery or a kids range has to translate that into our deck
+   names first. Four scenario nodes on one vertical spine, each pointing at the
+   catalogues and printed sections for that use. */
+.use-cases { max-width: 1280px; margin: 0 auto; padding: 30px 24px 64px; }
+.uc-head { max-width: 620px; margin: 0 0 38px; }
+.uc-eyebrow { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: #b0642a; margin-bottom: 10px; }
+.uc-head h2 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); font-weight: 700; color: #1a1a2e;
+  letter-spacing: -.02em; line-height: 1.2; margin-bottom: 9px; }
+.uc-head p { font-size: .93rem; color: #6c6c6c; line-height: 1.75; max-width: 58ch; }
+
+.uc-rail { position: relative; }
+/* One segment per node so the spine starts at the first dot and stops at the
+   last one, instead of running on past the final card row. */
+.uc-node { position: relative; display: grid; grid-template-columns: 208px minmax(0, 1fr);
+  gap: 22px 34px; align-items: start; padding-bottom: 46px; }
+.uc-node::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #e3ded3; }
+.uc-node:first-child::before { top: 15px; }
+.uc-node:last-child { padding-bottom: 0; }
+.uc-node:last-child::before { bottom: auto; height: 15px; }
+.uc-label { position: relative; padding-left: 27px; padding-top: 2px; }
+.uc-label h3 { font-size: 1rem; font-weight: 700; color: #1a1a2e; letter-spacing: -.01em; margin-bottom: 5px; }
+.uc-label p { font-size: .78rem; color: #98917f; line-height: 1.55; }
+.uc-dot { position: absolute; left: -4.5px; top: 8px; width: 9px; height: 9px; border-radius: 50%;
+  background: #1a1a2e; box-shadow: 0 0 0 4px #fff; transition: background .2s ease; }
+.uc-node:hover .uc-dot { background: #b0642a; }
+
+.uc-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 18px; }
+.uc-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #ece8e0;
+  border-radius: 13px; overflow: hidden; text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.uc-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(26,26,46,.11); border-color: #ddd6c7; }
+.uc-cover { display: block; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f2efe9; }
+.uc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.uc-txt { display: block; padding: 13px 15px 15px; }
+.uc-name { display: block; font-size: .93rem; font-weight: 700; color: #1a1a2e; letter-spacing: -.01em; }
+.uc-meta { display: block; margin-top: 4px; font-size: .75rem; color: #8f887b; line-height: 1.5; }
+
+.uc-more { display: flex; flex-direction: column; align-self: start; background: #faf8f4;
+  border: 1px solid #ece8e0; border-radius: 13px; padding: 16px 17px; }
+.uc-more h4 { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: #a49c8c; margin-bottom: 8px; }
+.uc-more ul { list-style: none; margin: 0; padding: 0; }
+.uc-more li { border-bottom: 1px solid #efeade; }
+.uc-more li:last-child { border-bottom: none; }
+.uc-more a { display: block; padding: 9px 0; font-size: .83rem; color: #1a1a2e; text-decoration: none; }
+.uc-more a:hover { color: #b0642a; }
+.uc-more a.uc-more-all { margin-top: 12px; padding: 12px 0 0; border-top: 1px solid #e6e0d2;
+  font-size: .76rem; font-weight: 700; color: #b0642a; }
+.uc-more a.uc-more-all:hover { color: #1a1a2e; }
+
+@media (max-width: 900px) {
+  .uc-rail::before, .uc-dot { display: none; }
+  .uc-node { grid-template-columns: 1fr; gap: 16px; padding-bottom: 38px; }
+  .uc-label { padding-left: 0; }
+  .uc-head { margin-bottom: 30px; }
+}
+@media (max-width: 560px) {
+  .use-cases { padding: 22px 18px 48px; }
+  .uc-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .uc-more { grid-column: 1 / -1; }
+  .uc-txt { padding: 11px 12px 13px; }
+  .uc-name { font-size: .86rem; }
+}
 details.hi-col { background: #faf9f7; border: 1px solid #ece8e0; border-radius: 10px; padding: 0; }
 details.hi-col summary { list-style: none; cursor: pointer; display: flex; align-items: baseline;
   justify-content: space-between; gap: 10px; padding: 14px 16px; }
@@ -493,6 +560,126 @@ details.hi-col .hi-sub, details.hi-col .hi-all { margin: 10px 16px 14px; display
     <h1>Kitchenware, Dinnerware, Baking &amp; Pastry Tools</h1>
     <p>Yongli is a BSCI &amp; ISO 9001 certified OEM/ODM manufacturer in Huizhou, China, making food-grade silicone kitchenware, baby care, personal care and festive decoration products since 2010. Open any catalogue below as a searchable flip-book, or jump straight to a product range.</p>
   </div>
+  <!-- ===== What are you making? ===== -->
+  <section class="use-cases" aria-labelledby="ucTitle">
+    <div class="uc-head">
+      <span class="uc-eyebrow">Start here</span>
+      <h2 id="ucTitle">What are you making?</h2>
+      <p>Pick the end product instead of the deck name. Each line opens the catalogue for that range, plus the printed sections a buyer usually asks for first.</p>
+    </div>
+    <div class="uc-rail">
+
+      <div class="uc-node">
+        <div class="uc-label"><span class="uc-dot" aria-hidden="true"></span>
+          <h3>Baking &amp; pastry</h3>
+          <p>Bakeware, sourdough, frozen desserts</p>
+        </div>
+        <div class="uc-cards">
+          <a class="uc-card" href="/catalog/baking-tools/" data-cat="baking-tools">
+            <span class="uc-cover"><img src="assets/covers/baking-tools-400.jpg" srcset="assets/covers/baking-tools-400.jpg 400w, assets/covers/baking-tools.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Baking Tools catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Baking Tools</span><span class="uc-meta">50 pages &middot; bakeware, pastry, sourdough</span></span>
+          </a>
+          <a class="uc-card" href="/catalog/ice-cream-ice-tools/" data-cat="ice-cream-ice-tools">
+            <span class="uc-cover"><img src="assets/covers/ice-cream-ice-tools-400.jpg" srcset="assets/covers/ice-cream-ice-tools-400.jpg 400w, assets/covers/ice-cream-ice-tools.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Ice Cream &amp; Ice Tools catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Ice Cream &amp; Ice Tools</span><span class="uc-meta">22 pages &middot; moulds, scoops, bar tools</span></span>
+          </a>
+          <div class="uc-more">
+            <h4>Also in this range</h4>
+            <ul>
+              <li><a href="/catalog/kitchen-tools/baking-and-pastry/">Baking &amp; pastry tools</a></li>
+              <li><a href="/catalog/kitchen/sourdough-starter-kit/">Sourdough starter kits</a></li>
+              <li><a href="/catalog/kitchen/cookie-cutter/">Cookie cutters</a></li>
+              <li><a href="/catalog/kitchen/ice-cream-tool/">Ice cream tools</a></li>
+            </ul>
+            <a class="uc-more-all" href="/catalog/baking-tools/">Open catalogue page &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="uc-node">
+        <div class="uc-label"><span class="uc-dot" aria-hidden="true"></span>
+          <h3>Kids &amp; baby</h3>
+          <p>Feeding, suction tableware, bibs</p>
+        </div>
+        <div class="uc-cards">
+          <a class="uc-card" href="/catalog/kids-tableware/" data-cat="kids-tableware">
+            <span class="uc-cover"><img src="assets/covers/kids-tableware-400.jpg" srcset="assets/covers/kids-tableware-400.jpg 400w, assets/covers/kids-tableware.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Kids Tableware catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Kids Tableware</span><span class="uc-meta">31 pages &middot; plates, bowls, drinkware</span></span>
+          </a>
+          <a class="uc-card" href="/catalog/baby/" data-cat="baby">
+            <span class="uc-cover"><img src="assets/covers/baby-400.jpg" srcset="assets/covers/baby-400.jpg 400w, assets/covers/baby.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Baby Care catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Baby Care</span><span class="uc-meta">22 pages &middot; feeding sets, bibs, placemats</span></span>
+          </a>
+          <div class="uc-more">
+            <h4>Also in this range</h4>
+            <ul>
+              <li><a href="/catalog/kids-tableware/kids-and-baby/">Kids &amp; baby tableware</a></li>
+              <li><a href="/catalog/baby/baby-bib/">Silicone bibs</a></li>
+              <li><a href="/catalog/baby/feeding-set/">Feeding sets</a></li>
+              <li><a href="/catalog/baby/silicone-placemat/">Silicone placemats</a></li>
+            </ul>
+            <a class="uc-more-all" href="/catalog/kids-tableware/">Open catalogue page &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="uc-node">
+        <div class="uc-label"><span class="uc-dot" aria-hidden="true"></span>
+          <h3>Outdoor &amp; BBQ</h3>
+          <p>Grill, picnic and travel drinkware</p>
+        </div>
+        <div class="uc-cards">
+          <a class="uc-card" href="/catalog/outdoor-bbq/" data-cat="outdoor-bbq">
+            <span class="uc-cover"><img src="assets/covers/outdoor-bbq-400.jpg" srcset="assets/covers/outdoor-bbq-400.jpg 400w, assets/covers/outdoor-bbq.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Outdoor &amp; BBQ catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Outdoor &amp; BBQ</span><span class="uc-meta">15 pages &middot; grill tools, picnic accessories</span></span>
+          </a>
+          <a class="uc-card" href="/catalog/drinkware-bottles/" data-cat="drinkware-bottles">
+            <span class="uc-cover"><img src="assets/covers/drinkware-bottles-400.jpg" srcset="assets/covers/drinkware-bottles-400.jpg 400w, assets/covers/drinkware-bottles.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Drinkware &amp; Bottles catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Drinkware &amp; Bottles</span><span class="uc-meta">30 pages &middot; bottles, tumblers, cups</span></span>
+          </a>
+          <div class="uc-more">
+            <h4>Also in this range</h4>
+            <ul>
+              <li><a href="/catalog/kitchen/bbq-grill-accessories/">BBQ &amp; grill accessories</a></li>
+              <li><a href="/catalog/kitchen/collapsible-travel-cup/">Collapsible travel cups</a></li>
+              <li><a href="/catalog/kitchen/stainless-steel-tumbler/">Stainless steel tumblers</a></li>
+              <li><a href="/catalog/kitchen/collapsible-food-storage/">Collapsible food containers</a></li>
+            </ul>
+            <a class="uc-more-all" href="/catalog/outdoor-bbq/">Open catalogue page &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="uc-node">
+        <div class="uc-label"><span class="uc-dot" aria-hidden="true"></span>
+          <h3>Storage &amp; organisation</h3>
+          <p>Pantry, fridge, countertop, household</p>
+        </div>
+        <div class="uc-cards">
+          <a class="uc-card" href="/catalog/kitchen-storage-organization/" data-cat="kitchen-storage-organization">
+            <span class="uc-cover"><img src="assets/covers/kitchen-storage-organization-400.jpg" srcset="assets/covers/kitchen-storage-organization-400.jpg 400w, assets/covers/kitchen-storage-organization.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Kitchen Storage &amp; Organization catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Kitchen Storage &amp; Organization</span><span class="uc-meta">66 pages &middot; containers, racks, pantry</span></span>
+          </a>
+          <a class="uc-card" href="/catalog/household-essentials/" data-cat="household-essentials">
+            <span class="uc-cover"><img src="assets/covers/household-essentials-400.jpg" srcset="assets/covers/household-essentials-400.jpg 400w, assets/covers/household-essentials.jpg 640w" sizes="(max-width: 560px) 44vw, (max-width: 900px) 30vw, 300px" alt="Household Essentials catalogue cover" width="720" height="720" loading="lazy" decoding="async"></span>
+            <span class="uc-txt"><span class="uc-name">Household Essentials</span><span class="uc-meta">43 pages &middot; everyday household items</span></span>
+          </a>
+          <div class="uc-more">
+            <h4>Also in this range</h4>
+            <ul>
+              <li><a href="/catalog/kitchen-storage-organization/storage-and-organisation/">Containers &amp; racks</a></li>
+              <li><a href="/catalog/kitchen/food-storage-container/">Food storage containers</a></li>
+              <li><a href="/catalog/kitchen/silicone-food-storage-bag/">Silicone storage bags</a></li>
+              <li><a href="/catalog/kitchen/snack-box/">Snack boxes</a></li>
+            </ul>
+            <a class="uc-more-all" href="/catalog/kitchen-storage-organization/">Open catalogue page &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <div id="catalogGrid" class="catalog-grid"></div>
 
   <!-- INDEX:BEGIN -->
@@ -921,6 +1108,16 @@ function inquiryFallbackHtml(d){
 
 //===== Events =====
 function bindEvents(){
+  // Scenario cards open the flip-book in place; the href stays a real catalogue
+  // page so a crawler - or a visitor with JS off - still lands somewhere useful.
+  document.querySelectorAll('.uc-card[data-cat]').forEach(el=>{
+    el.addEventListener('click',ev=>{
+      const i=catalogs.findIndex(c=>c.id===el.dataset.cat);
+      if(i<0)return;
+      ev.preventDefault();
+      openReader(i);
+    });
+  });
   // Nav. The Catalog item drops down the row of PDF catalogues while the mouse
   // is on it; touch devices have no hover, so there a tap toggles it instead.
   const navBox=document.getElementById('navCatalogDropdown');
