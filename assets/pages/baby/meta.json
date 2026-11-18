@@ -29,8 +29,6 @@
    "pageEnd": null
   }
  ],
- "hi": false,
- "hiWidth": 0,
  "native": [
   837,
   730,
@@ -54,5 +52,7 @@
   730,
   730,
   730
- ]
+ ],
+ "hi": false,
+ "hiWidth": 0
 }

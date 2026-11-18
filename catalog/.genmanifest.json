@@ -189,7 +189,7 @@
  },
  "baby": {
   "pdf": "970a78a7e566437c236f246b411acff26312ebdd",
-  "toc": "f2531155aa4dc5cff9d46b2f17e2fba7314ee4b0",
+  "toc": "4e596e1678402ec321be1f2928f0862a539b9f98",
   "cats": [
    {
     "title": "Feeding Set",
@@ -233,7 +233,7 @@
  },
  "ladies": {
   "pdf": "de99f0c161caeb1525ecf3ffcaf78d1d6e5d4365",
-  "toc": "fc8bb6f59546666bd76e1e364489137bccd0135e",
+  "toc": "5724cb77d6e54cf58af879ae41284d7b00ef2c37",
   "cats": [
    {
     "title": "Ice Facial Roller",
@@ -459,6 +459,496 @@
    ],
    [
     "https://oemkitchenware.com/catalog/2023/household-essentials/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "kitchen-tools": {
+  "pdf": "67419b9ef136b6de39f0a8ddbc4d12748d721b13",
+  "toc": "b26c17a7983039d337f3cff6396fbb83b26caa32",
+  "cats": [
+   {
+    "title": "Spoons & Ladles",
+    "page": 1
+   },
+   {
+    "title": "Tongs & Turners",
+    "page": 7
+   },
+   {
+    "title": "Baking & Pastry",
+    "page": 10
+   },
+   {
+    "title": "Knives & Cutting",
+    "page": 18
+   },
+   {
+    "title": "Bowls & Strainers",
+    "page": 38
+   },
+   {
+    "title": "Measuring",
+    "page": 42
+   },
+   {
+    "title": "Bowls & Strainers (2)",
+    "page": 56
+   },
+   {
+    "title": "Storage & Organisation",
+    "page": 59
+   },
+   {
+    "title": "Measuring (2)",
+    "page": 62
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/spoons-and-ladles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/tongs-and-turners/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/baking-and-pastry/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/knives-and-cutting/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/bowls-and-strainers/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/measuring/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/bowls-and-strainers-2/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/storage-and-organisation/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-tools/measuring-2/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "knives-cutting-boards": {
+  "pdf": "e97eeea93081a95771c28a533df1531d01bee6d7",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Knives & Cutting Boards",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/knives-cutting-boards/knives-and-cutting-boards/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "baking-tools": {
+  "pdf": "cf3072692cf4152cda68302848bbc04fa3dc4125",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Baking Tools",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/baking-tools/baking-tools/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "ice-cream-ice-tools": {
+  "pdf": "2c767737286d8a8e7ba84f26036e7e4364cebbde",
+  "toc": "f3ec1ee52090e654768777e55f8340a6bf3b49c7",
+  "cats": [
+   {
+    "title": "Ice Cream & Popsicles",
+    "page": 1
+   },
+   {
+    "title": "Ice Cream & Popsicles (2)",
+    "page": 6
+   },
+   {
+    "title": "Tableware & Serveware",
+    "page": 10
+   },
+   {
+    "title": "Ice Cream & Popsicles (3)",
+    "page": 12
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles-2/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ice-cream-ice-tools/tableware-and-serveware/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/ice-cream-ice-tools/ice-cream-and-popsicles-3/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "coffee-tea": {
+  "pdf": "fb608827b6661db507e37d4fd73653124bd5072a",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Coffee & Tea",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/coffee-tea/coffee-and-tea/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "drinkware-bottles": {
+  "pdf": "b14bd5697e97b53e04c517feaf47f126f7d48857",
+  "toc": "67973c6f5f818cce5c124ee57e57aa6b8763b904",
+  "cats": [
+   {
+    "title": "Drinkware & Bottles",
+    "page": 1
+   },
+   {
+    "title": "Spoons & Ladles",
+    "page": 13
+   },
+   {
+    "title": "Drinkware & Bottles (2)",
+    "page": 16
+   },
+   {
+    "title": "Coffee & Tea",
+    "page": 26
+   },
+   {
+    "title": "Storage & Organisation",
+    "page": 28
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/drinkware-bottles/drinkware-and-bottles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/drinkware-bottles/spoons-and-ladles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/drinkware-bottles/drinkware-and-bottles-2/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/drinkware-bottles/coffee-and-tea/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/drinkware-bottles/storage-and-organisation/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "kitchen-storage-organization": {
+  "pdf": "f6ea95fb72f8307a6489fbb8bd600d2fc87184ea",
+  "toc": "74c375fb71e330cae60989ca8db1c7aa82c39dff",
+  "cats": [
+   {
+    "title": "Storage & Organisation",
+    "page": 1
+   },
+   {
+    "title": "Bowls & Strainers",
+    "page": 37
+   },
+   {
+    "title": "Storage & Organisation (2)",
+    "page": 39
+   },
+   {
+    "title": "Drinkware & Bottles",
+    "page": 49
+   },
+   {
+    "title": "Storage & Organisation (3)",
+    "page": 52
+   },
+   {
+    "title": "Tableware & Serveware",
+    "page": 59
+   },
+   {
+    "title": "Storage & Organisation (4)",
+    "page": 62
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/bowls-and-strainers/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-2/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/drinkware-and-bottles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-3/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/tableware-and-serveware/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kitchen-storage-organization/storage-and-organisation-4/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "tableware": {
+  "pdf": "9a8b7e1b9b422de664c8db96951367018d0b49ae",
+  "toc": "775dd48f6d36319bafab473ab54ad4d03e5d8f05",
+  "cats": [
+   {
+    "title": "Tableware & Serveware",
+    "page": 1
+   },
+   {
+    "title": "Tableware & Serveware (2)",
+    "page": 8
+   },
+   {
+    "title": "Spoons & Ladles",
+    "page": 10
+   },
+   {
+    "title": "Knives & Cutting",
+    "page": 12
+   },
+   {
+    "title": "Tableware & Serveware (3)",
+    "page": 15
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/tableware/tableware-and-serveware/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/tableware/tableware-and-serveware-2/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/tableware/spoons-and-ladles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/tableware/knives-and-cutting/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/tableware/tableware-and-serveware-3/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "cleaning-supplies": {
+  "pdf": "d0813fb8fefde8592d904d6a5047c6484bf7be98",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Cleaning Supplies",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/cleaning-supplies/cleaning-supplies/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "beauty-personal-care": {
+  "pdf": "407b0548e1172bbd01e5b910c0a720f4cc631d61",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Beauty & Personal Care",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/beauty-personal-care/beauty-and-personal-care/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "kids-tableware": {
+  "pdf": "d53b686fbc07f05a4bba809d48948310cf829ca0",
+  "toc": "f88cac91756fbb3c3185b2157425c563421d8305",
+  "cats": [
+   {
+    "title": "Tableware & Serveware",
+    "page": 1
+   },
+   {
+    "title": "Spoons & Ladles",
+    "page": 16
+   },
+   {
+    "title": "Kids & Baby",
+    "page": 19
+   },
+   {
+    "title": "Drinkware & Bottles",
+    "page": 26
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/kids-tableware/tableware-and-serveware/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kids-tableware/spoons-and-ladles/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kids-tableware/kids-and-baby/",
+    "monthly",
+    "0.7"
+   ],
+   [
+    "https://oemkitchenware.com/catalog/kids-tableware/drinkware-and-bottles/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "pet-supplies": {
+  "pdf": "adabbbbd90c3d9fc1a7095ed6f5c42271a330514",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Pet Supplies",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/pet-supplies/pet-supplies/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "outdoor-bbq": {
+  "pdf": "8f70775af5df171bb05e4bc993956c0642646c81",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Outdoor & BBQ",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/outdoor-bbq/outdoor-and-bbq/",
+    "monthly",
+    "0.7"
+   ]
+  ]
+ },
+ "household-essentials": {
+  "pdf": "8cc24fb16abf4831436d580b4bd9404870876e46",
+  "toc": "none",
+  "cats": [
+   {
+    "title": "Household Essentials",
+    "page": 1
+   }
+  ],
+  "pages": [
+   [
+    "https://oemkitchenware.com/catalog/household-essentials/household-essentials/",
     "monthly",
     "0.7"
    ]

@@ -990,7 +990,7 @@ def guide_html(guide, products, all_guides, have_product, shots=None, hero_of=No
         re.sub("&amp;", "&", guide["h1"]), guide["slug"])
 
     body = HEAD.format(title=guide["meta_title"], desc=guide["meta_desc"], url=url,
-                       image=SITE + "/assets/covers/new2026.jpg",
+                       image=SITE + "/assets/covers/kitchen.jpg",
                        ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Buyer Guides", "/guides/"),
                     (re.sub("&amp;", "&", guide["h1"]), None)])
@@ -1038,7 +1038,7 @@ def guides_hub_html(all_guides, shots=None, hero_of=None):
           "name": "Yongli buyer guides", "url": url, "description": re.sub("&amp;", "&", desc)}
     cards = "\n".join(card_html(g, shots, hero_of.get(g["slug"])) for g in all_guides)
     body = HEAD.format(title="Buyer Guides — OEM Kitchenware Sourcing | Yongli",
-                       desc=desc, url=url, image=SITE + "/assets/covers/new2026.jpg",
+                       desc=desc, url=url, image=SITE + "/assets/covers/kitchen.jpg",
                        ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("Buyer Guides", None)])
     body += '<h1>Buyer guides</h1>\n'
@@ -1049,7 +1049,8 @@ def guides_hub_html(all_guides, shots=None, hero_of=None):
     body += '<section class="block"><h2>All guides</h2><div class="hub-grid">%s</div></section>\n' % cards
     body += ('<section class="block"><h2>Prefer to browse the catalogues?</h2>'
              '<p class="block-sub">Our flip-book catalogues hold the printed range with every product '
-             'code: <a href="/catalog/new2026/">2026 New</a>, <a href="/catalog/2023/">2023</a>, '
+             'code: <a href="/catalog/kitchen-tools/">Kitchen Tools</a>, '
+        '<a href="/catalog/baking-tools/">Baking Tools</a>, '
              '<a href="/catalog/kitchen/">Kitchen Gadgets</a>, <a href="/catalog/baby/">Baby Care</a>, '
              '<a href="/catalog/ladies/">Ladies&rsquo; Appliances</a>, '
              '<a href="/catalog/balls/">Christmas Balls</a>. You can also open the '
@@ -1191,7 +1192,7 @@ def product_index_html(rows, all_guides, shots=None):
                      % (g["slug"], esc(re.sub("&amp;", "&", g["h1"]).split(" — ")[0].split(" (")[0]))
                      for g in all_guides)
     body = HEAD.format(title="All Products — OEM Kitchenware Item Codes | Yongli", desc=desc,
-                       url=url, image=SITE + "/assets/covers/new2026.jpg",
+                       url=url, image=SITE + "/assets/covers/kitchen.jpg",
                        ld=json.dumps(ld, ensure_ascii=False, indent=1), css=css())
     body += crumbs([("Home", "/"), ("All Products", None)])
     body += '<h1>All products</h1>\n<p class="lede">%s</p>\n' % esc(desc)
@@ -1300,7 +1301,7 @@ def main():
     for p in products:                      # then the current decks, then the rest
         if len(chosen) >= args.limit:
             break
-        if p["code"] not in chosen and p["cid"] in ("new2026", "2023"):
+        if p["code"] not in chosen and p["cid"] in ("kitchen-tools", "baking-tools", "kitchen"):
             chosen[p["code"]] = p
     for p in products:
         if len(chosen) >= args.limit:

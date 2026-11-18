@@ -1,767 +1,4 @@
 {
- "new2026": {
-  "pages": 124,
-  "w": 921.6,
-  "h": 518.4,
-  "aspect": 1.7778,
-  "wide": true,
-  "width": 2600,
-  "quality": 76,
-  "format": "webp",
-  "toc": [
-   {
-    "title": "FC u K CE",
-    "page": 3,
-    "pageEnd": 3
-   },
-   {
-    "title": "Kitchen Tools",
-    "page": 5,
-    "pageEnd": 5
-   },
-   {
-    "title": "Tea Spoon",
-    "page": 8,
-    "pageEnd": 8
-   },
-   {
-    "title": "Electric Egg Beater",
-    "page": 9,
-    "pageEnd": 9
-   },
-   {
-    "title": "Silicone Mixing Scraper",
-    "page": 10,
-    "pageEnd": 10
-   },
-   {
-    "title": "Cherry Pitter",
-    "page": 11,
-    "pageEnd": 11
-   },
-   {
-    "title": "Rotary Peeler",
-    "page": 12,
-    "pageEnd": 12
-   },
-   {
-    "title": "Sausage Slicer",
-    "page": 13,
-    "pageEnd": 13
-   },
-   {
-    "title": "Corn Stripper",
-    "page": 14,
-    "pageEnd": 14
-   },
-   {
-    "title": "Burger Press",
-    "page": 15,
-    "pageEnd": 15
-   },
-   {
-    "title": "Jar & Can Gripper",
-    "page": 17,
-    "pageEnd": 17
-   },
-   {
-    "title": "Wavy Draining Mat",
-    "page": 18,
-    "pageEnd": 18
-   },
-   {
-    "title": "Silicone Draining Mat",
-    "page": 19,
-    "pageEnd": 19
-   },
-   {
-    "title": "2-Tier Washing Colander",
-    "page": 20,
-    "pageEnd": 20
-   },
-   {
-    "title": "Oil Strainer Stand",
-    "page": 21,
-    "pageEnd": 21
-   },
-   {
-    "title": "Collapsible Pot Lid",
-    "page": 22,
-    "pageEnd": 22
-   },
-   {
-    "title": "Heat-Proof Pot Ear Clip",
-    "page": 24,
-    "pageEnd": 24
-   },
-   {
-    "title": "Measuring Cup",
-    "page": 25,
-    "pageEnd": 25
-   },
-   {
-    "title": "Food Warming Tray",
-    "page": 27,
-    "pageEnd": 27
-   },
-   {
-    "title": "Knives & Cutting Boards",
-    "page": 28,
-    "pageEnd": 28
-   },
-   {
-    "title": "Poultry Shears",
-    "page": 32,
-    "pageEnd": 32
-   },
-   {
-    "title": "Rolling Knife Sharpener",
-    "page": 33,
-    "pageEnd": 33
-   },
-   {
-    "title": "Knife Sharpening Pen",
-    "page": 34,
-    "pageEnd": 34
-   },
-   {
-    "title": "Baking Tools",
-    "page": 35,
-    "pageEnd": 35
-   },
-   {
-    "title": "Cookie Cutter",
-    "page": 36,
-    "pageEnd": 36
-   },
-   {
-    "title": "Height 3.1cm",
-    "page": 37,
-    "pageEnd": 37
-   },
-   {
-    "title": "Air Fryer",
-    "page": 40,
-    "pageEnd": 40
-   },
-   {
-    "title": "Chocolat",
-    "page": 42,
-    "pageEnd": 42
-   },
-   {
-    "title": "Wooden Rolling Pin",
-    "page": 46,
-    "pageEnd": 46
-   },
-   {
-    "title": "Ice Cream & Ice Tools",
-    "page": 50,
-    "pageEnd": 50
-   },
-   {
-    "title": "Silicone Ice Cube Tray",
-    "page": 51,
-    "pageEnd": 51
-   },
-   {
-    "title": "8-Cube Silicone Ice Cube Tray",
-    "page": 52,
-    "pageEnd": 52
-   },
-   {
-    "title": "6-Cube Stainless Steel Ice Tray",
-    "page": 53,
-    "pageEnd": 53
-   },
-   {
-    "title": "Silicone lce Cube Mold",
-    "page": 54,
-    "pageEnd": 54
-   },
-   {
-    "title": "Coffee & Tea",
-    "page": 55,
-    "pageEnd": 55
-   },
-   {
-    "title": "Coffee Filter Screen",
-    "page": 57,
-    "pageEnd": 57
-   },
-   {
-    "title": "7-Piece Matcha Set",
-    "page": 58,
-    "pageEnd": 58
-   },
-   {
-    "title": "Silicone Tea Infuser",
-    "page": 59,
-    "pageEnd": 59
-   },
-   {
-    "title": "Drinkware & Bottles",
-    "page": 61,
-    "pageEnd": 61
-   },
-   {
-    "title": "MY BOTTU",
-    "page": 62,
-    "pageEnd": 62
-   },
-   {
-    "title": "Dual-Handle Straw Cup",
-    "page": 63,
-    "pageEnd": 63
-   },
-   {
-    "title": "Oats Cup",
-    "page": 64,
-    "pageEnd": 64
-   },
-   {
-    "title": "3-in-1 lce Cup",
-    "page": 65,
-    "pageEnd": 65
-   },
-   {
-    "title": "Kitchen Storage &",
-    "page": 68,
-    "pageEnd": 68
-   },
-   {
-    "title": "5-Compartment Lunch Box",
-    "page": 69,
-    "pageEnd": 69
-   },
-   {
-    "title": "Silicone Lunch Box",
-    "page": 70,
-    "pageEnd": 70
-   },
-   {
-    "title": "Portable Stainless Steel Lunch Box",
-    "page": 71,
-    "pageEnd": 71
-   },
-   {
-    "title": "304Stainless Steel 2-Compartment",
-    "page": 72,
-    "pageEnd": 72
-   },
-   {
-    "title": "3-Piece Silicone Lid Set",
-    "page": 74,
-    "pageEnd": 74
-   },
-   {
-    "title": "Toothbrush Storage Box",
-    "page": 75,
-    "pageEnd": 75
-   },
-   {
-    "title": "Silicone Food Bag",
-    "page": 76,
-    "pageEnd": 76
-   },
-   {
-    "title": "Disposable Cling Film Cover",
-    "page": 77,
-    "pageEnd": 77
-   },
-   {
-    "title": "PPSauce Cup",
-    "page": 79,
-    "pageEnd": 79
-   },
-   {
-    "title": "Wooden Recipe Box",
-    "page": 80,
-    "pageEnd": 80
-   },
-   {
-    "title": "Magnetic Clip",
-    "page": 81,
-    "pageEnd": 82
-   },
-   {
-    "title": "Tableware",
-    "page": 84,
-    "pageEnd": 84
-   },
-   {
-    "title": "Cutlery Set",
-    "page": 86,
-    "pageEnd": 86
-   },
-   {
-    "title": "Enamel Square Tray",
-    "page": 87,
-    "pageEnd": 87
-   },
-   {
-    "title": "Silicone Trivet",
-    "page": 89,
-    "pageEnd": 89
-   },
-   {
-    "title": "Cleaning s",
-    "page": 91,
-    "pageEnd": 91
-   },
-   {
-    "title": "Cleaning Brush",
-    "page": 92,
-    "pageEnd": 92
-   },
-   {
-    "title": "Stainless Steel Flexible Cleaning",
-    "page": 93,
-    "pageEnd": 93
-   },
-   {
-    "title": "Nano Sponge",
-    "page": 94,
-    "pageEnd": 94
-   },
-   {
-    "title": "Beauty & Personal Care",
-    "page": 95,
-    "pageEnd": 95
-   },
-   {
-    "title": "Siliconelce Face Massager",
-    "page": 96,
-    "pageEnd": 96
-   },
-   {
-    "title": "Makeup Sponge Case",
-    "page": 97,
-    "pageEnd": 97
-   },
-   {
-    "title": "Kids Tableware",
-    "page": 99,
-    "pageEnd": 99
-   },
-   {
-    "title": "Training Cup",
-    "page": 100,
-    "pageEnd": 100
-   },
-   {
-    "title": "Kids Cup",
-    "page": 101,
-    "pageEnd": 101
-   },
-   {
-    "title": "Silicone Drawing Mat",
-    "page": 105,
-    "pageEnd": 105
-   },
-   {
-    "title": "Silicone Kids Placemat with Strap",
-    "page": 106,
-    "pageEnd": 106
-   },
-   {
-    "title": "Pet Supplies",
-    "page": 108,
-    "pageEnd": 108
-   },
-   {
-    "title": "Stainless Steel Pet Travel Cup",
-    "page": 109,
-    "pageEnd": 109
-   },
-   {
-    "title": "Silicone Pet Nursing Bottle",
-    "page": 110,
-    "pageEnd": 110
-   },
-   {
-    "title": "Outdoor & BBQ",
-    "page": 112,
-    "pageEnd": 112
-   },
-   {
-    "title": "BBQCleaning Brush",
-    "page": 113,
-    "pageEnd": 113
-   },
-   {
-    "title": "Round BBQ Cage",
-    "page": 114,
-    "pageEnd": 114
-   },
-   {
-    "title": "KINGFISHER",
-    "page": 115,
-    "pageEnd": 115
-   },
-   {
-    "title": "Household Essentials",
-    "page": 116,
-    "pageEnd": 116
-   },
-   {
-    "title": "Pipe Bath Toy",
-    "page": 117,
-    "pageEnd": 117
-   },
-   {
-    "title": "PROFESSIONAL TOOLS",
-    "page": 118,
-    "pageEnd": 118
-   },
-   {
-    "title": "Microfiber Towel",
-    "page": 119,
-    "pageEnd": 119
-   },
-   {
-    "title": "Square Folding Bucket",
-    "page": 120,
-    "pageEnd": 120
-   },
-   {
-    "title": "Velvet Bag",
-    "page": 121,
-    "pageEnd": 121
-   },
-   {
-    "title": "Magnetic Sealing Clip",
-    "page": 122,
-    "pageEnd": 122
-   },
-   {
-    "title": "NTAG213 Chip",
-    "page": 124,
-    "pageEnd": 124
-   }
-  ],
-  "hi": false,
-  "hiWidth": 0,
-  "native": [
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920,
-   1920
-  ]
- },
- "2023": {
-  "pages": 107,
-  "w": 1440.0,
-  "h": 810.0,
-  "aspect": 1.7778,
-  "wide": true,
-  "width": 2600,
-  "quality": 76,
-  "format": "webp",
-  "toc": [
-   {
-    "title": "Kitchen Tools",
-    "page": 2,
-    "pageEnd": 13
-   },
-   {
-    "title": "Knives & Cutting Boards",
-    "page": 14,
-    "pageEnd": 17
-   },
-   {
-    "title": "Baking Tools",
-    "page": 18,
-    "pageEnd": 32
-   },
-   {
-    "title": "Ice Cream & Ice Tools",
-    "page": 33,
-    "pageEnd": 39
-   },
-   {
-    "title": "Coffee & Tea",
-    "page": 40,
-    "pageEnd": 43
-   },
-   {
-    "title": "Drinkware & Bottles",
-    "page": 44,
-    "pageEnd": 51
-   },
-   {
-    "title": "Kitchen Storage & Organization",
-    "page": 52,
-    "pageEnd": 66
-   },
-   {
-    "title": "Tableware",
-    "page": 67,
-    "pageEnd": 72
-   },
-   {
-    "title": "Cleaning Supplies",
-    "page": 73,
-    "pageEnd": 77
-   },
-   {
-    "title": "Beauty & Personal Care",
-    "page": 78,
-    "pageEnd": 83
-   },
-   {
-    "title": "Kids Tableware",
-    "page": 84,
-    "pageEnd": 92
-   },
-   {
-    "title": "Pet Supplies",
-    "page": 93,
-    "pageEnd": 95
-   },
-   {
-    "title": "Outdoor & BBQ",
-    "page": 96,
-    "pageEnd": 101
-   },
-   {
-    "title": "Household Essentials",
-    "page": 102,
-    "pageEnd": null
-   }
-  ],
-  "hi": true,
-  "hiWidth": 4000,
-  "native": [
-   1920,
-   1920,
-   3246,
-   3450,
-   8006,
-   3246,
-   3432,
-   3223,
-   3246,
-   3246,
-   2397,
-   4748,
-   3340,
-   1920,
-   2861,
-   3139,
-   3316,
-   1920,
-   3000,
-   3352,
-   3246,
-   4433,
-   3247,
-   4533,
-   4498,
-   3747,
-   2889,
-   4178,
-   1915,
-   3276,
-   4044,
-   4746,
-   1920,
-   3788,
-   2457,
-   3293,
-   3538,
-   4196,
-   4215,
-   1920,
-   3840,
-   3246,
-   3235,
-   1920,
-   3026,
-   4377,
-   3246,
-   4788,
-   5183,
-   3415,
-   3712,
-   1920,
-   3573,
-   3247,
-   4155,
-   3235,
-   4184,
-   3246,
-   2995,
-   3148,
-   2903,
-   2777,
-   3270,
-   2368,
-   4085,
-   2664,
-   1920,
-   4748,
-   3121,
-   3246,
-   2318,
-   3246,
-   1920,
-   3246,
-   3246,
-   4299,
-   4563,
-   1920,
-   3078,
-   2689,
-   4748,
-   4567,
-   3415,
-   1920,
-   3282,
-   2689,
-   4375,
-   3240,
-   5400,
-   2962,
-   3162,
-   4148,
-   1920,
-   4614,
-   3229,
-   1920,
-   3270,
-   3422,
-   3246,
-   4586,
-   4405,
-   1920,
-   4526,
-   2461,
-   4405,
-   3235,
-   3188
-  ]
- },
  "kitchen": {
   "pages": 168,
   "w": 419.25,
@@ -1046,64 +283,6 @@
    4000
   ]
  },
- "baby": {
-  "pages": 22,
-  "w": 419.25,
-  "h": 595.5,
-  "aspect": 0.704,
-  "wide": false,
-  "width": 1600,
-  "quality": 80,
-  "format": "webp",
-  "toc": [
-   {
-    "title": "Feeding Set",
-    "page": 1,
-    "pageEnd": 17
-   },
-   {
-    "title": "Spoon/Fork",
-    "page": 18,
-    "pageEnd": 19
-   },
-   {
-    "title": "Baby Bib",
-    "page": 20,
-    "pageEnd": 20
-   },
-   {
-    "title": "Silicone Placemat",
-    "page": 21,
-    "pageEnd": null
-   }
-  ],
-  "hi": false,
-  "hiWidth": 0,
-  "native": [
-   837,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730,
-   730
-  ]
- },
  "ladies": {
   "pages": 24,
   "w": 419.25,
@@ -1212,5 +391,2647 @@
    657,
    4000
   ]
+ },
+ "kitchen-tools": {
+  "pages": 65,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Rice Serving Spoon",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Bullet Tip Mixing Spoon",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Two in One Pasta Server",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Plastic Mixing Spoon",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Folding Flat Spoon",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Silicone Long Spatula",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Pancake Spatula",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Silicone Turner",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Silicone Mini Whisk",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Stainless Steel Whisk",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Silicone Cookware Set",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Plastic Kitchen Utensil Set",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Teak Wood Cookware Set",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Kitchen Cookware Set",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Stainless Steel Spork",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Heat Resistant Tongs",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Wooden Handle Peeler",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Vegetable Peeler",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Stainless Steel Grater",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Cheese Grater",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "French Fry Cutter",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Hamburger Press Set",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Adjustable Tortilla Press",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Chicken Breast Shredder",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Portable Juicer",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Hand Blender",
+    "page": 28,
+    "pageEnd": 28
+   },
+   {
+    "title": "Large Slow Juicer",
+    "page": 29,
+    "pageEnd": 29
+   },
+   {
+    "title": "Compact Food Processor",
+    "page": 30,
+    "pageEnd": 30
+   },
+   {
+    "title": "Kitchen Mixer",
+    "page": 31,
+    "pageEnd": 31
+   },
+   {
+    "title": "Meat Tenderizer Hammer",
+    "page": 32,
+    "pageEnd": 32
+   },
+   {
+    "title": "Sausage Stuffer",
+    "page": 33,
+    "pageEnd": 33
+   },
+   {
+    "title": "Electric Corkscrew Set",
+    "page": 34,
+    "pageEnd": 34
+   },
+   {
+    "title": "Beverage Can Opener",
+    "page": 35,
+    "pageEnd": 35
+   },
+   {
+    "title": "Electric Can Opener",
+    "page": 36,
+    "pageEnd": 36
+   },
+   {
+    "title": "Silicone Leaf Bag Tie",
+    "page": 37,
+    "pageEnd": 37
+   },
+   {
+    "title": "Clear Chicken Shredder",
+    "page": 38,
+    "pageEnd": 38
+   },
+   {
+    "title": "Triangular Iron Rack",
+    "page": 39,
+    "pageEnd": 39
+   },
+   {
+    "title": "Silicone Soap Holder",
+    "page": 40,
+    "pageEnd": 40
+   },
+   {
+    "title": "Stainless Steel Strainer",
+    "page": 41,
+    "pageEnd": 41
+   },
+   {
+    "title": "Steak Thermometer",
+    "page": 42,
+    "pageEnd": 42
+   },
+   {
+    "title": "Square Timer",
+    "page": 43,
+    "pageEnd": 43
+   },
+   {
+    "title": "Kitchen Digital Scale",
+    "page": 44,
+    "pageEnd": 44
+   },
+   {
+    "title": "Square Egg Poacher",
+    "page": 45,
+    "pageEnd": 45
+   },
+   {
+    "title": "Rectangular Draining Mat",
+    "page": 46,
+    "pageEnd": 46
+   },
+   {
+    "title": "Silicone Non-Slip Mat",
+    "page": 47,
+    "pageEnd": 47
+   },
+   {
+    "title": "Silicone Oil Filter Net",
+    "page": 48,
+    "pageEnd": 48
+   },
+   {
+    "title": "Butterfly Silicone Trivet",
+    "page": 49,
+    "pageEnd": 49
+   },
+   {
+    "title": "Dotted Silicone Oven Mitt",
+    "page": 50,
+    "pageEnd": 50
+   },
+   {
+    "title": "Heat Resistant Glove",
+    "page": 51,
+    "pageEnd": 51
+   },
+   {
+    "title": "Oil Sprayer Bottle",
+    "page": 52,
+    "pageEnd": 52
+   },
+   {
+    "title": "Cherry Pitter",
+    "page": 53,
+    "pageEnd": 54
+   },
+   {
+    "title": "Plastic Salad Spinner",
+    "page": 55,
+    "pageEnd": 55
+   },
+   {
+    "title": "Cast Iron Enamel Pot",
+    "page": 56,
+    "pageEnd": 56
+   },
+   {
+    "title": "Silicone Steamer Basket",
+    "page": 57,
+    "pageEnd": 57
+   },
+   {
+    "title": "Solid Wood Pestle",
+    "page": 58,
+    "pageEnd": 58
+   },
+   {
+    "title": "Silicone Mixing Bowl Lid",
+    "page": 59,
+    "pageEnd": 59
+   },
+   {
+    "title": "Microwave Glass Lid",
+    "page": 60,
+    "pageEnd": 60
+   },
+   {
+    "title": "Stainless Steel Funnel",
+    "page": 61,
+    "pageEnd": 61
+   },
+   {
+    "title": "Pressure Cooker",
+    "page": 62,
+    "pageEnd": 62
+   },
+   {
+    "title": "Clear Measuring Cup",
+    "page": 63,
+    "pageEnd": 63
+   },
+   {
+    "title": "Sausage Scoring Tool",
+    "page": 64,
+    "pageEnd": 64
+   },
+   {
+    "title": "Corn Stripper",
+    "page": 65,
+    "pageEnd": 65
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "knives-cutting-boards": {
+  "pages": 30,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Cutting Board",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Titanium Cutting Board",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Round Hole Cutting Board",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Fruit Cutting Board",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Half Moon Cutting Board",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Defrost Cutting Board",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Magnetic Knife Stand",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Rolling Knife Sharpener",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Electric Knife Sharpener",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Mini Warming Tray",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Ring Scissors",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Stainless Steel Knife Set",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "PP Handle Oyster Knife",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Twin-Steel Meat Knife",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Handled Butter Knife",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Wooden Bread Knife",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Knife Sharpening Pen",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "Smiley Finger Guard",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Handheld Potato Cutter",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Round Bread Slicer",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Round Oval Bread Slicer",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Bread Cutter",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Manual Rotary Grater",
+    "page": 28,
+    "pageEnd": 28
+   },
+   {
+    "title": "Vegetable Shredder Box",
+    "page": 29,
+    "pageEnd": 29
+   },
+   {
+    "title": "One-Piece Pot Scraper",
+    "page": 30,
+    "pageEnd": 30
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "baking-tools": {
+  "pages": 50,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Cake Mould",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Silicone Fruit Cake Mould",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Round Cake Mould",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Star Silicone Cake Mould",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Chocolate Mould",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Lollipop Mould",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Chocolate Mould",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Round Chocolate Mould",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "20-Cavity Shell Cake Mould",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Emoji Chocolate Mould",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Animal Silicone Mould",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Silicone Flower Mould",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Halloween Cake Mould",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Christmas Cookie Cutter",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Round Cookie Cutter Set",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Chocolate Mold",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Microwave Baking Pan",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Carbon Steel Baking Pan",
+    "page": 20,
+    "pageEnd": 21
+   },
+   {
+    "title": "Silicone Proofing Basket",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "Bunny Ear Muffin Cup",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Silicone Liner",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Dough Proofing Box",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Waffle Maker",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Silicone Oven Mat",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Silicone Baking Mat",
+    "page": 28,
+    "pageEnd": 29
+   },
+   {
+    "title": "Slicing Knife with Scale",
+    "page": 30,
+    "pageEnd": 30
+   },
+   {
+    "title": "Three in One Flour Cutter",
+    "page": 31,
+    "pageEnd": 31
+   },
+   {
+    "title": "Stainless Steel Knife",
+    "page": 32,
+    "pageEnd": 32
+   },
+   {
+    "title": "Magnetic Bread Razor",
+    "page": 33,
+    "pageEnd": 33
+   },
+   {
+    "title": "Bread Slicing Knife",
+    "page": 34,
+    "pageEnd": 34
+   },
+   {
+    "title": "Heart Shaped Rolling Pin",
+    "page": 35,
+    "pageEnd": 35
+   },
+   {
+    "title": "Small Plastic Rolling Pin",
+    "page": 36,
+    "pageEnd": 36
+   },
+   {
+    "title": "Ceramic Pizza Plate",
+    "page": 37,
+    "pageEnd": 37
+   },
+   {
+    "title": "Dough Mixing Bowl",
+    "page": 38,
+    "pageEnd": 38
+   },
+   {
+    "title": "Wood Handle Flour Sifter",
+    "page": 39,
+    "pageEnd": 39
+   },
+   {
+    "title": "Batter Separator",
+    "page": 40,
+    "pageEnd": 40
+   },
+   {
+    "title": "Cake Baking Tool Set",
+    "page": 41,
+    "pageEnd": 41
+   },
+   {
+    "title": "Tortilla Baking Tray",
+    "page": 42,
+    "pageEnd": 42
+   },
+   {
+    "title": "Air Fryer Baking Pan",
+    "page": 43,
+    "pageEnd": 43
+   },
+   {
+    "title": "Cast Iron Bread Pot",
+    "page": 44,
+    "pageEnd": 44
+   },
+   {
+    "title": "Silicone Air Fryer",
+    "page": 45,
+    "pageEnd": 45
+   },
+   {
+    "title": "Square Silicone Air Fryer",
+    "page": 46,
+    "pageEnd": 46
+   },
+   {
+    "title": "Silicone Steamer",
+    "page": 48,
+    "pageEnd": 48
+   },
+   {
+    "title": "Striped Slow Cooker Liner",
+    "page": 49,
+    "pageEnd": 49
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "ice-cream-ice-tools": {
+  "pages": 22,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Square Ice Cube Tray",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Tumbler Ice Cube Tray",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Silicone Ice Cube Tray",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Tumbler Ice Cube Tray",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Silicone Ice Cube Tray",
+    "page": 6,
+    "pageEnd": 9
+   },
+   {
+    "title": "Square Ice Cube Tray",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Ice Fruit Serving Tray",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Round Ice Cube Tray",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Plastic Ice Cup",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Silicone Ice Stick Mould",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Silicone Cat Paw Mould",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Silicone Ice Pop Mould",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Round Ice Ball Mould",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Ice Pop Mould",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Mini Ice Cream Maker",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Ingot Shaped Ice Bucket",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Ice Cream Scoop",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Plastic Ice Cream Scoop",
+    "page": 22,
+    "pageEnd": 22
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "coffee-tea": {
+  "pages": 21,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Mini Electric Blender",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Electric Milk Frother",
+    "page": 3,
+    "pageEnd": 5
+   },
+   {
+    "title": "Coffee Milk Frother",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Electric Milk Frother",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Automatic Milk Frother",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Manual Coffee Grinder",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Coffee Tamper Set",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Matcha Tool Set",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Sakura Spout Bowl Set",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Vintage Tea Pot",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Glass Coffee Pot",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Coffee Scale",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Coffee Machine Mat",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Silicone Tea Infuser",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Christmas Tea Strainer",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Press Type Tea Strainer",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Tea Scoop & Stand",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Coffee Cup Holder",
+    "page": 21,
+    "pageEnd": 21
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "drinkware-bottles": {
+  "pages": 30,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Collapsible Silicone Cup",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Silicone Straight Cup",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Silicone Collapsible Cup",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Silicone Coffee Cup",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Stainless Steel Beer Mug",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Stainless Steel Egg Cup",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Stainless Steel Cup",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Electric Juicer Cup",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Mini Milk Tea Cup",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Flip Top Straw Cup",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Plastic Wine Cup",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Hydrogen Water Cup",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Overnight Oats Cup",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Glass Candle Jar",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Double-Wall Glass Cup",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Custom Cloud Straw Cap",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Sports Insulated Tumbler",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Large Handled Tumbler",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Mini Insulated Tumbler",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Travel Dispensing Bottle",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Aluminium Sports Bottle",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "Plastic Bottle",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Hydrogen Water Bottle",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Water Bottle Sleeve",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Silicone Cup Sleeve",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Foldable Electric Kettle",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Silicone Bottle Cap",
+    "page": 28,
+    "pageEnd": 28
+   },
+   {
+    "title": "Twist Cup without Lid",
+    "page": 29,
+    "pageEnd": 29
+   },
+   {
+    "title": "Glass Beer Mug",
+    "page": 30,
+    "pageEnd": 30
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "kitchen-storage-organization": {
+  "pages": 66,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Lunch Box",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Silicone Sauce Container",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Mini Sauce Cup",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Silicone Sandwich Box",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Airtight Bento Box",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Silicone Food Container",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Square Silicone Lunch Box",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Insulated Lunch Box",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Car Heated Lunch Box",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Stainless Steel Bento Box",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Wheat Straw Lunch Box",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Plastic Bento Box",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Folding Lunch Box",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Portable Bento Box",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Sectioned Bento Box",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Bamboo Fiber Bento Box",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Electric Lunch Box",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Wooden Recipe Box",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "Multi Layer Storage Box",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Car Refrigerator",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Bamboo Storage Box Set",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Latch-Lock Oil Sprayer",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Plastic Storage Box",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Bamboo Lid Bread Box",
+    "page": 28,
+    "pageEnd": 28
+   },
+   {
+    "title": "Airtight Salad Container",
+    "page": 29,
+    "pageEnd": 29
+   },
+   {
+    "title": "Food Container",
+    "page": 30,
+    "pageEnd": 30
+   },
+   {
+    "title": "Bread Storage Bin",
+    "page": 31,
+    "pageEnd": 31
+   },
+   {
+    "title": "Food Storage Container",
+    "page": 33,
+    "pageEnd": 33
+   },
+   {
+    "title": "Plastic Sauce Container",
+    "page": 34,
+    "pageEnd": 34
+   },
+   {
+    "title": "Collapsible Tote Basket",
+    "page": 35,
+    "pageEnd": 35
+   },
+   {
+    "title": "Glass Bottle with Cork",
+    "page": 36,
+    "pageEnd": 36
+   },
+   {
+    "title": "Ceramic Fruit Basket",
+    "page": 37,
+    "pageEnd": 37
+   },
+   {
+    "title": "Collapsible Colander",
+    "page": 38,
+    "pageEnd": 38
+   },
+   {
+    "title": "Insulated Soup Cup",
+    "page": 39,
+    "pageEnd": 39
+   },
+   {
+    "title": "Grain Storage Bin",
+    "page": 40,
+    "pageEnd": 40
+   },
+   {
+    "title": "Plastic Storage Jar",
+    "page": 41,
+    "pageEnd": 41
+   },
+   {
+    "title": "Screw Top Plastic Jar",
+    "page": 42,
+    "pageEnd": 42
+   },
+   {
+    "title": "Glass Storage Jar",
+    "page": 43,
+    "pageEnd": 43
+   },
+   {
+    "title": "Sprouting Jar Set",
+    "page": 44,
+    "pageEnd": 44
+   },
+   {
+    "title": "Glass Salad Jar",
+    "page": 45,
+    "pageEnd": 45
+   },
+   {
+    "title": "Patterned Storage Jar",
+    "page": 46,
+    "pageEnd": 46
+   },
+   {
+    "title": "Glass Sealed Jar",
+    "page": 47,
+    "pageEnd": 47
+   },
+   {
+    "title": "Mini Handle Glass Jar",
+    "page": 48,
+    "pageEnd": 48
+   },
+   {
+    "title": "Sauce Squeeze Bottle",
+    "page": 49,
+    "pageEnd": 49
+   },
+   {
+    "title": "Multi Spice Bottle",
+    "page": 50,
+    "pageEnd": 50
+   },
+   {
+    "title": "Keychain Bottle Opener",
+    "page": 51,
+    "pageEnd": 51
+   },
+   {
+    "title": "Magnetic Clip",
+    "page": 52,
+    "pageEnd": 52
+   },
+   {
+    "title": "Silicone Sealing Lid",
+    "page": 53,
+    "pageEnd": 53
+   },
+   {
+    "title": "Silicone Bowl Cover",
+    "page": 54,
+    "pageEnd": 54
+   },
+   {
+    "title": "Mason Jar Coin Slot Lid",
+    "page": 55,
+    "pageEnd": 55
+   },
+   {
+    "title": "Mason Jar Lid",
+    "page": 56,
+    "pageEnd": 56
+   },
+   {
+    "title": "Tumbler Draining Rack",
+    "page": 57,
+    "pageEnd": 57
+   },
+   {
+    "title": "Kitchen Organizer Rack",
+    "page": 58,
+    "pageEnd": 58
+   },
+   {
+    "title": "Kitchen Dish Drainer",
+    "page": 59,
+    "pageEnd": 59
+   },
+   {
+    "title": "Silicone Draining Mat",
+    "page": 60,
+    "pageEnd": 60
+   },
+   {
+    "title": "Silicone Drain Mat",
+    "page": 61,
+    "pageEnd": 61
+   },
+   {
+    "title": "Mason Jar with Handle",
+    "page": 62,
+    "pageEnd": 62
+   },
+   {
+    "title": "Silicone Food Bag",
+    "page": 63,
+    "pageEnd": 63
+   },
+   {
+    "title": "Storage Mesh Bag",
+    "page": 64,
+    "pageEnd": 64
+   },
+   {
+    "title": "Lunch Box Insulated Bag",
+    "page": 65,
+    "pageEnd": 65
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "tableware": {
+  "pages": 21,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Ceramic Plate",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Stainless Steel Round Plate",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Lidded Salad Plate",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Ceramic Lace Plate",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Stainless Steel Bowl",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Plastic Salad Bowl Set",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Oval Stainless Steel Dish",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Stainless Steel Cutlery",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Silicone Spoon",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Disposable Tableware",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Stainless Steel Fruit Fork",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Salad Cup with Fork",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Umbrella Candy Stand",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Snowflake Placemat",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Leather Placemat",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Silicone Tray",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Silicone Car Cup Mat",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Round Trivet",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Chopstick Rest",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Custom Tablecloth",
+    "page": 21,
+    "pageEnd": 21
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "cleaning-supplies": {
+  "pages": 15,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Straw Brush",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Silicone Dish Brush",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Nylon Bristle Brush",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Nylon Cleaning Brush",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Liquid Refill Pot Brush",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Sisal Cleaning Brush",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Wood Pulp Dish Brush",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Long Bath Towel",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Silicone Drying Mat",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Steel Wool Scrub Pad",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Custom Sponge Wipe",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Nordic Plastic Trash Bin",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Stainless Steel Soap",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Rinse Free Kitchen Cleaner",
+    "page": 15,
+    "pageEnd": 15
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "beauty-personal-care": {
+  "pages": 16,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Manual Breast Pump",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Kids Cupping Tool",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Silicone Cupping Set",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Gua Sha Ice Face Roller",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Bunny Ear Nipple Cover",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Silicone Eye Mask",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Heart Bath Salt 3-Piece",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Portable Makeup Mat",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Silicone Makeup Bag",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Electric Foot File",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Smart Timed Pill Box",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Silicone Dish Brush",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Silicone Vaginal Dilator",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Cupping Therapy Set",
+    "page": 15,
+    "pageEnd": 15
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "kids-tableware": {
+  "pages": 31,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Crab Dinner Plate Set",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Magnetic Silicone Plate",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Large Suction Kids Plate",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Silicone Suction Plates",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Sunflower Kids Plate",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Suction Kids Placemat",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Silicone Placemat",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Baby Tableware Set",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Bear Stainless Steel Set",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Teething Ice Pop Mould",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Stainless Steel Bowl",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Bear Baby Food Bowl",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Suction Insulated Bowl",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Kids Flip-Top Lunch Box",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Unfinished Cutlery Set",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Baby Food Spoon",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Whale Chopsticks",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Silicone Baby Pacifier",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Silicone Baby Bib",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Silicone Bib with Strap",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Silicone Drawing Mat",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "Square Silicone Mat",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Giraffe Teether",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Kids Water Cup",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Kids Silicone Water Cup",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Children's Cup",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Training Cup",
+    "page": 28,
+    "pageEnd": 28
+   },
+   {
+    "title": "Kids Kitchen Play Set",
+    "page": 29,
+    "pageEnd": 29
+   },
+   {
+    "title": "Plastic Baby Milk Bottle",
+    "page": 30,
+    "pageEnd": 30
+   },
+   {
+    "title": "Baby Teething Stick",
+    "page": 31,
+    "pageEnd": 31
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "pet-supplies": {
+  "pages": 8,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Pet Slow Feeder Mat",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Silicone Pet Mat",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Silicone Pet Feeding Mat",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Disposable Cat Litter Box",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Cat Paw Food Clip",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Stainless Steel Dog Bowl",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Wooden Cat Toy",
+    "page": 8,
+    "pageEnd": 8
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "outdoor-bbq": {
+  "pages": 15,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Square Grill Pan",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Foil Baking Tray",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Tri Fork BBQ Skewer Set",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "BBQ Meat Skewer Tool",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Teppanyaki Tool Set",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Stainless Steel BBQ Fork",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Flip Top BBQ Grill Basket",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Hexagon BBQ Basket",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Round BBQ Cage",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Camping Folding Pot",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Electric BBQ Brush",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Grill Cleaning Scraper",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Probe Thermometer",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Silicone Barbecue Mat",
+    "page": 15,
+    "pageEnd": 15
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
+ },
+ "household-essentials": {
+  "pages": 43,
+  "w": 1440.0,
+  "h": 810.0,
+  "aspect": 1.7778,
+  "wide": true,
+  "width": 2600,
+  "quality": 76,
+  "format": "webp",
+  "toc": [
+   {
+    "title": "Silicone Bag",
+    "page": 2,
+    "pageEnd": 2
+   },
+   {
+    "title": "Fruit & Vegetable Washer",
+    "page": 3,
+    "pageEnd": 3
+   },
+   {
+    "title": "Sunflower Beaded Charm",
+    "page": 4,
+    "pageEnd": 4
+   },
+   {
+    "title": "Drawstring Mesh Bag",
+    "page": 5,
+    "pageEnd": 5
+   },
+   {
+    "title": "Drawstring Backpack",
+    "page": 6,
+    "pageEnd": 6
+   },
+   {
+    "title": "Coral Fleece Bear Towel",
+    "page": 7,
+    "pageEnd": 7
+   },
+   {
+    "title": "Silicone Mat",
+    "page": 8,
+    "pageEnd": 8
+   },
+   {
+    "title": "Gas Stove Guard Mat",
+    "page": 9,
+    "pageEnd": 9
+   },
+   {
+    "title": "Custom PVC Mat",
+    "page": 10,
+    "pageEnd": 10
+   },
+   {
+    "title": "Sponge Sandpaper",
+    "page": 11,
+    "pageEnd": 11
+   },
+   {
+    "title": "Silicone T Shape Stopper",
+    "page": 12,
+    "pageEnd": 12
+   },
+   {
+    "title": "Wooden Puzzle",
+    "page": 13,
+    "pageEnd": 13
+   },
+   {
+    "title": "Plastic Candy Box",
+    "page": 14,
+    "pageEnd": 14
+   },
+   {
+    "title": "Disposable Lunch Box",
+    "page": 15,
+    "pageEnd": 15
+   },
+   {
+    "title": "Clear Heart Shaped Ball",
+    "page": 16,
+    "pageEnd": 16
+   },
+   {
+    "title": "Clear Flat Bottom Ball",
+    "page": 17,
+    "pageEnd": 17
+   },
+   {
+    "title": "Glowing Clown Nose Ball",
+    "page": 18,
+    "pageEnd": 18
+   },
+   {
+    "title": "Silicone Round Sink Plug",
+    "page": 19,
+    "pageEnd": 19
+   },
+   {
+    "title": "Disposable Slippers",
+    "page": 20,
+    "pageEnd": 20
+   },
+   {
+    "title": "Rubber Bands",
+    "page": 21,
+    "pageEnd": 21
+   },
+   {
+    "title": "Adhesive Sticker",
+    "page": 22,
+    "pageEnd": 22
+   },
+   {
+    "title": "Disassembly Hook",
+    "page": 23,
+    "pageEnd": 23
+   },
+   {
+    "title": "Stainless Steel Door Bolt",
+    "page": 24,
+    "pageEnd": 24
+   },
+   {
+    "title": "Colorful Paint Marker",
+    "page": 25,
+    "pageEnd": 25
+   },
+   {
+    "title": "Siphon Tube and Filler",
+    "page": 26,
+    "pageEnd": 26
+   },
+   {
+    "title": "Tulip Flower Keychain",
+    "page": 27,
+    "pageEnd": 27
+   },
+   {
+    "title": "Soft Magnetic Sheet",
+    "page": 28,
+    "pageEnd": 28
+   },
+   {
+    "title": "Bed Sheet Fastener",
+    "page": 29,
+    "pageEnd": 29
+   },
+   {
+    "title": "Baby Bath Kneeler",
+    "page": 30,
+    "pageEnd": 30
+   },
+   {
+    "title": "Collapsible Mop Bucket",
+    "page": 31,
+    "pageEnd": 31
+   },
+   {
+    "title": "Cast Iron Skillet",
+    "page": 32,
+    "pageEnd": 32
+   },
+   {
+    "title": "Bow Pull Ribbon",
+    "page": 33,
+    "pageEnd": 33
+   },
+   {
+    "title": "Sports Knee Support",
+    "page": 34,
+    "pageEnd": 34
+   },
+   {
+    "title": "Branch Pruning Shears",
+    "page": 35,
+    "pageEnd": 35
+   },
+   {
+    "title": "Braided Cord",
+    "page": 36,
+    "pageEnd": 36
+   },
+   {
+    "title": "Manual Bread Maker",
+    "page": 37,
+    "pageEnd": 37
+   },
+   {
+    "title": "Ceramic Hookah Bowl",
+    "page": 38,
+    "pageEnd": 38
+   },
+   {
+    "title": "Paintbrush Cleaner",
+    "page": 39,
+    "pageEnd": 39
+   },
+   {
+    "title": "Hot and Cold Mini Fridge",
+    "page": 40,
+    "pageEnd": 40
+   },
+   {
+    "title": "Telescopic Phone Stand",
+    "page": 41,
+    "pageEnd": 41
+   },
+   {
+    "title": "Solid Watercolor Palette",
+    "page": 42,
+    "pageEnd": 42
+   },
+   {
+    "title": "Silicone Watch",
+    "page": 43,
+    "pageEnd": 43
+   }
+  ],
+  "native": [
+   2201,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720,
+   3720
+  ],
+  "hi": true,
+  "hiWidth": 4000
  }
 }
