@@ -757,9 +757,21 @@ def write_home_index(cats_built):
             % (cat["id"], slugify(p["title"]), esc(p["title"]),
                cat["id"], int(p["page"]), int(p["page"]), int(p["page"]))
             for p in cat_pages)
-        cols.append('<div class="hi-col"><h3>%s</h3><p class="hi-sub">%s</p><ul>%s</ul>'
-                    '<a class="hi-all" href="/catalog/%s/">Browse all %s &rarr;</a></div>'
-                    % (esc(cat["name"]), esc(cat["sub"]), links, cat["id"], esc(cat["name"])))
+        # Collapsed by default: eighteen open lists made the page look finished
+        # before a visitor had scrolled once. One closed row per catalogue keeps
+        # the map readable and puts the detail one click away.
+        try:
+            _m = json.loads((ROOT / "assets" / "pages" / cat["id"] / "meta.json").read_text(encoding="utf-8"))
+            _pg = _m.get("pages", 0)
+            _npg = _pg if isinstance(_pg, int) else len(_pg)
+        except Exception:
+            _npg = 0
+        cols.append('<details class="hi-col"><summary><span class="hi-name">%s</span>'
+                    '<span class="hi-meta">%d sections &middot; %d pages</span></summary>'
+                    '<p class="hi-sub">%s</p><ul>%s</ul>'
+                    '<a class="hi-all" href="/catalog/%s/">Browse all %s &rarr;</a></details>'
+                    % (esc(cat["name"]), len(cat_pages), _npg, esc(cat["sub"]), links,
+                       cat["id"], esc(cat["name"])))
     block = ("<!-- INDEX:BEGIN -->\n"
              '<div class="home-index">\n'
              "<h2>Full catalogue index</h2>\n"

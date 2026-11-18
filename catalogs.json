@@ -9,7 +9,8 @@
     "coverLocked": false,
     "theme": "Silicone, stainless steel and wood kitchen tools",
     "materials": "",
-    "group": "Kitchen & Prep"
+    "group": "Kitchen & Prep",
+    "pages": 65
   },
   {
     "id": "knives-cutting-boards",
@@ -21,7 +22,8 @@
     "coverLocked": false,
     "theme": "Cutting boards, knives and chopping accessories",
     "materials": "",
-    "group": "Kitchen & Prep"
+    "group": "Kitchen & Prep",
+    "pages": 30
   },
   {
     "id": "baking-tools",
@@ -33,7 +35,8 @@
     "coverLocked": false,
     "theme": "Bakeware, pastry tools and sourdough accessories",
     "materials": "",
-    "group": "Bake & Freeze"
+    "group": "Bake & Freeze",
+    "pages": 50
   },
   {
     "id": "ice-cream-ice-tools",
@@ -45,7 +48,8 @@
     "coverLocked": false,
     "theme": "Ice moulds, scoops and bar tools",
     "materials": "",
-    "group": "Bake & Freeze"
+    "group": "Bake & Freeze",
+    "pages": 22
   },
   {
     "id": "coffee-tea",
@@ -57,7 +61,8 @@
     "coverLocked": false,
     "theme": "Pour-over, milk frothing and tea accessories",
     "materials": "",
-    "group": "Table & Drink"
+    "group": "Table & Drink",
+    "pages": 21
   },
   {
     "id": "drinkware-bottles",
@@ -69,7 +74,8 @@
     "coverLocked": false,
     "theme": "Bottles, tumblers and drinkware",
     "materials": "",
-    "group": "Table & Drink"
+    "group": "Table & Drink",
+    "pages": 30
   },
   {
     "id": "kitchen-storage-organization",
@@ -81,7 +87,8 @@
     "coverLocked": false,
     "theme": "Containers, racks and pantry organisation",
     "materials": "",
-    "group": "Home & Storage"
+    "group": "Home & Storage",
+    "pages": 66
   },
   {
     "id": "tableware",
@@ -93,7 +100,8 @@
     "coverLocked": false,
     "theme": "Plates, bowls, mats and table accessories",
     "materials": "",
-    "group": "Table & Drink"
+    "group": "Table & Drink",
+    "pages": 21
   },
   {
     "id": "cleaning-supplies",
@@ -105,7 +113,8 @@
     "coverLocked": false,
     "theme": "Brushes, scrubbers and cleaning tools",
     "materials": "",
-    "group": "Home & Storage"
+    "group": "Home & Storage",
+    "pages": 15
   },
   {
     "id": "beauty-personal-care",
@@ -117,7 +126,8 @@
     "coverLocked": false,
     "theme": "Bath, body and personal care accessories",
     "materials": "",
-    "group": "Beauty & Care"
+    "group": "Beauty & Care",
+    "pages": 16
   },
   {
     "id": "kids-tableware",
@@ -129,7 +139,8 @@
     "coverLocked": false,
     "theme": "Baby and kids feeding sets",
     "materials": "",
-    "group": "Kids, Pets & Outdoor"
+    "group": "Kids, Pets & Outdoor",
+    "pages": 31
   },
   {
     "id": "pet-supplies",
@@ -141,7 +152,8 @@
     "coverLocked": false,
     "theme": "Pet bowls, mats and feeding accessories",
     "materials": "",
-    "group": "Kids, Pets & Outdoor"
+    "group": "Kids, Pets & Outdoor",
+    "pages": 8
   },
   {
     "id": "outdoor-bbq",
@@ -153,7 +165,8 @@
     "coverLocked": false,
     "theme": "Grill tools, outdoor and picnic accessories",
     "materials": "",
-    "group": "Kids, Pets & Outdoor"
+    "group": "Kids, Pets & Outdoor",
+    "pages": 15
   },
   {
     "id": "household-essentials",
@@ -165,7 +178,8 @@
     "coverLocked": false,
     "theme": "Everyday household items",
     "materials": "",
-    "group": "Home & Storage"
+    "group": "Home & Storage",
+    "pages": 43
   },
   {
     "id": "kitchen",
@@ -175,7 +189,8 @@
     "toc": "toc-kitchen.json",
     "theme": "silicone and stainless steel kitchenware",
     "materials": "Food-grade silicone, stainless steel, BPA-free plastic",
-    "group": "Legacy Catalogues"
+    "group": "Legacy Catalogues",
+    "pages": 168
   },
   {
     "id": "baby",
@@ -185,7 +200,8 @@
     "toc": "toc-baby.json",
     "theme": "food-grade silicone baby care products",
     "materials": "Food-grade silicone, BPA-free materials, EN71 & FDA compliant",
-    "group": "Legacy Catalogues"
+    "group": "Legacy Catalogues",
+    "pages": 22
   },
   {
     "id": "ladies",
@@ -195,7 +211,8 @@
     "toc": "toc-ladies.json",
     "theme": "personal care and beauty devices",
     "materials": "Safe, body-friendly materials with CE/RoHS compliant electronics",
-    "group": "Legacy Catalogues"
+    "group": "Legacy Catalogues",
+    "pages": 24
   },
   {
     "id": "balls",
@@ -205,6 +222,7 @@
     "toc": null,
     "theme": "festive Christmas and holiday decorations",
     "materials": "High-quality festive finishes, drop-safe decoration materials",
-    "group": "Legacy Catalogues"
+    "group": "Legacy Catalogues",
+    "pages": 13
   }
 ]
